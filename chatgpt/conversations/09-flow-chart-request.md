@@ -1,0 +1,66 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - 'button "Generated image: User homepage flowchart diagram"'
+  - button "Share this image":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: i have written seperate sections for the viewing of animals and the questionaire completion, i can includde the view account nad logout stuff in here but i dont know again how this would lok
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - 'button "Generated image: User homepage flowchart design"'
+  - button "Share this image":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: okay what about the animal viewing page now for the flow chart
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - generic: Worked for 1m 17s
+  - 'button "Generated image: Animal viewing page flowchart design"'
+  - button "Share this image":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Medium":
+    - generic: Medium
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status: Worked for 1m 17s

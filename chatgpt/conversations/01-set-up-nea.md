@@ -1,0 +1,357 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Yesterday 8:35 PM":
+    - generic: Yesterday 8:35 PM
+  - heading "You said:" [level=4]
+  - generic: its saying unable to open it
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: That usually means SQLite can’t find the folder/path, or the
+    - code: data
+    - text: folder doesn’t exist yet.
+  - paragraph: "From your NEA project folder, run:"
+  - text: Bash
+  - button "Copy":
+  - code: pwd
+  - paragraph: "then:"
+  - text: Bash
+  - button "Copy":
+  - code: ls
+  - paragraph: "You should see something like:"
+  - button "Copy":
+  - code: app.py database.py data
+  - paragraph:
+    - text: Then check inside
+    - code: data
+    - text: ":"
+  - text: Bash
+  - button "Copy":
+  - code: ls data
+  - paragraph:
+    - text: If you see
+    - code: adoption.db
+    - text: ", run:"
+  - text: Bash
+  - button "Copy":
+  - code: sqlite3 data/adoption.db
+  - paragraph:
+    - text: If the
+    - code: data
+    - text: folder does
+    - strong: not
+    - text: "exist, create it:"
+  - text: Bash
+  - button "Copy":
+  - code: mkdir data
+  - paragraph: "Then run your Python program that creates the database:"
+  - text: Bash
+  - button "Copy":
+  - code: python3 app.py
+  - paragraph: "or, if your database setup is only triggered through Streamlit:"
+  - text: Bash
+  - button "Copy":
+  - code: streamlit run app.py
+  - paragraph: "After that, check again:"
+  - text: Bash
+  - button "Copy":
+  - code: ls data
+  - paragraph:
+    - text: If you want, send me the
+    - strong: exact error message
+    - text: "plus the output of:"
+  - text: Bash
+  - button "Copy":
+  - code: pwd ls ls data
+  - paragraph: and I can tell you exactly what’s wrong.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: how do i link all the pages together in one file
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph: Yes — that’s actually a cleaner way to structure your NEA.
+  - paragraph:
+    - text: You would
+    - strong: not
+    - text: "write:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: import loginpage.py as loginPage
+  - paragraph:
+    - text: Python imports the filename
+    - strong:
+      - text: without
+      - code: .py
+    - text: ":"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: import loginpage as loginPage
+  - paragraph:
+    - text: Then inside
+    - code: loginpage.py
+    - text: ", you could have:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import streamlit as st def show(): st.title(\"Login\") email = st.text_input(\"Email\") password = st.text_input(\"Password\", type=\"password\") if st.button(\"Login\"): st.write(\"Login clicked\")"
+  - paragraph: "Then in your main file:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: import streamlit as st import loginpage as loginPage loginPage.show()
+  - paragraph: "A better full structure for your NEA might be:"
+  - button "Copy":
+  - code: animal_adoption_nea/ │ ├── app.py ├── loginpage.py ├── registrationpage.py ├── homepage.py ├── animalspage.py ├── questionnairepage.py ├── adminpage.py ├── database.py └── matching.py
+  - paragraph:
+    - text: Then in
+    - code: app.py
+    - text: ":"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import streamlit as st import loginpage import registrationpage import homepage import animalspage import questionnairepage import adminpage if \"page\" not in st.session_state: st.session_state.page = \"login\" if st.session_state.page == \"login\": loginpage.show() elif st.session_state.page == \"register\": registrationpage.show() elif st.session_state.page == \"home\": homepage.show() elif st.session_state.page == \"animals\": animalspage.show() elif st.session_state.page == \"questionnaire\": questionnairepage.show() elif st.session_state.page == \"admin\": adminpage.show()"
+  - paragraph: Then each file just contains the code for that page.
+  - paragraph:
+    - text: For example,
+    - code: homepage.py
+    - text: ":"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import streamlit as st def show(): st.title(\"Animal Adoption Matcher\") if st.button(\"View Animals\"): st.session_state.page = \"animals\" st.rerun() if st.button(\"Take Questionnaire\"): st.session_state.page = \"questionnaire\" st.rerun() if st.button(\"Admin\"): st.session_state.page = \"admin\" st.rerun()"
+  - paragraph:
+    - text: And
+    - code: adminpage.py
+    - text: ":"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import streamlit as st def show(): st.title(\"Admin Page\") st.write(\"Manage animal records\") if st.button(\"Back\"): st.session_state.page = \"home\" st.rerun()"
+  - paragraph: For your NEA, I’d actually recommend this over putting everything into one huge file. It makes your decomposition much clearer because you can explain that the system has been split into separate modules for authentication, animal management, questionnaire processing, matching and database access.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: i dont understand where i use the database within my code or shall i not focus on that yet
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: You should understand the database connection now, but you do
+    - strong: not
+    - text: need to build every database feature before making your pages.
+  - paragraph: "For your NEA, the easiest approach is:"
+  - button "Copy":
+  - code: Build page layout ↓ Add validation ↓ Connect that page to the database ↓ Test it
+  - paragraph:
+    - text: So for example, on your
+    - strong: registration page
+    - text: ", the database is used when the user presses"
+    - strong: Create Account
+    - text: .
+  - paragraph: "Your flow is:"
+  - button "Copy":
+  - code: User enters details ↓ Validate details ↓ Check email isn't already in database ↓ Hash password ↓ Insert user into database ↓ Show success message
+  - paragraph:
+    - text: That means your
+    - code: registrationpage.py
+    - text: might eventually call functions from
+    - code: database.py
+    - text: .
+  - paragraph:
+    - text: For example, in
+    - code: database.py
+    - text: ":"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import sqlite3 DB_PATH = \"data/adoption.db\" def connect_db(): return sqlite3.connect(DB_PATH) def add_user(name, email, age, password_hash): conn = connect_db() cursor = conn.cursor() cursor.execute(\"\"\" INSERT INTO users (name, email, age, password_hash, role) VALUES (?, ?, ?, ?, ?) \"\"\", (name, email, age, password_hash, \"user\")) conn.commit() conn.close() def get_user_by_email(email): conn = connect_db() cursor = conn.cursor() cursor.execute(\"\"\" SELECT * FROM users WHERE email = ? \"\"\", (email,)) user = cursor.fetchone() conn.close() return user"
+  - paragraph:
+    - text: Then in
+    - code: registrationpage.py
+    - text: ":"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import streamlit as st import database def show(): st.title(\"Register\") name = st.text_input(\"Name\") email = st.text_input(\"Email\") age = st.number_input(\"Age\", min_value=18) password = st.text_input(\"Password\", type=\"password\") if st.button(\"Create Account\"): existing_user = database.get_user_by_email(email) if existing_user: st.error(\"An account with this email already exists.\") else: # later, hash the password properly database.add_user(name, email, age, password) st.success(\"Account created successfully.\")"
+  - paragraph: "So the page doesn't contain all the SQL. It just says:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: database.get_user_by_email(email)
+  - paragraph: "or:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: database.add_user(...)
+  - paragraph: That is much cleaner.
+  - paragraph: "The database would also be used in different parts of your system like this:"
+  - table:
+    - rowgroup:
+      - row "Page What the database does":
+        - columnheader "Page"
+        - columnheader "What the database does"
+    - rowgroup:
+      - row "Registration Adds a new user":
+        - cell "Registration"
+        - cell "Adds a new user"
+      - row "Login Finds the user and checks their stored password hash":
+        - cell "Login"
+        - cell "Finds the user and checks their stored password hash"
+      - row "Home May retrieve their name":
+        - cell "Home"
+        - cell "May retrieve their name"
+      - row "Animal viewing Loads animals from the database":
+        - cell "Animal viewing"
+        - cell "Loads animals from the database"
+      - row "Admin Adds, edits and deletes animals":
+        - cell "Admin"
+        - cell "Adds, edits and deletes animals"
+      - row "Questionnaire May save answers/results":
+        - cell "Questionnaire"
+        - cell "May save answers/results"
+      - row "Matching results Retrieves animals to score against the answers":
+        - cell "Matching results"
+        - cell "Retrieves animals to score against the answers"
+      - row "Account Retrieves the user's details":
+        - cell "Account"
+        - cell "Retrieves the user's details"
+  - button "Copy table":
+  - paragraph:
+    - text: So I would
+    - strong: not ignore the database
+    - text: ", but I also wouldn't try to finish it all at once."
+  - paragraph: "A sensible order for you now is:"
+  - list:
+    - paragraph: Get your pages switching correctly.
+    - paragraph:
+      - text: Create your
+      - code: users
+      - text: and
+      - code: animals
+      - text: tables.
+    - paragraph:
+      - text: Connect registration to
+      - code: users
+      - text: .
+    - paragraph:
+      - text: Connect login to
+      - code: users
+      - text: .
+    - paragraph:
+      - text: Connect animal viewing to
+      - code: animals
+      - text: .
+    - paragraph:
+      - text: Connect admin CRUD to
+      - code: animals
+      - text: .
+    - paragraph: Then build the questionnaire and matching system.
+  - paragraph:
+    - text: "The main thing to remember is:"
+    - strong:
+      - text: your pages are the interface, and
+      - code: database.py
+      - text: handles permanent storage.
+    - text: Your page files call database functions whenever they need to save or retrieve something.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: how do i run it
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: From your main project folder, run the file that starts the whole Streamlit app — probably
+    - code: app.py
+    - text: .
+  - paragraph: "In the VS Code terminal:"
+  - text: Bash
+  - button "Copy":
+  - code: streamlit run app.py
+  - paragraph:
+    - text: If that says
+    - code: "streamlit: command not found"
+    - text: ", activate your virtual environment first:"
+  - text: Bash
+  - button "Copy":
+  - code: source venv/bin/activate
+  - paragraph: "Then run:"
+  - text: Bash
+  - button "Copy":
+  - code: streamlit run app.py
+  - paragraph: "Your project folder should look something like:"
+  - button "Copy":
+  - code: animal_adoption_nea/ ├── app.py ├── loginpage.py ├── registrationpage.py ├── homepage.py ├── adminpage.py ├── database.py └── data/ └── adoption.db
+  - paragraph:
+    - text: You normally
+    - strong:
+      - text: do not run
+      - code: loginpage.py
+      - text: or
+      - code: database.py
+      - text: directly
+    - text: .
+    - code: app.py
+    - text: imports them and controls which page is shown.
+  - paragraph: "So your terminal flow is basically:"
+  - text: Bash
+  - button "Copy":
+  - code: cd path/to/animal_adoption_nea source venv/bin/activate streamlit run app.py
+  - paragraph: If you send me what your files are currently called, I can tell you the exact command to run your setup.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Medium":
+    - generic: Medium
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

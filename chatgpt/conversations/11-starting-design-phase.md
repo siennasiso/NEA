@@ -1,0 +1,252 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Mon, Jul 13 at 10:06 PM":
+    - generic: Mon, Jul 13 at 10:06 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic: "My main system can be decomposed into main components which come together to create the final system. Section Front End Justification Backend Justification User/Admin Authentication Will allow users to register and existing users to login, and allow admins to access their page safely and securely. Registration will collect the users name, email, age, address and password. The interface should provide clear feedback when details are missing or forgotten from its validation system. It will also show an error message if login details are incorrect The system will validate entered details, such as: Username cannot be blank Password minimum 8 characters Required questions cannot be skipped Age must be a valid number Duplicate usernames not allowed The passwords will be hashed in order to be kept secure and safe. During login, enter details will be compared against records in the users table. A session will then be created when authentication is successful. For the admin side, if the login details are incorrect it will not allow them access, which will stop unauthorised users from adding, editing or deleting animal records. User Homepage/Main Menu Will provide the main navigation area after the user logs in. It will allow the user to access the questionnaire, browse available animals and view their account. It will also explain the purpose of the adoption matching system. It will be clear and welcoming, and not overwhelming for the user. The system will check the user's session to make sure they are logged in. It may retrieve the user's name and recent questionnaire information from the database so that personalised information can be displayed. Administrator Menu Provides staff with a dashboard to manage existing animals and their records. Admins will be clearly able to add new animals, edit existing details and remove records. To add animals it will store: Name, species, age, breed, sex, personality and exercise needs, children compatible, garden required, medical notes and an image. Forms will be clearly Labelled and display confirmation or error messages. The system will check that the loginned in account has the role before access is allowed. Parameterised SQL commands will insert, update and delete animal records. All inputs will be validated before changes are made to the database. Will also include a logout function, to securely log out so no physical access to the system unless its an admin. Animal Viewing Allows users to browse available animals using clearly presented animal cards. Each card will show information such as the animal name, image, species, breed and age. Users will be able to select a card to view a more detailed animal profile. Animal records will be retrieved from the animals table. Search and filter selections will be used to change the database query or filter the retrieved records. Selecting an animal will use its unique animal ID to load the correct profile. Questionnaire and Recommendations Will use a form in order to allow users to answer questions about their home, lifestyle, experience and preferences. The questionnaire will have questions such as the housing type, access to garden, animal loneliness times, children, pets, experience, activity labels, what species and size preferred. These questions would not appear all at one time to not overwhelm the user and the input type would be drop downs or radio buttons. After submitting the questionnaire, the system will display compatibility scores almost immediately and recommended animals. It will also explain requirements the user does not meet. Responses will be validated and compared with the requirements of each available animal. A weighted compatibility algorithm will calculate a percentage score for every animal. The animals will then be sorted from highest to lowest score so the top recommendations can be displayed. The questionnaire responses and match results may also be stored within the database with the users ID this okay a* standard?!?"
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Yes, I remember from the work we've done that
+    - strong: you did mention age
+    - text: "as part of the information collected from adopters. If you're going to collect it and either:"
+  - list:
+    - paragraph: use it to ensure adopters meet a minimum age requirement (e.g. 18+), or
+    - paragraph: store it as part of the adopter profile,
+  - paragraph:
+    - text: then it's perfectly fine to keep it in your design. In fact, it's better for your
+    - strong: analysis, design and implementation to be consistent
+    - text: than to remove it now.
+  - paragraph: And that's fair about the "may" wording. It's not something that would lose you marks on its own. I only mentioned it because examiners generally like design documents to sound definitive. If the rest of your document uses similar wording consistently, I wouldn't worry about changing every instance.
+  - heading "Overall" [level=3]
+  - paragraph:
+    - text: I think this decomposition section is
+    - strong: strong enough to move on
+    - text: . I wouldn't spend hours polishing it further.
+  - paragraph: "I'd just make these quick fixes (2–3 minutes):"
+  - list:
+    - paragraph:
+      - text: "\"login\" →"
+      - strong: log in
+      - text: (when used as a verb)
+    - paragraph:
+      - text: "\"enter details\" →"
+      - strong: entered details
+    - paragraph:
+      - text: "\"logged in account\" →"
+      - strong: logged-in account
+    - paragraph:
+      - text: "\"animal loneliness times\" →"
+      - strong: how long the animal would be left alone
+    - paragraph:
+      - text: "\"activity labels\" →"
+      - strong: activity level
+  - paragraph: Those are just grammar/terminology improvements.
+  - paragraph:
+    - text: Otherwise, I'd start the
+    - strong: actual page designs
+    - text: (wireframes and annotations), because that's where you'll gain more marks than tweaking this table further.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - separator "Thu, Jul 16 at 1:00 AM":
+    - generic: Thu, Jul 16 at 1:00 AM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic: this is an exemplar what shall i descrobe mine with to make it the best can u write it for me at a a* standard
+  - group "Your message actions":
+    - button "See versions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Yes. One thing the
+    - strong: 70/70 exemplars do really well
+    - text: is that they don't just label components ("this is a button"). They
+    - strong: justify every design decision
+    - text: by linking it to usability, accessibility, user experience or the client's requirements. That's exactly what you should do.
+  - paragraph: Looking at your login page, these are the annotations I'd use.
+  - separator
+  - heading "1. Welcome Heading" [level=3]:
+    - strong: 1. Welcome Heading
+  - blockquote:
+    - paragraph:
+      - strong: Large bold heading welcomes the user and clearly identifies the purpose of the page. Using a friendly greeting creates a more inviting interface, encouraging users to continue using the adoption system rather than feeling overwhelmed.
+  - separator
+  - heading "2. Supporting Text" [level=3]:
+    - strong: 2. Supporting Text
+  - blockquote:
+    - paragraph:
+      - strong: A smaller subtitle below the main heading briefly explains the purpose of the page ("Login to continue"), reducing confusion for first-time users and making the navigation process more intuitive.
+  - separator
+  - heading "3. Email Input" [level=3]:
+    - strong: 3. Email Input
+  - blockquote:
+    - paragraph:
+      - strong: Clearly labelled email input box allows users to quickly identify the required information. Placeholder text provides an example of the expected input, reducing the likelihood of validation errors.
+  - separator
+  - heading "4. Password Input" [level=3]:
+    - strong: 4. Password Input
+  - blockquote:
+    - paragraph:
+      - strong: Password field masks entered characters to improve security and protect sensitive information from being viewed by others. Placeholder text provides guidance while maintaining a clean interface.
+  - separator
+  - heading "5. Login Button" [level=3]:
+    - strong: 5. Login Button
+  - blockquote:
+    - paragraph:
+      - strong: The login button is intentionally larger than surrounding interactive elements to emphasise its importance as the primary action on the page. Its high-contrast colour ensures it is immediately visible and accessible.
+  - separator
+  - heading "6. Register Link" [level=3]:
+    - strong: 6. Register Link
+  - blockquote:
+    - paragraph:
+      - strong: A registration link is positioned beneath the login button to provide a clear route for new users without distracting existing users from the primary login process.
+  - separator
+  - heading "7. Animal Image" [level=3]:
+    - strong: 7. Animal Image
+  - blockquote:
+    - paragraph:
+      - strong: A welcoming image of an animal reinforces the purpose of the application while making the interface feel less clinical. It also improves the visual balance of the page by preventing large empty areas.
+  - separator
+  - heading "8. Consistent Colour Scheme" [level=3]:
+    - strong: 8. Consistent Colour Scheme
+  - blockquote:
+    - paragraph:
+      - strong: Soft pastel colours are used throughout the interface to create a calm and welcoming appearance, reflecting the caring nature of an animal adoption system while maintaining consistency across all pages.
+  - separator
+  - heading "9. White Space" [level=3]:
+    - strong: 9. White Space
+  - blockquote:
+    - paragraph:
+      - strong: Generous spacing between interface components reduces visual clutter, making individual controls easier to identify and improving overall readability.
+  - separator
+  - heading "10. Responsive Layout" [level=3]:
+    - strong: 10. Responsive Layout
+  - blockquote:
+    - paragraph:
+      - strong: The interface has been designed using Streamlit containers and columns so that components automatically reposition themselves on different screen sizes, improving accessibility across laptops and tablets.
+  - separator
+  - heading "11. Validation Feedback" [level=3]:
+    - strong: 11. Validation Feedback
+  - blockquote:
+    - paragraph:
+      - strong: If login details are incorrect or mandatory fields are left blank, clear validation messages will be displayed directly below the relevant input field so users immediately understand how to correct the error.
+  - separator
+  - heading "12. Accessibility" [level=3]:
+    - strong: 12. Accessibility
+  - blockquote:
+    - paragraph:
+      - strong: Large fonts, clearly labelled inputs and high contrast between text and background improve readability and make the interface easier to use for a wider range of users.
+  - separator
+  - heading "One thing I'd add to your wireframe" [level=2]
+  - paragraph:
+    - text: I'd add a
+    - strong: logo
+    - text: in the top-left corner (or centred above the heading).
+  - paragraph: "Then you can annotate:"
+  - blockquote:
+    - paragraph:
+      - strong: The system logo provides consistent branding across every page, helping users recognise the application and making the interface appear more professional.
+  - separator
+  - heading "One thing that will make your design stand out" [level=2]
+  - paragraph:
+    - text: Instead of only annotating the UI, include
+    - strong: small technical annotations
+    - text: as well.
+  - paragraph: "For example, next to the login button:"
+  - blockquote:
+    - paragraph:
+      - strong: When pressed, the entered credentials will be validated before being compared with hashed passwords stored in the SQLite users table. If authentication is successful, a Streamlit session will be created and the user will be redirected to either the homepage or administrator dashboard depending on their account role.
+  - paragraph:
+    - text: OCR really likes this because it shows you've thought about
+    - strong: how the interface links to the backend
+    - text: ", not just what it looks like."
+  - separator
+  - heading "Overall" [level=3]
+  - paragraph:
+    - text: If you produce this level of annotation for
+    - strong: all five main pages
+    - text: (Authentication, Homepage, Animal Viewing, Questionnaire & Results, and Admin Area), your design section will be very close to the standard of the 70/70 exemplars. The key difference is that every annotation should answer
+    - strong: "\"why was this designed this way?\""
+    - text: ", not just describe"
+    - strong: "\"what is here?\""
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: can you aannotate it onto the document
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: I've created an annotated version of your login page in the same style as the exemplar, with annotations focused on
+    - strong: justifying design decisions
+    - text: rather than simply describing the components.
+  - paragraph: "You can download it here:"
+  - paragraph:
+    - strong:
+      - button "📄 Annotated_Login_Page_Design.png":
+        - text: 📄 Annotated_Login_Page_Design.png
+  - paragraph: "A couple of suggestions before you use it in your NEA:"
+  - list:
+    - paragraph:
+      - text: Your final version should use your
+      - strong: pink theme
+      - text: rather than the grey placeholder colours in the wireframe.
+    - paragraph:
+      - text: OCR examiners like annotations that explain
+      - strong: why
+      - text: a design decision was made (accessibility, usability, consistency, client requirements), which is the style I've used.
+    - paragraph:
+      - text: For the final document, I'd also add
+      - strong: 2–3 backend annotations
+      - text: (e.g. "Login button validates credentials against hashed passwords in the SQLite database" or "Successful login creates a Streamlit session"), because that demonstrates the connection between the interface and your implementation.
+  - paragraph:
+    - text: I think we can make this even stronger—very close to the 70/70 exemplar—by producing polished annotated wireframes for all five of your main sections using the same style and wording.
+    - button "Coding Citation":
+  - button "Annotated_Login_Page_Design.png":
+    - generic: Annotated_Login_Page_Design.png
+    - generic: Image
+  - button "Download file":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "GPT-5.5":
+    - generic: GPT-5.5
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

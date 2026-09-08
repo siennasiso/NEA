@@ -1,0 +1,300 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Sat, Jun 27 at 6:00 PM":
+    - generic: Sat, Jun 27 at 6:00 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic: logically, also im doing a login system
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for a couple of seconds":
+    - text: Thought for a couple of seconds
+  - paragraph:
+    - text: Yes — add a separate admin sequence inside
+    - strong: Thinking Logically
+    - text: ", because your system has two different user types:"
+    - strong: adopter
+    - text: and
+    - strong: admin
+    - text: .
+  - paragraph: "You can add this after the adopter sequence:"
+  - generic: Writing
+  - button "Copy":
+  - button [disabled]:
+  - button "Open editor":
+  - paragraph: "For the admin side of the system, there will also be a logical sequence:"
+  - list:
+    - paragraph: The admin user will log in using their username and password.
+    - paragraph: The system will validate the admin login details and check that the account has admin permissions.
+    - paragraph: Once logged in, the admin will be directed to the admin control page.
+    - paragraph: The admin will be able to add, edit or delete animal records.
+    - paragraph: When adding a new animal, the admin will enter required information such as species, breed, age, size, temperament, exercise needs and suitability with children or other pets.
+    - paragraph: The system will validate the animal record to make sure required fields are completed and the data is in the correct format.
+    - paragraph: If the data is valid, the animal record will be saved to the database.
+    - paragraph: The updated animal information will then be available for adopters to view and for the matching algorithm to use.
+  - paragraph: This admin process must be logical because incorrect animal data could affect the compatibility results shown to adopters. For example, if an admin forgets to enter whether an animal can live with children, the matching algorithm may not be able to calculate suitability accurately. Therefore, validation and clear sequencing are needed to ensure that animal records are complete, accurate and stored correctly.
+  - button "What is this?":
+    - text: What is this?
+  - paragraph:
+    - text: This fits nicely because it shows your admin side is not just “extra pages” — it affects the
+    - strong: database
+    - text: and the
+    - strong: accuracy of the matching algorithm
+    - text: .
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: "Use of Computational Methods The most suitable solution for a problem like this is to create a computer based adoption matching system. This is because the problem includes storing animal data, adopter information, comparing different factors and producing recommendations. A manual system may require staff to compare each adopter with each animal individually, which could take significantly longer and will require more effort. Using a manual way of storing data may also lead to inconsistencies, missing information and errors, whereas using a database allows data to be searched efficiently and stored consistently. A computational solution allows this problem to be solved more efficiently by using algorithms, data validation, automated scoring and ensuring consistent data handling Thinking Abstractly The process of abstraction is removing unnecessary details in order to simplify the approach of a problem, making it easier to understand and solve. Ignoring insignificant details will reduce the amount of unnecessary coding and make the system easier to maintain. Within my system, it will be used in order to focus specifically on matching an adopter with an animal. For example, the system does not need to store every detail about an adopter's personal life. It will only need to collect information that affects animal suitability such as the living space, garden access, experience with animals. Similarly, with the animal profiles it will only store useful information. It won't include its nicknames, or minor habits or favourite toy as this is not as important for the matching system. This will make the system easier to design and implement as irrelevant details are ignored. This will also make the system more efficient by focusing on the most important factors that affect suitability. Thinking Ahead During the development of this system I will need to think ahead in order to identify the requirements of my user and relate to the issues they might face or be facing. I have to anticipate how users would like their information to be presented in order to attract them to adopting an animal, it must also be fully accessible and easy to use. I will also need to plan how the data will be stored before implementation. For example, animal records and adopter records must be stored persistently so information is not lost when the program closes. I will also need to consider validation as users should not be able to leave empty fields or enter invalid data. This will help ensure that the matching algorithm is using accurate and correct information. I will also need to think about the structures and designs that can be reused on different pages before I start developing my project. I also have to consider the technologies I will use to develop my system, as there are many different technologies I can use with each their own pros and cons. Another key part of my system to which I will need to think ahead is the compatibility scoring system. This system should not simply recommend animals based on experience or breed. Instead it should compare multiple factors such as living space, experience, time available, children and animal requirements. Thinking Concurrently Processing multiple tasks at once will reduce the processing time of my app, reduce waiting time for my user and increase the overall efficiency of my system. When the user completes the adoption questionnaire, the system may need to retrieve animal records, compare the adopter answers with requirements, calculate compatibility scores and display results. It is also important within the login page, where the credentials that are entered need to be validated and sanitised to prevent any injection attacks, whilst finding user profile. After this stage is cleared, multiple elements will need to be loaded at the same time. The system also needs to be able to handle different users carrying out tasks at the same time. For example, an adopter could be viewing suitable animal matches while an admin user updates or adds an animal profile. I will need to design the system so these processes are independent and the data is able to remain consistent. Concurrency may not be a main focus of my project, but it will allow me to design a system which is responsive and efficient as more animal records and adopter applications are added. Thinking Procedurally with Decomposition Decomposition is the process of splitting a large process into small more manageable sections. This will make the system easier to design, implement, test and improve. Instead of trying to build the whole system at once, I can separate it into different components. The main components which build up my system will include animal records with their different cards, the adopter questionnaire with the matching algorithm, compatibility score calculation, results page, validation and the admin control page. The animal records section will store details about each animal and the adopters questionnaire collects information about users home and lifestyle. The matching algorithm will compare adopter answers with each animal's requirements and calculate compatibility score. I will also split the application into the front end and back end sections. The front end is what the user or the admin user will experience, which will have the login forms and present the different features of the application. The backend is where all the logic will be processed and will include a relational database for secure storage of user data. By using decomposition on my system it will allow each section to be developed and tested separately. For example, I can first test whether the animal records are being stored and added correctly, and if all the information is shown in the correct format. I can then test whether the adopter questionaire collects all the information required and validates the inputs. Then I can test whether the matching algorithm calculates scores correctly. This way of testing will make errors easier to identify and fix. Procedural thinking will allow me to further separate each function of front and backend and allow me to design my application using modules of reusable and readable code. The different subprograms will be kept in their own areas so I can work on them without affecting other areas. I will use this method in both the front and back ends of this project. Thinking Logically My program needs to be designed to make it simple to use but also logical to follow. This is important as users are guided through the adoption process clearly, from logging in to receiving suitable animal recommendations. My system should hopefully follow a sequential process, for the user to view: User creates an account or logs in using username and password Once logins, users directed to main page, with the animals The adopter will then complete a questionnaire A compatibility score is shown for animals, and ranked from suitable to least suitable and the user can browse. For the admin to view: Admin user will login in using their username and passwords The user will be directed to the admin control page The animal is able to add, edit or delete records - Like a CRUD interface. The system will validate the animal record to make sure required fields are completed and data in correct format and if it is valid will be saved to the database. The updated animal information is then available for adopters to view and matching algorithms to use. The system will also use logical decision making. For example, if the username or password is incorrect, the user cannot access their account. If required questionnaires fields are left blank, the system should display an error message. In the compatibility scoring algorithm, if an animal cannot live with children and the adopter has children then the compatibility score should decrease. If an animal requires a garden and the adopter has one then the score should increase. This also shows that my system will use sequencing, selection, validation, iteration and sorting. It is not simply just displaying the animal profiles but processing data logically to produce suitable recommendations."
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 11s":
+    - text: Thought for 11s
+  - paragraph:
+    - text: Your section is
+    - strong: good overall
+    - text: and definitely worth keeping. The content is strong because you are linking the project to
+    - strong: data storage, validation, algorithms, scoring, decomposition and logic
+    - text: . The main thing now is polishing grammar and making the
+    - strong: Thinking Logically
+    - text: section more formal.
+  - paragraph: "The weakest part is this bit:"
+  - blockquote:
+    - paragraph: The animal is able to add, edit or delete records
+  - paragraph: "That should be:"
+  - blockquote:
+    - paragraph: The admin is able to add, edit or delete animal records through a CRUD interface.
+  - paragraph:
+    - text: Also remove
+    - strong: “hopefully”
+    - text: "from:"
+  - blockquote:
+    - paragraph: My system should hopefully follow a sequential process
+  - paragraph: "It sounds uncertain. Say:"
+  - blockquote:
+    - paragraph: My system will follow a sequential process.
+  - paragraph:
+    - text: Here is a cleaner version of your
+    - strong: Thinking Logically
+    - text: "section with both adopter and admin sides included:"
+  - generic: Thinking Logically
+  - button "Copy":
+  - button [disabled]:
+  - button "Open editor":
+  - heading "Thinking Logically" [level=2]
+  - paragraph: My program needs to be designed so that it is simple to use but also logical to follow. This is important because users should be guided clearly through the adoption process, from logging in to receiving suitable animal recommendations.
+  - paragraph: "For the adopter side of the system, the process will follow a clear sequence:"
+  - list:
+    - paragraph: The user will create an account or log in using a username and password.
+    - paragraph: The system will validate the login details to check that the account exists and the password is correct.
+    - paragraph: Once logged in, the user will be directed to the main page where they can view available animals.
+    - paragraph: The adopter will complete a questionnaire about their home, lifestyle and experience with animals.
+    - paragraph: The system will validate the questionnaire to make sure all required fields have been completed.
+    - paragraph: The system will compare the adopter’s answers with each animal’s stored requirements.
+    - paragraph: A compatibility score will be calculated for each animal.
+    - paragraph: The animals will be ranked from most suitable to least suitable.
+    - paragraph: The user will be shown their recommended matches and can browse the animal profiles.
+  - paragraph: "For the admin side of the system, there will also be a logical sequence:"
+  - list:
+    - paragraph: The admin user will log in using their username and password.
+    - paragraph: The system will validate the admin login details and check that the account has admin permissions.
+    - paragraph: Once logged in, the admin will be directed to the admin control page.
+    - paragraph: The admin will be able to add, edit or delete animal records through a CRUD interface.
+    - paragraph: When adding or editing an animal record, the admin will enter required information such as species, breed, age, size, temperament, exercise needs and suitability with children or other pets.
+    - paragraph: The system will validate the animal record to make sure required fields are completed and the data is in the correct format.
+    - paragraph: If the data is valid, the animal record will be saved to the database.
+    - paragraph: The updated animal information will then be available for adopters to view and for the matching algorithm to use.
+  - paragraph: The system will also use logical decision-making. For example, if the username or password is incorrect, the user should not be able to access their account. If required questionnaire fields are left blank, the system should display an error message. In the compatibility scoring algorithm, if an animal cannot live with children and the adopter has children, then the compatibility score should decrease. If an animal requires a garden and the adopter has one, then the score should increase.
+  - paragraph: This shows that my system will use sequencing, selection, validation, iteration and sorting. It is not simply displaying animal profiles, but processing data logically to produce suitable adoption recommendations.
+  - button "What is this?":
+    - text: What is this?
+  - paragraph: "Other quick fixes in your whole section:"
+  - paragraph:
+    - text: Change
+    - strong: “computer based”
+    - text: to
+    - strong: “computer-based”
+    - text: .
+  - paragraph: "Change:"
+  - blockquote:
+    - paragraph: which could take significantly longer and will require more effort
+  - paragraph: "to:"
+  - blockquote:
+    - paragraph: which could take significantly longer and require more effort
+  - paragraph: "Change:"
+  - blockquote:
+    - paragraph: adopters questionnaire
+  - paragraph: "to:"
+  - blockquote:
+    - paragraph: adopter questionnaire
+  - paragraph: "Change:"
+  - blockquote:
+    - paragraph: questionaire
+  - paragraph: "to:"
+  - blockquote:
+    - paragraph: questionnaire
+  - paragraph: "Change:"
+  - blockquote:
+    - paragraph: frontend and backend
+  - paragraph: "to:"
+  - blockquote:
+    - paragraph: front-end and back-end
+  - paragraph: "Change:"
+  - blockquote:
+    - paragraph: matching algorithms to use
+  - paragraph: "to:"
+  - blockquote:
+    - paragraph: the matching algorithm to use
+  - paragraph: Overall, this is now a strong NEA analysis section. I would say it is ready after grammar cleanup and after replacing the logic section with the improved version above.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: "Use of Computational Methods The most suitable solution for a problem like this is to create a computer based adoption matching system. This is because the problem includes storing animal data, adopter information, comparing different factors and producing recommendations. A manual system may require staff to compare each adopter with each animal individually, which could take significantly longer and will require more effort. Using a manual way of storing data may also lead to inconsistencies, missing information and errors, whereas using a database allows data to be searched efficiently and stored consistently. A computational solution allows this problem to be solved more efficiently by using algorithms, data validation, automated scoring and ensuring consistent data handling Thinking Abstractly The process of abstraction is removing unnecessary details in order to simplify the approach of a problem, making it easier to understand and solve. Ignoring insignificant details will reduce the amount of unnecessary coding and make the system easier to maintain. Within my system, it will be used in order to focus specifically on matching an adopter with an animal. For example, the system does not need to store every detail about an adopter's personal life. It will only need to collect information that affects animal suitability such as the living space, garden access, experience with animals. Similarly, with the animal profiles it will only store useful information. It won't include its nicknames, or minor habits or favourite toy as this is not as important for the matching system. This will make the system easier to design and implement as irrelevant details are ignored. This will also make the system more efficient by focusing on the most important factors that affect suitability. Thinking Ahead During the development of this system I will need to think ahead in order to identify the requirements of my user and relate to the issues they might face or be facing. I have to anticipate how users would like their information to be presented in order to attract them to adopting an animal, it must also be fully accessible and easy to use. I will also need to plan how the data will be stored before implementation. For example, animal records and adopter records must be stored persistently so information is not lost when the program closes. I will also need to consider validation as users should not be able to leave empty fields or enter invalid data. This will help ensure that the matching algorithm is using accurate and correct information. I will also need to think about the structures and designs that can be reused on different pages before I start developing my project. I also have to consider the technologies I will use to develop my system, as there are many different technologies I can use with each their own pros and cons. Another key part of my system to which I will need to think ahead is the compatibility scoring system. This system should not simply recommend animals based on experience or breed. Instead it should compare multiple factors such as living space, experience, time available, children and animal requirements. Thinking Concurrently Processing multiple tasks at once will reduce the processing time of my app, reduce waiting time for my user and increase the overall efficiency of my system. When the user completes the adoption questionnaire, the system may need to retrieve animal records, compare the adopter answers with requirements, calculate compatibility scores and display results. It is also important within the login page, where the credentials that are entered need to be validated and sanitised to prevent any injection attacks, whilst finding user profile. After this stage is cleared, multiple elements will need to be loaded at the same time. The system also needs to be able to handle different users carrying out tasks at the same time. For example, an adopter could be viewing suitable animal matches while an admin user updates or adds an animal profile. I will need to design the system so these processes are independent and the data is able to remain consistent. Concurrency may not be a main focus of my project, but it will allow me to design a system which is responsive and efficient as more animal records and adopter applications are added. Thinking Procedurally with Decomposition Decomposition is the process of splitting a large process into small more manageable sections. This will make the system easier to design, implement, test and improve. Instead of trying to build the whole system at once, I can separate it into different components. The main components which build up my system will include animal records with their different cards, the adopter questionnaire with the matching algorithm, compatibility score calculation, results page, validation and the admin control page. The animal records section will store details about each animal and the adopters questionnaire collects information about users home and lifestyle. The matching algorithm will compare adopter answers with each animal's requirements and calculate compatibility score. I will also split the application into the front end and back end sections. The front end is what the user or the admin user will experience, which will have the login forms and present the different features of the application. The backend is where all the logic will be processed and will include a relational database for secure storage of user data. By using decomposition on my system it will allow each section to be developed and tested separately. For example, I can first test whether the animal records are being stored and added correctly, and if all the information is shown in the correct format. I can then test whether the adopter questionaire collects all the information required and validates the inputs. Then I can test whether the matching algorithm calculates scores correctly. This way of testing will make errors easier to identify and fix. Procedural thinking will allow me to further separate each function of front and backend and allow me to design my application using modules of reusable and readable code. The different subprograms will be kept in their own areas so I can work on them without affecting other areas. I will use this method in both the front and back ends of this project. Thinking Logically My program needs to be designed to make it simple to use but also logical to follow. This is important as users are guided through the adoption process clearly, from logging in to receiving suitable animal recommendations. My system should hopefully follow a sequential process, for the user to view: User creates an account or logs in using username and password Once logins, users directed to main page, with the animals The adopter will then complete a questionnaire A compatibility score is shown for animals, and ranked from suitable to least suitable and the user can browse. For the admin to view: Admin user will login in using their username and passwords The user will be directed to the admin control page The animal is able to add, edit or delete records - Like a CRUD interface. The system will validate the animal record to make sure required fields are completed and data in correct format and if it is valid will be saved to the database. The updated animal information is then available for adopters to view and matching algorithms to use. Although I have the list above, it will include many other forms of validation and the system will perform many logical tasks during these actions from the user. The system will also use logical decision making. For example, if the username or password is incorrect, the user cannot access their account. If required questionnaires fields are left blank, the system should display an error message. In the compatibility scoring algorithm, if an animal cannot live with children and the adopter has children then the compatibility score should decrease. If an animal requires a garden and the adopter has one then the score should increase. This also shows that my system will use sequencing, selection, validation, iteration and sorting. It is not simply just displaying the animal profiles but processing data logically to produce suitable recommendations."
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 8s":
+    - text: Thought for 8s
+  - paragraph:
+    - text: This is
+    - strong: good enough content-wise
+    - text: now. You do not need to keep adding loads more. The main issue is still
+    - strong: grammar and wording
+    - text: ", especially in the"
+    - strong: Thinking Logically
+    - text: section.
+  - paragraph: "Your best sections are:"
+  - paragraph:
+    - strong: "Strong:"
+    - text: Thinking Ahead, Decomposition
+    - strong: "Good but needs polish:"
+    - text: Abstraction, Logic
+    - strong: "Slightly forced but acceptable:"
+    - text: Concurrency
+  - paragraph:
+    - text: The biggest thing I would change is your
+    - strong: Thinking Logically
+    - text: "section. Replace your current logic section with this cleaner version:"
+  - generic: Thinking Logically
+  - button "Copy":
+  - button [disabled]:
+  - button "Open editor":
+  - heading "Thinking Logically" [level=2]
+  - paragraph: My program needs to be designed so that it is simple to use and logical to follow. This is important because users should be guided clearly through the adoption process, from logging in to receiving suitable animal recommendations.
+  - paragraph: "For the adopter side of the system, the process will follow a clear sequence:"
+  - list:
+    - paragraph: The user will create an account or log in using a username and password.
+    - paragraph: The system will validate the login details to check that the account exists and the password is correct.
+    - paragraph: Once logged in, the user will be directed to the main page where they can view available animals.
+    - paragraph: The adopter will complete a questionnaire about their home, lifestyle and experience with animals.
+    - paragraph: The system will validate the questionnaire to make sure all required fields have been completed.
+    - paragraph: The system will compare the adopter’s answers with each animal’s stored requirements.
+    - paragraph: A compatibility score will be calculated for each animal.
+    - paragraph: The animals will be ranked from most suitable to least suitable.
+    - paragraph: The user will be shown their recommended matches and can browse the animal profiles.
+  - paragraph: "For the admin side of the system, there will also be a logical sequence:"
+  - list:
+    - paragraph: The admin user will log in using their username and password.
+    - paragraph: The system will validate the admin login details and check that the account has admin permissions.
+    - paragraph: Once logged in, the admin will be directed to the admin control page.
+    - paragraph: The admin will be able to add, edit or delete animal records through a CRUD interface.
+    - paragraph: When adding or editing an animal record, the admin will enter required information such as species, breed, age, size, temperament, exercise needs and suitability with children or other pets.
+    - paragraph: The system will validate the animal record to make sure required fields are completed and the data is in the correct format.
+    - paragraph: If the data is valid, the animal record will be saved to the database.
+    - paragraph: The updated animal information will then be available for adopters to view and for the matching algorithm to use.
+  - paragraph: The system will also use logical decision-making throughout these processes. For example, if the username or password is incorrect, the user should not be able to access their account. If required questionnaire fields are left blank, the system should display an error message. In the compatibility scoring algorithm, if an animal cannot live with children and the adopter has children, then the compatibility score should decrease. If an animal requires a garden and the adopter has one, then the score should increase.
+  - paragraph: This shows that my system will use sequencing, selection, validation, iteration and sorting. It is not simply displaying animal profiles, but processing data logically to produce suitable adoption recommendations.
+  - button "What is this?":
+    - text: What is this?
+  - paragraph: "Also make these quick fixes in the rest:"
+  - table:
+    - rowgroup:
+      - row "Your wording Change to":
+        - columnheader "Your wording"
+        - columnheader "Change to"
+    - rowgroup:
+      - row "computer based computer-based":
+        - cell "computer based"
+        - cell "computer-based"
+      - row "may require staff would require staff":
+        - cell "may require staff"
+        - cell "would require staff"
+      - row "will require more effort require more effort":
+        - cell "will require more effort"
+        - cell "require more effort"
+      - row "consistency of data handling consistent data handling":
+        - cell "consistency of data handling"
+        - cell "consistent data handling"
+      - row "experience with animals. experience with animals and time available.":
+        - cell "experience with animals."
+        - cell "experience with animals and time available."
+      - row "questionaire questionnaire":
+        - cell "questionaire"
+        - cell "questionnaire"
+      - row "adopters questionnaire adopter questionnaire":
+        - cell "adopters questionnaire"
+        - cell "adopter questionnaire"
+      - row "frontend/backend front-end/back-end":
+        - cell "frontend/backend"
+        - cell "front-end/back-end"
+      - row "Whilst finding user profile while retrieving the user profile":
+        - cell "Whilst finding user profile"
+        - cell "while retrieving the user profile"
+      - row "attract them to adopting an animal help them make an informed adoption decision":
+        - cell "attract them to adopting an animal"
+        - cell "help them make an informed adoption decision"
+  - button "Copy table":
+  - paragraph:
+    - text: "One important point: in"
+    - strong: Thinking Ahead
+    - text: ", I would avoid saying:"
+  - blockquote:
+    - paragraph: attract them to adopting an animal
+  - paragraph: "It sounds like the system is trying to persuade people to adopt. For an animal welfare project, it sounds better to say:"
+  - blockquote:
+    - paragraph: help users make an informed adoption decision
+  - paragraph: Your section is now definitely strong enough to move on after these edits.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "High":
+    - generic: High
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

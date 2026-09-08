@@ -1,0 +1,326 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - separator "Thu, Jul 9 at 11:30 PM":
+    - generic: Thu, Jul 9 at 11:30 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic: do i need to include this in hardware anf software
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: For an
+    - strong: OCR A-Level Computer Science NEA
+    - text: ","
+    - strong: no, you don't need that much detail
+    - text: . That example is more detailed than the OCR mark scheme requires.
+  - paragraph:
+    - text: For your
+    - strong: Hardware and Software Requirements
+    - text: section, you should focus on
+    - strong: what is required to develop and run your system
+    - text: ", not explain why Python is a high-level language or discuss machine code."
+  - paragraph: "For your project, something like this is sufficient:"
+  - separator
+  - heading "Hardware Requirements" [level=2]
+  - heading "Developer" [level=3]
+  - list:
+    - paragraph:
+      - strong: "Device:"
+      - text: MacBook Air (13-inch, M3, 2024)
+    - paragraph:
+      - strong: "Processor:"
+      - text: Apple M3 Chip
+    - paragraph:
+      - strong: "RAM:"
+      - text: 8GB
+    - paragraph:
+      - strong: "Storage:"
+      - text: Sufficient SSD storage to hold the project files and SQLite database.
+    - paragraph:
+      - strong: "Display:"
+      - text: Built-in Retina display with external monitor for development.
+    - paragraph:
+      - strong: "Input Devices:"
+      - text: Keyboard and trackpad.
+    - paragraph:
+      - strong: "Internet Connection:"
+      - text: Required to download libraries, access documentation and test online functionality if required.
+  - heading "User" [level=3]
+  - list:
+    - paragraph: Desktop or laptop computer.
+    - paragraph: Keyboard and mouse/trackpad.
+    - paragraph: Monitor capable of displaying the graphical user interface.
+  - separator
+  - heading "Software Requirements" [level=2]
+  - heading "Developer" [level=3]
+  - list:
+    - paragraph: Python 3.13 (or later)
+    - paragraph: Visual Studio Code
+    - paragraph: SQLite
+    - paragraph: "Required Python libraries:"
+    - list:
+      - paragraph: CustomTkinter
+      - paragraph: sqlite3
+      - paragraph: Pillow
+      - paragraph: bcrypt (if you're using password hashing)
+  - heading "User" [level=3]
+  - list:
+    - paragraph: Windows, macOS or Linux operating system.
+    - paragraph: Python installed (if distributing the source code rather than an executable).
+  - separator
+  - heading "Do you need to explain why Python is high level?" [level=3]
+  - paragraph:
+    - strong: No.
+    - text: That's more appropriate for the analysis/computational methods section, not hardware/software requirements.
+  - paragraph:
+    - text: You also
+    - strong: don't need
+    - text: "paragraphs like:"
+  - blockquote:
+    - paragraph: "\"Python provides abstraction from assembly language...\""
+  - paragraph: or
+  - blockquote:
+    - paragraph: "\"Low-level languages introduce unnecessary complexity...\""
+  - paragraph: Those won't gain you additional marks in the hardware/software section.
+  - separator
+  - paragraph:
+    - text: Given the standard of the exemplar you've been using, I'd actually keep this section to
+    - strong: around half a page
+    - text: . The marks come from showing you've considered the requirements of the system, not from explaining programming language theory.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: "Centre: 12756 Maths Quiz App | Waseem Tamam | Candidate Number: 3687 18 Hardware and software requirements: The minimum hardware and software requirements for the user are shown below:  OS: Windows 10 or higher, MacOS Mojave or higher  CPU: 2GHz or faster x86 or x64 processor  RAM: 1GB or higher  Peripherals – Keyboard, mouse and monitor.  Python 3.7 or higher The program will require Python 3.7 or higher to be installed on the OS. As a high - level language, Python offers abstraction from assembly and machine code, simplifying understanding and development. While high - level code translation may demand more proces sing power, having sufficient hardware will minimise any impact on performance or delay. Utilizing a low - level language introduces unnecessary complexity, particularly in memory management, as the program doesn't leverage these features. Compatibility is l imited to desktops and laptops supporting the required operating system. Interaction with the GUI requires a keyboard and mouse which the user ’ s can use to input their answers and navigate the various pages, and the monitor is essential for displaying the GUI. The software requirements for the developer are listed below:  IDE – Visual Studio Code (Python inbuilt)  Databases – DB browser for SQLite The Visual Studio Code IDE serves as the optimal software for program development, offering standard IDE features like line numbering, color coding, and auto - completion. It allows direct interpretation of all code with troubleshooting capabilities, including variable tracking and breakpoints. As my program's backend relies on an SQLite database, a suitable p rogram for clear and organized database viewing is necessary. DB Browser is an ideal software choice, enabling the viewing of all SQL code for tables and facilitating changes to SQL within the browser, such as adding new tables, fields, and assigning prima ry keys. what about this"
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: This is a
+    - strong: 70/70 exemplar
+    - text: ", so it's clearly acceptable. However, that doesn't mean"
+    - strong: every sentence is necessary
+    - text: or that every sentence earned marks.
+  - heading "What is actually gaining marks?" [level=3]
+  - paragraph:
+    - text: ✅ The hardware/software specifications.
+    - text: ✅ Identifying what the user and developer need.
+    - text: ✅ Justifying why those tools were chosen.
+  - heading "What isn't really gaining many (if any) marks?" [level=3]
+  - paragraph: "These parts:"
+  - blockquote:
+    - paragraph:
+      - emphasis: "\"As a high-level language, Python offers abstraction from assembly and machine code...\""
+  - blockquote:
+    - paragraph:
+      - emphasis: "\"Utilizing a low-level language introduces unnecessary complexity...\""
+  - blockquote:
+    - paragraph:
+      - emphasis: "\"High-level code translation may demand more processing power...\""
+  - paragraph:
+    - text: Those are Computer Science facts, but they're
+    - strong: not really hardware/software requirements
+    - text: . OCR are looking for evidence that you've thought about what is needed to build and run the system.
+  - separator
+  - heading "If I were writing yours (to A* standard)" [level=2]
+  - heading "User Hardware Requirements" [level=3]
+  - list:
+    - paragraph: Windows 10 or later, macOS Monterey or later.
+    - paragraph: 4GB RAM minimum.
+    - paragraph: Keyboard and mouse/trackpad.
+    - paragraph: Monitor capable of displaying the graphical interface.
+  - paragraph: The application is designed to run on desktop and laptop computers. A keyboard and mouse are required for users to navigate the interface, complete the questionnaire and interact with the system. A monitor is required to display the graphical user interface.
+  - separator
+  - heading "User Software Requirements" [level=3]
+  - list:
+    - paragraph: Python 3.13 or later (if running the source code).
+    - paragraph: Required Python libraries installed.
+  - paragraph: The application is developed using Python, therefore Python must be installed for the program to execute unless it is packaged as a standalone executable.
+  - separator
+  - heading "Developer Software Requirements" [level=3]
+  - list:
+    - paragraph: Visual Studio Code
+    - paragraph: Python 3.13
+    - paragraph: SQLite
+    - paragraph: DB Browser for SQLite
+    - paragraph: Required Python libraries (CustomTkinter, Pillow, bcrypt, sqlite3)
+  - paragraph: Visual Studio Code provides syntax highlighting, debugging tools, code completion and an integrated terminal, making development more efficient. SQLite stores user accounts, animal records and questionnaire responses in a lightweight database. DB Browser for SQLite allows the database structure and stored records to be viewed and managed during development and testing.
+  - separator
+  - heading "For your project specifically" [level=2]
+  - paragraph:
+    - text: Since you're making an
+    - strong: animal adoption matching system
+    - text: ", I'd mention the software you're actually use:"
+  - list:
+    - paragraph: Python 3.13
+    - paragraph: Visual Studio Code
+    - paragraph: SQLite
+    - paragraph: DB Browser for SQLite
+    - paragraph: CustomTkinter
+    - paragraph: Pillow
+    - paragraph: bcrypt (if hashing passwords)
+  - paragraph:
+    - text: That is
+    - strong: more relevant
+    - text: than discussing high-level versus low-level languages.
+  - separator
+  - heading "My recommendation" [level=3]
+  - paragraph:
+    - text: I
+    - strong: wouldn't copy the exemplar exactly
+    - text: . It's a little verbose and includes theory that belongs elsewhere. A concise justification of
+    - strong: why you chose each piece of software
+    - text: is enough for full marks and actually reads more professionally.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: "Hardware and Software Requirements The technology used to build this system is based on the features that my client requires. The list of requirements is as follows: Clean user interface User registration and login Admin login Database storage for animal records, user accounts and questionnaire answers CRUD functionality for admins Input validation Compatibility scoring algorithm Ranked animal recommendations For this project, I will develop my system on my Macbook, which has the required hardware and software capabilities to develop, run and test my system. Developer Hardware: Device: Macbook Air, 13 Inch, M3 2024 Processor: Apple M3 Chip RAM: 8GB Display: I will use the 13.6 inch built in retina display alongside a 13 inch monitor Input: Keyboard and Trackpad Internet Connection: This is required in order to install packages, access documentation and test deployment. This hardware is suitable as my system will not require advanced graphics processing or a powerful server. The main processing will be form input, database queries, validation and the algorithm, which is perfectly suited for my laptop. Software: Operating system: MacOS Sequoia 15.0 IDE: Visual studio code Programming Language: Python User interface framework: Streamlit Database: SQLLite Database module: sqlite3 Browser: Chrome I will use some additional libraries such as pandas which may be used to organise and display data in tables. I have chosen python as my main programming language as it is the one i am most confident in, therefore I will not have to spend as much time trying to learn another language when python is suitable enough. It is suitable to create the matching algorithm, validating user inputs and all the functionalities my system requires. It allows me to be more efficient and focus on the computational parts of the system such as the comparison between adopter answers and animal requirements producing compatibility scores. For my user and admin interface I will be using streamlit. It is simpler to use than using tkinter and it provides built in tools such as buttons, forms, dropdowns, columns, containers and page navigation. This allows me to create the pages without using a full HTML, CSS and JS website. For data storage I will use SQLite as it is what I have the most experience in. It is suitable and easy to use to store data required for my system such as animal records, user accounts, admin login details, questionnaire answers and compatibility results. User + Admins My product will be a streamlit application, so users and admins will only require a device that accesses the system through any web browser. They do not need to install any modules, and all they require is an internet connection. They could access from a laptop, desktop computer or tablet, which may require a mouse, keyboard or even touchscreen if using a tablet. edit this"
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Overall, this is
+    - strong: already A/A*
+    - text: standard. I would just tighten the wording, improve the grammar, and make it sound more formal. I'd also make a couple of technical corrections (e.g. Streamlit doesn't require the user to install Python if it's deployed online).
+  - paragraph: "Here's how I'd write it:"
+  - separator
+  - heading "Hardware and Software Requirements" [level=1]
+  - paragraph: "The technologies chosen to develop this system have been selected to meet my client's requirements. The system must provide:"
+  - list:
+    - paragraph: A clean and intuitive user interface.
+    - paragraph: User registration and login.
+    - paragraph: Secure administrator login.
+    - paragraph: Database storage for animal records, user accounts and questionnaire responses.
+    - paragraph: CRUD functionality for administrators.
+    - paragraph: Input validation.
+    - paragraph: A compatibility scoring algorithm.
+    - paragraph: Ranked animal recommendations.
+  - paragraph: For this project, I will develop the system on my MacBook Air, which has sufficient hardware and software capabilities to develop, run and test the application.
+  - heading "Developer" [level=2]
+  - heading "Hardware" [level=3]
+  - list:
+    - paragraph:
+      - strong: "Device:"
+      - text: MacBook Air (13-inch, M3, 2024)
+    - paragraph:
+      - strong: "Processor:"
+      - text: Apple M3 Chip
+    - paragraph:
+      - strong: "RAM:"
+      - text: 8GB
+    - paragraph:
+      - strong: "Display:"
+      - text: 13.6-inch Retina display with an additional 13-inch external monitor
+    - paragraph:
+      - strong: "Input Devices:"
+      - text: Keyboard and trackpad
+    - paragraph:
+      - strong: "Internet Connection:"
+      - text: Required to install libraries, access documentation and test deployment.
+  - paragraph: This hardware is more than capable of developing and running the application. The system does not require intensive graphics processing or high-performance computing, as the primary tasks involve processing user input, querying the SQLite database, validating data and calculating compatibility scores.
+  - heading "Software" [level=3]
+  - list:
+    - paragraph:
+      - strong: "Operating System:"
+      - text: macOS Sequoia 15
+    - paragraph:
+      - strong: "Integrated Development Environment (IDE):"
+      - text: Visual Studio Code
+    - paragraph:
+      - strong: "Programming Language:"
+      - text: Python 3.13
+    - paragraph:
+      - strong: "Web Application Framework:"
+      - text: Streamlit
+    - paragraph:
+      - strong: "Database:"
+      - text: SQLite
+    - paragraph:
+      - strong: "Database Module:"
+      - text: sqlite3
+    - paragraph:
+      - strong: "Web Browser:"
+      - text: Google Chrome
+    - paragraph:
+      - strong: "Additional Libraries:"
+      - text: Pandas (for data handling), along with any additional libraries required throughout development.
+  - paragraph:
+    - text: I have chosen
+    - strong: Python
+    - text: because it is the programming language I am most experienced with, allowing me to focus on implementing the required functionality rather than learning a new language. Python is well suited to developing the compatibility scoring algorithm, validating user input and interacting with the SQLite database. Its extensive standard library and readability also make the code easier to develop, test and maintain.
+  - paragraph:
+    - text: I have chosen
+    - strong: Streamlit
+    - text: to develop the user and administrator interfaces because it provides a simple and efficient way to build modern web applications. It includes built-in components such as buttons, forms, dropdown menus, tables and page navigation, allowing me to create a professional interface without developing a full HTML, CSS and JavaScript website. This will reduce development time while still providing a responsive and user-friendly interface.
+  - paragraph:
+    - strong: SQLite
+    - text: has been selected because it is lightweight, reliable and integrates directly with Python through the
+    - code: sqlite3
+    - text: module. It is well suited to the scale of this project and will store all persistent data, including user accounts, administrator accounts, animal records, questionnaire responses and compatibility results.
+  - separator
+  - heading "Users and Administrators" [level=2]
+  - paragraph:
+    - text: As the finished product will be deployed as a
+    - strong: Streamlit web application
+    - text: ", users and administrators will only require:"
+  - heading "Hardware" [level=3]
+  - list:
+    - paragraph: Desktop computer, laptop or tablet.
+    - paragraph: Keyboard and mouse/trackpad (or touchscreen if using a tablet).
+    - paragraph: A stable internet connection.
+  - heading "Software" [level=3]
+  - list:
+    - paragraph: A modern web browser such as Google Chrome, Microsoft Edge, Safari or Firefox.
+  - paragraph: Users will access the application through a web browser, meaning they will not need to install Python or any additional software. All processing, database interactions and compatibility calculations will be handled by the application itself, providing a simple and accessible experience.
+  - separator
+  - heading "Overall" [level=3]
+  - paragraph:
+    - text: I'd give this
+    - strong: 9.5/10
+    - text: for OCR.
+  - paragraph:
+    - text: The only thing I'd change from your version is
+    - strong: don't say
+    - text: ":"
+  - blockquote:
+    - paragraph: "\"They require an internet connection.\""
+  - paragraph: unless you're definitely deploying it online.
+  - paragraph:
+    - text: If you're hosting it on
+    - strong: Streamlit Community Cloud
+    - text: or another server, that's correct.
+  - paragraph: "If you're just running it locally for your NEA demonstration, then instead say:"
+  - blockquote:
+    - paragraph:
+      - strong: The application can be accessed through a web browser. If deployed online, users will require an internet connection.
+  - paragraph: That keeps it technically accurate in both scenarios.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

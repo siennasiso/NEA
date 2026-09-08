@@ -1,0 +1,138 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Wed, Jun 24 at 8:33 PM":
+    - generic: Wed, Jun 24 at 8:33 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic: "RESPONSES: can you analyse these responses and what i should take from them with a overall conclusion NEA for the stakeholder survey section Analysis: Analysis: Analysis: Analysis: Analysis: Analysis: Analysis: Analysis: Analysis:"
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for a second":
+    - text: Thought for a second
+  - paragraph:
+    - text: For the question
+    - strong: “Which factors do you think should be considered when matching an animal to an adopter?”
+    - text: ", the most selected factors were"
+    - strong: living space
+    - text: at 88.9% and
+    - strong: time available
+    - text: at 85.2%, showing that respondents think an adopter’s environment and lifestyle are the most important parts of a successful match.
+    - strong: Income
+    - text: and
+    - strong: garden access
+    - text: were also chosen by many respondents, suggesting that practical care needs should be considered before adoption. Therefore, my system should include these factors in the questionnaire and use them to calculate a compatibility score between the adopter and the animal.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: i want to write about this This survey was insightful to understand to .....
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 6s":
+    - text: Thought for 6s
+  - paragraph: "Use this for your overall survey analysis:"
+  - generic: Writing
+  - button "Copy":
+  - button "Open editor":
+  - paragraph: This survey was insightful as it helped me understand what potential users would expect from an animal adoption system. The responses showed that users value lifestyle compatibility, clear information and an easy-to-use website, while also supporting the idea of a compatibility score. This means my solution should focus on collecting relevant adopter information and using it to recommend suitable animals, rather than allowing decisions to be based mainly on appearance.
+  - button "What is this?":
+    - text: What is this?
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: "Stakeholder Survey QUESTIONS: Have you ever owned a pet before? Yes No If you did own a pet, did you adopt it from a centre? Yes No N/A How would you normally choose a pet? Appearance Personality Breed Lifestyle Compatibility Advice from experts How important do you think it is to research an animal before adopting? Very Important Important Neither Not Important Not very important Which factors do you think should be considered when matching an animal to an adopter? (Select many) Living Space Garden Access Income Experience with animals Time available Presence of Children Other pets How important is it that an adoption website is easy to use? Very important (1) Slightly important (5) Would a compatibility score influence your decision when adopting an animal? Yes No Do you think adoption agencies should use a compatibility scoring system? Yes No How concerned are you about the welfare of adopted animals? Concerned (1) Not Concerned (5) RESPONSES: Analysis: 44.4% of respondents said yes, while 55.6% said no. This shows that my survey consists of a mixture of people with and without pet ownership experience. This is useful as my system needs to be able to support experienced and not experienced adopters. This means the system should not assume that users will already understand animal care or adoption requirements. Analysis: These results show that very few respondents have experience adopting from an adoption centre. This means my solution should clearly explain the adoption process and avoid making it confusing for users who have no experience. Analysis: The most common answer was lifestyle compatibility, chosen by 48.1% of respondents. This shows most users already do care about which animal fits their lifestyle rather than just how the animal looks, even though a few care about the aesthetics of the animal. This will allow my system to be suitable for those looking to adopt. Analysis: 63% of respondents said it was very important, and 33.3% said it was important. This means that 96.3% of respondents agreed that research is important before adopting an animal. This supports my idea that websites should include detailed animal information. Analysis: The most selected factors were living space at 88.9% and time available at 85.2% showing that respondents think an adopters environment and lifestyle are the most important parts of a successful match. Income and garden access were also highly chosen showing that practical care needs should be considered primarily. Analysis: Most responses were grouped around the higher end of the scale, which suggests that ease of use is important to users. As a result, I would like my website to have a simple layout, clear navigation, readable text and easy process. I aim to make it as accessible as possible. Analysis: 77.8% of respondents said yes and 22.2% said no. This shows that most users may find a compatibility score helpful when deciding whether an animal would be suitable for them. Analysis: 70.4% of respondents said yes, while 29.6% said no. This shows that respondents support the idea of adoption centres using this scoring system, but not everyone agrees. Therefore the compatibility score should be used as a guidance but not as the deciding factor. Analysis: The largest group of respondents selected 1, with 48.1% and 18.5% selected 2. This shows that many respondents are concerned about animal welfare. This supports the purpose of this system as it aims to reduce unsuitable adoptions by helping users find animals and reduce neglect of animals in households. Overall: Overall, the survey shows that there is a clear need for a pet adoption system that helps users make informed decisions. Most respondents have shown that they agree that research is important before adopting an animal, and would be influenced by the compatibility score. This survey also shows that the important factors include living space, time available, income, garden access and experience with animals. My solution should include detailed animal profiles, a user questionnaire with a compatibility scoring system, where lifestyle compatibility will be the most important and popular factor in choosing an animal. This system should also be easy to use as users will have different levels of experiences with pet ownership and adoption. This survey was insightful to help me understand what potential users would expect from an animal adoption system. feedback for this section (it includes the screenshots i just cant copy them in) am i free to move onto the next section"
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 10s":
+    - text: Thought for 10s
+  - paragraph: Yes — you are basically ready to move on after a few small improvements. The section is clear, and you have linked most results back to your solution, which is what examiners want.
+  - paragraph: "The main things I would fix before moving on:"
+  - list:
+    - paragraph:
+      - strong: Mention the sample size at the start
+    - paragraph: "Add one sentence near the beginning like:"
+    - paragraph: “This stakeholder survey received 27 responses, which gave me feedback from a range of potential users.”
+    - paragraph:
+      - strong: Be careful with the scale questions
+    - paragraph: "For the website ease-of-use question, you wrote:"
+    - blockquote:
+      - paragraph: “Most responses were grouped around the higher end of the scale”
+    - paragraph:
+      - text: But your scale says
+      - strong: 1 = very important
+      - text: and
+      - strong: 5 = slightly important
+      - text: ", so you should say:"
+    - blockquote:
+      - paragraph: “Most responses were grouped around the lower numbers on the scale, showing that users thought ease of use was important.”
+    - paragraph:
+      - text: Same for animal welfare, because
+      - strong: 1 = concerned
+      - text: and
+      - strong: 5 = not concerned
+      - text: .
+    - paragraph:
+      - strong: Slightly improve the wording
+    - paragraph: "Change:"
+    - blockquote:
+      - paragraph: “experienced and not experienced adopters”
+    - paragraph: "To:"
+    - blockquote:
+      - paragraph: “experienced and inexperienced adopters”
+    - paragraph: "Change:"
+    - blockquote:
+      - paragraph: “reduce neglect of animals in households”
+    - paragraph: "To:"
+    - blockquote:
+      - paragraph: “reduce the risk of animals being placed in unsuitable homes”
+    - paragraph: This sounds more formal and realistic.
+    - paragraph:
+      - strong: Finish your final sentence
+    - paragraph: "Your last sentence is unfinished. You could write:"
+    - blockquote:
+      - paragraph: “This survey was insightful as it helped me understand what potential users would expect from an animal adoption system, especially the need for clear information, lifestyle-based matching and a compatibility score.”
+  - paragraph: Your overall conclusion is good. After making those small edits, I would say yes, you are free to move onto the next section.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

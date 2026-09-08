@@ -1,0 +1,756 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Add it as a
+    - strong: second stage after the suitability score has been calculated
+    - text: .
+  - paragraph: "Your algorithm should use two different scores:"
+  - button "Copy":
+  - code: compatibility_score ranking_score
+  - paragraph: The compatibility score measures whether the adopter can meet the animal’s needs.
+  - paragraph: The ranking score decides the order the animals are displayed in.
+  - heading "Add this after calculating the compatibility percentage" [level=2]
+  - button "Copy":
+  - code: "Calculate compatibility percentage │ ▼ Set ranking_score = compatibility_score │ ▼ Does animal species match user preference? ├── Yes → Add species preference bonus to ranking_score └── No → Do not add bonus │ ▼ Does animal size match user preference? ├── Yes → Add size preference bonus to ranking_score └── No → Do not add bonus │ ▼ Store: • compatibility_score • ranking_score • matched requirements • unmet requirements"
+  - paragraph: "Then at the end:"
+  - button "Copy":
+  - code: Sort animals by ranking_score from highest to lowest
+  - paragraph: rather than sorting by compatibility score alone.
+  - heading "Detailed logic" [level=1]
+  - button "Copy":
+  - code: IF preferred_species = "No preference" THEN species_bonus = 0 ELSE IF preferred_species = animal.species THEN species_bonus = 10 ELSE species_bonus = 0 ENDIF
+  - button "Copy":
+  - code: IF preferred_size = "No preference" THEN size_bonus = 0 ELSE IF preferred_size = animal.size THEN size_bonus = 5 ELSE size_bonus = 0 ENDIF
+  - paragraph: "Then:"
+  - button "Copy":
+  - code: ranking_score = compatibility_score + species_bonus + size_bonus
+  - heading "Important rule" [level=2]
+  - paragraph: Only apply the preference bonus if the animal reaches a reasonable suitability threshold.
+  - paragraph: "For example:"
+  - button "Copy":
+  - code: IF compatibility_score >= 60 THEN Apply species preference bonus Apply size preference bonus ELSE ranking_score = compatibility_score ENDIF
+  - paragraph: This stops an unsuitable preferred animal from appearing above a genuinely suitable animal.
+  - heading "Full pseudocode section" [level=1]
+  - button "Copy":
+  - code: compatibility_score ← (score / total_weight) × 100 ranking_score ← compatibility_score species_bonus ← 0 size_bonus ← 0 IF compatibility_score >= 60 THEN IF preferred_species ≠ "No preference" AND preferred_species = animal.species THEN species_bonus ← 10 ENDIF IF preferred_size ≠ "No preference" AND preferred_size = animal.size THEN size_bonus ← 5 ENDIF ENDIF ranking_score ← compatibility_score + species_bonus + size_bonus STORE animal_id, compatibility_score, ranking_score, matched_requirements, unmet_requirements
+  - paragraph: "Then:"
+  - button "Copy":
+  - code: SORT results BY ranking_score DESCENDING
+  - heading "How it would look in your flowchart" [level=1]
+  - paragraph: "Add this section directly after:"
+  - blockquote:
+    - paragraph: Calculate compatibility percentage
+  - button "Copy":
+  - code: Calculate compatibility percentage │ ▼ Is compatibility score at least 60%? ├── No → Set ranking score equal to compatibility score │ └── Yes │ ▼ Does species match user preference? ├── Yes → Add 10 preference points └── No → Add 0 │ ▼ Does size match user preference? ├── Yes → Add 5 preference points └── No → Add 0 │ ▼ Calculate final ranking score │ ▼ Store result for current animal
+  - heading "Example" [level=1]
+  - button "Copy":
+  - code: Compatibility score = 78 Species matches = +10 Size matches = +5 Ranking score = 93
+  - paragraph: "The user should still see:"
+  - button "Copy":
+  - code: 78% compatibility
+  - paragraph: The 93 should remain hidden and only be used to rank the animals.
+  - paragraph: That is the cleanest way to add preferences without making the displayed compatibility percentage misleading.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: now can you remake me a flow chart like you had done before which i can copy out in my own way please which is pretty detailed and decriptive but not too much either
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - generic: Worked for 1m 24s
+  - 'button "Generated image: Adoption recommendation algorithm flowchart"'
+  - paragraph: The flowchart now separates questionnaire completion, the detailed compatibility calculation, preference bonuses and recommendation results into three clear green sections.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - separator "Tue, Jul 28 at 2:44 PM":
+    - generic: Tue, Jul 28 at 2:44 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic: for each of the pages, what notes and write up would i have to do on input validation this is an exemplar for it to be a* worthy
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - generic: Worked for 56s
+  - paragraph:
+    - text: For A* quality, do not just state
+    - strong: “inputs will be validated.”
+    - text: "For every input, specify:"
+  - list:
+    - paragraph: the validation type;
+    - paragraph: the exact permitted format/range;
+    - paragraph: what happens if validation fails;
+    - paragraph: the error message shown;
+    - paragraph: whether the interface itself restricts invalid values;
+    - paragraph: whether the database applies an additional constraint.
+  - paragraph: Pages such as the homepage and results page contain little or no direct data entry, so they do not need artificial validation rules. Instead, describe session checks and record-integrity checks.
+  - heading "Input Validation" [level=1]
+  - blockquote:
+    - paragraph: All user-entered data will be validated before it is processed or stored in the SQLite database. Streamlit controls such as drop-down menus, radio buttons and number inputs will restrict the range of values users can enter. However, the backend will still validate the submitted values because interface controls alone should not be relied upon.
+    - paragraph: If an input is invalid, the database operation will not be performed. A clear error message will be displayed close to the relevant field, while the user’s other valid answers will remain visible so they do not have to restart the form. Database constraints, including primary keys, foreign keys and unique email addresses, will provide an additional level of protection.
+  - separator
+  - heading "1. Registration Page" [level=1]
+  - paragraph: Users will enter their name, email address, age and password.
+  - heading "Name" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – The field cannot be empty or contain only spaces.
+    - paragraph:
+      - strong: Length check
+      - text: – The name must be between 2 and 50 characters.
+    - paragraph:
+      - strong: Format check
+      - text: – Letters, spaces, apostrophes and hyphens will be accepted. A name containing only numbers or unsupported symbols will be rejected.
+    - paragraph:
+      - strong: Whitespace check
+      - text: – Spaces at the beginning and end will be removed.
+  - paragraph:
+    - strong: "Example error messages:"
+  - blockquote:
+    - paragraph:
+      - text: “Please enter your name.”
+      - text: “Name must be between 2 and 50 characters.”
+  - heading "Email address" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – An email address must be provided.
+    - paragraph:
+      - strong: Format check
+      - text: – The value must contain a valid local section,
+      - code: "@"
+      - text: symbol and domain.
+    - paragraph:
+      - strong: Uniqueness check
+      - text: – A case-insensitive database query will check that the address is not already registered.
+    - paragraph:
+      - strong: Whitespace check
+      - text: – Leading and trailing spaces will be removed.
+    - paragraph:
+      - strong: Normalisation
+      - text: – The email address will be converted to lowercase before comparison and storage.
+  - paragraph:
+    - strong: "Example error messages:"
+  - blockquote:
+    - paragraph:
+      - text: “Please enter an email address.”
+      - text: “Please enter a valid email address.”
+      - text: “An account using this email address already exists.”
+  - heading "Age" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – An age must be entered.
+    - paragraph:
+      - strong: Type check
+      - text: – The value must be a whole number.
+    - paragraph:
+      - strong: Range check
+      - text: – The age must be within the valid adopter range, for example 18–120 if the minimum age requirement is 18.
+    - paragraph:
+      - strong: Boundary check
+      - text: – Negative values, decimals and unrealistic ages will not be accepted.
+  - paragraph: A Streamlit number input can restrict users to the permitted range.
+  - paragraph:
+    - strong: "Example error messages:"
+  - blockquote:
+    - paragraph:
+      - text: “Please enter your age.”
+      - text: “You must meet the minimum age requirement to register.”
+  - heading "Password" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – A password must be entered.
+    - paragraph:
+      - strong: Length check
+      - text: – The password must contain at least eight characters.
+    - paragraph:
+      - strong: Confirmation check
+      - text: – The confirmation field must exactly match the original password.
+    - paragraph:
+      - strong: Security processing
+      - text: – The valid password will be hashed before it is inserted into the database. The original password will never be stored.
+  - paragraph:
+    - strong: "Example error messages:"
+  - blockquote:
+    - paragraph:
+      - text: “Password must contain at least eight characters.”
+      - text: “The passwords do not match.”
+  - heading "Account role" [level=2]
+  - paragraph: The user will not enter their role.
+  - blockquote:
+    - paragraph:
+      - text: Normal registrations will automatically be assigned the role
+      - code: user
+      - text: . The role field will not appear on the public registration form, preventing users from registering themselves as administrators.
+  - heading "Registration outcome" [level=2]
+  - blockquote:
+    - paragraph: The account will only be created if every field passes validation. If one or more fields are invalid, individual messages will be shown and no partial account record will be inserted.
+  - separator
+  - heading "2. Login Page" [level=1]
+  - paragraph: Users will enter their email address and password.
+  - heading "Email address" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Cannot be empty.
+    - paragraph:
+      - strong: Format check
+      - text: – Must use a valid email format.
+    - paragraph:
+      - strong: Normalisation
+      - text: – Converted to lowercase and stripped of unnecessary spaces before the database query.
+  - heading "Password" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Cannot be empty.
+    - paragraph:
+      - strong: Authentication check
+      - text: – The password will be checked against the stored password hash rather than compared as plain text.
+  - heading "Account and role check" [level=2]
+  - list:
+    - paragraph: The system will check whether an account matching the email exists.
+    - paragraph: It will check whether the password is correct.
+    - paragraph: It will retrieve the account role.
+    - paragraph: Standard users will be sent to the user homepage.
+    - paragraph: Administrators will be sent to the administrator area.
+  - paragraph: "For security, use one general error message:"
+  - blockquote:
+    - paragraph: “The email address or password is incorrect.”
+  - paragraph: This avoids revealing whether a specific email address is registered.
+  - heading "Session check" [level=2]
+  - blockquote:
+    - paragraph: A session will only be created after successful authentication. Invalid credentials will leave the user on the login page and will not provide access to any protected features.
+  - separator
+  - heading "3. User Homepage/Main Menu" [level=1]
+  - paragraph: The homepage contains navigation buttons rather than free-text inputs, so extensive input validation is not required.
+  - heading "Validation and access checks" [level=2]
+  - list:
+    - paragraph:
+      - strong: Session check
+      - text: – The page will confirm that the user is logged in.
+    - paragraph:
+      - strong: User record check
+      - text: – The
+      - code: user_id
+      - text: stored in session state must correspond to an existing database account.
+    - paragraph:
+      - strong: Role check
+      - text: – Administrator-only controls will not be displayed to standard users.
+    - paragraph:
+      - strong: Navigation check
+      - text: – Only defined page names will be accepted when changing the active page.
+  - paragraph: "If the session is missing or invalid:"
+  - blockquote:
+    - paragraph: “Your session has expired. Please log in again.”
+  - paragraph: The user will then be redirected to the login page.
+  - separator
+  - heading "4. Animal Viewing Page" [level=1]
+  - paragraph: This page contains a search field, filters and selectable animal cards.
+  - heading "Search input" [level=2]
+  - list:
+    - paragraph:
+      - strong: Length check
+      - text: – Search text will have a reasonable maximum length, such as 50 characters.
+    - paragraph:
+      - strong: Whitespace check
+      - text: – Leading and trailing spaces will be removed.
+    - paragraph:
+      - strong: Format handling
+      - text: – Names containing letters, spaces, apostrophes and hyphens will be supported.
+    - paragraph:
+      - strong: Empty input handling
+      - text: – An empty search will be treated as a request to display all available animals rather than as an error.
+    - paragraph:
+      - strong: Security check
+      - text: – Search data will be passed into a parameterised SQL statement rather than joined directly into an SQL string.
+  - heading "Filter inputs" [level=2]
+  - paragraph: "Drop-down menus or selection controls will be used for:"
+  - list:
+    - paragraph: species;
+    - paragraph: breed;
+    - paragraph: age category;
+    - paragraph: size;
+    - paragraph: sex;
+    - paragraph: adoption status.
+  - paragraph: "These controls restrict users to valid values such as:"
+  - button "Copy":
+  - code: "Species: Dog, Cat, Rabbit or All Size: Small, Medium, Large or All Status: Available"
+  - paragraph: The backend will also confirm that submitted filter values belong to the permitted list.
+  - heading "Search results" [level=2]
+  - list:
+    - paragraph: If matching records are found, animal cards will be displayed.
+    - paragraph: "If none are found, the system will show:"
+  - blockquote:
+    - paragraph: “No animals match your current search and filters.”
+  - list:
+    - paragraph: The user will be able to clear the filters without reloading the application.
+  - heading "Animal selection" [level=2]
+  - list:
+    - paragraph:
+      - strong: ID type check
+      - text: – The selected
+      - code: animal_id
+      - text: must be an integer.
+    - paragraph:
+      - strong: Existence check
+      - text: – The ID must correspond to an existing animal record.
+    - paragraph:
+      - strong: Availability check
+      - text: – The animal should still be available before its profile is displayed.
+  - paragraph: "If the record no longer exists:"
+  - blockquote:
+    - paragraph: “This animal profile is no longer available.”
+  - separator
+  - heading "5. Animal Profile Page" [level=1]
+  - paragraph: The page contains almost no direct data entry, but the selected database record must be checked.
+  - list:
+    - paragraph:
+      - text: The
+      - code: animal_id
+      - text: must be present in session state.
+    - paragraph: It must be a valid integer.
+    - paragraph: It must match an existing animal.
+    - paragraph: Missing animal information will use suitable fallback text.
+    - paragraph: If the stored image path is invalid, a placeholder image will be displayed instead of allowing the page to fail.
+    - paragraph: The animal’s latest adoption status will be retrieved before displaying it.
+  - paragraph: This prevents an invalid or deleted record from producing a program error.
+  - separator
+  - heading "6. Questionnaire Page" [level=1]
+  - paragraph: This should be one of your most detailed validation sections because the answers directly affect the compatibility algorithm.
+  - heading "Housing type or housing level" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – The user must select an answer.
+    - paragraph:
+      - strong: Lookup check
+      - text: – The answer must be one of the permitted housing options.
+    - paragraph: A radio button or drop-down will prevent unsupported values.
+  - paragraph: "Example permitted values:"
+  - button "Copy":
+  - code: 1 = Flat or limited space 2 = Small or medium house 3 = Large house
+  - heading "Garden access" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Yes or No must be selected.
+    - paragraph:
+      - strong: Boolean check
+      - text: – The stored result must be
+      - code: "1"
+      - text: or
+      - code: "0"
+      - text: .
+  - heading "Hours the animal will be left alone" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – A value must be provided.
+    - paragraph:
+      - strong: Type check
+      - text: – Must be a whole number.
+    - paragraph:
+      - strong: Range check
+      - text: – Must be between 0 and 24 hours.
+  - paragraph:
+    - strong: "Error message:"
+  - blockquote:
+    - paragraph: “Enter the number of hours the animal would normally be left alone.”
+  - heading "Children in the home" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Yes or No must be selected.
+    - paragraph:
+      - strong: Boolean check
+      - text: – Only
+      - code: "1"
+      - text: or
+      - code: "0"
+      - text: will be stored.
+  - heading "Other pets in the home" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Yes or No must be selected.
+    - paragraph:
+      - strong: Boolean check
+      - text: – Only
+      - code: "1"
+      - text: or
+      - code: "0"
+      - text: will be stored.
+  - heading "Experience level" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – An experience level must be selected.
+    - paragraph:
+      - strong: Range check
+      - text: – The corresponding stored value must be within the designed scale, such as 0–3.
+  - button "Copy":
+  - code: 0 = No experience 1 = Limited experience 2 = Some experience 3 = Highly experienced
+  - heading "Preferred activity level" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – The user must select low, medium or high.
+    - paragraph:
+      - strong: Range check
+      - text: – The stored numerical value must be between 1 and 3.
+  - heading "Preferred species" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – An option must be selected.
+    - paragraph:
+      - strong: Lookup check
+      - text: – The value must be Dog, Cat, Rabbit or No preference.
+  - paragraph:
+    - text: Selecting
+    - strong: No preference
+    - text: is valid and will result in no species-ranking bonus being applied.
+  - heading "Preferred size" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – An option must be selected.
+    - paragraph:
+      - strong: Lookup check
+      - text: – The value must be Small, Medium, Large or No preference.
+  - heading "Section validation" [level=2]
+  - blockquote:
+    - paragraph: Each questionnaire section will be validated when the user presses “Next.” If a required question has not been answered, the user will remain on the current section and a message will identify the missing answer.
+  - paragraph: "Example:"
+  - blockquote:
+    - paragraph: “Please answer all required questions before continuing.”
+  - paragraph: Valid answers will be temporarily stored in Streamlit session state so they remain available when the user moves between sections.
+  - heading "Final submission validation" [level=2]
+  - paragraph: "Before processing the questionnaire, the system will:"
+  - list:
+    - paragraph: confirm that every required response exists;
+    - paragraph: confirm that values use permitted data types and ranges;
+    - paragraph:
+      - text: confirm that the logged-in
+      - code: user_id
+      - text: exists;
+    - paragraph: prevent duplicate submission caused by repeatedly pressing the submit button;
+    - paragraph: save the complete response as one database record.
+  - paragraph: The compatibility algorithm will only run after the complete questionnaire passes validation.
+  - separator
+  - heading "7. Compatibility Algorithm and Results Page" [level=1]
+  - paragraph: The results page does not collect large amounts of user data, but the calculated data must still be checked.
+  - heading "Compatibility result validation" [level=2]
+  - list:
+    - paragraph:
+      - code: compatibility_score
+      - text: must be numerical.
+    - paragraph: It must remain between 0 and 100.
+    - paragraph:
+      - code: ranking_score
+      - text: must be numerical.
+    - paragraph:
+      - text: Every result must contain a valid
+      - code: animal_id
+      - text: .
+    - paragraph:
+      - text: Every result must relate to the submitted
+      - code: response_id
+      - text: .
+    - paragraph:
+      - text: Only animals with the status
+      - code: available
+      - text: will be ranked.
+    - paragraph: Missing matched or unmet requirements will be represented using an empty list rather than a null value.
+  - paragraph: "If no available animals can be retrieved:"
+  - blockquote:
+    - paragraph: “Recommendations cannot currently be calculated because no available animal records were found.”
+  - heading "Recommendation selection" [level=2]
+  - paragraph: "When a user selects a recommended animal:"
+  - list:
+    - paragraph: the selected animal ID must exist;
+    - paragraph: the animal must still be available;
+    - paragraph: the profile record must be retrieved successfully.
+  - paragraph: The displayed compatibility percentage will remain separate from the hidden ranking score used to prioritise preferred species and sizes.
+  - separator
+  - heading "8. Administrator Area" [level=1]
+  - paragraph:
+    - text: The administrator area requires both
+    - strong: access validation
+    - text: and
+    - strong: form validation
+    - text: .
+  - heading "Access validation" [level=2]
+  - paragraph: "Before any administrator page is displayed:"
+  - list:
+    - paragraph: an active session must exist;
+    - paragraph: the session must contain a valid user ID;
+    - paragraph:
+      - text: the matching user record must have the role
+      - code: admin
+      - text: .
+  - paragraph: "If not:"
+  - blockquote:
+    - paragraph: “You do not have permission to access this page.”
+  - paragraph: The user will be redirected away from the administrator area.
+  - separator
+  - heading "9. Add Animal Page" [level=1]
+  - heading "Animal name" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Cannot be empty.
+    - paragraph:
+      - strong: Length check
+      - text: – Between 1 and 50 characters.
+    - paragraph:
+      - strong: Format check
+      - text: – Letters, spaces, apostrophes, hyphens and appropriate numbers may be allowed.
+  - heading "Species" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Must be selected.
+    - paragraph:
+      - strong: Lookup check
+      - text: – Must be Dog, Cat or Rabbit.
+    - paragraph: A drop-down menu will restrict the choices.
+  - heading "Breed" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Cannot be empty.
+    - paragraph:
+      - strong: Length check
+      - text: – For example, between 2 and 50 characters.
+    - paragraph:
+      - strong: Format check
+      - text: – Must not consist entirely of unsupported symbols.
+  - heading "Age" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Must be provided.
+    - paragraph:
+      - strong: Type check
+      - text: – Must be a whole number.
+    - paragraph:
+      - strong: Range check
+      - text: – Cannot be negative and must be within the designed maximum animal age.
+  - paragraph: A more precise design would store age in months so animals younger than one year can be represented.
+  - heading "Sex" [level=2]
+  - list:
+    - paragraph:
+      - strong: Lookup check
+      - text: – Must be Male, Female or Unknown.
+    - paragraph: A drop-down menu prevents invalid values.
+  - heading "Size" [level=2]
+  - list:
+    - paragraph:
+      - strong: Lookup check
+      - text: – Must be Small, Medium or Large.
+  - heading "Personality" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – A description must be provided.
+    - paragraph:
+      - strong: Length check
+      - text: – For example, between 20 and 1,000 characters.
+    - paragraph:
+      - strong: Whitespace check
+      - text: – A value consisting only of spaces will be rejected.
+  - heading "Exercise need" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Must be selected.
+    - paragraph:
+      - strong: Range check
+      - text: – Must be between 1 and 3.
+  - heading "Minimum housing requirement" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – Must be selected.
+    - paragraph:
+      - strong: Range check
+      - text: – Must be between 1 and 3.
+  - heading "Maximum hours alone" [level=2]
+  - list:
+    - paragraph:
+      - strong: Type check
+      - text: – Must be an integer.
+    - paragraph:
+      - strong: Range check
+      - text: – Must be between 0 and 24.
+  - heading "Garden required" [level=2]
+  - list:
+    - paragraph:
+      - text: "Must be stored as a Boolean value:"
+      - code: "0"
+      - text: or
+      - code: "1"
+      - text: .
+  - heading "Child compatibility" [level=2]
+  - list:
+    - paragraph:
+      - text: "Must be stored as a Boolean value:"
+      - code: "0"
+      - text: or
+      - code: "1"
+      - text: .
+  - heading "Other-pet compatibility" [level=2]
+  - list:
+    - paragraph:
+      - text: "Must be stored as a Boolean value:"
+      - code: "0"
+      - text: or
+      - code: "1"
+      - text: .
+  - heading "Experience required" [level=2]
+  - list:
+    - paragraph:
+      - strong: Range check
+      - text: – Must use the permitted 0–3 scale.
+  - heading "Medical notes" [level=2]
+  - list:
+    - paragraph: This field may be optional.
+    - paragraph: If entered, it will have a maximum length.
+    - paragraph: Text will be stored as plain text rather than interpreted as code.
+  - heading "Animal image" [level=2]
+  - list:
+    - paragraph:
+      - strong: Presence check
+      - text: – An image must be uploaded if every profile requires one.
+    - paragraph:
+      - strong: File-type check
+      - text: – Only approved formats such as JPG, JPEG and PNG will be accepted.
+    - paragraph:
+      - strong: File-size check
+      - text: – The file must not exceed the chosen maximum size.
+    - paragraph:
+      - strong: Filename handling
+      - text: – A safe, unique filename will be generated to avoid overwriting existing images.
+  - paragraph:
+    - strong: "Error messages:"
+  - blockquote:
+    - paragraph:
+      - text: “Upload a JPG or PNG image.”
+      - text: “The uploaded image is too large.”
+  - heading "Adoption status" [level=2]
+  - list:
+    - paragraph: Must be Available, Reserved or Adopted.
+    - paragraph:
+      - text: Newly added animals can automatically receive the status
+      - code: Available
+      - text: .
+  - heading "Add operation" [level=2]
+  - blockquote:
+    - paragraph: The animal record will only be inserted after all required fields pass validation. The SQL statement will be parameterised and committed only after successful validation. A success message will then confirm that the record has been created.
+  - separator
+  - heading "10. Edit Animal Page" [level=1]
+  - paragraph: "The edit form will use the same validation rules as the Add Animal page, with these additional checks:"
+  - list:
+    - paragraph:
+      - text: the selected
+      - code: animal_id
+      - text: must exist;
+    - paragraph: existing data will be loaded into the form;
+    - paragraph: unchanged fields will retain their current values;
+    - paragraph: the administrator must not be able to replace valid data with blank required fields;
+    - paragraph: the database update will only occur after the complete edited record passes validation;
+    - paragraph:
+      - text: a parameterised
+      - code: UPDATE
+      - text: statement will be used.
+  - paragraph:
+    - strong: "Messages:"
+  - blockquote:
+    - paragraph:
+      - text: “Animal details updated successfully.”
+      - text: “The changes could not be saved because some fields are invalid.”
+  - separator
+  - heading "11. Delete Animal Function" [level=1]
+  - paragraph: Deletion requires validation even though it has few inputs.
+  - list:
+    - paragraph:
+      - strong: Existence check
+      - text: – The selected animal ID must match an existing record.
+    - paragraph:
+      - strong: Role check
+      - text: – Only an administrator can perform the deletion.
+    - paragraph:
+      - strong: Confirmation check
+      - text: – The administrator must explicitly confirm the action.
+    - paragraph:
+      - strong: Related-data check
+      - text: – Match results linked to the animal must be handled using the designed foreign-key rule.
+    - paragraph:
+      - strong: Transaction check
+      - text: – The deletion should be committed only if the full operation succeeds.
+  - paragraph: "Example confirmation:"
+  - blockquote:
+    - paragraph: “Are you sure you want to delete Bella? This action cannot be undone.”
+  - paragraph: If confirmation is not provided, no deletion occurs.
+  - separator
+  - heading "12. User Account Page" [level=1]
+  - paragraph: "If the page only displays account information and provides a logout button, it needs only:"
+  - list:
+    - paragraph: session validation;
+    - paragraph: user ID existence validation;
+    - paragraph: role validation where appropriate.
+  - paragraph: If users can edit their account, apply the original registration validation to the name, email and age. An updated email must remain unique, excluding the user’s own current record.
+  - paragraph: Sensitive changes, such as changing a password, should require the current password first.
+  - separator
+  - heading "13. Logout" [level=1]
+  - paragraph: Logout does not require input-field validation.
+  - blockquote:
+    - paragraph: When the logout button is selected, the system will clear authentication and page-navigation values from Streamlit session state. The user will then return to the login page. Protected pages will check the cleared session and prevent access through previous navigation.
+  - heading "What makes this A* standard" [level=1]
+  - paragraph: "For each important input, your final document now identifies:"
+  - list:
+    - paragraph: the exact validation used;
+    - paragraph: permitted values or limits;
+    - paragraph: the interface control;
+    - paragraph: the backend check;
+    - paragraph: the error response;
+    - paragraph: what happens to the database operation;
+    - paragraph: relevant edge cases.
+  - paragraph:
+    - text: You should use the exact limits you eventually implement. For example, do not write
+    - strong: 20–1,000 characters
+    - text: in the design and then code a different limit without documenting that as an iterative change.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

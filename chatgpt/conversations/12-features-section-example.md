@@ -1,0 +1,383 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "You said:" [level=4]
+  - group "comp sci umar and sienna (1).pdf":
+    - button "comp sci umar and sienna (1).pdf"
+    - generic: comp sci umar and sienna (1).pdf
+    - generic: PDF
+  - generic: this is my whole analysis secton, can you mark it and tell me what sectionst o change iF NOT FULL MARKS
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: I’d mark your
+    - strong: Analysis section at around 8/10 currently
+    - text: for OCR NEA Analysis.
+  - paragraph:
+    - text: It is
+    - strong: definitely strong
+    - text: ", but I would not say full marks yet because some parts need tightening, consistency and clearer measurable requirements. Your section includes a real problem, stakeholders, computational thinking, competitor research, client interview, survey analysis, features, hardware/software, limitations and success criteria, which is a lot of the right content."
+    - button "comp sci umar and sienna (1)":
+      - paragraph: comp sci umar and sienna (1)
+  - heading "What is already strong" [level=2]
+  - paragraph:
+    - text: Your
+    - strong: problem definition
+    - text: is good because it explains the animal welfare issue, identifies the client and explains why a matching system is needed rather than just a normal adoption website.
+  - paragraph:
+    - text: Your
+    - strong: client interview
+    - text: is very useful. The answers clearly justify key features like the questionnaire, admin CRUD, staff final decision, compatibility scoring, detailed animal profiles and security.
+  - paragraph:
+    - text: Your
+    - strong: competitor research
+    - text: is one of the strongest parts. Dogs Trust, RSPCA and Petfinder are analysed in detail, and you have positives, negatives and “impact on my solution” sections. That is exactly what you want.
+  - paragraph:
+    - text: Your
+    - strong: stakeholder survey
+    - text: is also good because you included real response data and explained how it affects your system.
+  - paragraph:
+    - text: Your
+    - strong: features and success criteria
+    - text: are now much better because they link back to sources like E, Q and S.
+  - heading "Why it is not full marks yet" [level=2]
+  - heading "1. Your problem definition needs a slightly clearer final scope" [level=3]
+  - paragraph:
+    - text: At the start, you say the system is aimed at “adoption agencies,” but later your limitation says it is for
+    - strong: one specific animal shelter
+    - text: . Make this consistent from the beginning.
+  - paragraph: "Change your aim to something like:"
+  - blockquote:
+    - paragraph: I aim to create an animal adoption matching and management system for a single animal shelter. The system will allow staff to manage animal records and allow potential adopters to complete a questionnaire so they can receive suitability-based animal recommendations.
+  - paragraph: This makes the scope clearer and avoids sounding like you are building a national RSPCA-style system.
+  - heading "2. Your competitor research still mentions filters" [level=3]
+  - paragraph: "In the RSPCA impact section, you say:"
+  - blockquote:
+    - paragraph: “I will include labelled filters so users can narrow down results.”
+  - paragraph:
+    - text: But later we decided your main system is
+    - strong: matching-first
+    - text: ", not filter-first. Either remove this or change it to:"
+  - blockquote:
+    - paragraph: I may include simple species categories, but the main method of finding suitable animals will be the compatibility questionnaire and ranked recommendations.
+  - paragraph: This is important because your write-up needs to stay consistent.
+  - heading "3. Your survey analysis should include one limitation" [level=3]
+  - paragraph: Your survey is good, but for top marks, add a short limitation paragraph after the survey conclusion.
+  - paragraph: "For example:"
+  - blockquote:
+    - paragraph: One limitation of this survey is that it only received 27 responses, so it may not represent all potential adopters. Some respondents may also have limited experience with adoption centres. However, the responses still provide useful guidance about common user expectations, especially the importance of ease of use, animal welfare and compatibility scoring.
+  - paragraph: That makes your analysis more evaluative.
+  - heading "4. Your success criteria are good, but some wording needs fixing" [level=3]
+  - paragraph: "A few requirements are not worded properly yet. Fix these:"
+  - list:
+    - paragraph:
+      - text: “The user must collect information…” should be
+      - strong: “The questionnaire must collect information…”
+    - paragraph:
+      - text: “dogs, cat and rabbits” should be
+      - strong: “dogs, cats and rabbits.”
+    - paragraph:
+      - text: “each animals requirements” should be
+      - strong: “each animal’s requirements.”
+    - paragraph:
+      - text: “adopters questionnaire” should be
+      - strong: “adopter’s questionnaire.”
+    - paragraph: “The top 7 animals must be displayed…” is okay, but make sure you actually have at least 7 animals in your test database.
+    - paragraph:
+      - text: “directs users to adopt a questionnaire” should be
+      - strong: “directs users to complete the adopter questionnaire.”
+  - paragraph: These are small, but they make the section look more professional.
+  - heading "5. Add one sentence about weighted scoring" [level=3]
+  - paragraph: Your client interview question 10 says some factors should have more impact than others, such as space, allergies and children. That is a really good A* opportunity.
+  - paragraph: "In your features or success criteria, add:"
+  - blockquote:
+    - paragraph: The compatibility algorithm should use weighted factors so that important requirements such as allergies, children, other pets and living space have a greater impact than softer preferences such as preferred breed or age.
+  - paragraph: This will make your analysis and future design stronger.
+  - heading "6. Hardware/software needs spelling and formatting cleanup" [level=3]
+  - paragraph: "Fix these:"
+  - list:
+    - paragraph:
+      - text: Macbook →
+      - strong: MacBook
+    - paragraph:
+      - text: MacOS →
+      - strong: macOS
+    - paragraph:
+      - text: Visual studio code →
+      - strong: Visual Studio Code
+    - paragraph:
+      - text: SQLLite →
+      - strong: SQLite
+    - paragraph:
+      - text: streamlit →
+      - strong: Streamlit
+    - paragraph:
+      - text: python →
+      - strong: Python
+    - paragraph:
+      - text: “any web browser” →
+      - strong: a modern web browser
+  - paragraph: "Also avoid saying “Python is suitable enough.” Say:"
+  - blockquote:
+    - paragraph: Python is suitable for my system because it allows me to implement validation, database operations, sorting and the compatibility scoring algorithm clearly.
+  - heading "7. Limitations are good, but make them sound less self-critical" [level=3]
+  - paragraph: "Instead of saying:"
+  - blockquote:
+    - paragraph: “This will be extremely difficult with the experience I have…”
+  - paragraph: "Say:"
+  - blockquote:
+    - paragraph: “This would increase the scope of the project and make development and testing less realistic within the available time.”
+  - paragraph: That sounds more professional.
+  - heading "What I would change to push it to 9–10/10" [level=2]
+  - paragraph: "Do these exact changes:"
+  - list:
+    - paragraph:
+      - text: Make the whole project clearly about
+      - strong: one specific shelter
+      - text: from the problem definition onwards.
+    - paragraph:
+      - text: Remove or soften references to
+      - strong: filters
+      - text: if you are not building them.
+    - paragraph:
+      - text: Add a
+      - strong: survey limitation paragraph
+      - text: .
+    - paragraph:
+      - text: Add
+      - strong: weighted scoring
+      - text: to the features/success criteria.
+    - paragraph: Clean grammar/spelling across the features, hardware/software and success criteria tables.
+    - paragraph: Make sure every success criterion is testable and matches something you will actually build.
+  - heading "Estimated mark" [level=2]
+  - paragraph:
+    - text: "Current:"
+    - strong: 8/10
+  - paragraph:
+    - text: "After the changes above:"
+    - strong: 9/10 or possibly 10/10
+    - text: ", depending on how strict your teacher is."
+  - paragraph:
+    - text: The biggest missing thing for full marks is not content quantity — you have enough. It is
+    - strong: consistency and precision
+    - text: . Your idea is strong now; it just needs polishing so it reads like one clear, focused system.
+  - button "Sources":
+    - generic: Sources
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - separator "Sat, Jul 11 at 12:42 AM":
+    - generic: Sat, Jul 11 at 12:42 AM
+  - heading "You said:" [level=4]
+  - group "comp sci umar and sienna.pdf":
+    - button "comp sci umar and sienna.pdf"
+    - generic: comp sci umar and sienna.pdf
+    - generic: PDF
+  - generic: wb now !
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Yes — this is
+    - strong: better now
+    - text: . I’d move your mark from around
+    - strong: 8/10 to 9/10
+    - text: for the analysis section.
+  - paragraph:
+    - text: "You’ve made the important improvements: you clarified it is for"
+    - strong: one specific adoption agency/shelter
+    - text: ", added the"
+    - strong: survey limitation
+    - text: ", softened the RSPCA filter issue, and added"
+    - strong: weighted factors
+    - text: from the client interview. The weighted scoring point is especially strong because your client specifically says factors like space, allergies and children should have a bigger impact than softer preferences like breed or age.
+    - button "comp sci umar and sienna":
+      - paragraph: comp sci umar and sienna
+  - 'heading "Current mark: 9/10" [level=2]'
+  - paragraph:
+    - text: This is now very close to full marks. The content is there. The main thing stopping it being a confident
+    - strong: 10/10
+    - text: is mostly
+    - strong: presentation polish, grammar, and a few consistency issues
+    - text: ", not missing analysis."
+  - heading "What still needs changing before full marks" [level=2]
+  - heading "1. Fix spelling/capitalisation in Hardware and Software" [level=3]
+  - paragraph: "On your hardware/software section, you still have:"
+  - list:
+    - paragraph:
+      - strong: Macbook
+      - text: → MacBook
+    - paragraph:
+      - strong: MacOS
+      - text: → macOS
+    - paragraph:
+      - strong: Visual studio code
+      - text: → Visual Studio Code
+    - paragraph:
+      - strong: SQLLite
+      - text: → SQLite
+    - paragraph:
+      - strong: python
+      - text: → Python
+    - paragraph:
+      - strong: streamlit
+      - text: → Streamlit
+  - paragraph: This matters because it makes the document look less polished. Your hardware/software content is good, but these small errors weaken professionalism.
+  - heading "2. Fix wording in limitations" [level=3]
+  - paragraph: "This sentence still sounds too self-critical:"
+  - blockquote:
+    - paragraph: “This will be extremely difficult with the experience I have…”
+  - paragraph: "Change it to:"
+  - blockquote:
+    - paragraph: “This would significantly increase the scope of the project and make development and testing less realistic within the available time.”
+  - paragraph: That sounds more formal and mature.
+  - heading "3. Fix the title/name consistency" [level=3]
+  - paragraph: "Your title says:"
+  - blockquote:
+    - paragraph:
+      - strong: Animal Adoption and Maintenance Tool
+  - paragraph: "But the cover page says:"
+  - blockquote:
+    - paragraph:
+      - strong: Adoption management system
+  - paragraph: "Pick one name and use it consistently. I’d use:"
+  - blockquote:
+    - paragraph:
+      - strong: Animal Adoption Matching and Management System
+  - paragraph: "because it includes both parts: admin management and compatibility matching."
+  - heading "4. Fix a few success criteria grammar issues" [level=3]
+  - paragraph: "Your success criteria are good, but change these:"
+  - table:
+    - rowgroup:
+      - row "Current Better":
+        - columnheader "Current"
+        - columnheader "Better"
+    - rowgroup:
+      - row "“dogs, cat and rabbits” “dogs, cats and rabbits”":
+        - cell "“dogs, cat and rabbits”"
+        - cell "“dogs, cats and rabbits”"
+      - row "“animals name” “animal’s name”":
+        - cell "“animals name”"
+        - cell "“animal’s name”"
+      - row "“users home” “user’s home”":
+        - cell "“users home”"
+        - cell "“user’s home”"
+      - row "“adopters questionnaire” “adopter’s questionnaire”":
+        - cell "“adopters questionnaire”"
+        - cell "“adopter’s questionnaire”"
+      - row "“each animals requirements” “each animal’s requirements”":
+        - cell "“each animals requirements”"
+        - cell "“each animal’s requirements”"
+      - row "“when animals adopted” “when animals are adopted”":
+        - cell "“when animals adopted”"
+        - cell "“when animals are adopted”"
+  - button "Copy table":
+  - paragraph:
+    - text: Also, in the results page, you now say
+    - strong: top 4 animals
+    - text: ". That’s fine, but make sure your test database has at least 4 animals. If you want it safer, say:"
+  - blockquote:
+    - paragraph: The results page must display up to 4 animals from highest compatibility score to lowest.
+  - paragraph: That avoids problems if fewer than 4 animals are available.
+  - heading "5. Add one final “proposed solution summary” paragraph" [level=3]
+  - paragraph: Your analysis is strong, but it would benefit from one final paragraph before Features or after the research conclusion, summarising the exact final system.
+  - paragraph: "Add something like:"
+  - blockquote:
+    - paragraph: Based on my research, my final solution will be a compatibility-based animal adoption matching and management system for a single shelter. Users will be able to register, complete an adopter questionnaire and receive ranked animal recommendations with compatibility scores and requirement breakdowns. Admin users will be able to add, edit and delete animal records so that the database remains up to date. The system will not replace staff judgement, but will provide structured guidance to help adopters make more informed decisions.
+  - paragraph: This ties everything together nicely.
+  - heading "Overall verdict" [level=2]
+  - paragraph:
+    - text: You can
+    - strong: move on
+    - text: after making those small fixes.
+  - paragraph: "Your analysis section now includes:"
+  - list:
+    - paragraph: problem definition and stakeholders
+    - paragraph: computational thinking
+    - paragraph: research approach and objectives
+    - paragraph: detailed competitor research
+    - paragraph: client interview
+    - paragraph: stakeholder survey with limitation
+    - paragraph: features linked to sources
+    - paragraph: hardware/software requirements
+    - paragraph: limitations
+    - paragraph: SMART success criteria
+  - paragraph:
+    - text: That is a very strong analysis section. With the wording fixes above, I’d call it
+    - strong: A/A*
+    - text: standard.
+  - button "Sources":
+    - generic: Sources
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - separator "Mon, Jul 13 at 8:07 PM":
+    - generic: Mon, Jul 13 at 8:07 PM
+  - heading "You said:" [level=4]
+  - generic: wait did i need to inclde anywhere in sucess criter being able to search and filter
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: No, you
+    - strong: don’t need
+    - text: to include search/filter in your success criteria unless you are definitely going to build it.
+  - paragraph:
+    - text: In your current project, the main way users find suitable animals is the
+    - strong: questionnaire + compatibility score + ranked recommendations
+    - text: ", so that already replaces manual filtering. Your success criteria already cover this with:"
+  - list:
+    - paragraph: questionnaire collects suitability factors
+    - paragraph: algorithm compares answers with animal requirements
+    - paragraph: score is calculated
+    - paragraph: top animals are ranked from highest to lowest
+    - paragraph: requirements breakdown is shown
+  - paragraph: That is stronger than a basic search/filter system.
+  - paragraph:
+    - text: The only slight issue is that your
+    - strong: client interview Q7/Q8
+    - text: "mentions a search bar and filters. If you don’t want to build them, add one sentence in your limitations or design justification:"
+  - blockquote:
+    - paragraph: Although the client suggested a search and filter option, this will not be included as a core feature because the main purpose of the system is to recommend suitable animals automatically using the questionnaire and compatibility scoring algorithm. Simple species categories will still be included so users can view different types of animals.
+  - paragraph: That covers you.
+  - paragraph: "If you do decide to include it, keep it tiny:"
+  - blockquote:
+    - paragraph: The animal preview page must allow users to filter animals by species.
+  - paragraph:
+    - text: But honestly, I’d
+    - strong: not add full search/filter
+    - text: now. Stick with
+    - strong: multi-species categories + ranked recommendations
+    - text: . That keeps your project focused and easier to build/test.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

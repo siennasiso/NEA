@@ -1,0 +1,196 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "You said:" [level=4]
+  - group "comp sci umar and sienna.docx":
+    - button "comp sci umar and sienna.docx"
+    - generic: comp sci umar and sienna.docx
+    - generic: Document
+  - generic: can i move on gang
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 4m 10s":
+    - text: Thought for 4m 10s
+  - paragraph:
+    - emphasis:
+      - emphasis: Not securely A
+      - text: yet, but it has top-band potential.
+    - text: "* OCR assesses the whole Analysis section holistically, and the highest band requires in-depth competitor research that"
+    - strong: identifies and justifies
+    - text: suitable approaches. Your work currently identifies and describes them well, but some choices are not fully justified.
+    - link "OCR +1":
+      - /url: https://www.ocr.org.uk/images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf?utm_source=chatgpt.com
+      - generic: OCR
+      - generic: "+1"
+  - paragraph:
+    - text: Your screenshots, comparison tables and separate impact sections are strong.
+    - button "comp sci umar and sienna":
+      - paragraph: comp sci umar and sienna
+    - text: "To reach secure top-band quality:"
+  - list:
+    - paragraph:
+      - text: Explain
+      - strong: why each chosen feature benefits your stakeholder
+      - text: ", rather than only saying you like it."
+    - paragraph: Add a final paragraph listing exactly which features you selected and why.
+    - paragraph:
+      - text: Add captions and sources beneath screenshots; OCR recommends annotated visual evidence and a bibliography.
+      - link "OCR":
+        - /url: https://www.ocr.org.uk/images/170854-unit-h446-3-programming-project-sample-assessment-materials.pdf
+        - generic: OCR
+    - paragraph: Proofread errors such as “RPSCA”, “photo graphs”, “lack of numeracy”, “Petfinders”, “adopters home” and “recommendations then”.
+    - paragraph: Remove or properly reference uncertain claims such as the RSPCA’s 48-hour response time.
+    - paragraph: Change “bright colours may reduce accessibility” to “the frequent bright yellow may be visually distracting”, unless you have accessibility-testing evidence.
+  - paragraph: "Add this to your conclusion:"
+  - blockquote:
+    - paragraph: Based on this research, I will implement a reusable adopter profile to prevent users from repeatedly entering the same information. Animals will be organised into species categories and displayed using consistent cards with photographs and key information. The questionnaire will use a step-by-step structure and progress indicator to make data entry manageable. After completing it, users will receive a numerical compatibility score and a breakdown of matched and unmet requirements. These features have been selected because they make the system easier to navigate, provide more transparent feedback and help users compare animals objectively.
+  - paragraph:
+    - text: After those changes, this competitor-research section would be capable of supporting the
+    - strong: 9–10 Analysis band
+    - text: ", provided the rest of your Analysis—including stakeholders, limitations, requirements and measurable success criteria—is equally detailed."
+  - button "Sources":
+    - generic: Sources
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic: this is an exemplar and how it was marked (this project got 70/70 overall)
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 1m 26s":
+    - text: Thought for 1m 26s
+  - paragraph:
+    - text: Yes—against this full-mark exemplar, your competitor research is
+    - strong: top-band capable and detailed enough to move on
+    - text: . Your three competitors are more directly relevant, and your explicit “Impact on my solution” sections clearly identify suitable approaches from the research.
+    - button "comp sci umar and sienna":
+      - paragraph: comp sci umar and sienna
+  - paragraph:
+    - text: You do
+    - strong: not
+    - text: need a fourth competitor simply because the exemplar used four. Relevance and justification matter more than the exact number.
+  - paragraph: "Before final submission, complete these small improvements:"
+  - list:
+    - paragraph: Insert two or three screenshots for each competitor with captions.
+    - paragraph: Correct spelling and grammar, such as “RSPCA,” “Petfinder,” “dog’s personality,” and “adopter’s home.”
+    - paragraph: Remove or reference the RSPCA 48-hour claim.
+    - paragraph:
+      - text: Change the Petfinder drawback to say it does not explain
+      - strong: how factors are weighted
+      - text: ", since it does show individual comparisons."
+    - paragraph:
+      - text: In your later features table, include a “Source” column using labels such as
+      - strong: DT
+      - text: ","
+      - strong: RSPCA
+      - text: ","
+      - strong: PF
+      - text: ","
+      - strong: Client
+      - text: and
+      - strong: Survey
+      - text: . This mirrors the exemplar’s praised use of keys to identify where features came from.
+    - paragraph: "Add one final sentence explicitly justifying the selected features:"
+  - blockquote:
+    - paragraph: Based on this research, I will implement a reusable adopter profile, multi-species categories, detailed animal cards, labelled filters and a step-by-step questionnaire. These features were selected because they reduce repeated data entry, make the system easier to navigate and allow users to compare animals more clearly. I will improve upon the existing systems by providing a numerical suitability score and explaining matched and unmet requirements.
+  - paragraph: The exemplar shows that the market-research section does not need to be excessively complicated. Yours already exceeds it in explanation; it mainly needs polishing and clear links to your proposed features.
+  - button "Sources":
+    - generic: Sources
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: the based part can i just include in the feautures part
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for 31s":
+    - text: Thought for 31s
+  - paragraph:
+    - text: Yes — that detailed
+    - strong: “Based on this research…”
+    - text: content fits better in your
+    - strong: Features section
+    - text: ", where you can identify and justify each selected feature."
+  - paragraph:
+    - text: Keep your individual
+    - strong: Impact on My Solution
+    - text: "paragraphs, then end the competitor conclusion with:"
+  - blockquote:
+    - paragraph: The specific features selected from this research and the reasons for including them are explained in the Proposed Features section.
+  - paragraph: "In your features table, use columns such as:"
+  - table:
+    - rowgroup:
+      - row "Feature Source Justification":
+        - columnheader "Feature"
+        - columnheader "Source"
+        - columnheader "Justification"
+    - rowgroup:
+      - row "Step-by-step questionnaire Petfinder Makes the form less overwhelming and allows users to focus on one question at a time.":
+        - cell "Step-by-step questionnaire"
+        - cell "Petfinder"
+        - cell "Makes the form less overwhelming and allows users to focus on one question at a time."
+      - row "Reusable adopter profile Dogs Trust Prevents users from repeatedly entering the same home and lifestyle information.":
+        - cell "Reusable adopter profile"
+        - cell "Dogs Trust"
+        - cell "Prevents users from repeatedly entering the same home and lifestyle information."
+      - row "Multi-species categories RSPCA Allows users to browse different types of animals easily.":
+        - cell "Multi-species categories"
+        - cell "RSPCA"
+        - cell "Allows users to browse different types of animals easily."
+      - row "Numerical compatibility score Improvement on competitors Makes matches easier to compare objectively and provides immediate feedback.":
+        - cell "Numerical compatibility score"
+        - cell "Improvement on competitors"
+        - cell "Makes matches easier to compare objectively and provides immediate feedback."
+  - button "Copy table":
+  - paragraph:
+    - text: This directly demonstrates that you have
+    - strong: identified and justified suitable approaches based on your research
+    - text: ", which is what the top mark-band wording requires."
+    - button "comp sci umar and sienna":
+      - paragraph: comp sci umar and sienna
+  - button "Sources":
+    - generic: Sources
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "High":
+    - generic: High
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

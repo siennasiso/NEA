@@ -1,0 +1,363 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - separator "Tue, Aug 11 at 11:02 PM":
+    - generic: Tue, Aug 11 at 11:02 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic: annotate this please
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 10m":
+    - text: Worked for 10m
+  - heading "Revised home-space question" [level=2]
+  - paragraph:
+    - text: I changed the question so it measures the
+    - strong: actual indoor space available to the animal
+    - text: ", rather than assuming that every house is spacious or that every flat is unsuitable."
+  - paragraph
+  - paragraph:
+    - button "Open the full-size revised question":
+      - text: Open the full-size revised question
+  - heading "New wording" [level=3]
+  - blockquote:
+    - paragraph:
+      - strong: How much indoor space would the animal be able to use?
+      - text: Do not include a garden because outdoor space is asked about separately.
+  - paragraph: "The options are:"
+  - list:
+    - paragraph:
+      - strong: Limited space
+      - text: — One main room
+    - paragraph:
+      - strong: Moderate space
+      - text: — Two or three rooms
+    - paragraph:
+      - strong: Plenty of space
+      - text: — Most of the home
+  - paragraph:
+    - text: This is clearer because it asks about
+    - strong: usable space
+    - text: ", not simply the type of property. The secure-garden question remains separate, preventing the two questions from measuring the same requirement."
+  - heading "Updated interface set" [level=2]
+  - paragraph:
+    - button "Download the complete revised questionnaire interface set":
+      - text: Download the complete revised questionnaire interface set
+  - paragraph: "This includes:"
+  - list:
+    - paragraph: The page before starting
+    - paragraph: The revised indoor-space question
+    - paragraph: The ranked animal results page
+  - heading "Updated Streamlit code" [level=2]
+  - paragraph:
+    - button "Download the revised questionnaire code":
+      - text: Download the revised questionnaire code
+  - paragraph: "Use it to replace:"
+  - button "Copy":
+  - code: pages/3_Questionnaire.py
+  - paragraph:
+    - button "Download the complete project with the revised question"
+  - heading "How the scoring now works" [level=2]
+  - paragraph: "The program compares the selected amount of indoor space with the animal’s stored size:"
+  - button "Copy":
+  - code: Small animal → Limited space may be suitable Medium animal → Moderate space is recommended Large animal → Plenty of space is recommended
+  - paragraph: A full match receives the full indoor-space weighting. An answer one level below the recommended amount receives a partial score and produces an unmet-requirement explanation.
+  - paragraph: "For example:"
+  - button "Copy":
+  - code: "Matched requirement: Indoor living space Unmet requirement: Slightly less indoor space than recommended"
+  - heading "Copy-ready design justification" [level=2]
+  - blockquote:
+    - paragraph: The original question asked whether the user lived in a flat or house. However, this would not accurately measure the amount of space available because a flat may be large and a house may have limited usable space. The revised question therefore asks how much indoor space the animal would be allowed to use. The answers are divided into limited, moderate and plentiful space, with a short explanation beside each option. Garden access is collected through a separate question so that each questionnaire item measures one distinct requirement. The selected answer can then be compared with the animal’s stored size and space requirement by the compatibility-scoring algorithm.
+  - button "pawmatch_questionnaire_space_question_preview.png":
+    - generic: pawmatch_questionnaire_space_question_preview.png
+    - generic: Image
+  - button "Download file":
+  - button "pawmatch_questionnaire_interface_set_revised.png":
+    - generic: pawmatch_questionnaire_interface_set_revised.png
+    - generic: Image
+  - button "Download file":
+  - button "PawMatch_Questionnaire_Space_Update.py":
+    - generic: PawMatch_Questionnaire_Space_Update.py
+    - generic: Code
+  - button "Download file":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - separator "Wed, Aug 19 at 2:56 PM":
+    - generic: Wed, Aug 19 at 2:56 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic: annotate at a a* standard
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 11m 56s":
+    - text: Worked for 11m 56s
+  - heading "Annotated administrator interfaces" [level=2]
+  - paragraph:
+    - text: I annotated both of your original mock-ups in the same
+    - strong: callout-and-arrow format
+    - text: "as the exemplar. The annotations explain:"
+  - list:
+    - paragraph: What each feature does
+    - paragraph: Why it was selected
+    - paragraph: How it improves usability
+    - paragraph: How it connects to CRUD operations and SQLite
+    - paragraph: What validation and security checks will occur
+    - paragraph: How the interfaces support your compatibility algorithm
+  - heading "1. Manage Animals page" [level=3]
+  - paragraph
+  - paragraph:
+    - button "Open or download the full-size Manage Animals annotation":
+      - text: Open or download the full-size Manage Animals annotation
+  - paragraph: "This page includes 12 annotations covering:"
+  - list:
+    - paragraph: Consistent administrator branding
+    - paragraph: Role-based access control
+    - paragraph: Task-focused navigation
+    - paragraph: Search and species filtering
+    - paragraph: Clear database-record summaries
+    - paragraph: Secure logout
+    - paragraph: Personalised administrator feedback
+    - paragraph: Prominent Add Animal access
+    - paragraph: Pre-populated editing
+    - paragraph: Delete confirmation
+    - paragraph: Success, error and no-results feedback
+    - paragraph: Responsive, database-generated record rows
+  - heading "2. Add Animal page" [level=3]
+  - paragraph
+  - paragraph:
+    - button "Open or download the full-size Add Animal annotation":
+      - text: Open or download the full-size Add Animal annotation
+  - paragraph: "This page includes 12 annotations covering:"
+  - list:
+    - paragraph: Consistent layout
+    - paragraph: Active-page feedback
+    - paragraph: Grouping the form as one database record
+    - paragraph: Permanent labels and contextual examples
+    - paragraph: Blank-field validation
+    - paragraph: Numeric age validation
+    - paragraph: Controlled species and sex values
+    - paragraph: Optional image validation
+    - paragraph: Description guidance
+    - paragraph: Expandable matching requirements
+    - paragraph: Parameterised database insertion
+    - paragraph: Safe cancellation and logout
+  - heading "Combined version" [level=2]
+  - paragraph:
+    - button "Download both annotated administrator interfaces as one image":
+      - text: Download both annotated administrator interfaces as one image
+  - paragraph:
+    - button "Download all copy-ready annotation wording":
+      - text: Download all copy-ready annotation wording
+  - heading "Important issue corrected in the annotation" [level=2]
+  - paragraph:
+    - text: On your
+    - strong: Add Animal
+    - text: mock-up,
+    - strong: Manage Animals is still highlighted
+    - text: ", even though the user is on the Add Animal page."
+  - paragraph: "The final version should show:"
+  - button "Copy":
+  - code: Manage animals → secondary outlined style Add animal → filled pink active style
+  - paragraph: I marked this with an orange annotation rather than incorrectly claiming that the active-page feedback was already correct.
+  - heading "Final refinements before placing these in your NEA" [level=2]
+  - paragraph:
+    - text: For
+    - strong: Manage Animals
+    - text: ", add the animal’s current status to each record:"
+  - button "Copy":
+  - code: Luna Dog | Labrador Cross | 3 years old | Available
+  - paragraph:
+    - text: This is important because
+    - code: Available
+    - text: ","
+    - code: Reserved
+    - text: or
+    - code: Adopted
+    - text: "determines whether an animal appears on the adopter’s browsing and recommendation pages. Delete should also use a clearer destructive style and require confirmation:"
+  - button "Copy":
+  - code: Are you sure you want to delete Luna? This action cannot be undone. [Cancel] [Confirm delete]
+  - paragraph:
+    - text: For
+    - strong: Add Animal
+    - text: ", mark fields clearly as required or optional:"
+  - button "Copy":
+  - code: Animal name * Age * Species * Sex * Breed * Image URL — optional Description *
+  - paragraph: "Change placeholders to consistent forms such as:"
+  - button "Copy":
+  - code: e.g. Luna e.g. Labrador Cross e.g. 3 https://example.com/luna.jpg
+  - paragraph:
+    - text: Do not use
+    - code: google.com/images
+    - text: as the example because that is a search page rather than a direct image address.
+  - paragraph:
+    - text: The collapsed
+    - strong: Matching requirements
+    - text: "section should contain the complete set of values used by your algorithm:"
+  - button "Copy":
+  - code: Size Activity level Indoor-space requirement Garden required Suitable with children Suitable with other pets Required adopter experience Maximum hours left alone
+  - paragraph:
+    - text: Either add an
+    - strong: Adoption Status
+    - text: "field or state in your design that every newly created animal automatically receives the safe default:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: status = "Available"
+  - paragraph: "These annotations are strong design evidence because they do more than identify buttons and fields: they justify the decisions and explain the validation, database processing, security and feedback that will occur behind each control."
+  - button "pawmatch_manage_animals_annotated_A_star.png":
+    - generic: pawmatch_manage_animals_annotated_A_star.png
+    - generic: Image
+  - button "Download file":
+  - button "pawmatch_add_animal_annotated_A_star.png":
+    - generic: pawmatch_add_animal_annotated_A_star.png
+    - generic: Image
+  - button "Download file":
+  - button "pawmatch_admin_interfaces_annotated_set.png":
+    - generic: pawmatch_admin_interfaces_annotated_set.png
+    - generic: Image
+  - button "Download file":
+  - button "1 more":
+    - text: 1 more
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - separator "Mon, Aug 24 at 7:50 PM":
+    - generic: Mon, Aug 24 at 7:50 PM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic: can you annotate these photos with a* level annotations
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 11m 2s":
+    - text: Worked for 11m 2s
+  - heading "Annotated interface set" [level=2]
+  - paragraph:
+    - text: I annotated all four of your mock-ups using the same
+    - strong: callout-and-arrow format
+    - text: as the exemplar. Each annotation identifies the feature, explains its purpose and justifies how it supports usability, database processing, validation or the compatibility algorithm.
+  - paragraph
+  - paragraph:
+    - button "Open the complete combined annotation set":
+      - text: Open the complete combined annotation set
+  - heading "Individual full-size pages" [level=3]
+  - paragraph:
+    - button "Download the annotated Browse Animals page":
+      - text: Download the annotated Browse Animals page
+  - paragraph:
+    - button "Download the annotated Individual Animal Profile":
+      - text: Download the annotated Individual Animal Profile
+  - paragraph:
+    - button "Download the annotated Questionnaire Question":
+      - text: Download the annotated Questionnaire Question
+  - paragraph:
+    - button "Download the annotated Ranked Matches page":
+      - text: Download the annotated Ranked Matches page
+  - paragraph:
+    - button "Download the copy-ready annotation wording":
+      - text: Download the copy-ready annotation wording
+  - paragraph:
+    - button "Download all annotated files as a ZIP"
+  - heading "Important corrections identified" [level=2]
+  - paragraph:
+    - text: I used
+    - strong: orange annotations
+    - text: for parts that need correcting rather than describing them as though they are already correct.
+  - heading "Browse Animals" [level=3]
+  - paragraph:
+    - text: Add
+    - strong: My Matches
+    - text: to the shared sidebar because ranked recommendations are a core feature. The finished page should also display a dynamic result count and a specific message when no animals meet the filters.
+  - heading "Individual Animal Profile" [level=3]
+  - paragraph: "Change:"
+  - button "Copy":
+  - code: Home Type House
+  - paragraph: "to something consistent with your revised questionnaire, such as:"
+  - button "Copy":
+  - code: Indoor space requirement Plenty of indoor space
+  - paragraph: "Also add the animal’s current database status:"
+  - button "Copy":
+  - code: Available Reserved Adopted
+  - paragraph:
+    - text: The
+    - code: 86%
+    - text: score must only appear after the questionnaire and scoring algorithm have produced a result for that user.
+  - heading "Questionnaire Question" [level=3]
+  - paragraph: "Add this clarification beneath the question:"
+  - blockquote:
+    - paragraph: Do not include a garden because outdoor space is asked about separately.
+  - paragraph: This ensures indoor space and garden access are treated as two distinct requirements by the algorithm.
+  - heading "Ranked Matches" [level=3]
+  - paragraph:
+    - text: All three rank boxes currently contain
+    - code: "1"
+    - text: ". They must dynamically display:"
+  - button "Copy":
+  - code: 1 2 3
+  - paragraph:
+    - text: The ranked-results page should also highlight
+    - strong: My Matches
+    - text: ", not"
+    - strong: Questionnaire
+    - text: .
+  - paragraph: "The written categories must be generated from one documented threshold table. For example:"
+  - button "Copy":
+  - code: 85–100% Excellent Match 70–84% Strong Match 55–69% Good Match Below 55% Not recommended
+  - paragraph:
+    - text: Under those example boundaries,
+    - code: 84%
+    - text: would be
+    - strong: Strong Match
+    - text: ", not Excellent Match, and"
+    - code: 76%
+    - text: would also be Strong Match. Use the exact categories and boundaries you document in your algorithm design rather than entering them manually.
+  - button "pawmatch_four_interfaces_annotated_set.png":
+    - generic: pawmatch_four_interfaces_annotated_set.png
+    - generic: Image
+  - button "Download file":
+  - button "pawmatch_browse_animals_annotated_A_star.png":
+    - generic: pawmatch_browse_animals_annotated_A_star.png
+    - generic: Image
+  - button "Download file":
+  - button "pawmatch_animal_profile_annotated_A_star_final.png":
+    - generic: pawmatch_animal_profile_annotated_A_star_final.png
+    - generic: Image
+  - button "Download file":
+  - button "3 more":
+    - text: 3 more
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Instant":
+    - generic: Instant
+  - button "Start dictation":
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

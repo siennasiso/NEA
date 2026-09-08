@@ -1,0 +1,1267 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Sat, Aug 8 at 1:35 AM":
+    - generic: Sat, Aug 8 at 1:35 AM
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic "Loading...":
+  - generic: this is an exemplar for pre test data and post test data i need one for mine at a same high level as this so i can get 70/70
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 42s":
+    - text: Worked for 42s
+  - paragraph:
+    - text: Yes — for your animal adoption matching system, you can make the testing section
+    - strong: just as detailed as this exemplar
+    - text: ", but yours should be more clearly linked to the actual requirements, validation rules, database and compatibility algorithm you have designed."
+  - paragraph: "The strongest approach is to have:"
+  - paragraph:
+    - strong: "Pre-development test plan:"
+    - text: written before coding, containing the test, justification, exact test data and expected result. Leave the
+    - strong: Success?
+    - text: column empty.
+  - paragraph:
+    - strong: "Post-development test plan:"
+    - text: after you have built the system, use the
+    - strong: same test IDs/data
+    - text: ", record the actual result, state Pass/Fail, and if something failed explain the correction and retest."
+  - paragraph:
+    - text: Also, don't just test that buttons work. For the higher-level evidence, you want
+    - strong: normal, boundary and erroneous data
+    - text: ", database integrity, authentication/security, CRUD, filters, session control and detailed tests of your matching algorithm."
+  - paragraph: Below is a version tailored to your NEA.
+  - heading "Development Test Plan — Pre-Testing" [level=1]
+  - paragraph: "You could introduce it with:"
+  - blockquote:
+    - paragraph: Before development begins, I have created a test plan based on the success criteria and individual components identified during the analysis and design stages. The purpose of this plan is to define the inputs and expected outputs before the program is implemented, reducing the risk of only selecting tests which the finished system is already able to pass. Normal, boundary and erroneous data will be used where appropriate. Testing will cover the user interface, validation, authentication, database operations, questionnaire, compatibility algorithm, animal searching/filtering and administrator functionality. After development, the same tests will be repeated and the actual outcomes compared against the expected outcomes.
+  - separator
+  - heading "1. Application Setup and Database" [level=2]
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "SET01 Check that the Streamlit application loads successfully. Required before any other feature can be tested. Run streamlit run app.py Application should open without an unhandled error and display the login/landing page.":
+        - cell "SET01"
+        - cell "Check that the Streamlit application loads successfully. Required before any other feature can be tested.":
+          - strong: Check that the Streamlit application loads successfully.
+          - text: Required before any other feature can be tested.
+        - cell "Run streamlit run app.py":
+          - text: Run
+          - code: streamlit run app.py
+        - cell "Application should open without an unhandled error and display the login/landing page."
+        - cell
+      - row "SET02 Check that the SQLite database connects successfully. Required because users, animals and questionnaire data depend on database access. Start application with valid database file Connection should be established and the application should continue normally.":
+        - cell "SET02"
+        - cell "Check that the SQLite database connects successfully. Required because users, animals and questionnaire data depend on database access.":
+          - strong: Check that the SQLite database connects successfully.
+          - text: Required because users, animals and questionnaire data depend on database access.
+        - cell "Start application with valid database file"
+        - cell "Connection should be established and the application should continue normally."
+        - cell
+      - row "SET03 Check required database tables exist. Ensures the program has the structures required to store data. Inspect database after initialisation Required tables such as users, animals and questionnaire/preference data should exist with the correct fields.":
+        - cell "SET03"
+        - cell "Check required database tables exist. Ensures the program has the structures required to store data.":
+          - strong: Check required database tables exist.
+          - text: Ensures the program has the structures required to store data.
+        - cell "Inspect database after initialisation"
+        - cell "Required tables such as users, animals and questionnaire/preference data should exist with the correct fields.":
+          - text: Required tables such as
+          - code: users
+          - text: ","
+          - code: animals
+          - text: and questionnaire/preference data should exist with the correct fields.
+        - cell
+      - row "SET04 Check database records persist after the application is restarted. Necessary because information must not disappear between sessions. Add a test animal → close application → reopen Previously stored animal should still exist.":
+        - cell "SET04"
+        - cell "Check database records persist after the application is restarted. Necessary because information must not disappear between sessions.":
+          - strong: Check database records persist after the application is restarted.
+          - text: Necessary because information must not disappear between sessions.
+        - cell "Add a test animal → close application → reopen"
+        - cell "Previously stored animal should still exist."
+        - cell
+      - row "SET05 Check the program handles an empty animal table. Prevents crashes when no animals have yet been added. Animal table contains 0 records Animal/recommendation page should display an appropriate message instead of crashing.":
+        - cell "SET05"
+        - cell "Check the program handles an empty animal table. Prevents crashes when no animals have yet been added.":
+          - strong: Check the program handles an empty animal table.
+          - text: Prevents crashes when no animals have yet been added.
+        - cell "Animal table contains 0 records"
+        - cell "Animal/recommendation page should display an appropriate message instead of crashing."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "2. Registration" [level=1]
+  - paragraph:
+    - text: These are particularly useful because they demonstrate
+    - strong: normal, boundary and erroneous validation
+    - text: .
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - 'row "REG01 Check successful registration using valid details. Establishes the normal path through registration. Name: Sienna Smith Email: sienna@test.com Age: 18 Password: PinkPets1 Account should be created and a success message/login option displayed."':
+        - cell "REG01"
+        - cell "Check successful registration using valid details. Establishes the normal path through registration.":
+          - strong: Check successful registration using valid details.
+          - text: Establishes the normal path through registration.
+        - 'cell "Name: Sienna Smith Email: sienna@test.com Age: 18 Password: PinkPets1"':
+          - text: "Name:"
+          - code: Sienna Smith
+          - text: "Email:"
+          - code: sienna@test.com
+          - text: "Age:"
+          - code: "18"
+          - text: "Password:"
+          - code: PinkPets1
+        - cell "Account should be created and a success message/login option displayed."
+        - cell
+      - 'row "REG02 Check blank name is rejected. Required field validation. Name: \"\" with all other fields valid Account should not be created. User should be informed that name is required."':
+        - cell "REG02"
+        - cell "Check blank name is rejected. Required field validation.":
+          - strong: Check blank name is rejected.
+          - text: Required field validation.
+        - 'cell "Name: \"\" with all other fields valid"':
+          - text: "Name:"
+          - code: "\"\""
+          - text: with all other fields valid
+        - cell "Account should not be created. User should be informed that name is required."
+        - cell
+      - 'row "REG03 Check blank email is rejected. Prevents unusable account records. Email: \"\" Account should not be created and an email-required message should appear."':
+        - cell "REG03"
+        - cell "Check blank email is rejected. Prevents unusable account records.":
+          - strong: Check blank email is rejected.
+          - text: Prevents unusable account records.
+        - 'cell "Email: \"\""':
+          - text: "Email:"
+          - code: "\"\""
+        - cell "Account should not be created and an email-required message should appear."
+        - cell
+      - 'row "REG04 Check incorrectly formatted email is rejected. Prevents invalid contact/login data entering the database. Email: siennatest.com Registration should be rejected with an appropriate email validation message."':
+        - cell "REG04"
+        - cell "Check incorrectly formatted email is rejected. Prevents invalid contact/login data entering the database.":
+          - strong: Check incorrectly formatted email is rejected.
+          - text: Prevents invalid contact/login data entering the database.
+        - 'cell "Email: siennatest.com"':
+          - text: "Email:"
+          - code: siennatest.com
+        - cell "Registration should be rejected with an appropriate email validation message."
+        - cell
+      - row "REG05 Check duplicate email is rejected. Emails are unique identifiers and duplicate accounts would cause authentication problems. Register sienna@test.com twice First registration should succeed. Second should be rejected and no duplicate database record should be created.":
+        - cell "REG05"
+        - cell "Check duplicate email is rejected. Emails are unique identifiers and duplicate accounts would cause authentication problems.":
+          - strong: Check duplicate email is rejected.
+          - text: Emails are unique identifiers and duplicate accounts would cause authentication problems.
+        - cell "Register sienna@test.com twice":
+          - text: Register
+          - code: sienna@test.com
+          - text: twice
+        - cell "First registration should succeed. Second should be rejected and no duplicate database record should be created."
+        - cell
+      - 'row "REG06 Check age cannot contain non-numeric data. Prevents invalid values being stored. Age: eighteen Registration should fail safely or input should be prevented. No invalid value should enter database."':
+        - cell "REG06"
+        - cell "Check age cannot contain non-numeric data. Prevents invalid values being stored.":
+          - strong: Check age cannot contain non-numeric data.
+          - text: Prevents invalid values being stored.
+        - 'cell "Age: eighteen"':
+          - text: "Age:"
+          - code: eighteen
+        - cell "Registration should fail safely or input should be prevented. No invalid value should enter database."
+        - cell
+      - 'row "REG07 Check age immediately below minimum allowed age. Boundary test. Age: 17* Registration should be rejected with an age requirement message."':
+        - cell "REG07"
+        - cell "Check age immediately below minimum allowed age. Boundary test.":
+          - strong: Check age immediately below minimum allowed age.
+          - text: Boundary test.
+        - 'cell "Age: 17*"':
+          - text: "Age:"
+          - code: "17"
+          - text: "*"
+        - cell "Registration should be rejected with an age requirement message."
+        - cell
+      - 'row "REG08 Check age exactly at minimum allowed age. Boundary test. Age: 18* Registration should be accepted when all other information is valid."':
+        - cell "REG08"
+        - cell "Check age exactly at minimum allowed age. Boundary test.":
+          - strong: Check age exactly at minimum allowed age.
+          - text: Boundary test.
+        - 'cell "Age: 18*"':
+          - text: "Age:"
+          - code: "18"
+          - text: "*"
+        - cell "Registration should be accepted when all other information is valid."
+        - cell
+      - row "REG09 Check password immediately below minimum length. Boundary test. Password containing 7 characters Registration should be rejected and password requirement displayed.":
+        - cell "REG09"
+        - cell "Check password immediately below minimum length. Boundary test.":
+          - strong: Check password immediately below minimum length.
+          - text: Boundary test.
+        - cell "Password containing 7 characters"
+        - cell "Registration should be rejected and password requirement displayed."
+        - cell
+      - row "REG10 Check password exactly at minimum length. Boundary test. Password containing exactly 8 valid characters Registration should be allowed if every other field is valid.":
+        - cell "REG10"
+        - cell "Check password exactly at minimum length. Boundary test.":
+          - strong: Check password exactly at minimum length.
+          - text: Boundary test.
+        - cell "Password containing exactly 8 valid characters"
+        - cell "Registration should be allowed if every other field is valid."
+        - cell
+      - row "REG11 Check passwords are not stored as plaintext. Important security requirement. Register with password PinkPets1, then inspect database Database should contain a password hash rather than the literal value PinkPets1.":
+        - cell "REG11"
+        - cell "Check passwords are not stored as plaintext. Important security requirement.":
+          - strong: Check passwords are not stored as plaintext.
+          - text: Important security requirement.
+        - cell "Register with password PinkPets1, then inspect database":
+          - text: Register with password
+          - code: PinkPets1
+          - text: ", then inspect database"
+        - cell "Database should contain a password hash rather than the literal value PinkPets1.":
+          - text: Database should contain a password hash rather than the literal value
+          - code: PinkPets1
+          - text: .
+        - cell
+      - row "REG12 Check a newly registered account receives the normal user role. Prevents users assigning themselves administrator privileges. Register normally Database role should automatically be user, not admin.":
+        - cell "REG12"
+        - cell "Check a newly registered account receives the normal user role. Prevents users assigning themselves administrator privileges.":
+          - strong: Check a newly registered account receives the normal user role.
+          - text: Prevents users assigning themselves administrator privileges.
+        - cell "Register normally"
+        - cell "Database role should automatically be user, not admin.":
+          - text: Database role should automatically be
+          - code: user
+          - text: ", not"
+          - code: admin
+          - text: .
+        - cell
+  - button "Copy table":
+  - paragraph:
+    - text: "*Use 17/18 only if"
+    - strong: 18 is the minimum age in your final design
+    - text: ", which appears to fit the age-validation part of your system. Otherwise substitute your actual boundary."
+  - separator
+  - heading "3. Login and Authentication" [level=1]
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "LOG01 Check valid user login. Tests the normal authentication path. Existing user email + correct password User should be authenticated and taken to their dashboard/homepage.":
+        - cell "LOG01"
+        - cell "Check valid user login. Tests the normal authentication path.":
+          - strong: Check valid user login.
+          - text: Tests the normal authentication path.
+        - cell "Existing user email + correct password"
+        - cell "User should be authenticated and taken to their dashboard/homepage."
+        - cell
+      - row "LOG02 Check incorrect password. Confirms authentication rejects invalid credentials. Correct email + WrongPassword1 User should remain logged out and receive a clear generic error message.":
+        - cell "LOG02"
+        - cell "Check incorrect password. Confirms authentication rejects invalid credentials.":
+          - strong: Check incorrect password.
+          - text: Confirms authentication rejects invalid credentials.
+        - cell "Correct email + WrongPassword1":
+          - text: Correct email +
+          - code: WrongPassword1
+        - cell "User should remain logged out and receive a clear generic error message."
+        - cell
+      - row "LOG03 Check unregistered email. unknown@test.com + password Login should fail without crashing or exposing database information.":
+        - cell "LOG03"
+        - cell "Check unregistered email.":
+          - strong: Check unregistered email.
+        - cell "unknown@test.com + password":
+          - code: unknown@test.com
+          - text: + password
+        - cell "Login should fail without crashing or exposing database information."
+        - cell
+      - row "LOG04 Check blank email. Required input validation. Email blank + valid-looking password User should not be authenticated and should be asked to complete the field.":
+        - cell "LOG04"
+        - cell "Check blank email. Required input validation.":
+          - strong: Check blank email.
+          - text: Required input validation.
+        - cell "Email blank + valid-looking password"
+        - cell "User should not be authenticated and should be asked to complete the field."
+        - cell
+      - row "LOG05 Check blank password. Valid email + blank password User should remain logged out and receive appropriate validation feedback.":
+        - cell "LOG05"
+        - cell "Check blank password.":
+          - strong: Check blank password.
+        - cell "Valid email + blank password"
+        - cell "User should remain logged out and receive appropriate validation feedback."
+        - cell
+      - row "LOG06 Check user and administrator roles are separated. Log in using normal user account Normal user should be directed to the user interface and not administrator controls.":
+        - cell "LOG06"
+        - cell "Check user and administrator roles are separated.":
+          - strong: Check user and administrator roles are separated.
+        - cell "Log in using normal user account"
+        - cell "Normal user should be directed to the user interface and not administrator controls."
+        - cell
+      - row "LOG07 Check administrator login. Valid administrator credentials Administrator should be directed to the administrator page.":
+        - cell "LOG07"
+        - cell "Check administrator login.":
+          - strong: Check administrator login.
+        - cell "Valid administrator credentials"
+        - cell "Administrator should be directed to the administrator page."
+        - cell
+      - row "LOG08 Check a normal user cannot directly access the administrator page. Security/access-control test. Log in as normal user and attempt to navigate to admin page Access should be denied or user redirected to the normal dashboard.":
+        - cell "LOG08"
+        - cell "Check a normal user cannot directly access the administrator page. Security/access-control test.":
+          - strong: Check a normal user cannot directly access the administrator page.
+          - text: Security/access-control test.
+        - cell "Log in as normal user and attempt to navigate to admin page"
+        - cell "Access should be denied or user redirected to the normal dashboard."
+        - cell
+      - row "LOG09 Check session persists while navigating between legitimate pages. Login → dashboard → questionnaire → animals User should remain logged in while navigating.":
+        - cell "LOG09"
+        - cell "Check session persists while navigating between legitimate pages.":
+          - strong: Check session persists while navigating between legitimate pages.
+        - cell "Login → dashboard → questionnaire → animals"
+        - cell "User should remain logged in while navigating."
+        - cell
+      - row "LOG10 Check logout removes authentication session. Login → press Logout Session should be cleared and login page displayed. Attempting to return to protected page should require login again.":
+        - cell "LOG10"
+        - cell "Check logout removes authentication session.":
+          - strong: Check logout removes authentication session.
+        - cell "Login → press Logout"
+        - cell "Session should be cleared and login page displayed. Attempting to return to protected page should require login again."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "4. User Homepage / Dashboard" [level=1]
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "DASH01 Check homepage loads after login. Valid user logs in Dashboard should load without errors with the expected navigation components.":
+        - cell "DASH01"
+        - cell "Check homepage loads after login.":
+          - strong: Check homepage loads after login.
+        - cell "Valid user logs in"
+        - cell "Dashboard should load without errors with the expected navigation components."
+        - cell
+      - row "DASH02 Check personalised username is retrieved correctly. Demonstrates database integration. Login as Sienna Smith Appropriate welcome text should contain Sienna Smith, rather than another user's data.":
+        - cell "DASH02"
+        - cell "Check personalised username is retrieved correctly. Demonstrates database integration.":
+          - strong: Check personalised username is retrieved correctly.
+          - text: Demonstrates database integration.
+        - cell "Login as Sienna Smith":
+          - text: Login as
+          - code: Sienna Smith
+        - cell "Appropriate welcome text should contain Sienna Smith, rather than another user's data.":
+          - text: Appropriate welcome text should contain
+          - code: Sienna Smith
+          - text: ", rather than another user's data."
+        - cell
+      - row "DASH03 Check Questionnaire navigation. Press questionnaire button/card Questionnaire page should load.":
+        - cell "DASH03"
+        - cell "Check Questionnaire navigation.":
+          - strong: Check Questionnaire navigation.
+        - cell "Press questionnaire button/card"
+        - cell "Questionnaire page should load."
+        - cell
+      - row "DASH04 Check Browse Animals navigation. Press browse animals button/card Animal viewing page should load.":
+        - cell "DASH04"
+        - cell "Check Browse Animals navigation.":
+          - strong: Check Browse Animals navigation.
+        - cell "Press browse animals button/card"
+        - cell "Animal viewing page should load."
+        - cell
+      - row "DASH05 Check account/navigation controls load correctly. Logged-in user Expected navigation buttons should be available without administrator-only options appearing.":
+        - cell "DASH05"
+        - cell "Check account/navigation controls load correctly.":
+          - strong: Check account/navigation controls load correctly.
+        - cell "Logged-in user"
+        - cell "Expected navigation buttons should be available without administrator-only options appearing."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "5. Adoption Questionnaire" [level=1]
+  - paragraph: This is important because your questionnaire feeds the main algorithm.
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "QUE01 Check questionnaire loads correctly. Logged-in user opens questionnaire All questions, selectable options and submit button should display correctly.":
+        - cell "QUE01"
+        - cell "Check questionnaire loads correctly.":
+          - strong: Check questionnaire loads correctly.
+        - cell "Logged-in user opens questionnaire"
+        - cell "All questions, selectable options and submit button should display correctly."
+        - cell
+      - row "QUE02 Check questionnaire accepts a complete valid response. Normal data test. Complete all questions using allowed values Answers should be accepted and recommendation process should be available/run.":
+        - cell "QUE02"
+        - cell "Check questionnaire accepts a complete valid response. Normal data test.":
+          - strong: Check questionnaire accepts a complete valid response.
+          - text: Normal data test.
+        - cell "Complete all questions using allowed values"
+        - cell "Answers should be accepted and recommendation process should be available/run."
+        - cell
+      - row "QUE03 Check required questions cannot be left unanswered. Prevents incomplete data affecting compatibility calculations. Leave one required answer blank and submit Submission should be stopped and user told what still needs completing.":
+        - cell "QUE03"
+        - cell "Check required questions cannot be left unanswered. Prevents incomplete data affecting compatibility calculations.":
+          - strong: Check required questions cannot be left unanswered.
+          - text: Prevents incomplete data affecting compatibility calculations.
+        - cell "Leave one required answer blank and submit"
+        - cell "Submission should be stopped and user told what still needs completing."
+        - cell
+      - row "QUE04 Check only allowed values can be selected. Important for reliable algorithm inputs. Attempt to select/submit questionnaire values Input widgets should restrict users to permitted values such as the defined species/home/activity options.":
+        - cell "QUE04"
+        - cell "Check only allowed values can be selected. Important for reliable algorithm inputs.":
+          - strong: Check only allowed values can be selected.
+          - text: Important for reliable algorithm inputs.
+        - cell "Attempt to select/submit questionnaire values"
+        - cell "Input widgets should restrict users to permitted values such as the defined species/home/activity options."
+        - cell
+      - row "QUE05 Check questionnaire answers are associated with the correct user. Prevents one user's preferences being used for another. User A submits responses; User B logs in User B should not receive User A's stored questionnaire values.":
+        - cell "QUE05"
+        - cell "Check questionnaire answers are associated with the correct user. Prevents one user's preferences being used for another.":
+          - strong: Check questionnaire answers are associated with the correct user.
+          - text: Prevents one user's preferences being used for another.
+        - cell "User A submits responses; User B logs in"
+        - cell "User B should not receive User A's stored questionnaire values."
+        - cell
+      - row "QUE06 Check previously submitted answers can be updated. Submit questionnaire → modify an answer → resubmit Updated response should replace/update the relevant stored preferences rather than creating incorrect conflicting information.":
+        - cell "QUE06"
+        - cell "Check previously submitted answers can be updated.":
+          - strong: Check previously submitted answers can be updated.
+        - cell "Submit questionnaire → modify an answer → resubmit"
+        - cell "Updated response should replace/update the relevant stored preferences rather than creating incorrect conflicting information."
+        - cell
+      - row "QUE07 Check saved answers persist. Submit questionnaire → logout → login again Previously stored questionnaire information should remain available where intended.":
+        - cell "QUE07"
+        - cell "Check saved answers persist.":
+          - strong: Check saved answers persist.
+        - cell "Submit questionnaire → logout → login again"
+        - cell "Previously stored questionnaire information should remain available where intended."
+        - cell
+      - row "QUE08 Check submission invokes compatibility calculation. Complete questionnaire and press recommendation/submit button Program should calculate animal compatibility using the submitted answers.":
+        - cell "QUE08"
+        - cell "Check submission invokes compatibility calculation.":
+          - strong: Check submission invokes compatibility calculation.
+        - cell "Complete questionnaire and press recommendation/submit button"
+        - cell "Program should calculate animal compatibility using the submitted answers."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "6. Compatibility Scoring Algorithm" [level=1]
+  - paragraph:
+    - text: This should be one of the
+    - strong: strongest parts of your entire test plan
+    - text: ", because it is the main computational feature of your NEA."
+  - paragraph:
+    - text: For these tests, it is worth creating a tiny
+    - strong: controlled set of test animals
+    - text: whose attributes you already know. That means you can calculate the expected result yourself before executing the algorithm.
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "ALG01 Check an animal satisfying every tested criterion receives the highest compatibility. Normal/perfect-match test. Questionnaire answers deliberately identical to Test Animal A's relevant attributes Animal A should receive the maximum possible score or the highest score of all animals.":
+        - cell "ALG01"
+        - cell "Check an animal satisfying every tested criterion receives the highest compatibility. Normal/perfect-match test.":
+          - strong: Check an animal satisfying every tested criterion receives the highest compatibility.
+          - text: Normal/perfect-match test.
+        - cell "Questionnaire answers deliberately identical to Test Animal A's relevant attributes"
+        - cell "Animal A should receive the maximum possible score or the highest score of all animals."
+        - cell
+      - row "ALG02 Check a poor match receives a lower score than a strong match. Confirms score calculation has meaningful effect. Animal A matches most criteria; Animal B matches few score(A) > score(B)":
+        - cell "ALG02"
+        - cell "Check a poor match receives a lower score than a strong match. Confirms score calculation has meaningful effect.":
+          - strong: Check a poor match receives a lower score than a strong match.
+          - text: Confirms score calculation has meaningful effect.
+        - cell "Animal A matches most criteria; Animal B matches few"
+        - cell "score(A) > score(B)":
+          - code: score(A) > score(B)
+        - cell
+      - row "ALG03 Check preference weighting increases the score when a preferred characteristic is present. Tests the weighted preference design. Two otherwise similar animals, but only Animal A matches user's preferred age/size/species characteristic Animal A should receive the additional weighted points and rank above Animal B where appropriate.":
+        - cell "ALG03"
+        - cell "Check preference weighting increases the score when a preferred characteristic is present. Tests the weighted preference design.":
+          - strong: Check preference weighting increases the score when a preferred characteristic is present.
+          - text: Tests the weighted preference design.
+        - cell "Two otherwise similar animals, but only Animal A matches user's preferred age/size/species characteristic"
+        - cell "Animal A should receive the additional weighted points and rank above Animal B where appropriate."
+        - cell
+      - row "ALG04 Check optional preferences do not incorrectly outweigh essential requirements. Important because a visually preferred animal should not rank highly if unsuitable for the household. Animal A meets preference but violates an important requirement; Animal B meets requirements but has fewer optional preferences Suitable Animal B should rank above or Animal A should be excluded/penalised according to designed rules.":
+        - cell "ALG04"
+        - cell "Check optional preferences do not incorrectly outweigh essential requirements. Important because a visually preferred animal should not rank highly if unsuitable for the household.":
+          - strong: Check optional preferences do not incorrectly outweigh essential requirements.
+          - text: Important because a visually preferred animal should not rank highly if unsuitable for the household.
+        - cell "Animal A meets preference but violates an important requirement; Animal B meets requirements but has fewer optional preferences"
+        - cell "Suitable Animal B should rank above or Animal A should be excluded/penalised according to designed rules."
+        - cell
+      - row "ALG05 Check unmet requirements are identified correctly. Animal fails a known requirement such as compatibility with children/other pets Corresponding requirement should appear in unmet_requirements or otherwise affect classification as designed.":
+        - cell "ALG05"
+        - cell "Check unmet requirements are identified correctly.":
+          - strong: Check unmet requirements are identified correctly.
+        - cell "Animal fails a known requirement such as compatibility with children/other pets"
+        - cell "Corresponding requirement should appear in unmet_requirements or otherwise affect classification as designed.":
+          - text: Corresponding requirement should appear in
+          - code: unmet_requirements
+          - text: or otherwise affect classification as designed.
+        - cell
+      - row "ALG06 Check percentage calculation is correct. Tests mathematical accuracy. Example manually calculated test where total_score = 40, maximum_score = 50 compatibility_score should equal 80%.":
+        - cell "ALG06"
+        - cell "Check percentage calculation is correct. Tests mathematical accuracy.":
+          - strong: Check percentage calculation is correct.
+          - text: Tests mathematical accuracy.
+        - cell "Example manually calculated test where total_score = 40, maximum_score = 50":
+          - text: Example manually calculated test where
+          - code: total_score = 40
+          - text: ","
+          - code: maximum_score = 50
+        - cell "compatibility_score should equal 80%.":
+          - code: compatibility_score
+          - text: should equal
+          - code: 80%
+          - text: .
+        - cell
+      - row "ALG07 Check maximum compatibility cannot exceed 100%. Boundary/integrity test. Animal matches every possible weighted criterion Compatibility should be 100%, never above 100.":
+        - cell "ALG07"
+        - cell "Check maximum compatibility cannot exceed 100%. Boundary/integrity test.":
+          - strong: Check maximum compatibility cannot exceed 100%.
+          - text: Boundary/integrity test.
+        - cell "Animal matches every possible weighted criterion"
+        - cell "Compatibility should be 100%, never above 100.":
+          - text: Compatibility should be
+          - code: 100%
+          - text: ", never above 100."
+        - cell
+      - row "ALG08 Check score cannot become negative. Animal matches no positive criteria / receives maximum applicable penalties Final compatibility should remain within the designed valid range, normally minimum 0%.":
+        - cell "ALG08"
+        - cell "Check score cannot become negative.":
+          - strong: Check score cannot become negative.
+        - cell "Animal matches no positive criteria / receives maximum applicable penalties"
+        - cell "Final compatibility should remain within the designed valid range, normally minimum 0%.":
+          - text: Final compatibility should remain within the designed valid range, normally minimum
+          - code: 0%
+          - text: .
+        - cell
+      - row "ALG09 Check recommendation threshold. Create one animal immediately above and one immediately below Minimum_recommendation_score Animal meeting threshold should be included; animal below threshold should be treated according to design and not incorrectly recommended.":
+        - cell "ALG09"
+        - cell "Check recommendation threshold.":
+          - strong: Check recommendation threshold.
+        - cell "Create one animal immediately above and one immediately below Minimum_recommendation_score":
+          - text: Create one animal immediately above and one immediately below
+          - code: Minimum_recommendation_score
+        - cell "Animal meeting threshold should be included; animal below threshold should be treated according to design and not incorrectly recommended."
+        - cell
+      - row "ALG10 Check match category corresponds to numerical score. Example score deliberately within each defined category Correct match_category, e.g. Strong/Good/Low Match, should be assigned according to your stated boundaries.":
+        - cell "ALG10"
+        - cell "Check match category corresponds to numerical score.":
+          - strong: Check match category corresponds to numerical score.
+        - cell "Example score deliberately within each defined category"
+        - cell "Correct match_category, e.g. Strong/Good/Low Match, should be assigned according to your stated boundaries.":
+          - text: Correct
+          - code: match_category
+          - text: ", e.g. Strong/Good/Low Match, should be assigned according to your stated boundaries."
+        - cell
+      - 'row "ALG11 Check recommendations are sorted from highest score to lowest. Scores: Animal A = 92%, Animal B = 76%, Animal C = 84% Display order should be A (92), C (84), B (76)."':
+        - cell "ALG11"
+        - cell "Check recommendations are sorted from highest score to lowest.":
+          - strong: Check recommendations are sorted from highest score to lowest.
+        - 'cell "Scores: Animal A = 92%, Animal B = 76%, Animal C = 84%"'
+        - cell "Display order should be A (92), C (84), B (76)."
+        - cell
+      - row "ALG12 Check identical inputs produce identical results. Shows deterministic behaviour. Run same questionnaire against unchanged database twice Scores and ranking should be identical on both executions.":
+        - cell "ALG12"
+        - cell "Check identical inputs produce identical results. Shows deterministic behaviour.":
+          - strong: Check identical inputs produce identical results.
+          - text: Shows deterministic behaviour.
+        - cell "Run same questionnaire against unchanged database twice"
+        - cell "Scores and ranking should be identical on both executions."
+        - cell
+      - row "ALG13 Check one user's scoring does not modify another user's results. User A and User B submit different preferences Each user should receive recommendations calculated from their own responses.":
+        - cell "ALG13"
+        - cell "Check one user's scoring does not modify another user's results.":
+          - strong: Check one user's scoring does not modify another user's results.
+        - cell "User A and User B submit different preferences"
+        - cell "Each user should receive recommendations calculated from their own responses."
+        - cell
+      - row "ALG14 Check algorithm behaves safely when no suitable animal exists. Questionnaire deliberately conflicts with every current animal Program should display a suitable message rather than crash or fabricate a recommendation.":
+        - cell "ALG14"
+        - cell "Check algorithm behaves safely when no suitable animal exists.":
+          - strong: Check algorithm behaves safely when no suitable animal exists.
+        - cell "Questionnaire deliberately conflicts with every current animal"
+        - cell "Program should display a suitable message rather than crash or fabricate a recommendation."
+        - cell
+  - button "Copy table":
+  - heading "One algorithm test should be calculated manually" [level=3]
+  - paragraph: This is something I would definitely include in your written NEA.
+  - paragraph: "For example:"
+  - paragraph:
+    - strong: "Controlled animal: Luna"
+  - table:
+    - rowgroup:
+      - row "Criterion User Requirement/Preference Luna Weight Result":
+        - columnheader "Criterion"
+        - columnheader "User Requirement/Preference"
+        - columnheader "Luna"
+        - columnheader "Weight"
+        - columnheader "Result"
+    - rowgroup:
+      - row "Species Cat Cat 10 +10":
+        - cell "Species"
+        - cell "Cat"
+        - cell "Cat"
+        - cell "10"
+        - cell "+10"
+      - row "Suitable with children Yes Yes 15 +15":
+        - cell "Suitable with children"
+        - cell "Yes"
+        - cell "Yes"
+        - cell "15"
+        - cell "+15"
+      - row "Suitable with other pets Yes Yes 15 +15":
+        - cell "Suitable with other pets"
+        - cell "Yes"
+        - cell "Yes"
+        - cell "15"
+        - cell "+15"
+      - row "Activity level Medium Medium 10 +10":
+        - cell "Activity level"
+        - cell "Medium"
+        - cell "Medium"
+        - cell "10"
+        - cell "+10"
+      - row "Preferred size Small Small 5 +5":
+        - cell "Preferred size"
+        - cell "Small"
+        - cell "Small"
+        - cell "5"
+        - cell "+5"
+      - row "Preferred age Young Adult 5 0":
+        - cell "Preferred age"
+        - cell "Young"
+        - cell "Adult"
+        - cell "5"
+        - cell "0"
+  - button "Copy table":
+  - paragraph: "If those were the only test criteria:"
+  - paragraph:
+    - code: total_score = 55
+  - paragraph:
+    - code: maximum_score = 60
+  - paragraph:
+    - code: compatibility_score = (55 / 60) × 100
+  - paragraph:
+    - code: compatibility_score = 91.67%
+  - paragraph:
+    - text: You then run the actual algorithm and demonstrate that it returns approximately
+    - strong: 91.67%
+    - text: .
+  - paragraph:
+    - text: That is much stronger than simply writing
+    - emphasis: "\"check algorithm works\""
+    - text: .
+  - separator
+  - heading "7. Animal Viewing, Search and Filters" [level=1]
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "ANI01 Check animal viewing page loads database records. Database containing known test animals Appropriate animal cards/details should be displayed.":
+        - cell "ANI01"
+        - cell "Check animal viewing page loads database records.":
+          - strong: Check animal viewing page loads database records.
+        - cell "Database containing known test animals"
+        - cell "Appropriate animal cards/details should be displayed."
+        - cell
+      - row "ANI02 Check each animal displays the correct record. Prevents data becoming mixed between animals. Animal Luna, Cat, 3 years Luna's card should show Luna's corresponding details only.":
+        - cell "ANI02"
+        - cell "Check each animal displays the correct record. Prevents data becoming mixed between animals.":
+          - strong: Check each animal displays the correct record.
+          - text: Prevents data becoming mixed between animals.
+        - cell "Animal Luna, Cat, 3 years":
+          - text: Animal
+          - code: Luna
+          - text: ", Cat, 3 years"
+        - cell "Luna's card should show Luna's corresponding details only."
+        - cell
+      - row "ANI03 Check search by animal name. Search Luna Luna should be shown; irrelevant animals should be removed from results.":
+        - cell "ANI03"
+        - cell "Check search by animal name.":
+          - strong: Check search by animal name.
+        - cell "Search Luna":
+          - text: Search
+          - code: Luna
+        - cell "Luna should be shown; irrelevant animals should be removed from results."
+        - cell
+      - row "ANI04 Check search is case insensitive where designed. Search luna when database contains Luna Luna should still be returned.":
+        - cell "ANI04"
+        - cell "Check search is case insensitive where designed.":
+          - strong: Check search is case insensitive where designed.
+        - cell "Search luna when database contains Luna":
+          - text: Search
+          - code: luna
+          - text: when database contains
+          - code: Luna
+        - cell "Luna should still be returned."
+        - cell
+      - row "ANI05 Check species filter. Select Cat Only cats should remain visible.":
+        - cell "ANI05"
+        - cell "Check species filter.":
+          - strong: Check species filter.
+        - cell "Select Cat":
+          - text: Select
+          - code: Cat
+        - cell "Only cats should remain visible."
+        - cell
+      - row "ANI06 Check another filter such as age/size. Select Small Only animals matching the selected size should be displayed.":
+        - cell "ANI06"
+        - cell "Check another filter such as age/size.":
+          - strong: Check another filter such as age/size.
+        - cell "Select Small":
+          - text: Select
+          - code: Small
+        - cell "Only animals matching the selected size should be displayed."
+        - cell
+      - row "ANI07 Check multiple filters operate together correctly. Species=Dog, Size=Small Only animals satisfying both filters should appear.":
+        - cell "ANI07"
+        - cell "Check multiple filters operate together correctly.":
+          - strong: Check multiple filters operate together correctly.
+        - cell "Species=Dog, Size=Small":
+          - text: Species=
+          - code: Dog
+          - text: ", Size="
+          - code: Small
+        - cell "Only animals satisfying both filters should appear."
+        - cell
+      - row "ANI08 Check filters returning zero records. Choose a combination no current animal satisfies Page should show a clear No animals found style message rather than an error.":
+        - cell "ANI08"
+        - cell "Check filters returning zero records.":
+          - strong: Check filters returning zero records.
+        - cell "Choose a combination no current animal satisfies"
+        - cell "Page should show a clear No animals found style message rather than an error.":
+          - text: Page should show a clear
+          - code: No animals found
+          - text: style message rather than an error.
+        - cell
+      - row "ANI09 Check reset/clear filters. Apply filters → press Clear/Reset Full available animal list should become visible again.":
+        - cell "ANI09"
+        - cell "Check reset/clear filters.":
+          - strong: Check reset/clear filters.
+        - cell "Apply filters → press Clear/Reset"
+        - cell "Full available animal list should become visible again."
+        - cell
+      - row "ANI10 Check opening an animal displays the correct full profile. Select Luna's View details control Luna's full stored information should be displayed.":
+        - cell "ANI10"
+        - cell "Check opening an animal displays the correct full profile.":
+          - strong: Check opening an animal displays the correct full profile.
+        - cell "Select Luna's View details control":
+          - text: Select Luna's
+          - code: View details
+          - text: control
+        - cell "Luna's full stored information should be displayed."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "8. Administrator Access and CRUD" [level=1]
+  - paragraph: CRUD gives you excellent technical testing evidence, so don't only test one add button.
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "ADM01 Check administrator page loads for administrator. Login using admin account Animal management controls should display.":
+        - cell "ADM01"
+        - cell "Check administrator page loads for administrator.":
+          - strong: Check administrator page loads for administrator.
+        - cell "Login using admin account"
+        - cell "Animal management controls should display."
+        - cell
+      - row "ADM02 Check normal users cannot access administrator page. Security requirement. Normal user attempts admin page Access should be rejected/redirected.":
+        - cell "ADM02"
+        - cell "Check normal users cannot access administrator page. Security requirement.":
+          - strong: Check normal users cannot access administrator page.
+          - text: Security requirement.
+        - cell "Normal user attempts admin page"
+        - cell "Access should be rejected/redirected."
+        - cell
+      - row "ADM03 Check administrator can add a valid animal. Tests CREATE operation. Name=Luna, Species=Cat, Age=3, plus all required valid attributes Success message should appear and Luna should be added to database.":
+        - cell "ADM03"
+        - cell "Check administrator can add a valid animal. Tests CREATE operation.":
+          - strong: Check administrator can add a valid animal.
+          - text: Tests CREATE operation.
+        - cell "Name=Luna, Species=Cat, Age=3, plus all required valid attributes":
+          - text: Name=
+          - code: Luna
+          - text: ", Species="
+          - code: Cat
+          - text: ", Age="
+          - code: "3"
+          - text: ", plus all required valid attributes"
+        - cell "Success message should appear and Luna should be added to database."
+        - cell
+      - row "ADM04 Check blank animal name is rejected. Name=\"\"; remaining details valid Animal should not be added and validation message should display.":
+        - cell "ADM04"
+        - cell "Check blank animal name is rejected.":
+          - strong: Check blank animal name is rejected.
+        - cell "Name=\"\"; remaining details valid":
+          - text: Name=
+          - code: "\"\""
+          - text: ; remaining details valid
+        - cell "Animal should not be added and validation message should display."
+        - cell
+      - row "ADM05 Check invalid animal age is rejected. Age=three if free text/backend test permits Invalid record should not be stored.":
+        - cell "ADM05"
+        - cell "Check invalid animal age is rejected.":
+          - strong: Check invalid animal age is rejected.
+        - cell "Age=three if free text/backend test permits":
+          - text: Age=
+          - code: three
+          - text: if free text/backend test permits
+        - cell "Invalid record should not be stored."
+        - cell
+      - row "ADM06 Check negative age is rejected. Erroneous numerical data. Age=-1 Animal should not be added; appropriate validation should appear.":
+        - cell "ADM06"
+        - cell "Check negative age is rejected. Erroneous numerical data.":
+          - strong: Check negative age is rejected.
+          - text: Erroneous numerical data.
+        - cell "Age=-1":
+          - text: Age=
+          - code: "-1"
+        - cell "Animal should not be added; appropriate validation should appear."
+        - cell
+      - row "ADM07 Check valid boundary age such as 0 is handled according to design. Age=0 for an animal under one year, if your design allows this representation Accepted/rejected consistently with your stated validation rules.":
+        - cell "ADM07"
+        - cell "Check valid boundary age such as 0 is handled according to design.":
+          - strong: Check valid boundary age such as 0 is handled according to design.
+        - cell "Age=0 for an animal under one year, if your design allows this representation":
+          - text: Age=
+          - code: "0"
+          - text: for an animal under one year, if your design allows this representation
+        - cell "Accepted/rejected consistently with your stated validation rules."
+        - cell
+      - row "ADM08 Check administrator can edit an existing animal. Tests UPDATE. Change Luna's age from 3 to 4 Database and animal profile should show age 4. Other fields should remain unchanged.":
+        - cell "ADM08"
+        - cell "Check administrator can edit an existing animal. Tests UPDATE.":
+          - strong: Check administrator can edit an existing animal.
+          - text: Tests UPDATE.
+        - cell "Change Luna's age from 3 to 4":
+          - text: Change Luna's age from
+          - code: "3"
+          - text: to
+          - code: "4"
+        - cell "Database and animal profile should show age 4. Other fields should remain unchanged.":
+          - text: Database and animal profile should show age
+          - code: "4"
+          - text: . Other fields should remain unchanged.
+        - cell
+      - row "ADM09 Check changing one field does not accidentally overwrite other fields. Database integrity test. Edit only Luna's activity level Activity should change, while name/species/etc. stay unchanged.":
+        - cell "ADM09"
+        - cell "Check changing one field does not accidentally overwrite other fields. Database integrity test.":
+          - strong: Check changing one field does not accidentally overwrite other fields.
+          - text: Database integrity test.
+        - cell "Edit only Luna's activity level"
+        - cell "Activity should change, while name/species/etc. stay unchanged."
+        - cell
+      - row "ADM10 Check administrator can delete an animal. Tests DELETE. Delete test animal Luna Luna should be removed from database and no longer appear in browsing/recommendations.":
+        - cell "ADM10"
+        - cell "Check administrator can delete an animal. Tests DELETE.":
+          - strong: Check administrator can delete an animal.
+          - text: Tests DELETE.
+        - cell "Delete test animal Luna"
+        - cell "Luna should be removed from database and no longer appear in browsing/recommendations."
+        - cell
+      - row "ADM11 Check deletion requires confirmation if included in design. Helps prevent accidental loss of data. Press Delete but cancel confirmation Record should remain unchanged.":
+        - cell "ADM11"
+        - cell "Check deletion requires confirmation if included in design. Helps prevent accidental loss of data.":
+          - strong: Check deletion requires confirmation if included in design.
+          - text: Helps prevent accidental loss of data.
+        - cell "Press Delete but cancel confirmation"
+        - cell "Record should remain unchanged."
+        - cell
+      - row "ADM12 Check newly added animal becomes available to the compatibility algorithm. Integrates CRUD and algorithm rather than testing them separately. Add new compatible animal → run questionnaire New animal should be considered in recommendation results.":
+        - cell "ADM12"
+        - cell "Check newly added animal becomes available to the compatibility algorithm. Integrates CRUD and algorithm rather than testing them separately.":
+          - strong: Check newly added animal becomes available to the compatibility algorithm.
+          - text: Integrates CRUD and algorithm rather than testing them separately.
+        - cell "Add new compatible animal → run questionnaire"
+        - cell "New animal should be considered in recommendation results."
+        - cell
+      - row "ADM13 Check edits affect future compatibility calculations. Change an animal from unsuitable to suitable for a particular requirement New calculation should use updated attributes rather than old database values.":
+        - cell "ADM13"
+        - cell "Check edits affect future compatibility calculations.":
+          - strong: Check edits affect future compatibility calculations.
+        - cell "Change an animal from unsuitable to suitable for a particular requirement"
+        - cell "New calculation should use updated attributes rather than old database values."
+        - cell
+      - row "ADM14 Check deleted animals cannot appear in recommendation results. Delete animal → rerun same questionnaire Deleted animal should not be returned.":
+        - cell "ADM14"
+        - cell "Check deleted animals cannot appear in recommendation results.":
+          - strong: Check deleted animals cannot appear in recommendation results.
+        - cell "Delete animal → rerun same questionnaire"
+        - cell "Deleted animal should not be returned."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "9. Account and Logout" [level=1]
+  - table:
+    - rowgroup:
+      - row "ID Description & Justification Test Data / Input Expected Output Success?":
+        - columnheader "ID"
+        - columnheader "Description & Justification"
+        - columnheader "Test Data / Input"
+        - columnheader "Expected Output"
+        - columnheader "Success?"
+    - rowgroup:
+      - row "ACC01 Check account page displays correct user's information. Login as Sienna Smith Only Sienna's appropriate account information should display.":
+        - cell "ACC01"
+        - cell "Check account page displays correct user's information.":
+          - strong: Check account page displays correct user's information.
+        - cell "Login as Sienna Smith":
+          - text: Login as
+          - code: Sienna Smith
+        - cell "Only Sienna's appropriate account information should display."
+        - cell
+      - row "ACC02 Check users cannot view another user's account information. Privacy/database integrity test. Login as User A after User B has used system User A should only receive User A's information.":
+        - cell "ACC02"
+        - cell "Check users cannot view another user's account information. Privacy/database integrity test.":
+          - strong: Check users cannot view another user's account information.
+          - text: Privacy/database integrity test.
+        - cell "Login as User A after User B has used system"
+        - cell "User A should only receive User A's information."
+        - cell
+      - row "ACC03 Check logout from account/dashboard works. Press Logout Login page should display and session values should be cleared.":
+        - cell "ACC03"
+        - cell "Check logout from account/dashboard works.":
+          - strong: Check logout from account/dashboard works.
+        - cell "Press Logout"
+        - cell "Login page should display and session values should be cleared."
+        - cell
+      - row "ACC04 Check protected pages cannot be reopened after logout. Logout → attempt dashboard/admin/questionnaire access User should be returned to authentication rather than allowed back into protected content.":
+        - cell "ACC04"
+        - cell "Check protected pages cannot be reopened after logout.":
+          - strong: Check protected pages cannot be reopened after logout.
+        - cell "Logout → attempt dashboard/admin/questionnaire access"
+        - cell "User should be returned to authentication rather than allowed back into protected content."
+        - cell
+  - button "Copy table":
+  - separator
+  - heading "Post-Development Test Plan" [level=1]
+  - paragraph:
+    - text: This part should
+    - strong: not be fully completed yet
+    - text: if you haven't built the system. Do not invent successful results now.
+  - paragraph:
+    - text: Use your
+    - strong: same IDs from the pre-development test plan
+    - text: . That is important because it demonstrates that you actually tested what you planned to test, rather than making your testing fit the finished program.
+  - paragraph: "A strong introduction would be:"
+  - blockquote:
+    - paragraph: Following implementation, the tests defined in the original development test plan were carried out using the planned test data. The actual output was compared with the previously defined expected output. Any failed tests were investigated, changes were made to the relevant part of the program and the test was repeated. This provides evidence that validation, database operations, user authentication, system functionality and the compatibility algorithm operate according to the original design and success criteria.
+  - paragraph: "Then have this structure:"
+  - table:
+    - rowgroup:
+      - row "ID Test Planned Input Expected Output Actual Output Result Evidence / Corrective Action":
+        - columnheader "ID"
+        - columnheader "Test"
+        - columnheader "Planned Input"
+        - columnheader "Expected Output"
+        - columnheader "Actual Output"
+        - columnheader "Result"
+        - columnheader "Evidence / Corrective Action"
+    - rowgroup:
+      - row "REG01 Valid registration Sienna Smith, sienna@test.com, 18, PinkPets1 Account created successfully Complete after running test Pass/Fail Screenshot reference":
+        - cell "REG01"
+        - cell "Valid registration"
+        - cell "Sienna Smith, sienna@test.com, 18, PinkPets1":
+          - code: Sienna Smith
+          - text: ","
+          - code: sienna@test.com
+          - text: ","
+          - code: "18"
+          - text: ","
+          - code: PinkPets1
+        - cell "Account created successfully"
+        - cell "Complete after running test":
+          - strong: Complete after running test
+        - cell "Pass/Fail"
+        - cell "Screenshot reference"
+      - row "REG05 Duplicate email Register sienna@test.com twice Second attempt rejected; only one DB record Complete after test Pass/Fail Screenshot/database evidence":
+        - cell "REG05"
+        - cell "Duplicate email"
+        - cell "Register sienna@test.com twice":
+          - text: Register
+          - code: sienna@test.com
+          - text: twice
+        - cell "Second attempt rejected; only one DB record"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot/database evidence"
+      - row "REG07 Age below boundary 17 Registration rejected Complete after test Pass/Fail Screenshot reference":
+        - cell "REG07"
+        - cell "Age below boundary"
+        - cell "17":
+          - code: "17"
+        - cell "Registration rejected"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot reference"
+      - row "REG08 Age at boundary 18 Registration accepted Complete after test Pass/Fail Screenshot reference":
+        - cell "REG08"
+        - cell "Age at boundary"
+        - cell "18":
+          - code: "18"
+        - cell "Registration accepted"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot reference"
+      - row "LOG02 Incorrect password Correct email + wrong password Authentication rejected Complete after test Pass/Fail Screenshot reference":
+        - cell "LOG02"
+        - cell "Incorrect password"
+        - cell "Correct email + wrong password"
+        - cell "Authentication rejected"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot reference"
+      - row "LOG08 User attempts admin access Logged-in normal account Access denied Complete after test Pass/Fail Screenshot reference":
+        - cell "LOG08"
+        - cell "User attempts admin access"
+        - cell "Logged-in normal account"
+        - cell "Access denied"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot reference"
+      - row "QUE03 Missing questionnaire response One required field omitted Submission prevented Complete after test Pass/Fail Screenshot reference":
+        - cell "QUE03"
+        - cell "Missing questionnaire response"
+        - cell "One required field omitted"
+        - cell "Submission prevented"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot reference"
+      - row "ALG06 Mathematical accuracy 40/50 80% Record algorithm result Pass/Fail Calculation + program screenshot":
+        - cell "ALG06"
+        - cell "Mathematical accuracy"
+        - cell "40/50":
+          - code: 40/50
+        - cell "80%":
+          - code: 80%
+        - cell "Record algorithm result":
+          - strong: Record algorithm result
+        - cell "Pass/Fail"
+        - cell "Calculation + program screenshot"
+      - row "ALG11 Ranking A=92%, B=76%, C=84% A → C → B Record displayed ordering Pass/Fail Recommendation screenshot":
+        - cell "ALG11"
+        - cell "Ranking"
+        - cell "A=92%, B=76%, C=84%"
+        - cell "A → C → B"
+        - cell "Record displayed ordering":
+          - strong: Record displayed ordering
+        - cell "Pass/Fail"
+        - cell "Recommendation screenshot"
+      - row "ANI07 Combined filters Dog + Small Only small dogs displayed Complete after test Pass/Fail Screenshot":
+        - cell "ANI07"
+        - cell "Combined filters"
+        - cell "Dog + Small"
+        - cell "Only small dogs displayed"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot"
+      - row "ADM03 Add animal Valid Luna record Luna inserted Complete after test Pass/Fail Admin + database evidence":
+        - cell "ADM03"
+        - cell "Add animal"
+        - cell "Valid Luna record"
+        - cell "Luna inserted"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Admin + database evidence"
+      - row "ADM08 Edit animal Luna age 3 → 4 Updated everywhere Complete after test Pass/Fail Before/after evidence":
+        - cell "ADM08"
+        - cell "Edit animal"
+        - cell "Luna age 3 → 4"
+        - cell "Updated everywhere"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Before/after evidence"
+      - row "ADM10 Delete animal Delete Luna Record removed Complete after test Pass/Fail Before/after evidence":
+        - cell "ADM10"
+        - cell "Delete animal"
+        - cell "Delete Luna"
+        - cell "Record removed"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Before/after evidence"
+      - row "ACC04 Protected page after logout Logout → dashboard Authentication required Complete after test Pass/Fail Screenshot":
+        - cell "ACC04"
+        - cell "Protected page after logout"
+        - cell "Logout → dashboard"
+        - cell "Authentication required"
+        - cell "Complete after test":
+          - strong: Complete after test
+        - cell "Pass/Fail"
+        - cell "Screenshot"
+  - button "Copy table":
+  - paragraph:
+    - text: You would then continue the table for
+    - strong: all relevant IDs from your pre-test plan
+    - text: .
+  - heading "What to do when one fails" [level=2]
+  - paragraph: "A high-quality post-testing entry would look something like this:"
+  - table:
+    - rowgroup:
+      - row "ID Expected Actual Result Corrective Action / Retest":
+        - columnheader "ID"
+        - columnheader "Expected"
+        - columnheader "Actual"
+        - columnheader "Result"
+        - columnheader "Corrective Action / Retest"
+    - rowgroup:
+      - 'row "REG05 Duplicate email rejected Application produced an SQLite UNIQUE constraint error on screen Fail Added a check for the existing email before insertion and handled the database exception. Retested using the same email twice. The second attempt now displayed \"An account with this email already exists\" without crashing. Retest: Pass."':
+        - cell "REG05"
+        - cell "Duplicate email rejected"
+        - cell "Application produced an SQLite UNIQUE constraint error on screen":
+          - text: Application produced an SQLite
+          - code: UNIQUE constraint
+          - text: error on screen
+        - cell "Fail":
+          - strong: Fail
+        - 'cell "Added a check for the existing email before insertion and handled the database exception. Retested using the same email twice. The second attempt now displayed \"An account with this email already exists\" without crashing. Retest: Pass."':
+          - text: Added a check for the existing email before insertion and handled the database exception. Retested using the same email twice. The second attempt now displayed
+          - code: "\"An account with this email already exists\""
+          - text: without crashing.
+          - strong: "Retest: Pass."
+  - button "Copy table":
+  - paragraph:
+    - text: That is actually
+    - strong: better evidence than having every single test pass first time
+    - text: ", because it demonstrates genuine iterative development and debugging."
+  - paragraph: "And for your algorithm:"
+  - table:
+    - rowgroup:
+      - row "ID Expected Actual Result Corrective Action / Retest":
+        - columnheader "ID"
+        - columnheader "Expected"
+        - columnheader "Actual"
+        - columnheader "Result"
+        - columnheader "Corrective Action / Retest"
+    - rowgroup:
+      - row "ALG06 40 / 50 × 100 = 80% Program returned 80.0% Pass Manual calculation matched program output. No corrective action necessary.":
+        - cell "ALG06"
+        - cell "40 / 50 × 100 = 80%":
+          - code: 40 / 50 × 100 = 80%
+        - cell "Program returned 80.0%":
+          - text: Program returned
+          - code: 80.0%
+        - cell "Pass":
+          - strong: Pass
+        - cell "Manual calculation matched program output. No corrective action necessary."
+      - row "ALG11 Ranking A 92%, C 84%, B 76% Displayed A, C, B Pass Confirms sorting is performed in descending compatibility order.":
+        - cell "ALG11"
+        - cell "Ranking A 92%, C 84%, B 76%"
+        - cell "Displayed A, C, B"
+        - cell "Pass":
+          - strong: Pass
+        - cell "Confirms sorting is performed in descending compatibility order."
+  - button "Copy table":
+  - separator
+  - heading "The part that will make yours stronger than just copying the exemplar" [level=2]
+  - paragraph: "For your project, I would make sure your final evidence has a clear chain like:"
+  - paragraph:
+    - strong: Requirement → Design → Test ID → Test data → Expected result → Actual result → Screenshot/evidence → Pass/fail → Correction/retest
+  - paragraph: "For example:"
+  - paragraph:
+    - strong: "Success criterion:"
+    - text: Users must receive ranked animal recommendations based on their questionnaire responses.
+  - paragraph:
+    - strong: "Design:"
+    - text: weighted compatibility scoring algorithm.
+  - paragraph:
+    - strong: "Tests:"
+    - text: ALG01–ALG14.
+  - paragraph:
+    - strong: "Evidence:"
+    - text: manual calculations + program output + recommendation page screenshot.
+  - paragraph:
+    - strong: "Conclusion:"
+    - text: compare the final result directly back to the success criterion.
+  - paragraph: That's the sort of traceability that makes the testing feel like part of the development process rather than a table added at the end.
+  - paragraph:
+    - text: "One important thing:"
+    - strong: don't use all 70-ish rows purely for the sake of having lots of tests.
+    - text: Keep tests that prove a distinct requirement, validation rule, boundary, database operation or algorithm behaviour. The set above gives you roughly the same depth as the exemplar while being much more specifically linked to your animal-adoption project.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Medium":
+    - generic: Medium
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

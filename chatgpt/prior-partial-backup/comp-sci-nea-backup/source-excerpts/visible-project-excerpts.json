@@ -1,0 +1,534 @@
+{
+  "archive_date": "2026-09-07",
+  "project": "COMP SCI NEA",
+  "coverage": "Partial project overview only; 13 visible conversation excerpts. This is not an account/project export.",
+  "all_project_chats_enumerated": false,
+  "all_assistant_outputs_recovered": false,
+  "timestamp_note": "Conversation labels use Europe/London project context; exact message timestamps are unavailable. Hour-only labels are normalised with :00; see per-chat metadata.",
+  "chats": [
+    {
+      "source_id": "CHAT-01",
+      "visible_order": 1,
+      "displayed_timestamp": "2026-09-07T18:58",
+      "displayed_author": "shaan sisodia",
+      "title": "Set Up NEA",
+      "source_has_truncation_marker": false,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/01-2026-09-07-set-up-nea.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "how do i set up my nea"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-02",
+      "visible_order": 2,
+      "displayed_timestamp": "2026-08-06T19:35",
+      "displayed_author": "shaan sisodia",
+      "title": "Pseudocode for Login and Registration",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/02-2026-08-06-pseudocode-for-login-and-registration.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "streamlit pseudocode for these validations Validation\n\n1. **Name**\n\n- Presence check: Field cannot be empty or contain only spaces\n- Length check: name must be between 2 and 50 characters\n- Whitespace check: spaces at beginning and end will be removed\n\n2. **Email address**\n\n- Presence check: Field cannot be empty or contain only spaces\n- Format check: value must contain a @ and domain\n- Uniqueness check: a database query will check the address not already registered\n- Whitespace check: spaces at beginning and end will be removed\n- Check characters: convert all to lower case\n\n3. **Age**\n\n- Presence check: Field cannot be empty or contain only spaces\n- Type check: data must be a whole number\n- Range check: age must be 18+\n\n4. **Password**\n\n- Presence check: Field cannot be empty or contain only spaces\n- Length check: password must be more than 8 characters\n\nRegistration\n\n- Confirmation check: the confirmation field must exactly match original password\n- Security processing: the valid password will be hashed before it is inserted into the database and the original password will never be stored"
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "PSEUDOCODE FOR MY A LLEVEL DESIGN BIT"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-03",
+      "visible_order": 3,
+      "displayed_timestamp": "2026-08-06T20:26",
+      "displayed_author": "shaan sisodia",
+      "title": "Login Interface Design",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/03-2026-08-06-login-interface-design.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "<<ImageDisplayed>><<ImageDisplayed>>annotate my pink one like this exemplar so i can copy it out to a a* standard  which will g"
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "now do registration page similar format "
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "make it in streamlit"
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "what doese it look like"
+        },
+        {
+          "visible_sequence": 5,
+          "role": "user",
+          "text": "what about the dashboard homepage"
+        },
+        {
+          "visible_sequence": 6,
+          "role": "user",
+          "text": "<<ImageDisplayed>>what about something like this with my requirements from analysis and design section"
+        },
+        {
+          "visible_sequence": 7,
+          "role": "user",
+          "text": "made image with streamlit"
+        },
+        {
+          "visible_sequence": 8,
+          "role": "user",
+          "text": "can you do the same for the admin page now "
+        },
+        {
+          "visible_sequence": 9,
+          "role": "user",
+          "text": "i dont like it"
+        },
+        {
+          "visible_sequence": 10,
+          "role": "user",
+          "text": "reedo it its too complicated needs to be more simple "
+        },
+        {
+          "visible_sequence": 11,
+          "role": "user",
+          "text": "can you show me add animal page aswell please"
+        },
+        {
+          "visible_sequence": 12,
+          "role": "user",
+          "text": "<<ImageDisplayed>>can you annotate this like the eemplar was"
+        },
+        {
+          "visible_sequence": 13,
+          "role": "user",
+          "text": "now do the animal viewing page "
+        },
+        {
+          "visible_sequence": 14,
+          "role": "user",
+          "text": "can you do one for the animal page"
+        },
+        {
+          "visible_sequence": 15,
+          "role": "user",
+          "text": "<<ImageDisplayed>>annotate this please "
+        },
+        {
+          "visible_sequence": 16,
+          "role": "user",
+          "text": "can you make the interfaces for the questionaire page, e.g how a question would look + the after with each animals page and the beginning before taking it make it really simple please "
+        },
+        {
+          "visible_sequence": 17,
+          "role": "user",
+          "text": "the home question is kinda bad can you fix it to the amount of space "
+        },
+        {
+          "visible_sequence": 18,
+          "role": "user",
+          "text": "<<ImageDisplayed>><<ImageDisplayed>>annotate at a a* standard "
+        },
+        {
+          "visible_sequence": 19,
+          "role": "user",
+          "text": "<<ImageDisplayed>><<ImageDisplayed>><<ImageDisplayed>><<ImageDisplayed>>can you annotate these photos with a* level annotations"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 11,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-04",
+      "visible_order": 4,
+      "displayed_timestamp": "2026-08-08T01:35",
+      "displayed_author": "shaan sisodia",
+      "title": "Test Plan Guidance",
+      "source_has_truncation_marker": false,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/04-2026-08-08-test-plan-guidance.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "<<ImageDisplayed>><<ImageDisplayed>><<ImageDisplayed>><<ImageDisplayed>><<ImageDisplayed>><<ImageDisplayed>>this is an exemplar for pre test data and post test data i need one for mine at a same high level as this so i can get 70/70"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 6,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-05",
+      "visible_order": 5,
+      "displayed_timestamp": "2026-08-05T14:53",
+      "displayed_author": "shaan sisodia",
+      "title": "Streamlit Database Compatibility",
+      "source_has_truncation_marker": false,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/05-2026-08-05-streamlit-database-compatibility.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "considering i am using streamlit with my projetc, should i be using sqlite and is it compatible or shall i use a different type of database software"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-06",
+      "visible_order": 6,
+      "displayed_timestamp": "2026-07-20T00:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Variables Section Guidance",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/06-2026-07-20-variables-section-guidance.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "is this too ma## Login and Registration Variables\n\n| Variable name      | Data type | Purpose                                                        | Justification                                                                                                                                                       | Example or validation                           |\n| ------------------ | --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |\n| `user_name`        | String    | Stores the name entered during registration.                   | A string is required because a name contains alphabetic characters and may include spaces or hyphens. It allows the system to identify and personalise the account. | Cannot be blank.                                |\n| `email`            | String    | Stores the user’s email address.                               | An email contains letters and symbols, so it must be stored as a string. It is required as a unique identifier for logging in and contacting the user.              | Must follow a valid email format and be unique. |\n| `age`              | Integer   "
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "can you do the same four columns for these variablaes for the compatibility scoring algoirthm Variable Name\nanimal_id\nmaximum_score\ntotal_score\nanimal_scores\ncompatibility_score\nmatch_category\nunmet_requirements\nMinimum_recommendation_score\n"
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "add validation or ecample "
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "<<ImageDisplayed>>can you ensure the validation and the variables meet this criteria "
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 1,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-07",
+      "visible_order": 7,
+      "displayed_timestamp": "2026-07-22T21:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Branch · Starting Design Phase",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/07-2026-07-22-branch-starting-design-phase.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "Database (Table structure)\n\n\nField\nData type\nKey/validation\nPurpose\nuser_id\nINTEGER\nPrimary key which will auto increment\nUniquely identifies each account\nname\nSTRING\nrequired\nStores the users name to personalise their experience\nemail\nSTRING\nRequired and unique\nUsed to login and contact the user\nage\nINTEGER\nrequired , valid range\nStores the users age and can confirm that the adopter meets the required age\npassword_hash\nSTRING\nrequired\nStores the securely hashed password\nrole\nSTRING\n‘User’ or ‘admin’\nControls access to the administrator area, although normal registrations should automatically receive the role ‘user"
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "how can i make the after result look like the one in pet finder "
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "i want the preferences to be a top choice if they have that can you elaborate why weight so low and why thats goof"
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "so how do i add that into the algorithm"
+        },
+        {
+          "visible_sequence": 5,
+          "role": "user",
+          "text": "now can you remake me a flow chart like you had done before which i can copy out in my own way please which is pretty detailed and decriptive but not too much either "
+        },
+        {
+          "visible_sequence": 6,
+          "role": "user",
+          "text": "<<ImageDisplayed>>for each of the pages, what notes and write up would i have to do on input validation this is an exemplar for it to be a* worthy"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 1,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-08",
+      "visible_order": 8,
+      "displayed_timestamp": "2026-07-22T20:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Flow chart request",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/08-2026-07-22-flow-chart-request.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "i meant regsitration "
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "wait no redo i dont care about administration right now, make a detailed flow chart of the registration and login flow chart within one with it purple themed "
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "now administration page flow chart"
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "really dont i just need the manage animals section?"
+        },
+        {
+          "visible_sequence": 5,
+          "role": "user",
+          "text": "wait im confused about the interface then can you show me what it would be 'remember the theming and the pink' "
+        },
+        {
+          "visible_sequence": 6,
+          "role": "user",
+          "text": "this an ok flow chart?"
+        },
+        {
+          "visible_sequence": 7,
+          "role": "user",
+          "text": "User Homepage/Main Menu\nWill provide the main navigation area after the user logs in. It will allow the user to access the questionnaire, browse available animals and view their account. It will also explain the purpose of the adoption matching system. It will be clear and welcoming, and not overwhelming for the user. \nThe system will check the user's session to make sure they are logged in. It may retrieve the user's name and recent questionnaire information from the database so that personalised information can be displayed. \n what about this page whats the flow chart for it"
+        },
+        {
+          "visible_sequence": 8,
+          "role": "user",
+          "text": "make it like you made it before please "
+        },
+        {
+          "visible_sequence": 9,
+          "role": "user",
+          "text": "i have written seperate sections for the viewing of animals and the questionaire completion, i can includde the view account nad logout stuff in here but i dont know again how this would lok "
+        },
+        {
+          "visible_sequence": 10,
+          "role": "user",
+          "text": "okay what about the animal viewing page now for the flow chart"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-09",
+      "visible_order": 9,
+      "displayed_timestamp": "2026-07-22T20:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Remake Design Mockups",
+      "source_has_truncation_marker": false,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/09-2026-07-22-remake-design-mockups.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "i have lost my images you created for my design can you remake it here please"
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "nono it was pink before what"
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "but remember what the features of my interfaces are, and i need it to be easy and doable with streamlit "
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "see there was no applixations in my old ones, and how do i make this with streamlit "
+        },
+        {
+          "visible_sequence": 5,
+          "role": "user",
+          "text": "so remake the design please"
+        },
+        {
+          "visible_sequence": 6,
+          "role": "user",
+          "text": "do this properly, so its not hard to make but also simple but preety and aesthetic and that it matches all my requirements and all the features i had made inlcuding feedback from competitor reports and the stakeholder surveys and the client interview and matching my sucess criteria that it is at a a* standrard, which can be made using streamlit "
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-10",
+      "visible_order": 10,
+      "displayed_timestamp": "2026-07-11T00:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Starting Design Phase",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/10-2026-07-11-starting-design-phase.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "i like keeping the fields in it helps me with my own planning Proposed Layout \nMy main system can be decomposed into main components which come together to create the final system. \n\nSection\nFront End Justification\nBackend Justification\nUser/Admin Authentication\nWill allow users to register and existing users to login, and allow admins to access their page safely and securely. Registration will collect the users name, email, age and password. The interface should provide clear feedback when details are missing or forgotten from its validation system. It will also show an error message if login details are incorrect\nThe system will validate entered details, such as:\nemail cannot be blank and must be valid and unique\nPassword minimum 8 characters\nAge must be a valid number\nLogin fields cannot be blank\nThe passwords will be hashed in order to be kept secure and safe. During login, enter details will be compared against records in the users table. A session will then"
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "i think i talked about age in analysis no? idc ab the may parts"
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "<<ImageDisplayed>><<ImageDisplayed>>this is an exemplar what shall i descrobe mine with to make it the best can u write it for me at a a* standard"
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "can you aannotate it onto the document"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 2,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-11",
+      "visible_order": 11,
+      "displayed_timestamp": "2026-06-27T18:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Features section example",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/11-2026-06-27-features-section-example.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "is this okay, anything else? Limitations \n\nThe system will be built in order for one specific animal shelter rather than a large organisation such as the RSPCA. This means that the database will only need to store the animals, users and admin accounts linked to that shelter. This is a large limitation as creating a system for multiple shelters would require extra features such as shelter admin accounts and location based searching and overall a larger database structure. This will be extremely difficult with the experience I have and would increase the complexity of my project. Furthermore, this would make development and testing less realistic within the time available. \n\nThe system will only be focusing on common adoption animals such as dogs, cats and rabbits rather than every possible species. This is due to different animals having different care requirements, and every possible animal would make the matching algorithm too broad and difficult to test"
+        },
+        {
+          "visible_sequence": 2,
+          "role": "user",
+          "text": "this is my whole analysis secton, can you mark it and tell me what sectionst o change iF NOT FULL MARKS  <<File name=\"comp sci umar and sienna (1).pdf\">>"
+        },
+        {
+          "visible_sequence": 3,
+          "role": "user",
+          "text": "wb now ! <<File name=\"comp sci umar and sienna.pdf\">>"
+        },
+        {
+          "visible_sequence": 4,
+          "role": "user",
+          "text": "wait did i need to inclde anywhere in sucess criter being able to search and filter"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": [
+        "comp sci umar and sienna (1).pdf",
+        "comp sci umar and sienna.pdf"
+      ]
+    },
+    {
+      "source_id": "CHAT-12",
+      "visible_order": 12,
+      "displayed_timestamp": "2026-07-12T12:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Design Task Timeline",
+      "source_has_truncation_marker": false,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/12-2026-07-12-design-task-timeline.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "Design - Sienna\nTask\nStatus Sienna\nDue date\nDay\nIntroduction\n Not started\n Jun 21, 2026\n22nd June\nLogin/ Registration Page\n Not started\n Date\n\n\nAdmin Page\n Not started\n Date\n\n\nMain Menu/ Dashboard\n Not started\n Date\n\n\nAnimal Viewing Page\n Not started\n Date\n\n\nQuestionnaire Page\n Not started\n Date\n\n\ni need all these sections done by 28th august, bear in mind i am working the whole of august so will have barely any time to complete so want most done in july "
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    },
+    {
+      "source_id": "CHAT-13",
+      "visible_order": 13,
+      "displayed_timestamp": "2026-07-09T23:00",
+      "displayed_author": "shaan sisodia",
+      "title": "Hardware and Software Req",
+      "source_has_truncation_marker": true,
+      "coverage": "Visible user-message excerpts only; not a complete conversation export.",
+      "assistant_responses_recovered": false,
+      "original_attachment_bytes_recovered": false,
+      "path": "source-excerpts/13-2026-07-09-hardware-and-software-req.md",
+      "messages": [
+        {
+          "visible_sequence": 1,
+          "role": "user",
+          "text": "Hardware and Software Requirements\n\nThe technology used to build this system is based on the features that my client requires. The list of requirements is as follows:\nClean user interface\nUser registration and login\nAdmin login\nDatabase storage for animal records, user accounts and questionnaire answers\nCRUD functionality for admins\nInput validation \nCompatibility scoring algorithm\nRanked animal recommendations\nFor this project, I will develop my system on my Macbook, which has the required hardware and software capabilities to develop, run and test my system. \n\nDeveloper\nHardware: \nDevice: Macbook Air, 13 Inch, M3 2024\nProcessor: Apple M3 Chip\nRAM: 8GB\nDisplay: I will use the 13.6 inch built in retina display alongside a 13 inch monitor\nInput: Keyboard and Trackpad \nInternet Connection: This is required in order to install packages, access documentation and test deployment. \nThis hardware is suitable as my system will not require advanced graphics processing or a powerful server. The main processing will be form input, database queries, validation and the algorithm, which is perfectly suited for my laptop. \n\nSoftware:  \nOperating system: MacOS Sequoia 15.0 \nIDE: Visual studio code"
+        }
+      ],
+      "timestamp_note": "Displayed conversation label, not a verified timestamp for every message. Minute 00 represents hour-only labels for CHAT-06, CHAT-07, CHAT-08, CHAT-09, CHAT-10, CHAT-11, CHAT-12 and CHAT-13.",
+      "image_placeholder_count": 0,
+      "named_attachment_references": []
+    }
+  ]
+}

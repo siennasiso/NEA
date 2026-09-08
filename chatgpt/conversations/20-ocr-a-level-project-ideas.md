@@ -1,0 +1,156 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: You can absolutely do
+    - strong: one overall summary paragraph
+    - text: instead of analysing every question individually.
+  - paragraph: In fact, for OCR that's often cleaner and less repetitive.
+  - paragraph: "Something like:"
+  - blockquote:
+    - paragraph: The client interview provided valuable insight into the requirements of the proposed system. The client identified that many people fail to consider factors such as available space, time commitment, allergies and previous experience before adopting an animal. As a result, these factors will be incorporated into the compatibility questionnaire and scoring algorithm. The client also highlighted the importance of maintaining detailed animal profiles and ensuring that staff are able to add, edit and remove animal records through a secure administrative interface. In addition, the client requested a simple and welcoming design, strong security measures, and the ability for users to search and filter animals. These requirements will be used to guide the design and development of the system.
+  - paragraph: That's enough to show you've reflected on the interview.
+  - separator
+  - heading "Even better" [level=3]
+  - paragraph: When you get to later sections, keep referring back to it.
+  - paragraph: "For example:"
+  - heading "Features of Proposed Solution" [level=4]
+  - blockquote:
+    - paragraph: Following feedback from the client interview, the system will include a compatibility scoring algorithm to help users identify suitable animals.
+  - heading "Success Criteria" [level=4]
+  - blockquote:
+    - paragraph: The system shall allow staff members to add, edit and delete animal records, as requested by the client.
+  - heading "Design" [level=4]
+  - blockquote:
+    - paragraph: The client requested a friendly and welcoming interface using soft pastel colours; therefore, these colours will be incorporated into the user interface design.
+  - heading "Algorithms" [level=4]
+  - blockquote:
+    - paragraph: The weighting of factors within the compatibility algorithm is based on the client's recommendation that available space, allergies and young children should have a greater impact on suitability.
+  - separator
+  - paragraph: This is actually stronger than writing pages of interview analysis because it demonstrates that the interview genuinely influenced your project.
+  - paragraph: "So my recommendation:"
+  - list:
+    - paragraph:
+      - strong: Keep the interview as it is.
+    - paragraph:
+      - text: Add
+      - strong: one summary paragraph
+      - text: after it.
+    - paragraph: Continuously refer back to the interview throughout Analysis, Design, and Success Criteria.
+  - paragraph: That's exactly what higher-mark coursework tends to do.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: in the summary paragraph can you talk about design
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph: Yes, because your client gave quite a lot of design-related feedback (layout, colours, usability, navigation, devices, etc.).
+  - paragraph: "You could write:"
+  - blockquote:
+    - paragraph: The client interview provided valuable insight into both the functionality and design requirements of the proposed system. The client identified that many people fail to consider factors such as available space, time commitment, allergies and previous experience before adopting an animal. Therefore, these factors will be incorporated into the compatibility questionnaire and scoring algorithm. The client also highlighted the importance of maintaining detailed animal profiles and providing staff with the ability to add, edit and remove animal records through a secure administrative interface. In terms of design, the client requested a simple, welcoming and easy-to-use interface with clear navigation, animal photographs and soft pastel colours to create a friendly appearance. The client also emphasised the importance of security, ensuring that only authorised staff can modify records. The information gathered from this interview will be used to inform the design, functionality and development of the final system.
+  - paragraph: "This paragraph works well because it covers:"
+  - list:
+    - paragraph: Functional requirements
+    - paragraph: Compatibility algorithm
+    - paragraph: Staff features
+    - paragraph: Security
+    - paragraph: User interface design
+    - paragraph: How the interview will influence the project
+  - paragraph: which is exactly what OCR wants to see from a client interview summary.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: Client Interview What factors do people fail to consider before adopting an animal? “I think a lot of people choose animals based on how cute they are without thinking how much work they can be. They often forget to consider things like how much space they have, how much time they can spend with their animal, how much it costs to look after, and whether they have experience caring for that type of animal. Some people also do not think about whether their home is suitable for the animals needs.” What information should be stored about each animal? “Each animal should have basic information such as its name, age, breed, species, sex and a photo of the animal. It can also contain an extra information section such as personality, medical conditions, exercise needs, whether it gets along with children or other pets and special requirements other adopters should know about.” How should the system respond if the user is not suitable for the particular animal? “ I don't think the system should completely stop someone from adopting an animal, but it should warn them they might not be a good match. It should explain which requirements they don't meet and recommend other animals. This helps people make better decisions and reduce chances of animals ending up in the wrong home, but also not diverting people from adopting.” Do you think users should be able to apply for adoption directly through the system? “No, I don't think users should be able to apply for adoption directly through the system. Although the system can help identify suitable animals, I still think adoption agencies should still carry out further checks in person. If staff are able to meet the adopter face-to-face they can assess personality, commitment and understanding of responsibility in owning a pet. It should aid the original process not completely take over that decision” What key tasks should the staff have on their side of the system? “The key features the staff should have is being able to add, edit and remove animal records, update animal information, upload photos and mark animals as available and unavailable for adoption. They should also be able to manage user accounts and view compatibility results generated by the system. The database should also be kept up to date.” What features would make the system easy to use for both staff and adopters? “I think the main thing is that it should be simple and not confusing. People should be able to find what they are looking for quickly without clicking through loads of pages. It should be easy to browse animals and use the questionnaire, and for staff it should be straightforward to update animal information. Clear buttons, a clean layout and simple instructions.” What features should be displayed on the homepage? “I think the homepage should show some of the animals that are currently available with a search bar. I also want information about how the adoption process works and a button to complete the questionnaire. The homepage should be welcoming and make it clear what the website is for.” Should users be able to search for animals, if so what filters should be available? “Yes I think users should be able to search for animals as it makes it much easier to find a suitable pet. Filter categories could be the type of animal, breed, age, size and activity level.” What information should users provide when creating an account? “Basic information such as name, email, address, phone number and a password when creating an account. You could also include the age to ensure they are old enough to adopt the animal.” Should some factors have a greater impact on the compatibility algorithm than others and if so which factors? “Yes I think some factors should matter more than others. Things like available space, allergies and whether there are young children in the house should have a bigger impact. For example, if someone is allergic to cats, they should not be strongly matched with a cat, even if the rest of their answers are suitable. Less serious factors such as preferred age or breed, should not be considered as important as the animals safety and wellbeing.” Do you want the website to look a specific way? Any colours, fonts etc. It would also help if you gave specific examples of apps you like “I would like the website to have a cute and friendly look rather than it being too serious. Soft pink and pastel colours would make it feel more welcoming and enjoyable to use. I think the design should be simple but visually appealing, with lots of photos of the animals and clear buttons. The main thing is that it feels approachable and encourages people to engage with the adoption process.” Do you have any security concerns regarding the app? “Yes, I think security is important because the system will store users' accounts and animal records. Passwords should be protected, and only staff should be able to add, edit or delete animal information. Regular users should only be able to browse animals and complete questionnaires, not change anything in the database.” Which devices do you want it to work on? “I want the system to work on both laptop and desktop computers, as these will be mostly used by adoption agency staff.” What should happen after a user receives their compatibility results? “I think the system should show users the results in a clear way and provide them with more information about any animals that are a good match. What happens after that would depend on how the adoption agency wants to use the system.” Are there any features that you believe are essential for the success of this system? “The compatibility scoring system is probably the most important feature as it helps match animals with suitable owners. Additionally, the animal profiles need to be detailed and up to date so the users will have all the information they need before making a decision” Overall, the client interview provided valuable insight into the function and design requirements for this system. The client identified that many people fail to consider factors such as available space, time commitment, allergies and previous experience before adopting an animal. Therefore, these factors will be incorporated into the compatibility questionnaire and scoring algorithm. The client also highlighted the importance of maintaining and up to date detailed animal profiles and providing staff with ability to edit, add and remove animals through an administrative interface. For the design, the client wants a simple, easy to use interface with clear navigation, animal photographs and soft pastel colours to make it a friendly interface. The client also is very focused on security ensuring only staff can change details within the database regarding the animals.
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Honestly, this is
+    - strong: good enough for a strong OCR client interview section
+    - text: .
+  - paragraph: If I were giving feedback as a teacher, I wouldn't tell you to add more questions. I'd tell you to make a few small improvements to the summary paragraph and then move on.
+  - heading "Small corrections" [level=3]
+  - paragraph: "Instead of:"
+  - blockquote:
+    - paragraph: "\"maintaining and up to date detailed animal profiles\""
+  - paragraph: "write:"
+  - blockquote:
+    - paragraph: "\"maintaining detailed and up-to-date animal profiles\""
+  - paragraph: "Instead of:"
+  - blockquote:
+    - paragraph: "\"providing staff with ability to edit, add and remove animals\""
+  - paragraph: "write:"
+  - blockquote:
+    - paragraph: "\"providing staff with the ability to add, edit and remove animal records\""
+  - paragraph: "Instead of:"
+  - blockquote:
+    - paragraph: "\"The client also is very focused on security\""
+  - paragraph: "write:"
+  - blockquote:
+    - paragraph: "\"The client also emphasised the importance of security\""
+  - paragraph: It sounds more formal.
+  - separator
+  - heading "Slightly improved final paragraph" [level=3]
+  - paragraph: "You could use:"
+  - blockquote:
+    - paragraph: Overall, the client interview provided valuable insight into the functional and design requirements of the proposed system. The client identified that many people fail to consider factors such as available space, time commitment, allergies and previous experience before adopting an animal. Therefore, these factors will be incorporated into the compatibility questionnaire and scoring algorithm. The client also highlighted the importance of maintaining detailed and up-to-date animal profiles and providing staff with the ability to add, edit and remove animal records through an administrative interface. In terms of design, the client requested a simple and easy-to-use interface with clear navigation, animal photographs and soft pastel colours to create a friendly and welcoming experience. The client also emphasised the importance of security, ensuring that only authorised staff members can modify animal information stored within the database. The information gathered from this interview will be used to inform the design and development of the final system.
+  - separator
+  - heading "From an OCR perspective" [level=3]
+  - paragraph: "You have gathered requirements for:"
+  - paragraph:
+    - text: ✅ Functionality
+    - text: ✅ Security
+    - text: ✅ User accounts
+    - text: ✅ Compatibility algorithm
+    - text: ✅ Database contents
+    - text: ✅ Search and filtering
+    - text: ✅ User interface design
+    - text: ✅ Device requirements
+    - text: ✅ Administrative features
+  - paragraph: That's exactly what a client interview is supposed to achieve.
+  - paragraph:
+    - text: "My advice now is:"
+    - strong: stop editing the interview
+    - text: and move on to the stakeholder survey. The survey will probably contribute more marks at this point than spending another hour tweaking interview answers.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Medium":
+    - generic: Medium
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

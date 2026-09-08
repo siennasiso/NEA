@@ -1,0 +1,14 @@
+# This is a partial archive; exclude runtime clutter and credentials, not coursework documents.
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*.pem
+*.key
+# Keep complete account exports out of this project snapshot unless reviewed and selected.
+chatgpt-account-export/

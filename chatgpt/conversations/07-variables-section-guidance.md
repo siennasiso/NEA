@@ -1,0 +1,409 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Here is the compatibility-scoring algorithm table using the four columns
+    - strong: Variable name, Data type, Purpose and Justification
+    - text: .
+  - generic: Compatibility-Scoring Algorithm Variables
+  - button "Copy":
+  - button [disabled]:
+  - button "Open editor":
+  - heading "Compatibility-Scoring Algorithm Variables" [level=2]
+  - table:
+    - rowgroup:
+      - row "Variable name Data type Purpose Justification" [disabled]:
+        - columnheader "Variable name" [disabled]
+        - columnheader "Data type" [disabled]
+        - columnheader "Purpose" [disabled]
+        - columnheader "Justification" [disabled]
+      - row "animal_id Integer Stores the unique identifier of the animal currently being assessed. An integer is suitable because each animal is assigned a unique numerical primary key in the database. It ensures that each calculated score is linked to the correct animal, even when animals have the same name." [disabled]:
+        - cell "animal_id":
+          - code: animal_id
+        - cell "Integer"
+        - cell "Stores the unique identifier of the animal currently being assessed."
+        - cell "An integer is suitable because each animal is assigned a unique numerical primary key in the database. It ensures that each calculated score is linked to the correct animal, even when animals have the same name."
+      - row "maximum_score Integer Stores the highest possible number of points that can be awarded by the compatibility algorithm. This is required so that the user’s raw score can be converted into a percentage. An integer is appropriate because the algorithm awards whole-number points for each matching factor." [disabled]:
+        - cell "maximum_score":
+          - code: maximum_score
+        - cell "Integer"
+        - cell "Stores the highest possible number of points that can be awarded by the compatibility algorithm."
+        - cell "This is required so that the user’s raw score can be converted into a percentage. An integer is appropriate because the algorithm awards whole-number points for each matching factor."
+      - row "total_score Integer Stores the accumulated compatibility points for the animal currently being assessed. The value begins at zero and increases whenever the user’s circumstances or preferences match the animal’s requirements. It must be reset before the algorithm assesses the next animal." [disabled]:
+        - cell "total_score":
+          - code: total_score
+        - cell "Integer"
+        - cell "Stores the accumulated compatibility points for the animal currently being assessed."
+        - cell "The value begins at zero and increases whenever the user’s circumstances or preferences match the animal’s requirements. It must be reset before the algorithm assesses the next animal."
+      - row "animal_scores List Stores the animal IDs and compatibility scores calculated for all available animals. A list is suitable because the algorithm processes multiple animals. Keeping the results together allows them to be sorted from highest to lowest compatibility before being displayed to the user." [disabled]:
+        - cell "animal_scores":
+          - code: animal_scores
+        - cell "List"
+        - cell "Stores the animal IDs and compatibility scores calculated for all available animals."
+        - cell "A list is suitable because the algorithm processes multiple animals. Keeping the results together allows them to be sorted from highest to lowest compatibility before being displayed to the user."
+      - row "compatibility_score Float Stores the final compatibility score for an animal as a percentage. A percentage is easier for users to understand and compare than a raw points total. A float allows the result to contain a decimal value when the calculation does not produce a whole number." [disabled]:
+        - cell "compatibility_score":
+          - code: compatibility_score
+        - cell "Float"
+        - cell "Stores the final compatibility score for an animal as a percentage."
+        - cell "A percentage is easier for users to understand and compare than a raw points total. A float allows the result to contain a decimal value when the calculation does not produce a whole number."
+      - row "match_category String Stores the descriptive category assigned to the compatibility score. A text category such as \"Excellent Match\" or \"Poor Match\" makes the numerical score easier for the user to interpret. The value is selected according to predefined score ranges." [disabled]:
+        - cell "match_category":
+          - code: match_category
+        - cell "String"
+        - cell "Stores the descriptive category assigned to the compatibility score."
+        - cell "A text category such as \"Excellent Match\" or \"Poor Match\" makes the numerical score easier for the user to interpret. The value is selected according to predefined score ranges.":
+          - text: A text category such as
+          - code: "\"Excellent Match\""
+          - text: or
+          - code: "\"Poor Match\""
+          - text: makes the numerical score easier for the user to interpret. The value is selected according to predefined score ranges.
+      - row "unmet_requirements List Stores explanations of the animal requirements that the user does not meet. There may be several reasons why an animal is not fully suitable, so a list allows multiple explanations to be stored. This makes the algorithm transparent by explaining the result instead of displaying only a score." [disabled]:
+        - cell "unmet_requirements":
+          - code: unmet_requirements
+        - cell "List"
+        - cell "Stores explanations of the animal requirements that the user does not meet."
+        - cell "There may be several reasons why an animal is not fully suitable, so a list allows multiple explanations to be stored. This makes the algorithm transparent by explaining the result instead of displaying only a score."
+      - row "minimum_recommendation_score Integer Stores the minimum compatibility percentage required for an animal to be presented as a suitable recommendation. This prevents animals with very low compatibility scores from being presented as suitable matches. An integer is appropriate because the threshold can be represented as a whole percentage, such as 60." [disabled]:
+        - cell "minimum_recommendation_score":
+          - code: minimum_recommendation_score
+        - cell "Integer"
+        - cell "Stores the minimum compatibility percentage required for an animal to be presented as a suitable recommendation."
+        - cell "This prevents animals with very low compatibility scores from being presented as suitable matches. An integer is appropriate because the threshold can be represented as a whole percentage, such as 60.":
+          - text: This prevents animals with very low compatibility scores from being presented as suitable matches. An integer is appropriate because the threshold can be represented as a whole percentage, such as
+          - code: "60"
+          - text: .
+  - button "What is this?":
+    - text: What is this?
+  - paragraph:
+    - text: Use lowercase for
+    - code: minimum_recommendation_score
+    - text: so its naming is consistent with the other Python variables. Your
+    - code: animal_scores
+    - text: "list could contain records such as:"
+  - code: "[ {\"animal_id\": 3, \"compatibility_score\": 92.5}, {\"animal_id\": 7, \"compatibility_score\": 78.0} ]"
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: add validation or ecample
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Here is the updated table with an
+    - strong: Example or validation
+    - text: column.
+  - generic: Compatibility-Scoring Algorithm Variables
+  - button "Copy":
+  - button [disabled]:
+  - button "Open editor":
+  - heading "Compatibility-Scoring Algorithm Variables" [level=2]
+  - table:
+    - rowgroup:
+      - row "Variable name Data type Purpose Justification Example or validation" [disabled]:
+        - columnheader "Variable name" [disabled]
+        - columnheader "Data type" [disabled]
+        - columnheader "Purpose" [disabled]
+        - columnheader "Justification" [disabled]
+        - columnheader "Example or validation" [disabled]
+      - row "animal_id Integer Stores the unique identifier of the animal currently being assessed. An integer is suitable because each animal is assigned a unique numerical primary key in the database. It ensures that each calculated score is linked to the correct animal. Must match an existing record in the animals table, for example 12." [disabled]:
+        - cell "animal_id":
+          - code: animal_id
+        - cell "Integer"
+        - cell "Stores the unique identifier of the animal currently being assessed."
+        - cell "An integer is suitable because each animal is assigned a unique numerical primary key in the database. It ensures that each calculated score is linked to the correct animal."
+        - cell "Must match an existing record in the animals table, for example 12.":
+          - text: Must match an existing record in the
+          - code: animals
+          - text: table, for example
+          - code: "12"
+          - text: .
+      - row "maximum_score Integer Stores the highest possible number of points available in the compatibility algorithm. This is required so that the raw score can be converted into a percentage. An integer is appropriate because the algorithm awards whole-number points. Must be greater than 0, for example 100." [disabled]:
+        - cell "maximum_score":
+          - code: maximum_score
+        - cell "Integer"
+        - cell "Stores the highest possible number of points available in the compatibility algorithm."
+        - cell "This is required so that the raw score can be converted into a percentage. An integer is appropriate because the algorithm awards whole-number points."
+        - cell "Must be greater than 0, for example 100.":
+          - text: Must be greater than
+          - code: "0"
+          - text: ", for example"
+          - code: "100"
+          - text: .
+      - row "total_score Integer Stores the accumulated compatibility points for the animal currently being assessed. The value increases whenever the user’s answers match the animal’s requirements. It must be reset before the next animal is assessed. Begins at 0 and must not exceed maximum_score." [disabled]:
+        - cell "total_score":
+          - code: total_score
+        - cell "Integer"
+        - cell "Stores the accumulated compatibility points for the animal currently being assessed."
+        - cell "The value increases whenever the user’s answers match the animal’s requirements. It must be reset before the next animal is assessed."
+        - cell "Begins at 0 and must not exceed maximum_score.":
+          - text: Begins at
+          - code: "0"
+          - text: and must not exceed
+          - code: maximum_score
+          - text: .
+      - 'row "animal_scores List Stores the IDs and compatibility scores calculated for all available animals. A list is suitable because the algorithm processes multiple animals. The results can then be sorted from highest to lowest compatibility. Example: [{\"animal_id\": 3, \"score\": 92.5}, {\"animal_id\": 7, \"score\": 78.0}]." [disabled]':
+        - cell "animal_scores":
+          - code: animal_scores
+        - cell "List"
+        - cell "Stores the IDs and compatibility scores calculated for all available animals."
+        - cell "A list is suitable because the algorithm processes multiple animals. The results can then be sorted from highest to lowest compatibility."
+        - 'cell "Example: [{\"animal_id\": 3, \"score\": 92.5}, {\"animal_id\": 7, \"score\": 78.0}]."':
+          - text: "Example:"
+          - code: "[{\"animal_id\": 3, \"score\": 92.5}, {\"animal_id\": 7, \"score\": 78.0}]"
+          - text: .
+      - row "compatibility_score Float Stores the final compatibility result for an animal as a percentage. A percentage is easier for users to understand and compare than a raw points total. A float allows decimal results to be stored. Must be between 0.0 and 100.0, for example 82.5." [disabled]:
+        - cell "compatibility_score":
+          - code: compatibility_score
+        - cell "Float"
+        - cell "Stores the final compatibility result for an animal as a percentage."
+        - cell "A percentage is easier for users to understand and compare than a raw points total. A float allows decimal results to be stored."
+        - cell "Must be between 0.0 and 100.0, for example 82.5.":
+          - text: Must be between
+          - code: "0.0"
+          - text: and
+          - code: "100.0"
+          - text: ", for example"
+          - code: "82.5"
+          - text: .
+      - row "match_category String Stores the descriptive category assigned to the compatibility score. A category makes the numerical result easier for the user to interpret. It is selected according to predefined percentage ranges. Must be one of the predefined categories, such as \"Top Match\", \"Good Match\" or \"Low Match\"." [disabled]:
+        - cell "match_category":
+          - code: match_category
+        - cell "String"
+        - cell "Stores the descriptive category assigned to the compatibility score."
+        - cell "A category makes the numerical result easier for the user to interpret. It is selected according to predefined percentage ranges."
+        - cell "Must be one of the predefined categories, such as \"Top Match\", \"Good Match\" or \"Low Match\".":
+          - text: Must be one of the predefined categories, such as
+          - code: "\"Top Match\""
+          - text: ","
+          - code: "\"Good Match\""
+          - text: or
+          - code: "\"Low Match\""
+          - text: .
+      - 'row "unmet_requirements List Stores explanations of the animal requirements that the user does not meet. There may be several reasons why an animal is not fully suitable, so a list allows multiple explanations to be stored and displayed. Example: [\"Requires a secure garden\", \"Not suitable with cats\"]. It may be empty when all essential requirements are met." [disabled]':
+        - cell "unmet_requirements":
+          - code: unmet_requirements
+        - cell "List"
+        - cell "Stores explanations of the animal requirements that the user does not meet."
+        - cell "There may be several reasons why an animal is not fully suitable, so a list allows multiple explanations to be stored and displayed."
+        - 'cell "Example: [\"Requires a secure garden\", \"Not suitable with cats\"]. It may be empty when all essential requirements are met."':
+          - text: "Example:"
+          - code: "[\"Requires a secure garden\", \"Not suitable with cats\"]"
+          - text: . It may be empty when all essential requirements are met.
+      - row "minimum_recommendation_score Integer Stores the minimum score required for an animal to be presented as a suitable recommendation. This prevents animals with very low compatibility scores from being presented as suitable matches. Must be between 0 and 100, for example 60." [disabled]:
+        - cell "minimum_recommendation_score":
+          - code: minimum_recommendation_score
+        - cell "Integer"
+        - cell "Stores the minimum score required for an animal to be presented as a suitable recommendation."
+        - cell "This prevents animals with very low compatibility scores from being presented as suitable matches."
+        - cell "Must be between 0 and 100, for example 60.":
+          - text: Must be between
+          - code: "0"
+          - text: and
+          - code: "100"
+          - text: ", for example"
+          - code: "60"
+          - text: .
+  - button "What is this?":
+    - text: What is this?
+  - paragraph: For calculated variables, the final column does not need traditional input validation. A valid range, starting value or example output is enough.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic "Loading...":
+  - generic: can you ensure the validation and the variables meet this criteria
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Your table already identifies and justifies the key variables, but to meet the criterion more securely, the final column should
+    - strong: explain the validation
+    - text: ", rather than only giving an example."
+  - paragraph: For calculated variables, validation means checking that values remain within expected ranges and are linked to valid database records. It does not always mean checking something typed by the user.
+  - heading "Compatibility-scoring algorithm variables" [level=2]
+  - table:
+    - rowgroup:
+      - row "Variable name Data type Purpose Justification Validation and example":
+        - columnheader "Variable name"
+        - columnheader "Data type"
+        - columnheader "Purpose"
+        - columnheader "Justification"
+        - columnheader "Validation and example"
+    - rowgroup:
+      - 'row "animal_id Integer Stores the unique identifier of the animal currently being assessed. An integer is appropriate because each animal has a unique numerical primary key in the database. This ensures the score is linked to the correct animal, even if two animals have the same name. The ID must be a positive integer and must correspond to an existing record in the animals table. If no matching animal exists, that record will not be processed. Example: 12."':
+        - cell "animal_id":
+          - code: animal_id
+        - cell "Integer"
+        - cell "Stores the unique identifier of the animal currently being assessed."
+        - cell "An integer is appropriate because each animal has a unique numerical primary key in the database. This ensures the score is linked to the correct animal, even if two animals have the same name."
+        - 'cell "The ID must be a positive integer and must correspond to an existing record in the animals table. If no matching animal exists, that record will not be processed. Example: 12."':
+          - text: The ID must be a positive integer and must correspond to an existing record in the
+          - code: animals
+          - text: "table. If no matching animal exists, that record will not be processed. Example:"
+          - code: "12"
+          - text: .
+      - 'row "maximum_score Integer Stores the highest number of points that can be awarded by the algorithm. This allows the raw total to be converted into a standard percentage, making results easier to compare between animals. Must be greater than 0 to prevent division by zero when calculating the percentage. Example: 100."':
+        - cell "maximum_score":
+          - code: maximum_score
+        - cell "Integer"
+        - cell "Stores the highest number of points that can be awarded by the algorithm."
+        - cell "This allows the raw total to be converted into a standard percentage, making results easier to compare between animals."
+        - 'cell "Must be greater than 0 to prevent division by zero when calculating the percentage. Example: 100."':
+          - text: Must be greater than
+          - code: "0"
+          - text: "to prevent division by zero when calculating the percentage. Example:"
+          - code: "100"
+          - text: .
+      - row "total_score Integer Stores the points accumulated while assessing one animal. The variable allows points from each compatibility factor to be combined into one overall result. It is reset before the next animal is assessed. Must begin at 0 for each animal and must not become negative or exceed maximum_score.":
+        - cell "total_score":
+          - code: total_score
+        - cell "Integer"
+        - cell "Stores the points accumulated while assessing one animal."
+        - cell "The variable allows points from each compatibility factor to be combined into one overall result. It is reset before the next animal is assessed."
+        - cell "Must begin at 0 for each animal and must not become negative or exceed maximum_score.":
+          - text: Must begin at
+          - code: "0"
+          - text: for each animal and must not become negative or exceed
+          - code: maximum_score
+          - text: .
+      - 'row "animal_scores List Stores each assessed animal together with its calculated compatibility score. A list is appropriate because several animal results must be stored before they can be sorted from highest to lowest compatibility. Each item must contain a valid animal_id and a score between 0 and 100. Example: [{\"animal_id\": 3, \"score\": 92.5}]."':
+        - cell "animal_scores":
+          - code: animal_scores
+        - cell "List"
+        - cell "Stores each assessed animal together with its calculated compatibility score."
+        - cell "A list is appropriate because several animal results must be stored before they can be sorted from highest to lowest compatibility."
+        - 'cell "Each item must contain a valid animal_id and a score between 0 and 100. Example: [{\"animal_id\": 3, \"score\": 92.5}]."':
+          - text: Each item must contain a valid
+          - code: animal_id
+          - text: and a score between
+          - code: "0"
+          - text: and
+          - code: "100"
+          - text: ". Example:"
+          - code: "[{\"animal_id\": 3, \"score\": 92.5}]"
+          - text: .
+      - 'row "compatibility_score Float Stores the final compatibility percentage calculated for an animal. A float is suitable because converting the raw score into a percentage may produce a decimal value. A percentage is easier for the user to understand than a raw total. Must remain between 0.0 and 100.0. Any displayed result may be rounded to one decimal place. Example: 82.5."':
+        - cell "compatibility_score":
+          - code: compatibility_score
+        - cell "Float"
+        - cell "Stores the final compatibility percentage calculated for an animal."
+        - cell "A float is suitable because converting the raw score into a percentage may produce a decimal value. A percentage is easier for the user to understand than a raw total."
+        - 'cell "Must remain between 0.0 and 100.0. Any displayed result may be rounded to one decimal place. Example: 82.5."':
+          - text: Must remain between
+          - code: "0.0"
+          - text: and
+          - code: "100.0"
+          - text: ". Any displayed result may be rounded to one decimal place. Example:"
+          - code: "82.5"
+          - text: .
+      - row "match_category String Stores the descriptive category assigned to the compatibility score. A category helps the user interpret the percentage and understand whether the animal is a strong or weak match. Must be selected from predefined values such as \"Top Match\", \"Good Match\" or \"Low Match\". The category is determined using fixed percentage boundaries rather than entered manually.":
+        - cell "match_category":
+          - code: match_category
+        - cell "String"
+        - cell "Stores the descriptive category assigned to the compatibility score."
+        - cell "A category helps the user interpret the percentage and understand whether the animal is a strong or weak match."
+        - cell "Must be selected from predefined values such as \"Top Match\", \"Good Match\" or \"Low Match\". The category is determined using fixed percentage boundaries rather than entered manually.":
+          - text: Must be selected from predefined values such as
+          - code: "\"Top Match\""
+          - text: ","
+          - code: "\"Good Match\""
+          - text: or
+          - code: "\"Low Match\""
+          - text: . The category is determined using fixed percentage boundaries rather than entered manually.
+      - 'row "unmet_requirements List Stores explanations of the animal requirements that the user does not meet. A list is appropriate because one animal may have several unmet requirements. This makes the result transparent by explaining why points were lost. Each item must be a predefined explanation produced by the algorithm. The list may be empty if all important requirements are met. Example: [\"Requires a secure garden\"]."':
+        - cell "unmet_requirements":
+          - code: unmet_requirements
+        - cell "List"
+        - cell "Stores explanations of the animal requirements that the user does not meet."
+        - cell "A list is appropriate because one animal may have several unmet requirements. This makes the result transparent by explaining why points were lost."
+        - 'cell "Each item must be a predefined explanation produced by the algorithm. The list may be empty if all important requirements are met. Example: [\"Requires a secure garden\"]."':
+          - text: "Each item must be a predefined explanation produced by the algorithm. The list may be empty if all important requirements are met. Example:"
+          - code: "[\"Requires a secure garden\"]"
+          - text: .
+      - 'row "minimum_recommendation_score Integer Stores the minimum compatibility percentage required for an animal to be shown as a suitable recommendation. This prevents animals with very low scores from being presented as suitable matches and provides a consistent recommendation boundary. Must be a whole number between 0 and 100. It should be assigned by the program rather than entered by the user. Example: 60."':
+        - cell "minimum_recommendation_score":
+          - code: minimum_recommendation_score
+        - cell "Integer"
+        - cell "Stores the minimum compatibility percentage required for an animal to be shown as a suitable recommendation."
+        - cell "This prevents animals with very low scores from being presented as suitable matches and provides a consistent recommendation boundary."
+        - 'cell "Must be a whole number between 0 and 100. It should be assigned by the program rather than entered by the user. Example: 60."':
+          - text: Must be a whole number between
+          - code: "0"
+          - text: and
+          - code: "100"
+          - text: ". It should be assigned by the program rather than entered by the user. Example:"
+          - code: "60"
+          - text: .
+  - button "Copy table":
+  - heading "Explanation to place underneath the table" [level=2]
+  - blockquote:
+    - paragraph:
+      - text: Validation is necessary within the compatibility algorithm to ensure that the recommendations produced are reliable and that invalid data does not cause incorrect results. The
+      - code: animal_id
+      - text: will be checked against the animals table so that scores are only calculated for existing animal records. Numerical values such as
+      - code: total_score
+      - text: ","
+      - code: maximum_score
+      - text: and
+      - code: compatibility_score
+      - text: will be restricted to appropriate ranges. In particular,
+      - code: maximum_score
+      - text: must be greater than zero to prevent a division-by-zero error when calculating the percentage. The
+      - code: match_category
+      - text: will be selected from predefined categories according to fixed score boundaries, preventing inconsistent category names. The contents of
+      - code: animal_scores
+      - text: and
+      - code: unmet_requirements
+      - text: will be generated by the program rather than entered directly by the user, reducing the risk of invalid values being stored.
+  - heading "Data-structure justification" [level=2]
+  - paragraph:
+    - text: To address the reference to
+    - strong: data structures
+    - text: "explicitly, add:"
+  - blockquote:
+    - paragraph:
+      - text: Lists have been selected for
+      - code: animal_scores
+      - text: and
+      - code: unmet_requirements
+      - text: because both variables may need to contain multiple values.
+      - code: animal_scores
+      - text: must store the results for several animals so that they can be sorted into ranked order.
+      - code: unmet_requirements
+      - text: must be able to store several explanations for a single animal. A single string or numerical variable would not be suitable for either purpose.
+  - paragraph: "You do not need to include classes merely because the criterion mentions them. You can state:"
+  - blockquote:
+    - paragraph:
+      - text: Classes have not been included at this stage because the proposed solution can be implemented clearly using database records, functions, lists and dictionaries. However, an
+      - code: Animal
+      - text: class could be introduced during development if object-oriented organisation becomes beneficial.
+  - paragraph:
+    - text: With the revised table and the explanatory paragraphs, you are
+    - strong: identifying the key variables, justifying their data types and data structures, and explaining the necessary validation
+    - text: ", which directly addresses the wording of the criterion."
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

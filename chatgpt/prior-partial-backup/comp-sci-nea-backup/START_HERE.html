@@ -1,0 +1,502 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>COMP SCI NEA — Partial Backup</title><style>
+:root{color-scheme:light}body{margin:0;background:#fff9fc;color:#29222a;font:16px/1.6 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:980px;margin:auto;padding:40px 24px 80px}header{padding:12px 0 24px;border-bottom:1px solid #e9dce4}h1{font-size:2.8rem;line-height:1.1;margin:.2em 0}h2{margin-top:2em}small,.muted{color:#6b5765}.label{letter-spacing:.12em;text-transform:uppercase;font-size:.78em;font-weight:700;color:#754f69}.notice{border-left:5px solid #875170;background:#f5e8f0;padding:18px 22px;margin:24px 0}.stats{display:flex;flex-wrap:wrap;gap:12px}.stats p{background:white;border:1px solid #e9dce4;border-radius:10px;padding:16px;flex:1;min-width:150px;margin:0}.stats strong{display:block;font-size:1.7em}a{color:#784263;text-underline-offset:3px}.links{display:flex;gap:20px;flex-wrap:wrap}details{margin:12px 0;background:white;border:1px solid #e9dce4;border-radius:8px;padding:14px 18px}summary{cursor:pointer;font-weight:650}summary small{font-weight:400;margin-left:10px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;max-width:100%;background:#faf8fa;border-radius:6px;padding:16px}code{background:#f0e8ee;padding:2px 5px;border-radius:4px}footer{margin-top:42px;padding-top:20px;border-top:1px solid #e9dce4}.check{font-weight:650}</style></head><body><main>
+<header><p class="label">COMP SCI NEA · Snapshot 7 September 2026</p><h1>Project backup</h1><p class="muted">Animal adoption matching system · Visible source excerpts and recovered notes</p></header>
+<div class="notice"><strong>PARTIAL BACKUP — NOT UPLOADED TO GITHUB</strong><p>This preserves the project material visible in this session. It is not a full export of every chat, and does not contain the original PDFs, images or earlier assistant replies.</p></div>
+<section class="stats"><p><strong>13</strong>Visible chat excerpts</p><p><strong>60</strong>Visible user messages</p><p><strong>9</strong>Organised notes</p><p><strong>0</strong>Original files recovered</p></section>
+<h2>Backup status</h2><p>Two named PDFs and 21 image-placeholder occurrences are recorded as missing originals. Image occurrences may repeat the same file. Eight source entries are explicitly marked as truncated. Other project chats may exist beyond this visible overview.</p>
+<nav class="links"><a href="BACKUP_STATUS.md">Detailed status</a><a href="inventory/MISSING_ORIGINALS.md">Missing originals</a><a href="RESTORE_AND_PUBLISH.md">Restore and publish</a><a href="source-excerpts/visible-project-excerpts.json">Machine-readable excerpts</a></nav>
+<h2>Recovered notes</h2><p>These are newly organised summaries of the available wording, not original coursework documents or evidence that an artefact was completed.</p>
+<details><summary>Project overview</summary><p><a href="recovered-notes/01-project-overview.md">Open Markdown file</a></p><pre># Project overview
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+The project described in the visible conversations is an animal-adoption matching system for one shelter. The interface is intended to be simple, welcoming and pink-themed, and practical to implement with Streamlit. This is a record of stated plans, not proof that the system has been implemented.
+
+The features explicitly listed in CHAT-13 are a clean user interface; user registration and login; administrator login; database storage for animal records, accounts and questionnaire answers; administrator CRUD functionality; input validation; a compatibility-scoring algorithm; and ranked animal recommendations.
+
+CHAT-08 describes a homepage/main menu after login, links to the questionnaire, animal browsing and account viewing, a check of the user&#x27;s session, and possible retrieval of the user&#x27;s name and recent questionnaire information. The user also discusses placing account viewing and logout in that section.
+
+CHAT-09 explicitly rejects the addition of an applications feature that was not present in the earlier designs. The same chat says the design should reflect competitor reports, stakeholder surveys, the client interview and success criteria. Those underlying documents and their findings are not available here.
+
+Streamlit is a stated interface choice. SQLite is discussed as an option in CHAT-05, but the visible excerpt is a question, not a confirmed database decision.
+
+Sources: CHAT-05, CHAT-08, CHAT-09, CHAT-13. See the source index for original visible wording.
+</pre></details>
+<details><summary>Analysis and project scope</summary><p><a href="recovered-notes/02-analysis-and-scope.md">Open Markdown file</a></p><pre># Analysis and project scope
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+CHAT-11 contains a limitations passage stating that the system is for one specific animal shelter, rather than a large multi-shelter organisation. It identifies additional shelter accounts, location-based searching and a larger database structure as complications of a multi-shelter system. These are the user&#x27;s scope justifications, preserved without treating them as universal technical limitations.
+
+The same passage limits the animals to common adoption species such as dogs, cats and rabbits. It explains that species-specific care requirements would make a broader algorithm more difficult to develop and test.
+
+Two named analysis documents are referenced, but neither original PDF was recovered:
+
+- `comp sci umar and sienna (1).pdf`
+- `comp sci umar and sienna.pdf`
+
+The user asks for the analysis to be marked, then asks whether search and filtering should be included in the success criteria. The visible source does not contain the assistant&#x27;s marking, a final score, the full success criteria or the answer to the search/filter question.
+
+Do not treat this note as the full analysis section, a completed requirements specification or confirmation of a grade.
+
+Sources: CHAT-11; stakeholder/competitor references also appear in CHAT-09.
+</pre></details>
+<details><summary>Interface and flowchart requirements</summary><p><a href="recovered-notes/03-interface-and-flowchart-requirements.md">Open Markdown file</a></p><pre># Interface and flowchart requirements
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+The visible requests cover login, registration, a homepage/dashboard, administrator animal management, an add-animal page, animal browsing/viewing, an individual animal page, and a questionnaire sequence. The questionnaire requests cover the start screen, an example question, and the results/animal pages after completion.
+
+The user&#x27;s repeated constraints are simplicity, an attractive pink theme, and an interface that is feasible in Streamlit. CHAT-03 specifically asks for a simpler administrator screen after rejecting a more complicated version. It also asks to change a home-related questionnaire item so it concerns the amount of space available. Exact replacement wording and answer options are absent.
+
+CHAT-08 requests a combined registration/login flowchart with a purple theme. The same chat requests administrator, homepage/main-menu and animal-viewing flowcharts. Administrator functionality is discussed in terms of managing animals. Questionnaire completion and animal viewing are said to have separate sections; account viewing and logout may belong in the homepage section.
+
+The user asks for exemplar-style annotations and high-quality design explanations. These requests establish intended deliverables; they are not the original annotations, diagrams or interface images. None of those generated or uploaded image files was available for this backup.
+
+Sources: CHAT-03, CHAT-07, CHAT-08, CHAT-09 and CHAT-10.
+</pre></details>
+<details><summary>Authentication and validation</summary><p><a href="recovered-notes/04-authentication-and-validation.md">Open Markdown file</a></p><pre># Authentication and validation
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+The following rules are transcribed into a table from the visible registration-validation request in CHAT-02. They are user-stated design rules, not a completed implementation or an independent security assessment.
+
+| Field/process | Visible rule |
+|---|---|
+| Name | Reject empty/space-only input; length between 2 and 50 characters; trim leading/trailing spaces. |
+| Email | Reject empty/space-only input; require an @ and a domain; query the database for uniqueness; trim leading/trailing spaces; convert to lowercase. |
+| Age | Presence check; whole-number type check; age at least 18. |
+| Password | Reject empty/space-only input; the August excerpt says more than 8 characters. |
+| Password confirmation | Must exactly match the original password. |
+| Password storage | Hash a valid password before insertion; do not store the original password. |
+
+CHAT-10 additionally describes collecting name, email, age and password during registration, feedback for missing/invalid input, errors for incorrect login details, nonblank login fields, comparing login details against user records and establishing a session. Its source text ends mid-sentence.
+
+**Unresolved source difference:** CHAT-10 says “Password minimum 8 characters”; CHAT-02 says “password must be more than 8 characters”. These differ at a length of exactly eight. Both are preserved; no final decision is inferred.
+
+The requested A-level design pseudocode and earlier assistant responses were not recoverable. No hashing algorithm, implementation code, lockout policy or recovery mechanism is specified in the available text.
+
+Sources: CHAT-02 and CHAT-10.
+</pre></details>
+<details><summary>Visible database design</summary><p><a href="recovered-notes/05-database-design.md">Open Markdown file</a></p><pre># Visible database design
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+CHAT-07 contains this user-account table proposal. Types and validation wording are retained as design terminology, not converted into executable SQL.
+
+| Field | Stated data type | Key/validation | Stated purpose |
+|---|---|---|---|
+| user_id | INTEGER | Auto-incrementing primary key | Uniquely identifies each account. |
+| name | STRING | Required | Stores the user&#x27;s name to personalise their experience. |
+| email | STRING | Required and unique | Used to log in and contact the user. |
+| age | INTEGER | Required; valid range | Stores age to confirm the required adopter age. |
+| password_hash | STRING | Required | Stores the securely hashed password. |
+| role | STRING | ‘User’ or ‘admin’ | Controls access to the administrator area; normal registrations should receive ‘user’. |
+
+The original role description is cut off, and its capitalisation is inconsistent (`User` versus `user`). This note does not silently resolve that difference.
+
+CHAT-13 identifies accounts, animal records and questionnaire answers as database content. The complete animal/questionnaire schemas, table relationships, SQL creation scripts and database files are not present.
+
+CHAT-05 asks whether SQLite should be used with Streamlit. The answer is not included, so the final database software choice remains unverified.
+
+Sources: CHAT-05, CHAT-07 and CHAT-13.
+</pre></details>
+<details><summary>Compatibility-scoring material</summary><p><a href="recovered-notes/06-compatibility-scoring.md">Open Markdown file</a></p><pre># Compatibility-scoring material
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+The feature list in CHAT-13 includes a compatibility-scoring algorithm and ranked animal recommendations.
+
+CHAT-07 asks for a result presentation resembling Petfinder, asks for preferences to have a prominent place in the top choice, asks why a preference weight is low and how to add the change into the algorithm. These are questions and requests; the responses and any final scoring decisions are absent.
+
+CHAT-06 supplies these exact variable names:
+
+```text
+animal_id
+maximum_score
+total_score
+animal_scores
+compatibility_score
+match_category
+unmet_requirements
+Minimum_recommendation_score
+```
+
+The final equation, weights, maximum-score calculation, minimum recommendation threshold, category boundaries, tie-breaking rules and treatment of unmet requirements are not recoverable from the available excerpts. The names alone do not establish their implementation.
+
+No replacement scoring algorithm has been invented for this archive. Recover the original flowchart/pseudocode, code and worked examples before treating the algorithm design as backed up.
+
+Sources: CHAT-06, CHAT-07 and CHAT-13.
+</pre></details>
+<details><summary>Visible variable information</summary><p><a href="recovered-notes/07-variables.md">Open Markdown file</a></p><pre># Visible variable information
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+CHAT-06 includes two complete rows and the beginning of an age row from a login/registration variables table.
+
+| Variable | Visible type | Visible purpose | Visible justification/validation |
+|---|---|---|---|
+| user_name | String | Stores the name entered during registration. | Names contain alphabetic characters and may contain spaces/hyphens; supports identification and personalisation; cannot be blank. |
+| email | String | Stores the user&#x27;s email address. | Contains letters and symbols; used as a unique identifier for login/contact; valid email format and uniqueness required. |
+| age | Integer | Not visible in this row. | The row is truncated. Age validation is separately available in CHAT-02. |
+
+The eight compatibility variable names are preserved in note 06. The user requested data types, purposes, justifications and validation/examples for those variables, but the completed table is not visible. Their final types and constraints should not be inferred from the variable names.
+
+An image specifying criteria for the variables/validation section is referenced but is not available as an original image file.
+
+Sources: CHAT-06 and CHAT-02.
+</pre></details>
+<details><summary>Test-planning material</summary><p><a href="recovered-notes/08-test-planning.md">Open Markdown file</a></p><pre># Test-planning material
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+CHAT-04 asks for pre-test and post-test data at the standard of an exemplar and references six images. Those six image occurrences are recorded in the missing-assets inventory; no image bytes were recovered, and it is unknown whether any are repeats.
+
+No original completed test plan, test table, test execution record, screenshot of a result, actual outcome, pass/fail decision or final evaluation is available in this backup. The user&#x27;s target of 70/70 is an aspiration, not a recorded grade or result.
+
+Visible areas discussed elsewhere that a recovered test plan would be expected to relate to include registration/login, validation, administrator animal management, browsing, questionnaire input and compatibility scoring. This is an organisational cross-reference, not a newly produced or recovered test specification.
+
+Do not record tests as passed on the basis of this archive. No NEA application tests were run because no application code or database was available.
+
+Sources: CHAT-04; feature context in CHAT-13.
+</pre></details>
+<details><summary>Development setup and timeline</summary><p><a href="recovered-notes/09-development-setup-and-timeline.md">Open Markdown file</a></p><pre># Development setup and timeline
+
+&gt; RECOVERED NOTES — newly organised on 7 September 2026 from the visible source excerpts. This is not an original document, a full transcript, or proof of completed work.
+
+CHAT-13 lists the proposed developer environment as a MacBook Air with an Apple M3 chip, 8 GB RAM, a 13.6-inch built-in display plus a 13-inch monitor, keyboard/trackpad, macOS Sequoia 15.0 and Visual Studio Code. The hardware model is described as “13 Inch, M3 2024”. These are historical user-stated specifications, not an inspection of the current device.
+
+The source explains that internet access is intended for package installation, documentation and deployment testing. Streamlit is stated in other chats. No actual project folder, source-code file, dependency list, environment file, deployed URL or installation log was recovered.
+
+CHAT-12 is headed “Design - Sienna”. It lists Introduction, Login/Registration Page, Admin Page, Main Menu/Dashboard, Animal Viewing Page and Questionnaire Page. The visible statuses are “Not started” at the time of that message. The introduction line contains both “Jun 21, 2026” and “22nd June”; other dates are placeholders. These are retained as a source inconsistency, not repaired.
+
+The user requested completion by 28 August, with most work in July because they expected to work throughout August. In the 2026 chat context that deadline is 28 August 2026. No later completion status is visible. CHAT-01, dated 7 September 2026, asks how to set up the NEA; the answer is not available.
+
+Sources: CHAT-01, CHAT-05, CHAT-12 and CHAT-13.
+</pre></details>
+
+<h2>Visible source excerpts</h2><p>Original visible spelling and incomplete endings are retained. Message numbering is local to each excerpt. Dates are conversation overview labels, not individual message timestamps.</p>
+<details><summary>CHAT-01 · Set Up NEA <small>2026-09-07</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/01-2026-09-07-set-up-nea.md">Source file</a></p><pre>Visible user message 1
+how do i set up my nea</pre></details>
+<details><summary>CHAT-02 · Pseudocode for Login and Registration <small>2026-08-06</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/02-2026-08-06-pseudocode-for-login-and-registration.md">Source file</a></p><pre>Visible user message 1
+streamlit pseudocode for these validations Validation
+
+1. **Name**
+
+- Presence check: Field cannot be empty or contain only spaces
+- Length check: name must be between 2 and 50 characters
+- Whitespace check: spaces at beginning and end will be removed
+
+2. **Email address**
+
+- Presence check: Field cannot be empty or contain only spaces
+- Format check: value must contain a @ and domain
+- Uniqueness check: a database query will check the address not already registered
+- Whitespace check: spaces at beginning and end will be removed
+- Check characters: convert all to lower case
+
+3. **Age**
+
+- Presence check: Field cannot be empty or contain only spaces
+- Type check: data must be a whole number
+- Range check: age must be 18+
+
+4. **Password**
+
+- Presence check: Field cannot be empty or contain only spaces
+- Length check: password must be more than 8 characters
+
+Registration
+
+- Confirmation check: the confirmation field must exactly match original password
+- Security processing: the valid password will be hashed before it is inserted into the database and the original password will never be stored
+
+Visible user message 2
+PSEUDOCODE FOR MY A LLEVEL DESIGN BIT</pre></details>
+<details><summary>CHAT-03 · Login Interface Design <small>2026-08-06</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/03-2026-08-06-login-interface-design.md">Source file</a></p><pre>Visible user message 1
+&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;annotate my pink one like this exemplar so i can copy it out to a a* standard  which will g
+
+Visible user message 2
+now do registration page similar format 
+
+Visible user message 3
+make it in streamlit
+
+Visible user message 4
+what doese it look like
+
+Visible user message 5
+what about the dashboard homepage
+
+Visible user message 6
+&lt;&lt;ImageDisplayed&gt;&gt;what about something like this with my requirements from analysis and design section
+
+Visible user message 7
+made image with streamlit
+
+Visible user message 8
+can you do the same for the admin page now 
+
+Visible user message 9
+i dont like it
+
+Visible user message 10
+reedo it its too complicated needs to be more simple 
+
+Visible user message 11
+can you show me add animal page aswell please
+
+Visible user message 12
+&lt;&lt;ImageDisplayed&gt;&gt;can you annotate this like the eemplar was
+
+Visible user message 13
+now do the animal viewing page 
+
+Visible user message 14
+can you do one for the animal page
+
+Visible user message 15
+&lt;&lt;ImageDisplayed&gt;&gt;annotate this please 
+
+Visible user message 16
+can you make the interfaces for the questionaire page, e.g how a question would look + the after with each animals page and the beginning before taking it make it really simple please 
+
+Visible user message 17
+the home question is kinda bad can you fix it to the amount of space 
+
+Visible user message 18
+&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;annotate at a a* standard 
+
+Visible user message 19
+&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;can you annotate these photos with a* level annotations</pre></details>
+<details><summary>CHAT-04 · Test Plan Guidance <small>2026-08-08</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/04-2026-08-08-test-plan-guidance.md">Source file</a></p><pre>Visible user message 1
+&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;this is an exemplar for pre test data and post test data i need one for mine at a same high level as this so i can get 70/70</pre></details>
+<details><summary>CHAT-05 · Streamlit Database Compatibility <small>2026-08-05</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/05-2026-08-05-streamlit-database-compatibility.md">Source file</a></p><pre>Visible user message 1
+considering i am using streamlit with my projetc, should i be using sqlite and is it compatible or shall i use a different type of database software</pre></details>
+<details><summary>CHAT-06 · Variables Section Guidance <small>2026-07-20</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/06-2026-07-20-variables-section-guidance.md">Source file</a></p><pre>Visible user message 1
+is this too ma## Login and Registration Variables
+
+| Variable name      | Data type | Purpose                                                        | Justification                                                                                                                                                       | Example or validation                           |
+| ------------------ | --------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| `user_name`        | String    | Stores the name entered during registration.                   | A string is required because a name contains alphabetic characters and may include spaces or hyphens. It allows the system to identify and personalise the account. | Cannot be blank.                                |
+| `email`            | String    | Stores the user’s email address.                               | An email contains letters and symbols, so it must be stored as a string. It is required as a unique identifier for logging in and contacting the user.              | Must follow a valid email format and be unique. |
+| `age`              | Integer   
+
+Visible user message 2
+can you do the same four columns for these variablaes for the compatibility scoring algoirthm Variable Name
+animal_id
+maximum_score
+total_score
+animal_scores
+compatibility_score
+match_category
+unmet_requirements
+Minimum_recommendation_score
+
+
+Visible user message 3
+add validation or ecample 
+
+Visible user message 4
+&lt;&lt;ImageDisplayed&gt;&gt;can you ensure the validation and the variables meet this criteria </pre></details>
+<details><summary>CHAT-07 · Branch · Starting Design Phase <small>2026-07-22</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/07-2026-07-22-branch-starting-design-phase.md">Source file</a></p><pre>Visible user message 1
+Database (Table structure)
+
+
+Field
+Data type
+Key/validation
+Purpose
+user_id
+INTEGER
+Primary key which will auto increment
+Uniquely identifies each account
+name
+STRING
+required
+Stores the users name to personalise their experience
+email
+STRING
+Required and unique
+Used to login and contact the user
+age
+INTEGER
+required , valid range
+Stores the users age and can confirm that the adopter meets the required age
+password_hash
+STRING
+required
+Stores the securely hashed password
+role
+STRING
+‘User’ or ‘admin’
+Controls access to the administrator area, although normal registrations should automatically receive the role ‘user
+
+Visible user message 2
+how can i make the after result look like the one in pet finder 
+
+Visible user message 3
+i want the preferences to be a top choice if they have that can you elaborate why weight so low and why thats goof
+
+Visible user message 4
+so how do i add that into the algorithm
+
+Visible user message 5
+now can you remake me a flow chart like you had done before which i can copy out in my own way please which is pretty detailed and decriptive but not too much either 
+
+Visible user message 6
+&lt;&lt;ImageDisplayed&gt;&gt;for each of the pages, what notes and write up would i have to do on input validation this is an exemplar for it to be a* worthy</pre></details>
+<details><summary>CHAT-08 · Flow chart request <small>2026-07-22</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/08-2026-07-22-flow-chart-request.md">Source file</a></p><pre>Visible user message 1
+i meant regsitration 
+
+Visible user message 2
+wait no redo i dont care about administration right now, make a detailed flow chart of the registration and login flow chart within one with it purple themed 
+
+Visible user message 3
+now administration page flow chart
+
+Visible user message 4
+really dont i just need the manage animals section?
+
+Visible user message 5
+wait im confused about the interface then can you show me what it would be &#x27;remember the theming and the pink&#x27; 
+
+Visible user message 6
+this an ok flow chart?
+
+Visible user message 7
+User Homepage/Main Menu
+Will provide the main navigation area after the user logs in. It will allow the user to access the questionnaire, browse available animals and view their account. It will also explain the purpose of the adoption matching system. It will be clear and welcoming, and not overwhelming for the user. 
+The system will check the user&#x27;s session to make sure they are logged in. It may retrieve the user&#x27;s name and recent questionnaire information from the database so that personalised information can be displayed. 
+ what about this page whats the flow chart for it
+
+Visible user message 8
+make it like you made it before please 
+
+Visible user message 9
+i have written seperate sections for the viewing of animals and the questionaire completion, i can includde the view account nad logout stuff in here but i dont know again how this would lok 
+
+Visible user message 10
+okay what about the animal viewing page now for the flow chart</pre></details>
+<details><summary>CHAT-09 · Remake Design Mockups <small>2026-07-22</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/09-2026-07-22-remake-design-mockups.md">Source file</a></p><pre>Visible user message 1
+i have lost my images you created for my design can you remake it here please
+
+Visible user message 2
+nono it was pink before what
+
+Visible user message 3
+but remember what the features of my interfaces are, and i need it to be easy and doable with streamlit 
+
+Visible user message 4
+see there was no applixations in my old ones, and how do i make this with streamlit 
+
+Visible user message 5
+so remake the design please
+
+Visible user message 6
+do this properly, so its not hard to make but also simple but preety and aesthetic and that it matches all my requirements and all the features i had made inlcuding feedback from competitor reports and the stakeholder surveys and the client interview and matching my sucess criteria that it is at a a* standrard, which can be made using streamlit </pre></details>
+<details><summary>CHAT-10 · Starting Design Phase <small>2026-07-11</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/10-2026-07-11-starting-design-phase.md">Source file</a></p><pre>Visible user message 1
+i like keeping the fields in it helps me with my own planning Proposed Layout 
+My main system can be decomposed into main components which come together to create the final system. 
+
+Section
+Front End Justification
+Backend Justification
+User/Admin Authentication
+Will allow users to register and existing users to login, and allow admins to access their page safely and securely. Registration will collect the users name, email, age and password. The interface should provide clear feedback when details are missing or forgotten from its validation system. It will also show an error message if login details are incorrect
+The system will validate entered details, such as:
+email cannot be blank and must be valid and unique
+Password minimum 8 characters
+Age must be a valid number
+Login fields cannot be blank
+The passwords will be hashed in order to be kept secure and safe. During login, enter details will be compared against records in the users table. A session will then
+
+Visible user message 2
+i think i talked about age in analysis no? idc ab the may parts
+
+Visible user message 3
+&lt;&lt;ImageDisplayed&gt;&gt;&lt;&lt;ImageDisplayed&gt;&gt;this is an exemplar what shall i descrobe mine with to make it the best can u write it for me at a a* standard
+
+Visible user message 4
+can you aannotate it onto the document</pre></details>
+<details><summary>CHAT-11 · Features section example <small>2026-06-27</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/11-2026-06-27-features-section-example.md">Source file</a></p><pre>Visible user message 1
+is this okay, anything else? Limitations 
+
+The system will be built in order for one specific animal shelter rather than a large organisation such as the RSPCA. This means that the database will only need to store the animals, users and admin accounts linked to that shelter. This is a large limitation as creating a system for multiple shelters would require extra features such as shelter admin accounts and location based searching and overall a larger database structure. This will be extremely difficult with the experience I have and would increase the complexity of my project. Furthermore, this would make development and testing less realistic within the time available. 
+
+The system will only be focusing on common adoption animals such as dogs, cats and rabbits rather than every possible species. This is due to different animals having different care requirements, and every possible animal would make the matching algorithm too broad and difficult to test
+
+Visible user message 2
+this is my whole analysis secton, can you mark it and tell me what sectionst o change iF NOT FULL MARKS  &lt;&lt;File name=&quot;comp sci umar and sienna (1).pdf&quot;&gt;&gt;
+
+Visible user message 3
+wb now ! &lt;&lt;File name=&quot;comp sci umar and sienna.pdf&quot;&gt;&gt;
+
+Visible user message 4
+wait did i need to inclde anywhere in sucess criter being able to search and filter</pre></details>
+<details><summary>CHAT-12 · Design Task Timeline <small>2026-07-12</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/12-2026-07-12-design-task-timeline.md">Source file</a></p><pre>Visible user message 1
+Design - Sienna
+Task
+Status Sienna
+Due date
+Day
+Introduction
+ Not started
+ Jun 21, 2026
+22nd June
+Login/ Registration Page
+ Not started
+ Date
+
+
+Admin Page
+ Not started
+ Date
+
+
+Main Menu/ Dashboard
+ Not started
+ Date
+
+
+Animal Viewing Page
+ Not started
+ Date
+
+
+Questionnaire Page
+ Not started
+ Date
+
+
+i need all these sections done by 28th august, bear in mind i am working the whole of august so will have barely any time to complete so want most done in july </pre></details>
+<details><summary>CHAT-13 · Hardware and Software Req <small>2026-07-09</small></summary><p>Visible user excerpts only. Assistant answers and attachment bytes are not present. <a href="source-excerpts/13-2026-07-09-hardware-and-software-req.md">Source file</a></p><pre>Visible user message 1
+Hardware and Software Requirements
+
+The technology used to build this system is based on the features that my client requires. The list of requirements is as follows:
+Clean user interface
+User registration and login
+Admin login
+Database storage for animal records, user accounts and questionnaire answers
+CRUD functionality for admins
+Input validation 
+Compatibility scoring algorithm
+Ranked animal recommendations
+For this project, I will develop my system on my Macbook, which has the required hardware and software capabilities to develop, run and test my system. 
+
+Developer
+Hardware: 
+Device: Macbook Air, 13 Inch, M3 2024
+Processor: Apple M3 Chip
+RAM: 8GB
+Display: I will use the 13.6 inch built in retina display alongside a 13 inch monitor
+Input: Keyboard and Trackpad 
+Internet Connection: This is required in order to install packages, access documentation and test deployment. 
+This hardware is suitable as my system will not require advanced graphics processing or a powerful server. The main processing will be form input, database queries, validation and the algorithm, which is perfectly suited for my laptop. 
+
+Software:  
+Operating system: MacOS Sequoia 15.0 
+IDE: Visual studio code</pre></details>
+
+<h2>GitHub destination</h2><p>The proposed destination is <code>sisodias/comp-sci-nea-backup</code>, with private visibility. That repository was <strong>not created</strong> by this session. The included publication helper requires local GitHub CLI authentication and uploads only this verified partial snapshot.</p><p>From the extracted folder, preview with <code>python3 scripts/publish_private_github.py --dry-run</code>. See the restore guide before running the upload.</p>
+<footer><p class="check">Do not delete the original chats or files on the assumption that this archive contains them.</p><p class="muted">No original images were recreated, no test results invented, and no replacement scoring algorithm inserted. This page works offline and loads no external resources.</p></footer></main></body></html>

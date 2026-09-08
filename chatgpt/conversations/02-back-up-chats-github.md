@@ -1,0 +1,116 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - separator "Yesterday 7:25 PM":
+    - generic: Yesterday 7:25 PM
+  - heading "You said:" [level=4]
+  - generic: GitHub
+  - text: Go through every single chat in here and back it all up, all docs and everything that's made. Back it all up and make a new GitHub repo and back it all up here for me, please.
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 10m 11s":
+    - text: Worked for 10m 11s
+  - paragraph:
+    - text: I’ve created a
+    - strong: downloadable partial backup of the NEA material available to me
+    - text: .
+    - strong: It is not a complete export of every chat and file, and it has not been uploaded to GitHub.
+  - heading "Your backup" [level=2]
+  - paragraph:
+    - strong:
+      - button "Download the NEA backup ZIP"
+  - paragraph:
+    - text: After extracting it, open
+    - strong:
+      - code: START_HERE.html
+    - text: to browse the archive.
+  - table:
+    - rowgroup:
+      - row "Included What was preserved":
+        - columnheader "Included"
+        - columnheader "What was preserved"
+    - rowgroup:
+      - row "13 project-chat excerpts 60 visible user messages, saved individually and in a combined machine-readable file.":
+        - cell "13 project-chat excerpts":
+          - strong: 13 project-chat excerpts
+        - cell "60 visible user messages, saved individually and in a combined machine-readable file."
+      - row "9 organised notes documents Project scope, interfaces, validation, database design, compatibility scoring, variables, testing, development setup and timeline. These are labelled as summaries—not original documents.":
+        - cell "9 organised notes documents":
+          - strong: 9 organised notes documents
+        - cell "Project scope, interfaces, validation, database design, compatibility scoring, variables, testing, development setup and timeline. These are labelled as summaries—not original documents."
+      - row "Missing-files inventory The two referenced analysis PDFs and 21 image-reference occurrences, explicitly marked as unavailable rather than backed up.":
+        - cell "Missing-files inventory":
+          - strong: Missing-files inventory
+        - cell "The two referenced analysis PDFs and 21 image-reference occurrences, explicitly marked as unavailable rather than backed up."
+      - row "Backup utilities File checksums, an integrity checker and a script for publishing the snapshot to a new private GitHub repository.":
+        - cell "Backup utilities":
+          - strong: Backup utilities
+        - cell "File checksums, an integrity checker and a script for publishing the snapshot to a new private GitHub repository."
+  - button "Copy table":
+  - paragraph: I tested extracting the ZIP and restoring a separate Git-history copy; both passed the file-integrity checks.
+  - paragraph:
+    - button "Download the Git-history recovery copy"
+    - text: ·
+    - button "Download the checksums":
+      - text: Download the checksums
+  - heading "What prevented the complete GitHub backup" [level=2]
+  - paragraph:
+    - text: Your GitHub connection returned the account
+    - strong:
+      - code: sisodias
+    - text: ", but the available tools did not provide a repository-creation action."
+  - paragraph:
+    - text: The project context also exposes
+    - strong: excerpts, not complete historical conversations or their original attachments
+    - text: ". I could not retrieve the earlier assistant responses, original mock-ups and flowcharts, or either analysis PDF:"
+    - code: comp sci umar and sienna (1).pdf
+    - text: and
+    - code: comp sci umar and sienna.pdf
+    - text: . Those gaps are documented in the archive.
+  - heading "Publishing this snapshot" [level=2]
+  - paragraph:
+    - text: The included script targets a
+    - strong:
+      - text: new private repository named
+      - code: sisodias/comp-sci-nea-backup
+    - text: . On your Mac, with Python 3, Git and the GitHub CLI installed and authenticated as
+    - code: sisodias
+    - text: ", run this from the extracted folder:"
+  - text: Bash
+  - button "Copy":
+  - paragraph:
+    - text: It verifies the snapshot, requests creation of the private repository, uploads the files and checks the resulting commit. It does not overwrite an existing repository. GitHub’s CLI supports creating a private repository from a local source and pushing its commits.
+    - link "GitHub CLI":
+      - /url: https://cli.github.com/manual/gh_repo_create
+      - generic: GitHub CLI
+  - paragraph:
+    - text: A complete backup still requires the full conversations and original attachments. For eligible accounts, ChatGPT’s
+    - strong: Settings → Data controls → Export data
+    - text: provides an account export containing chat history; check that it includes the required project conversations.
+    - link "OpenAI Help Center":
+      - /url: https://help.openai.com/en/articles/7260999-how-do-i-export-my-data
+      - generic: OpenAI Help Center
+  - paragraph:
+    - strong: Keep the original chats and documents—this archive does not yet replace them.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

@@ -1,0 +1,563 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 5m 36s":
+    - text: Worked for 5m 36s
+  - 'heading "Realistically: you do not need all of that pseudocode" [level=2]':
+    - text: "Realistically: you do"
+    - strong: not
+    - text: need all of that pseudocode
+  - paragraph:
+    - text: For
+    - strong: login and registration together
+    - text: ", I would aim for approximately:"
+  - list:
+    - paragraph: One registration algorithm
+    - paragraph: One login algorithm
+    - paragraph: One compact validation table
+    - paragraph: A short explanation of important design choices
+  - paragraph:
+    - text: That would probably take around
+    - strong: two pages altogether
+    - text: ", depending on formatting. You do"
+    - strong: not
+    - text: need separate pseudocode blocks for every tiny function such as
+    - code: hash_password()
+    - text: ","
+    - code: valid_email()
+    - text: ","
+    - code: email_exists()
+    - text: and
+    - code: add_user_to_database()
+    - text: .
+  - paragraph:
+    - text: The entire OCR programming project is marked out of 70, but the whole
+    - strong: design section is only 15 marks
+    - text: . The remaining marks come from analysis, development and testing, and evaluation and documentation. Therefore, producing six pages just for login validation would not automatically move you towards 70/70.
+    - link "OCR":
+      - /url: https://www.ocr.org.uk/qualifications/as-and-a-level/computer-science-h046-h446-from-2015/specification-at-a-glance/
+      - generic: OCR
+  - paragraph:
+    - text: OCR’s highest design band requires the complete system to be systematically decomposed, its structure defined, and its algorithms described accurately enough to form a complete solution. It also requires justified variables, validation and test data. The latest moderators’ report warns against algorithms that are merely high-level summaries or that appear to have been produced after the code was already written.
+    - link "OCR +1":
+      - /url: https://www.ocr.org.uk/images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf?utm_source=chatgpt.com
+      - generic: OCR
+      - generic: "+1"
+  - heading "What I would actually include" [level=1]
+  - heading "1. Registration pseudocode" [level=2]
+  - paragraph: "This is about the right level of detail:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def register_user(name, email, age, password, confirm_password): errors = [] name = name.strip() email = email.strip().lower() if name == \"\": errors.append(\"Name cannot be blank\") if not valid_email(email): errors.append(\"Enter a valid email address\") if not is_integer(age): errors.append(\"Age must be a whole number\") elif age < 18: errors.append(\"You must be at least 18 years old\") if len(password) < 8: errors.append(\"Password must contain at least 8 characters\") if password != confirm_password: errors.append(\"Passwords do not match\") if len(errors) == 0 and email_exists(email): errors.append(\"An account with this email already exists\") if len(errors) > 0: display_errors(errors) else: password_hash = hash_password(password) save_user( name, email, age, password_hash, role=\"user\" ) display_success(\"Account created successfully\") open_login_page()"
+  - paragraph: "This already demonstrates:"
+  - list:
+    - paragraph: Input sanitisation
+    - paragraph: Presence checks
+    - paragraph: Format checks
+    - paragraph: Type checks
+    - paragraph: Range checks
+    - paragraph: Length checks
+    - paragraph: Comparison checks
+    - paragraph: Duplicate-record checks
+    - paragraph: Password hashing
+    - paragraph: Database insertion
+    - paragraph: User feedback
+    - paragraph: Navigation
+  - paragraph:
+    - text: You do not need another full page explaining how
+    - code: email_exists()
+    - text: works. The function name clearly shows its purpose.
+  - separator
+  - heading "2. Login pseudocode" [level=2]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def login_user(email, password): email = email.strip().lower() if email == \"\" or password == \"\": display_error(\"All fields must be completed\") else: user = find_user_by_email(email) if user is None: display_error(\"Email or password is incorrect\") elif not verify_password(password, user.password_hash): display_error(\"Email or password is incorrect\") else: session[\"logged_in\"] = True session[\"user_id\"] = user.user_id session[\"name\"] = user.name session[\"role\"] = user.role if user.role == \"admin\": open_admin_page() else: open_user_homepage()"
+  - paragraph: "This covers the important login routes:"
+  - list:
+    - paragraph: Blank inputs
+    - paragraph: Account not found
+    - paragraph: Incorrect password
+    - paragraph: Successful normal-user login
+    - paragraph: Successful administrator login
+    - paragraph: Creation of the user session
+  - paragraph: That is enough detail for someone to understand how the login system should work without effectively writing the final Python program.
+  - separator
+  - heading "3. One validation table" [level=2]
+  - paragraph: You do not need both a very long validation function and a detailed validation table. Since you already have pseudocode, use a small table to add the test data and justification that the OCR design criteria require.
+  - table:
+    - rowgroup:
+      - row "Field Validation Example test data Expected outcome Justification":
+        - columnheader "Field"
+        - columnheader "Validation"
+        - columnheader "Example test data"
+        - columnheader "Expected outcome"
+        - columnheader "Justification"
+    - rowgroup:
+      - row "Name Must not be blank \"\" Error displayed Prevents accounts without a user name":
+        - cell "Name"
+        - cell "Must not be blank"
+        - cell "\"\"":
+          - code: "\"\""
+        - cell "Error displayed"
+        - cell "Prevents accounts without a user name"
+      - row "Email Must follow a valid format sienna@email.com Accepted Ensures the email can be used as an account identifier":
+        - cell "Email"
+        - cell "Must follow a valid format"
+        - cell "sienna@email.com":
+          - code: sienna@email.com
+        - cell "Accepted"
+        - cell "Ensures the email can be used as an account identifier"
+      - row "Email Must be unique An email already in the database Error displayed Prevents duplicate accounts":
+        - cell "Email"
+        - cell "Must be unique"
+        - cell "An email already in the database"
+        - cell "Error displayed"
+        - cell "Prevents duplicate accounts"
+      - row "Age Must be an integer of at least 18 18 Accepted Tests the lower boundary":
+        - cell "Age"
+        - cell "Must be an integer of at least 18"
+        - cell "18":
+          - code: "18"
+        - cell "Accepted"
+        - cell "Tests the lower boundary"
+      - row "Age Must be at least 18 17 Error displayed Tests just below the lower boundary":
+        - cell "Age"
+        - cell "Must be at least 18"
+        - cell "17":
+          - code: "17"
+        - cell "Error displayed"
+        - cell "Tests just below the lower boundary"
+      - row "Password Minimum eight characters animals1 Accepted Tests the minimum valid length":
+        - cell "Password"
+        - cell "Minimum eight characters"
+        - cell "animals1":
+          - code: animals1
+        - cell "Accepted"
+        - cell "Tests the minimum valid length"
+      - row "Password Minimum eight characters animal1 Error displayed Tests just below the boundary":
+        - cell "Password"
+        - cell "Minimum eight characters"
+        - cell "animal1":
+          - code: animal1
+        - cell "Error displayed"
+        - cell "Tests just below the boundary"
+      - row "Confirm password Must match password Two different values Error displayed Reduces accidental password entry errors":
+        - cell "Confirm password"
+        - cell "Must match password"
+        - cell "Two different values"
+        - cell "Error displayed"
+        - cell "Reduces accidental password entry errors"
+      - row "Login details Must match a stored account Correct email and password Login succeeds Tests normal valid data":
+        - cell "Login details"
+        - cell "Must match a stored account"
+        - cell "Correct email and password"
+        - cell "Login succeeds"
+        - cell "Tests normal valid data"
+      - row "Login details Must match a stored account Correct email and incorrect password Generic error displayed Tests invalid authentication":
+        - cell "Login details"
+        - cell "Must match a stored account"
+        - cell "Correct email and incorrect password"
+        - cell "Generic error displayed"
+        - cell "Tests invalid authentication"
+  - button "Copy table":
+  - paragraph:
+    - text: This table is particularly useful because the highest design band requires appropriate test data to be identified and justified, including data for iterative development and later testing.
+    - link "OCR":
+      - /url: https://www.ocr.org.uk/images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf?utm_source=chatgpt.com
+      - generic: OCR
+  - separator
+  - heading "4. A short explanation after the algorithms" [level=2]
+  - paragraph: "Around one paragraph is enough:"
+  - blockquote:
+    - paragraph: The authentication system has been decomposed into registration and login algorithms. During registration, inputs will be validated before the database is changed. Email addresses will be converted to lowercase so that the same address cannot be registered using different capitalisation, and the database will also prevent duplicate emails. Passwords will be hashed before being stored so that plain-text passwords are not held in the database. When a user logs in successfully, their identifier, name and role will be stored in session state. Their role will determine whether they are directed to the user homepage or the administrator page.
+  - paragraph:
+    - text: That gives the required
+    - strong: explanation and justification
+    - text: rather than presenting unexplained pseudocode.
+  - heading "What you can leave out" [level=1]
+  - paragraph: "For this particular section, I would leave out:"
+  - list:
+    - paragraph:
+      - text: Separate algorithms for
+      - code: valid_email()
+    - paragraph:
+      - text: Separate algorithms for
+      - code: email_exists()
+    - paragraph:
+      - text: Separate algorithms for
+      - code: hash_password()
+    - paragraph: Exact SQL queries
+    - paragraph:
+      - code: try
+      - text: and
+      - code: except
+      - text: database handling
+    - paragraph: Every Streamlit widget
+    - paragraph: The detailed mathematics of password hashing
+    - paragraph: Repeated explanations of the same validation checks
+    - paragraph: Pseudocode for displaying labels, headings and ordinary buttons
+  - paragraph: You can simply state that these are supporting functions. Only expand one separately when it contains significant original logic.
+  - paragraph: "For example:"
+  - blockquote:
+    - paragraph:
+      - code: email_exists(email)
+      - text: searches the users table for the normalised email and returns either
+      - code: "True"
+      - text: or
+      - code: "False"
+      - text: .
+  - paragraph: That single sentence is enough.
+  - heading "Across your entire design section" [level=1]
+  - paragraph:
+    - text: To reach the highest band, you need to cover the
+    - strong: complete solution
+    - text: ", not give extreme detail to login and then leave the important matching system vague. OCR’s 2025 moderators specifically praised projects whose detailed algorithms collectively explained the complete solution."
+    - link "OCR":
+      - /url: https://www.ocr.org.uk/Images/752068-moderators-report.pdf
+      - generic: OCR
+  - paragraph: "For your project, I would divide the algorithm design approximately like this:"
+  - table:
+    - rowgroup:
+      - row "Component Best design evidence Required detail":
+        - columnheader "Component"
+        - columnheader "Best design evidence"
+        - columnheader "Required detail"
+    - rowgroup:
+      - row "Registration and login Two pseudocode algorithms and validation table Medium":
+        - cell "Registration and login"
+        - cell "Two pseudocode algorithms and validation table"
+        - cell "Medium"
+      - row "User homepage/navigation Annotated interface and simple navigation flowchart Low":
+        - cell "User homepage/navigation"
+        - cell "Annotated interface and simple navigation flowchart"
+        - cell "Low"
+      - row "Questionnaire Pseudocode showing validation, answer storage and submission Medium":
+        - cell "Questionnaire"
+        - cell "Pseudocode showing validation, answer storage and submission"
+        - cell "Medium"
+      - row "Compatibility scoring Detailed pseudocode with weights, mandatory requirements and calculations Very high":
+        - cell "Compatibility scoring"
+        - cell "Detailed pseudocode with weights, mandatory requirements and calculations"
+        - cell "Very high":
+          - strong: Very high
+      - row "Ranking recommendations Pseudocode showing sorting, thresholds and match categories High":
+        - cell "Ranking recommendations"
+        - cell "Pseudocode showing sorting, thresholds and match categories"
+        - cell "High":
+          - strong: High
+      - row "Unmet requirements Pseudocode showing how explanations are generated High":
+        - cell "Unmet requirements"
+        - cell "Pseudocode showing how explanations are generated"
+        - cell "High"
+      - row "Animal browsing and filtering Pseudocode showing combined filters and database retrieval Medium":
+        - cell "Animal browsing and filtering"
+        - cell "Pseudocode showing combined filters and database retrieval"
+        - cell "Medium"
+      - row "Administrator CRUD Pseudocode or flowcharts for add, edit and delete operations Medium":
+        - cell "Administrator CRUD"
+        - cell "Pseudocode or flowcharts for add, edit and delete operations"
+        - cell "Medium"
+      - row "Account and logout Small flowchart or short pseudocode Low":
+        - cell "Account and logout"
+        - cell "Small flowchart or short pseudocode"
+        - cell "Low"
+      - row "Database Table structures, keys, relationships and validation High":
+        - cell "Database"
+        - cell "Table structures, keys, relationships and validation"
+        - cell "High"
+      - row "Interfaces Annotated Streamlit-compatible mock-ups Medium":
+        - cell "Interfaces"
+        - cell "Annotated Streamlit-compatible mock-ups"
+        - cell "Medium"
+      - row "Testing approach Normal, boundary and invalid test-data tables High":
+        - cell "Testing approach"
+        - cell "Normal, boundary and invalid test-data tables"
+        - cell "High"
+  - button "Copy table":
+  - paragraph:
+    - text: Your
+    - strong: compatibility scoring algorithm should receive substantially more detail than login
+    - text: ", because it is the most original and technically significant part of your solution."
+  - heading "My honest recommendation" [level=1]
+  - paragraph: "For login and registration, submit:"
+  - list:
+    - paragraph: The two pseudocode blocks above
+    - paragraph: One validation/test-data table
+    - paragraph: One explanatory paragraph
+    - paragraph: Your annotated login and registration interface mock-ups
+    - paragraph: Your users-table database design, which you already have elsewhere
+  - paragraph: That is enough. Adding five more supporting algorithms would mostly create repetition rather than additional marks.
+  - paragraph:
+    - text: Also, keep the pseudocode Python-like but not fully executable. Avoid Streamlit-specific lines such as
+    - code: st.text_input()
+    - text: and SQLite-specific cursor code in the design algorithm. Those belong in your development section. OCR wants the design to exist before implementation and be detailed enough to guide it, rather than appearing to have been copied backwards from completed code.
+    - link "OCR":
+      - /url: https://www.ocr.org.uk/Images/752068-moderators-report.pdf
+      - generic: OCR
+  - paragraph:
+    - text: One important OCR requirement is that material produced using AI must not be presented as independently produced candidate work. Use this as planning support, rewrite it in your own style, make your own design decisions, and ensure you can explain every line. OCR’s latest moderators’ report states that AI use must be acknowledged and that credit should only be awarded for the candidate’s own work.
+    - link "OCR":
+      - /url: https://www.ocr.org.uk/Images/752068-moderators-report.pdf
+      - generic: OCR
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - separator "Wed, Aug 26 at 10:17 PM":
+    - generic: Wed, Aug 26 at 10:17 PM
+  - heading "You said:" [level=4]
+  - paragraph: streamlit pseudocode for these validations Validation
+  - list:
+    - strong: Name
+  - list:
+    - listitem: "Presence check: Field cannot be empty or contain only spaces"
+    - listitem: "Length check: name must be between 2 and 50 characters"
+    - listitem: "Whitespace check: spaces at beginning and end will be removed"
+  - list:
+    - strong: Email address
+  - list:
+    - listitem: "Presence check: Field cannot be empty or contain only spaces"
+    - listitem: "Format check: value must contain a @ and domain"
+    - listitem: "Uniqueness check: a database query will check the address not already registered"
+    - listitem: "Whitespace check: spaces at beginning and end will be removed"
+    - listitem: "Check characters: convert all to lower case"
+  - list:
+    - strong: Age
+  - list:
+    - listitem: "Presence check: Field cannot be empty or contain only spaces"
+    - listitem: "Type check: data must be a whole number"
+    - listitem: "Range check: age must be 18+"
+  - list:
+    - strong: Password
+  - list:
+    - listitem: "Presence check: Field cannot be empty or contain only spaces"
+    - listitem: "Length check: password must be more than 8 characters"
+  - paragraph: Registration
+  - list:
+    - listitem: "Confirmation check: the confirmation field must exactly match original password"
+    - listitem: "Security processing: the valid password will be hashed before it is inserted into the database and the original password will never be stored."
+  - paragraph: Login
+  - list:
+    - listitem: The password will be checked against the stored password hash rather than compared as plain text.
+  - paragraph:
+    - strong: Registration outcome
+  - list:
+    - listitem: The account will be created if every field passes validation, individual messages will be shown if one or more fields are invalid.
+  - paragraph:
+    - strong: Session check
+  - list:
+    - listitem: A session will only be created after successful authentication. Invalid information will leave users on the login page and will not allow them to access the user or admin page.
+  - button "Show more":
+    - generic: Show more
+  - heading "You said:" [level=4]
+  - generic: PSEUDOCODE FOR MY A LLEVEL DESIGN BIT
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - generic: Worked for 2m 41s
+  - paragraph:
+    - text: "One important detail:"
+    - strong: “more than 8 characters” means at least 9 characters
+    - text: . The pseudocode below follows that exact rule. If your success criterion says
+    - strong: “at least 8 characters”
+    - text: ", change:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: len(password) <= 8
+  - paragraph: "to:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: len(password) < 8
+  - paragraph: Keep this consistent throughout your design, development and testing.
+  - heading "Registration Page and Validation" [level=1]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def registration_page(): st.title(\"Create an Account\") with st.form(\"registration_form\"): name_input = st.text_input(\"Name\") email_input = st.text_input(\"Email address\") age_input = st.text_input(\"Age\") password = st.text_input( \"Password\", type=\"password\" ) confirm_password = st.text_input( \"Confirm password\", type=\"password\" ) register_button = st.form_submit_button(\"Register\") if register_button: errors = [] # Remove spaces from the beginning and end # of the name and email name = name_input.strip() email = email_input.strip().lower() # ------------------------- # NAME VALIDATION # ------------------------- if name == \"\": errors.append(\"Name cannot be blank.\") elif len(name) < 2 or len(name) > 50: errors.append( \"Name must be between 2 and 50 characters.\" ) # ------------------------- # EMAIL VALIDATION # ------------------------- if email == \"\": errors.append(\"Email address cannot be blank.\") elif not valid_email(email): errors.append(\"Enter a valid email address.\") elif email_exists(email): errors.append( \"An account with this email address already exists.\" ) # ------------------------- # AGE VALIDATION # ------------------------- age = None if age_input.strip() == \"\": errors.append(\"Age cannot be blank.\") else: try: age = int(age_input) if age < 18: errors.append( \"You must be at least 18 years old.\" ) except ValueError: errors.append( \"Age must be entered as a whole number.\" ) # ------------------------- # PASSWORD VALIDATION # ------------------------- # strip() is used only to detect a password # containing nothing except spaces. # The original password is not changed. if password.strip() == \"\": errors.append(\"Password cannot be blank.\") elif len(password) <= 8: errors.append( \"Password must contain more than 8 characters.\" ) # ------------------------- # CONFIRMATION VALIDATION # ------------------------- if confirm_password == \"\": errors.append(\"Please confirm your password.\") elif password != confirm_password: errors.append(\"Passwords do not match.\") # ------------------------- # REGISTRATION OUTCOME # ------------------------- if len(errors) > 0: for message in errors: st.error(message) else: # Only the hash is stored password_hash = hash_password(password) save_user_to_database( name=name, email=email, age=age, password_hash=password_hash, role=\"user\" ) st.success(\"Account created successfully.\") # Registration does not automatically # create an authenticated session st.switch_page(\"pages/Login.py\")"
+  - heading "Email Format Validation" [level=1]
+  - paragraph:
+    - text: This supporting function is enough for your design pseudocode. It demonstrates that the email must have an
+    - code: "@"
+    - text: ", a local section and a domain."
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def valid_email(email): if email.count(\"@\") != 1: return False local_part, domain = email.split(\"@\") if local_part == \"\": return False if domain == \"\": return False if \".\" not in domain: return False if domain.startswith(\".\") or domain.endswith(\".\"): return False return True"
+  - paragraph: "For example:"
+  - button "Copy":
+  - code: sienna@email.com → valid siennaemail.com → invalid because there is no @ @email.com → invalid because the local part is missing sienna@ → invalid because the domain is missing sienna@email → invalid because the domain is incomplete
+  - heading "Email Uniqueness Check" [level=1]
+  - paragraph: "You only need a small supporting algorithm for this:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def email_exists(email): result = database.execute( \"SELECT user_id FROM users WHERE email = ?\", [email] ) if result contains a record: return True else: return False"
+  - paragraph:
+    - text: The parameter placeholder
+    - code: "?"
+    - text: shows that you intend to use a
+    - strong: parameterised query
+    - text: ", instead of directly adding user input to an SQL statement."
+  - heading "Login Page and Validation" [level=1]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def login_page(): st.title(\"Login\") with st.form(\"login_form\"): email_input = st.text_input(\"Email address\") password = st.text_input( \"Password\", type=\"password\" ) login_button = st.form_submit_button(\"Login\") if login_button: errors = [] # Remove surrounding spaces and make # the email lowercase email = email_input.strip().lower() # ------------------------- # LOGIN INPUT VALIDATION # ------------------------- if email == \"\": errors.append(\"Email address cannot be blank.\") elif not valid_email(email): errors.append(\"Enter a valid email address.\") if password.strip() == \"\": errors.append(\"Password cannot be blank.\") if len(errors) > 0: for message in errors: st.error(message) else: user = find_user_by_email(email) # ------------------------- # AUTHENTICATION # ------------------------- if user is None: st.error( \"The email address or password is incorrect.\" ) elif not verify_password( password, user.password_hash ): st.error( \"The email address or password is incorrect.\" ) else: # Session data is only created after # the login details have been verified st.session_state[\"logged_in\"] = True st.session_state[\"user_id\"] = user.user_id st.session_state[\"name\"] = user.name st.session_state[\"role\"] = user.role st.success(\"Login successful.\") if user.role == \"admin\": st.switch_page(\"pages/Admin.py\") else: st.switch_page(\"pages/Home.py\")"
+  - paragraph: "This uses the same message for an unknown email and an incorrect password:"
+  - button "Copy":
+  - code: The email address or password is incorrect.
+  - paragraph: That is better than revealing whether a particular email address is registered.
+  - heading "Password Hash Verification" [level=1]
+  - paragraph: You do not need to explain the internal mathematics of password hashing. The important design decision is that a secure library will be used.
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def hash_password(password): password_hash = secure_hashing_library.hash(password) return password_hash"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def verify_password(password, stored_password_hash): password_matches = secure_hashing_library.verify( password, stored_password_hash ) return password_matches"
+  - paragraph: "The original password should not be inserted into the users table:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "# Correct save_to_database(password_hash) # Incorrect save_to_database(password)"
+  - paragraph:
+    - text: Also, do not use
+    - code: .strip()
+    - text: on the password before hashing or checking it. It is only used in the presence check to identify an input containing nothing but spaces.
+  - heading "Session and Page-Access Check" [level=1]
+  - paragraph: Place a version of this check at the beginning of protected pages such as the homepage, questionnaire and animal recommendations page.
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def require_login(): if st.session_state.get(\"logged_in\", False) == False: st.error(\"You must log in to access this page.\") st.switch_page(\"pages/Login.py\") st.stop()"
+  - paragraph: "The administrator page should also check the role:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def require_admin(): if st.session_state.get(\"logged_in\", False) == False: st.error(\"You must log in to access this page.\") st.switch_page(\"pages/Login.py\") st.stop() elif st.session_state.get(\"role\") != \"admin\": st.error( \"You do not have permission to access the admin page.\" ) st.switch_page(\"pages/Home.py\") st.stop()"
+  - paragraph: "Therefore:"
+  - button "Copy":
+  - code: Valid user login → user session created → user homepage opened Valid admin login → admin session created → admin page opened Invalid login → no session created → error displayed → user remains on login page
+  - heading "Suitable Explanation for Your Design" [level=2]
+  - blockquote:
+    - paragraph: The registration form will be placed inside a Streamlit form so that all values are submitted and validated together. An error list will collect individual validation messages, allowing the user to see every invalid field after one submission. The name and email address will have surrounding whitespace removed, while the email will also be converted to lowercase to ensure consistent database searches. The password will not be altered because spaces could form part of a valid password. Once every field passes validation, the password will be securely hashed and only the hash will be inserted into the database. During login, the entered password will be verified against the stored hash. Session-state values will only be created after successful authentication, preventing unauthenticated users from accessing protected user or administrator pages.
+  - heading "Registration and Login Pseudocode" [level=1]
+  - paragraph:
+    - text: This is written in a
+    - strong: Python-style Streamlit pseudocode format
+    - text: . It is detailed enough for the design section but does not include unnecessary implementation code.
+  - heading "Registration Page Pseudocode" [level=2]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def registration_page(): st.title(\"Create an Account\") with st.form(\"registration_form\"): name = st.text_input(\"Name\") email = st.text_input(\"Email address\") age_input = st.text_input(\"Age\") password = st.text_input(\"Password\", type=\"password\") confirm_password = st.text_input( \"Confirm password\", type=\"password\" ) register_button = st.form_submit_button(\"Register\") if register_button: errors = [] # Remove spaces from the beginning and end name = name.strip() email = email.strip().lower() # Validate name if name == \"\": errors.append(\"Name cannot be blank\") elif len(name) < 2 or len(name) > 50: errors.append( \"Name must be between 2 and 50 characters\" ) # Validate email if email == \"\": errors.append(\"Email address cannot be blank\") elif not valid_email_format(email): errors.append(\"Enter a valid email address\") elif email_exists_in_database(email): errors.append( \"An account with this email address already exists\" ) # Validate age if age_input.strip() == \"\": errors.append(\"Age cannot be blank\") elif not age_input.strip().isdigit(): errors.append(\"Age must be entered as a whole number\") else: age = int(age_input) if age < 18: errors.append( \"You must be at least 18 years old\" ) # Validate password if password.strip() == \"\": errors.append(\"Password cannot be blank\") elif len(password) <= 8: errors.append( \"Password must contain more than 8 characters\" ) # Validate password confirmation if confirm_password == \"\": errors.append(\"Please confirm your password\") elif password != confirm_password: errors.append(\"Passwords do not match\") # Display all validation errors if len(errors) > 0: for error in errors: st.error(error) # Create the account when every check has passed else: password_hash = hash_password(password) database.insert_user( name=name, email=email, age=age, password_hash=password_hash, role=\"user\" ) st.success(\"Account created successfully\") navigate_to_login_page()"
+  - separator
+  - heading "Email Format Validation Pseudocode" [level=2]
+  - paragraph:
+    - text: This supporting function checks that the email contains an
+    - code: "@"
+    - text: symbol and a valid domain.
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def valid_email_format(email): if \" \" in email: return False if email.count(\"@\") != 1: return False local_part, domain = email.split(\"@\") if local_part == \"\": return False if domain == \"\": return False if \".\" not in domain: return False if domain.startswith(\".\") or domain.endswith(\".\"): return False return True"
+  - separator
+  - heading "Duplicate Email Check Pseudocode" [level=2]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def email_exists_in_database(email): existing_user = database.find_user_by_email(email) if existing_user is not None: return True else: return False"
+  - separator
+  - heading "Login Page Pseudocode" [level=1]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def login_page(): st.title(\"Login\") with st.form(\"login_form\"): email = st.text_input(\"Email address\") password = st.text_input( \"Password\", type=\"password\" ) login_button = st.form_submit_button(\"Login\") if login_button: errors = [] email = email.strip().lower() # Check that both fields have been completed if email == \"\": errors.append(\"Email address cannot be blank\") elif not valid_email_format(email): errors.append(\"Enter a valid email address\") if password.strip() == \"\": errors.append(\"Password cannot be blank\") if len(errors) > 0: for error in errors: st.error(error) else: user = database.find_user_by_email(email) # Do not reveal whether the email or password was wrong if user is None: st.error(\"Email address or password is incorrect\") elif not verify_password( password, user.password_hash ): st.error(\"Email address or password is incorrect\") else: # Create session only after successful authentication st.session_state[\"logged_in\"] = True st.session_state[\"user_id\"] = user.user_id st.session_state[\"name\"] = user.name st.session_state[\"role\"] = user.role st.success(\"Login successful\") if user.role == \"admin\": navigate_to_admin_page() else: navigate_to_user_homepage()"
+  - separator
+  - heading "Password Security Pseudocode" [level=2]
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def hash_password(password): password_hash = secure_hashing_function(password) return password_hash"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def verify_password(entered_password, stored_password_hash): password_matches = secure_hash_check( entered_password, stored_password_hash ) return password_matches"
+  - paragraph:
+    - text: The original password is never inserted into the database. Only
+    - code: password_hash
+    - text: is stored.
+  - separator
+  - heading "Session Check for Protected Pages" [level=1]
+  - paragraph: Place this logic at the beginning of pages that should only be accessed after login.
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def check_user_session(): if st.session_state.get(\"logged_in\", False) == False: st.error(\"You must log in to access this page\") navigate_to_login_page() stop_page_execution()"
+  - paragraph: "For the administrator page, an additional role check will be performed:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def check_admin_session(): if st.session_state.get(\"logged_in\", False) == False: st.error(\"You must log in to access this page\") navigate_to_login_page() stop_page_execution() elif st.session_state.get(\"role\") != \"admin\": st.error( \"You do not have permission to access the admin page\" ) navigate_to_user_homepage() stop_page_execution()"
+  - separator
+  - heading "Explanation to Place Under the Pseudocode" [level=2]
+  - blockquote:
+    - paragraph: The registration page will collect the user’s name, email address, age and password using a Streamlit form. When the register button is selected, each input will be validated and any errors will be added to an error list. This allows individual messages to be displayed for every invalid field. Spaces will be removed from the beginning and end of the name and email address, and the email address will be converted to lowercase to ensure it is stored consistently. The account will only be inserted into the database when the error list is empty. Before insertion, the password will be processed using a secure hashing function, meaning that the original password will never be stored.
+  - blockquote:
+    - paragraph: During login, the entered email address will be used to retrieve the corresponding user record. The entered password will be checked against the stored password hash using a password-verification function rather than comparing plain-text passwords. Session-state values will only be created after successful authentication. The user’s role will then determine whether they are directed to the normal user homepage or the administrator page. Protected pages will check the session before displaying their contents, preventing unauthenticated users from accessing restricted areas.
+  - paragraph:
+    - strong: "Important:"
+    - text: your rule says the password must be
+    - strong: more than eight characters
+    - text: ", so the pseudocode rejects passwords of eight characters or fewer. This means the minimum accepted length is"
+    - strong: nine characters
+    - text: .
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

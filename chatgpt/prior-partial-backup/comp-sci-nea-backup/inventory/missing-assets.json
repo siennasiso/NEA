@@ -1,0 +1,265 @@
+{
+  "scope": "Known references from visible excerpts only, not a complete asset inventory.",
+  "image_occurrences_are_not_unique_file_count": true,
+  "references": [
+    {
+      "id": "IMGREF-001",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 1,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-002",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 1,
+      "occurrence_in_message": 2,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-003",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 6,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-004",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 12,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-005",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 15,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-006",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 18,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-007",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 18,
+      "occurrence_in_message": 2,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-008",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 19,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-009",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 19,
+      "occurrence_in_message": 2,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-010",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 19,
+      "occurrence_in_message": 3,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-011",
+      "kind": "image_reference",
+      "source_id": "CHAT-03",
+      "visible_message": 19,
+      "occurrence_in_message": 4,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-012",
+      "kind": "image_reference",
+      "source_id": "CHAT-04",
+      "visible_message": 1,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-013",
+      "kind": "image_reference",
+      "source_id": "CHAT-04",
+      "visible_message": 1,
+      "occurrence_in_message": 2,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-014",
+      "kind": "image_reference",
+      "source_id": "CHAT-04",
+      "visible_message": 1,
+      "occurrence_in_message": 3,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-015",
+      "kind": "image_reference",
+      "source_id": "CHAT-04",
+      "visible_message": 1,
+      "occurrence_in_message": 4,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-016",
+      "kind": "image_reference",
+      "source_id": "CHAT-04",
+      "visible_message": 1,
+      "occurrence_in_message": 5,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-017",
+      "kind": "image_reference",
+      "source_id": "CHAT-04",
+      "visible_message": 1,
+      "occurrence_in_message": 6,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-018",
+      "kind": "image_reference",
+      "source_id": "CHAT-06",
+      "visible_message": 4,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-019",
+      "kind": "image_reference",
+      "source_id": "CHAT-07",
+      "visible_message": 6,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-020",
+      "kind": "image_reference",
+      "source_id": "CHAT-10",
+      "visible_message": 3,
+      "occurrence_in_message": 1,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "IMGREF-021",
+      "kind": "image_reference",
+      "source_id": "CHAT-10",
+      "visible_message": 3,
+      "occurrence_in_message": 2,
+      "status": "referenced_only_original_bytes_unavailable",
+      "original_filename": null,
+      "sha256": null,
+      "note": "Reference occurrence, not a verified unique image. May duplicate another image; no dimensions/content inferred."
+    },
+    {
+      "id": "PDFREF-001",
+      "kind": "pdf_reference",
+      "source_id": "CHAT-11",
+      "visible_message": 2,
+      "original_filename": "comp sci umar and sienna (1).pdf",
+      "status": "referenced_only_original_bytes_unavailable",
+      "sha256": null
+    },
+    {
+      "id": "PDFREF-002",
+      "kind": "pdf_reference",
+      "source_id": "CHAT-11",
+      "visible_message": 3,
+      "original_filename": "comp sci umar and sienna.pdf",
+      "status": "referenced_only_original_bytes_unavailable",
+      "sha256": null
+    }
+  ],
+  "other_unrecovered_material": [
+    "Full transcripts and earlier assistant responses",
+    "Original generated/annotated interface images",
+    "Original generated flowcharts",
+    "Full analysis/design and success criteria",
+    "Stakeholder surveys, client interview and competitor reports",
+    "Original pseudocode, application source code and SQLite/database files, if created",
+    "Completed test plans and execution evidence, if created",
+    "Any chats or files not exposed in the current project overview"
+  ]
+}

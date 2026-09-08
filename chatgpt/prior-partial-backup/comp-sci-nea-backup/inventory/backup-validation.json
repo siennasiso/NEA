@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "check_count": 12,
+  "checks": [
+    "All manifest-listed files match their sizes and SHA-256 checksums.",
+    "13 source excerpts / 60 messages agree between Markdown and JSON; truncation/image counts agree.",
+    "Missing-original references are recorded as absent rather than hashed fictitious files.",
+    "Offline HTML index links resolve and no external scripts/images are loaded.",
+    "Integrity checker detects tampering in a disposable test copy.",
+    "Publication dry run issues no GitHub/Git command.",
+    "Invalid repository names are rejected.",
+    "Wrong-account safety check stops before repository creation.",
+    "Simulated publisher scenario: create_failure; only verified snapshot files copied, no force push.",
+    "Simulated publisher scenario: private_failure; only verified snapshot files copied, no force push.",
+    "Simulated publisher scenario: sha_mismatch; only verified snapshot files copied, no force push.",
+    "Simulated publisher scenario: success; only verified snapshot files copied, no force push."
+  ],
+  "scope": "Local archive checks and mocked publication control-flow tests only. No live GitHub creation or upload was performed."
+}

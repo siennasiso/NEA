@@ -1,0 +1,336 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Wed, Jul 8 at 12:14 AM":
+    - generic: Wed, Jul 8 at 12:14 AM
+  - heading "You said:" [level=4]
+  - generic: for the design whats the different sustems please just reiterate it again
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: For the OCR A-Level Computer Science NEA, your
+    - strong: Design
+    - text: section is where you explain
+    - strong: how the system will work before you code it
+    - text: . Since you're making an
+    - strong: Animal Adoption Matching System
+    - text: ", these are the main systems (modules) you should design."
+  - heading "1. User Authentication System" [level=2]
+  - paragraph: "Purpose: Allows users and admins to securely access the system."
+  - paragraph: "Include:"
+  - list:
+    - paragraph: Login page
+    - paragraph: Register page
+    - paragraph: Password validation
+    - paragraph: Username uniqueness
+    - paragraph: Admin login
+    - paragraph: Session/logout
+  - separator
+  - heading "2. Animal Database Management System (Admin)" [level=2]
+  - paragraph: "Purpose: Allows staff to manage all animal records."
+  - paragraph: "Include:"
+  - list:
+    - paragraph: Add animal
+    - paragraph: Edit animal
+    - paragraph: Delete animal
+    - paragraph: Search animals
+    - paragraph: "Store:"
+    - list:
+      - paragraph: Name
+      - paragraph: Species
+      - paragraph: Breed
+      - paragraph: Age
+      - paragraph: Sex
+      - paragraph: Personality
+      - paragraph: Exercise needs
+      - paragraph: Children compatible
+      - paragraph: Other pets compatible
+      - paragraph: Garden required
+      - paragraph: Medical notes
+      - paragraph: Image
+  - separator
+  - heading "3. Adoption Questionnaire System" [level=2]
+  - paragraph: "Purpose: Collects information about the adopter."
+  - paragraph: "Include questions such as:"
+  - list:
+    - paragraph: House or flat
+    - paragraph: Garden?
+    - paragraph: Hours left alone
+    - paragraph: Children?
+    - paragraph: Other pets?
+    - paragraph: Experience with animals?
+    - paragraph: Activity level
+    - paragraph: Preferred species
+    - paragraph: Preferred size
+    - paragraph: Time available
+  - separator
+  - heading "4. Compatibility Matching System ⭐ (Main algorithm)" [level=2]
+  - paragraph: "Purpose: Matches the adopter with suitable animals."
+  - paragraph: "Design:"
+  - list:
+    - paragraph: Flowchart
+    - paragraph: Pseudocode
+    - paragraph: Weightings
+    - paragraph: Scoring method
+  - paragraph: "Example:"
+  - paragraph:
+    - text: Garden = Yes
+    - text: Animal requires garden = Yes
+    - text: +10 points
+  - paragraph:
+    - text: Experience matches
+    - text: +8 points
+  - paragraph:
+    - text: Children compatible
+    - text: +10 points
+  - paragraph: Final score = 82%
+  - separator
+  - heading "5. Recommendation System" [level=2]
+  - paragraph: "Purpose: Displays the best matches."
+  - paragraph: "Include:"
+  - list:
+    - paragraph: Sort by compatibility score
+    - paragraph: Show top 5 animals
+    - paragraph: Percentage match
+    - paragraph: Reasons for recommendation
+  - paragraph: "Example:"
+  - paragraph:
+    - text: Bella
+    - text: 92%
+  - paragraph:
+    - text: ✓ Good with children
+    - text: ✓ Garden suitable
+    - text: ✓ Matches activity level
+  - separator
+  - heading "6. Animal Viewing System" [level=2]
+  - paragraph: "Purpose: Lets users browse animals."
+  - paragraph: "Functions:"
+  - list:
+    - paragraph: View all animals
+    - paragraph: Search
+    - paragraph: "Filter by:"
+    - list:
+      - paragraph: Species
+      - paragraph: Age
+      - paragraph: Breed
+      - paragraph: Size
+      - paragraph: Compatibility
+  - separator
+  - heading "7. Admin Dashboard" [level=2]
+  - paragraph: "Purpose: Gives staff access to management features."
+  - paragraph: "Buttons:"
+  - list:
+    - paragraph: Manage animals
+    - paragraph: View users
+    - paragraph: View questionnaire results
+    - paragraph: View adoption matches
+    - paragraph: Logout
+  - separator
+  - heading "8. Database Design" [level=2]
+  - paragraph: Design all tables.
+  - paragraph: "For example:"
+  - paragraph:
+    - strong: Users
+  - list:
+    - paragraph: UserID
+    - paragraph: Username
+    - paragraph: Password
+    - paragraph: IsAdmin
+  - paragraph:
+    - strong: Animals
+  - list:
+    - paragraph: AnimalID
+    - paragraph: Name
+    - paragraph: Species
+    - paragraph: Breed
+    - paragraph: Age
+    - paragraph: Personality
+    - paragraph: ExerciseNeeds
+    - paragraph: GardenRequired
+    - paragraph: ChildrenCompatible
+    - paragraph: OtherPetsCompatible
+    - paragraph: MedicalNotes
+    - paragraph: Image
+  - paragraph:
+    - strong: Questionnaire
+  - list:
+    - paragraph: ResponseID
+    - paragraph: UserID
+    - paragraph: Garden
+    - paragraph: Children
+    - paragraph: Pets
+    - paragraph: Experience
+    - paragraph: TimeAvailable
+    - paragraph: ActivityLevel
+  - separator
+  - heading "9. Navigation System" [level=2]
+  - paragraph: Show how users move through the application.
+  - paragraph: "Example flow:"
+  - paragraph: Home
+  - paragraph: ↓
+  - paragraph: Login/Register
+  - paragraph: ↓
+  - paragraph: Questionnaire
+  - paragraph: ↓
+  - paragraph: Compatibility Results
+  - paragraph: ↓
+  - paragraph: Animal Profile
+  - paragraph: ↓
+  - paragraph: Logout
+  - paragraph: "Admin:"
+  - paragraph: Login
+  - paragraph: ↓
+  - paragraph: Dashboard
+  - paragraph: ↓
+  - paragraph: Manage Animals
+  - paragraph: ↓
+  - paragraph: Database
+  - separator
+  - heading "10. Validation System" [level=2]
+  - paragraph: Show all validation rules.
+  - paragraph: "Examples:"
+  - list:
+    - paragraph: Username cannot be blank
+    - paragraph: Password minimum 8 characters
+    - paragraph: Required questions cannot be skipped
+    - paragraph: Age must be a valid number
+    - paragraph: Duplicate usernames not allowed
+  - separator
+  - heading "11. User Interface Design" [level=2]
+  - paragraph: "Create wireframes for:"
+  - list:
+    - paragraph: Home page
+    - paragraph: Login
+    - paragraph: Register
+    - paragraph: Questionnaire
+    - paragraph: Results page
+    - paragraph: Animal profile
+    - paragraph: Admin dashboard
+    - paragraph: Animal management page
+  - separator
+  - heading "These are the main systems you should include" [level=3]
+  - list:
+    - paragraph: User Authentication System
+    - paragraph: Animal Database Management System
+    - paragraph: Adoption Questionnaire System
+    - paragraph: Compatibility Matching System (most important)
+    - paragraph: Recommendation System
+    - paragraph: Animal Viewing/Search System
+    - paragraph: Admin Dashboard
+    - paragraph: Database Design
+    - paragraph: Navigation System
+    - paragraph: Validation System
+    - paragraph: User Interface Design (wireframes)
+  - paragraph: This is a solid structure for an OCR A-Level NEA and covers both the interface and the underlying logic that examiners expect to see before implementation.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: the adoption questionaire system can you relate it to the user system as a whole, and i want the questionaire to be like one of the examples
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Yes — treat it as part of the
+    - strong: User System
+    - text: ", not a separate random feature."
+  - 'heading "User System: Adoption Questionnaire" [level=2]'
+  - paragraph: The adoption questionnaire will be used after a user has registered or logged in. Its purpose is to collect information about the adopter so the system can compare their lifestyle and home environment with the requirements of each animal in the database.
+  - paragraph: This means the questionnaire is directly linked to the user’s account. Each response will be stored with the user’s ID, so the system knows which adopter the answers belong to. These answers will then be used by the compatibility matching algorithm to calculate which animals are most suitable for that user.
+  - heading "Requirements for the User Questionnaire System" [level=2]
+  - list:
+    - paragraph: The system must only allow logged-in users to complete the adoption questionnaire.
+    - paragraph: The system must store each questionnaire response against the user’s account.
+    - paragraph: The system must ask questions about the adopter’s lifestyle, home environment and animal preferences.
+    - paragraph: The system must validate questionnaire inputs so required questions cannot be skipped.
+    - paragraph: The system must allow users to update their questionnaire answers if their circumstances change.
+    - paragraph: The system must use the questionnaire answers as inputs for the compatibility scoring algorithm.
+    - paragraph: The system must use the completed questionnaire to generate ranked animal recommendations.
+    - paragraph: The system must display clear questions with simple options such as dropdowns, radio buttons or multiple-choice answers.
+    - paragraph: The system must prevent incomplete questionnaire data from being used to calculate recommendations.
+    - paragraph: The system must provide feedback once the questionnaire has been submitted successfully.
+  - heading "Example Questionnaire Fields" [level=2]
+  - table:
+    - rowgroup:
+      - row "Question Input Type Example Options":
+        - columnheader "Question"
+        - columnheader "Input Type"
+        - columnheader "Example Options"
+    - rowgroup:
+      - row "What type of home do you live in? Dropdown House, flat, other":
+        - cell "What type of home do you live in?"
+        - cell "Dropdown"
+        - cell "House, flat, other"
+      - row "Do you have access to a garden? Radio buttons Yes, no":
+        - cell "Do you have access to a garden?"
+        - cell "Radio buttons"
+        - cell "Yes, no"
+      - row "How many hours would the animal be left alone per day? Dropdown 0–2, 3–5, 6+":
+        - cell "How many hours would the animal be left alone per day?"
+        - cell "Dropdown"
+        - cell "0–2, 3–5, 6+"
+      - row "Do you have children at home? Radio buttons Yes, no":
+        - cell "Do you have children at home?"
+        - cell "Radio buttons"
+        - cell "Yes, no"
+      - row "Do you have other pets? Radio buttons Yes, no":
+        - cell "Do you have other pets?"
+        - cell "Radio buttons"
+        - cell "Yes, no"
+      - row "How much experience do you have with animals? Dropdown None, some, experienced":
+        - cell "How much experience do you have with animals?"
+        - cell "Dropdown"
+        - cell "None, some, experienced"
+      - row "What activity level can you support? Dropdown Low, medium, high":
+        - cell "What activity level can you support?"
+        - cell "Dropdown"
+        - cell "Low, medium, high"
+      - row "What species are you interested in? Dropdown Dog, cat, rabbit, any":
+        - cell "What species are you interested in?"
+        - cell "Dropdown"
+        - cell "Dog, cat, rabbit, any"
+      - row "What size animal would you prefer? Dropdown Small, medium, large, any":
+        - cell "What size animal would you prefer?"
+        - cell "Dropdown"
+        - cell "Small, medium, large, any"
+  - button "Copy table":
+  - paragraph: "So in your design section, you could call it:"
+  - paragraph:
+    - strong: User Profile and Questionnaire System
+  - paragraph: because it is not just a form — it is how the system builds a profile of the adopter and uses that profile to make recommendations.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "GPT-5.5":
+    - generic: GPT-5.5
+  - button "Start dictation":
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

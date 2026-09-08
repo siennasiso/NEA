@@ -1,0 +1,163 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for a couple of seconds":
+    - text: Thought for a couple of seconds
+  - paragraph: "This is good content, but I would polish the wording so it sounds more formal and OCR-ready. Your current version is clear, but some parts are a bit awkward, especially:"
+  - blockquote:
+    - paragraph: “analysing their design of their system and process and formatting”
+  - paragraph: and
+  - blockquote:
+    - paragraph: “reflect this into the design”
+  - paragraph: "Here is a stronger version:"
+  - separator
+  - heading "Research - Approach and Objectives" [level=1]
+  - paragraph:
+    - text: I will take a structured approach to my research by using both
+    - strong: primary
+    - text: and
+    - strong: secondary research
+    - text: . This will allow me to understand the problem from different perspectives and ensure that my final system meets user needs and expectations.
+  - paragraph: As part of my secondary research, I will inspect existing adoption websites and analyse their design, structure, features and adoption process. This will help me identify features that I may want to include in my own system, as well as limitations that I should avoid.
+  - paragraph: For my primary research, I will conduct an interview with my client, Matilde, to gain a better understanding of what she wants from the project. This will help me identify the key requirements of the system and ensure that my design reflects the needs of the client.
+  - paragraph: I will also carry out a stakeholder survey using Google Forms to gather opinions from potential users. This will help me understand user preferences, assess whether the problem is important and worth solving, and support the development of key parts of the system, such as the adopter questionnaire.
+  - paragraph: I will assess the different technologies that could be used to produce my application. This will help me decide which programming language, database system and development tools are most suitable for my project.
+  - paragraph: Finally, I will identify the software and hardware requirements needed for my project to run effectively. This will ensure that the system can be developed, tested and used successfully.
+  - heading "My research objectives are:" [level=2]
+  - list:
+    - paragraph: To understand the current problems with adoption systems.
+    - paragraph: To identify what information needs to be stored about each animal.
+    - paragraph: To identify what information needs to be collected from adopters.
+    - paragraph: To find out which factors are most important when matching an adopter to an animal.
+    - paragraph: To understand and take inspiration from existing adoption websites.
+    - paragraph: To identify limitations in existing adoption websites that my system could improve on.
+    - paragraph: To understand user expectations for the interface.
+    - paragraph: To investigate suitable technologies, software and hardware for developing the system.
+    - paragraph: To use my research findings to help define the features, requirements and success criteria of my final system.
+  - separator
+  - paragraph: I would definitely use this version instead of your current one. It sounds more controlled, more formal, and better linked to the actual purpose of the research section.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: is mine fine though
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for a second":
+    - text: Thought for a second
+  - paragraph:
+    - text: Yes, yours is
+    - strong: fine
+    - text: and you can move on with it.
+  - paragraph: "It covers the main things OCR would expect:"
+  - list:
+    - paragraph:
+      - text: You mention
+      - strong: primary and secondary research
+    - paragraph:
+      - text: You explain that you will look at
+      - strong: existing adoption websites
+    - paragraph:
+      - text: You include a
+      - strong: client interview
+    - paragraph:
+      - text: You include a
+      - strong: stakeholder survey
+    - paragraph:
+      - text: You mention
+      - strong: technology choices
+    - paragraph:
+      - text: You mention
+      - strong: software and hardware requirements
+    - paragraph: Your objectives link clearly to your adoption matching system
+  - paragraph: "The only thing I would fix before leaving it is the wording in this sentence:"
+  - blockquote:
+    - paragraph: I will inspect existing adoption websites, analysing their design of their system and process and formatting whilst looking at features I may want to include or avoid.
+  - paragraph: "Change it to:"
+  - blockquote:
+    - paragraph: I will inspect existing adoption websites, analysing their design, structure, features and adoption process, while looking at features I may want to include or avoid.
+  - paragraph: "And this sentence:"
+  - blockquote:
+    - paragraph: I will conduct an interview with my client (Matilde) to get a better understanding of what she would want within this project, and reflect this into the design of my system.
+  - paragraph: "Change it to:"
+  - blockquote:
+    - paragraph: I will conduct an interview with my client, Matilde, to get a better understanding of what she wants from the project and reflect this in the design of my system.
+  - paragraph: Also, add full stops to your objectives so it looks more polished.
+  - paragraph:
+    - text: So yes —
+    - strong: content-wise, yours is fine
+    - text: . It just needs a small grammar polish, not a full rewrite.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: "Research - Approach and Objectives I will take a structured approach to my research by using both primary and secondary research in order to understand the problem from different perspectives and ensure my final system meets user needs and expectations: I will inspect existing adoption websites, analysing their design, structure, features and adoption process, while looking at features I may want to include or avoid. I will conduct an interview with my client (Matilde) to get a better understanding of what she wants within this project, and reflect this in the design of my system. I will carry out a stakeholder survey to find out more about their preferences. I will use google forms and this will help me see if my problem is important and worth solving, and will help me in developing parts of the system such as the questionnaire. I will assess the different technologies that can be used to produce my application. I will identify software and hardware requirements for my project to run effectively. My research objectives are: Understand current problems with adoption systems. Identify which information needs to be stored about each animal Identify which information needs to be collected from adopters Find out what factors are most important when matching an adopter to an animal Understand and take inspiration from existing adoption websites Understand user expectations for the interface"
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Thought for a second":
+    - text: Thought for a second
+  - paragraph:
+    - text: Yes, this is
+    - strong: fine to use
+    - text: . It is clear, relevant, and covers the main research methods you need.
+  - paragraph:
+    - text: I’d only make
+    - strong: tiny wording/grammar fixes
+    - text: "before putting it in your NEA:"
+  - separator
+  - heading "Research - Approach and Objectives" [level=1]
+  - paragraph: I will take a structured approach to my research by using both primary and secondary research in order to understand the problem from different perspectives and ensure my final system meets user needs and expectations.
+  - paragraph: I will inspect existing adoption websites, analysing their design, structure, features and adoption process, while looking at features I may want to include or avoid.
+  - paragraph: I will conduct an interview with my client, Matilde, to get a better understanding of what she wants from this project and reflect this in the design of my system.
+  - paragraph: I will carry out a stakeholder survey to find out more about users’ preferences. I will use Google Forms, and this will help me see if my problem is important and worth solving. It will also help me develop parts of the system, such as the questionnaire.
+  - paragraph: I will assess the different technologies that can be used to produce my application.
+  - paragraph: I will identify software and hardware requirements for my project to run effectively.
+  - heading "My research objectives are:" [level=2]
+  - list:
+    - paragraph: Understand current problems with adoption systems.
+    - paragraph: Identify which information needs to be stored about each animal.
+    - paragraph: Identify which information needs to be collected from adopters.
+    - paragraph: Find out what factors are most important when matching an adopter to an animal.
+    - paragraph: Understand and take inspiration from existing adoption websites.
+    - paragraph: Understand user expectations for the interface.
+  - separator
+  - paragraph: "The only thing I’d maybe add is one final objective:"
+  - blockquote:
+    - paragraph: Use my research findings to help decide the final features and requirements of my system.
+  - paragraph: That links the research directly to your design, which makes it stronger for OCR.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

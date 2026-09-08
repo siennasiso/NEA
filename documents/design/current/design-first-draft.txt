@@ -1,0 +1,1020 @@
+sienna
+Design
+✔️ Introduction/Overall
+                                  Proposed Layout
+           The system can be decomposed into five main components. Separating the
+          system into smaller components makes it easier to design, develop, test and
+                     maintain whilst each section performs a specific function.
+
+
+Section               Front End Justification                         Backend Justification
+
+User/Admin            Will allow users to register and existing       The system will validate entered details,
+Authentication        users to login, and allow admins to access      such as:
+                      their page safely and securely. Registration        -​ email cannot be blank and must be
+                      will collect the users name, email, age and            valid and unique
+                      password. The interface should provide clear        -​ Password minimum 8 characters
+                      feedback when details are missing or                -​ Age must be a valid number
+                      forgotten from its validation system. It will       -​ Login fields cannot be blank
+                      also show an error message if login details     The passwords will be hashed in order to
+                      are incorrect                                   be kept secure and safe. During login,
+                                                                      enter details will be compared against
+                                                                      records in the users table. A session will
+                                                                      then be created when authentication is
+                                                                      successful.
+                                                                      For the admin side, if the login details are
+                                                                      incorrect it will not allow them access,
+                                                                      which will stop unauthorised users from
+                                                                      adding, editing or deleting animal records.
+
+User                  Will provide the main navigation area after     The system will check the user's session
+Homepage/Main         the user logs in. It will allow the user to     to make sure they are logged in. It may
+                      access the questionnaire, browse available      retrieve the email and recent questionnaire
+Menu
+                      animals and view their account. It will also    information from the database so that
+                      explain the purpose of the adoption             personalised information can be displayed.
+                      matching system. It will be clear and
+                      welcoming, and not overwhelming for the
+                      user.
+
+Administrator Menu    Provides staff with a dashboard to manage       The system will check that the logged in
+                      existing animals and their records. Admins      account has the admin role before access
+                      will be clearly able to add new animals, edit   is allowed. Parameterised SQL commands
+                      existing details and remove records. To add     will insert, update and delete animal
+                      animals it will store: Name, species, age,      records. All inputs will be validated before
+                      breed, sex, personality and exercise needs,     changes are made to the database. A log
+                    children compatible, garden required,           out function will clear the admins session
+                    medical notes and an image. Forms will be       and return them to the login page,
+                    clearly Labelled and display confirmation or    preventing another person using the same
+                    error messages.                                 device which will prevent unwanted
+                                                                    access to the database.
+
+Animal Viewing      Allows users to browse available animals        Animal records will be retrieved from the
+                    using clearly presented animal cards. Each      animals table. Search and filter selections
+                    card will show information such as the          will be used to change the database query
+                    animal name, image, species, breed and age.     or filter the retrieved records. Selecting an
+                    Users will be able to select a card to view a   animal will use its unique animal ID to
+                    more detailed animal profile.                   load the correct profile.
+
+Questionnaire and   Will use a form in order to allow users to      Responses will be validated and
+Recommendations     answer questions about their home, lifestyle,   compared with the requirements of each
+                    experience and preferences. The                 available animal. A weighted compatibility
+                    questionnaire will have questions such as       algorithm will calculate a percentage
+                    the housing type, access to garden, animal      score for every animal. The animals will
+                    loneliness times, children, pets, experience,   then be sorted from highest to lowest
+                    activity labels, what species and size          score so the top recommendations can be
+                    preferred. These questions would not appear     displayed. The questionnaire responses
+                    all at one time to not overwhelm the user       and match results may also be stored
+                    and the input type would be drop downs or       within the database with the users ID
+                    radio buttons. After submitting the             (email)
+                    questionnaire, the system will display
+                    compatibility scores almost immediately and
+                    recommended animals. It will also explain
+                    requirements the user does not meet.
+Database structure
+
+
+Tables                                    Purpose
+
+Users                                     Stores registered user and
+                                          administrator account details
+
+Animals                                   Stores user profiles, care needs and
+                                          matching requirements
+
+Questionnaire responses                   Stores answers submitted by users
+
+Matchresults                              Stores calculated compatibility scores
+                                          between responses and animals
+
+
+One user can complete multiple questionnaire responses, each questionnaire
+can produce multiple compatibility results because it is compared to every
+available animal. Each animal can therefore appear in multiple match results
+belonging to different users or questionnaire attempts.
+   -​ Users 1 → Many Questionnaire responses
+   -​ Questionnaire responses 1 → Many matchresults
+   -​ animals 1 → Many matchresults
+
+
+Validation
+All user entered data should be validated before it is processed or stored in the
+SQLite database. Streamlit controls such as dropdowns radio buttons and
+number inputs will restrict the range of values users can enter. However, the
+backend will still validate the submitted values because interface controls alone
+should not be relied on.
+🩷 Login + Adminitration
+                       Login and Registration
+
+User/Admin        Will allow users to register and existing       The system will validate entered details,
+Authentication    users to login, and allow admins to access      such as:
+                  their page safely and securely. Registration        -​ Username cannot be blank
+                  will collect the users name, email, age,            -​ Password minimum 8 characters
+                  address and password. The interface should          -​ Required questions cannot be
+                  provide clear feedback when details are                skipped
+                  missing or forgotten from its validation            -​ Age must be a valid number
+                  system. It will also show an error message if       -​ Duplicate usernames not allowed
+                  login details are incorrect                     The passwords will be hashed in order to
+                                                                  be kept secure and safe. During login,
+                                                                  enter details will be compared against
+                                                                  records in the users table. A session will
+                                                                  then be created when authentication is
+                                                                  successful.
+                                                                  For the admin side, if the login details are
+                                                                  incorrect it will not allow them access,
+                                                                  which will stop unauthorised users from
+                                                                  adding, editing or deleting animal records.
+
+
+
+        Interface Design
+Algorithm (Flow chart, pseudocode)
+      Pseudocode
+
+
+
+
+      Database (Table structure)
+
+
+
+
+       Field                     Data type                     Key/validation
+       user_id                   INTEGER                       Primary key which will auto
+                                                               increment
+
+       name                      TEXT                          required
+
+       email                     TEXT                          Required and unique
+
+       age                       INTEGER                       required , valid range
+
+       password_hash             TEXT                          required
+
+       user_role                 TEXT                          ‘User’ or ‘admin’
+
+       date_created              DATE                          required
+
+
+
+      Variables
+
+
+Variable           Data     Purpose           Justification                         E.g or
+Name               Type                                                             Validation
+user_name          String   Stores the name   This will allow the system to         Cannot be blank
+                            entered during    identify and personalise the
+                            registration      account. A string would be required
+                                              for the datatype as it will contain
+                                              alphabetic characters and may
+                                              include spaces and hyphens.
+
+email            String    Will store users   It will be used as a unique identifier    Must follow a
+                           email address      for logging in and contacting the         valid email format
+                                              user. It will contain letters and         and be unique
+                                              symbols so will be stored as a
+                                              string.
+
+age              integer   Stores the users   It will be used to ensure the user        Must be a valid
+                           age                meets any minimum age                     positive number.
+                                              requirements. An integer is suitable
+                                              for this variable as age is
+                                              represented by a whole number.
+
+password         string    Temporarily        It is needed to authenticate the user     Minimum of eight
+                           stores the         securely. Passwords usually contain       characters.
+                           password           letters, numbers and special
+                           entered by the     characters, so a string is suitable for
+                           password           the data type.
+
+confirm_passwo   string    Stores the         This allows the system to check           It will have to
+rd                         repeated           that the user has mistyped their          match password
+                           password           password before creating the
+                           entered during     account.
+                           registration
+
+password_hash    string    Stores the         Passwords should not be stored as         Generated using a
+                           hashed version     plain text. Storing the hash reduces      secure hashing
+                           of the password    the risk of passwords being               function
+                                              exposed if the database is accessed
+                                              without permission.
+
+login_email      string    Stores the email   The variable is required so that the      Cannot be blank
+                           entered on the     system can search for the
+                           login page         corresponding account in the
+                                              database
+
+login_password   string    Temporarily        The entered password will be              Cannot be blank
+                           stores the         checked against the stored
+                           password           password hash in order to verify
+                           entered during     users identity
+                           login
+
+user_id          integer   Uniquely           An integer is efficient for use as a      It will be retrieved
+                                  identifies the       database primary key, it will allow    from the database
+                                  logged in user       records such as questionnaires and     after login
+                                                       recommendations to be linked to
+                                                       the correct user.
+
+user_role          String         Stores whether       This variable is required for access   Will be stored as
+                                  the account is an    control, so that normal users cannot   ‘user’ or ‘admin’
+                                  administrator or     access the administrator pages
+                                  a user               Controls access to the administrator
+                                                       area, although normal registrations
+                                                       should automatically receive the
+                                                       role ‘user’, the admin role should
+                                                       not be selectable from the
+                                                       registration form.
+
+error_message      string         Stores the error     My system will provide clear           ‘Incorrect email or
+                                  message which        feedback and help the user             password, please
+                                  will appear when     understand what has gone wrong         retry’
+                                  the input or login   and how to correct it. A string will
+                                  details are          be suitable for this message as it
+                                  invalid              contains many words in one
+                                                       sentence.
+
+is_authenticated   booleen        Records whether      A boolean data type is suitable as     True or False
+                                  login attempt        authentication only has two
+                                  was successful       possible values.
+
+
+
+        Validation
+            1.​ Name
+            -​ Presence check: Field cannot be empty or contain only spaces
+            -​ Length check: name must be between 2 and 50 characters
+            -​ Whitespace check: spaces at beginning and end will be removed
+
+
+            2.​ Email address
+            -​ Presence check: Field cannot be empty or contain only spaces
+            -​ Format check: value must contain a @ and domain
+            -​ Uniqueness check: a database query will check the address not already registered
+            -​ Whitespace check: spaces at beginning and end will be removed
+            -​ Check characters: convert all to lower case
+
+
+            3.​ Age
+   -​ Presence check: Field cannot be empty or contain only spaces
+   -​ Type check: data must be a whole number
+   -​ Range check: age must be 18+
+
+
+   4.​ Password
+   -​ Presence check: Field cannot be empty or contain only spaces
+   -​ Length check: password must be more than 8 characters
+Registration
+   -​ Confirmation check: the confirmation field must exactly match original password
+   -​ Security processing: the valid password will be hashed before it is inserted into the
+        database and the original password will never be stored.
+Login
+   -​ The password will be checked against the stored password hash rather than compared
+        as plain text.
+
+
+Registration outcome
+   -​ The account will be created if every field passes validation, individual messages will be
+        shown if one or more fields are invalid.
+
+
+Session check
+   -​ A session will only be created after successful authentication. Invalid information will
+        leave users on the login page and will not allow them to access the user or admin page.
+🩷 Admin Page
+                                       Admin Page
+
+Administrator Menu   Provides staff with a dashboard to manage       The system will check that the loginned in
+                     existing animals and their records. Admins      account has the role before access is
+                     will be clearly able to add new animals, edit   allowed. Parameterised SQL commands
+                     existing details and remove records. To add     will insert, update and delete animal
+                     animals it will store: Name, species, age,      records. All inputs will be validated before
+                     breed, sex, personality and exercise needs,     changes are made to the database. Will
+                     children compatible, garden required,           also include a logout function, to securely
+                     medical notes and an image. Forms will be       log out so no physical access to the
+                     clearly Labelled and display confirmation or    system unless its an admin.
+                     error messages.
+
+        Interface
+Pseudocode
+Animal Table
+Field          Data type   Key/validation
+animal_id      INTEGER     Primary key, autoincrement
+
+name           TEXT        required
+
+species        TEXT        Required - dog, cat or rabbit
+            breed                       TEXT                           Required
+
+            age                         INTEGER                        Required, cannot be zero
+
+            sex                         TEXT                           required- male, female or unknown
+
+            size                        TEXT                           Required - small medium or large
+
+            personality                 TEXT                           required
+
+            Exercise_needs              INTEGER                        Required - 1 to 3
+
+            minimum_housing_level       INTEGER                        Required - 1 to 3
+
+            garden_required             BOOLEAN                        Required 0 or 1
+
+            child_compatible            BOOLEAN                        Required 0 or 1
+
+            max_hours_left_alone        INTEGER                        required
+
+            Medical_notes               TEXT                           optional
+
+            image                       TEXT                           Required, an image path
+
+            date_added                  DATE                           required
+
+
+
+
+        Variables
+
+
+Variable Name                 Data Type Purpose                      Justification          Validation or
+                                                                                            e.g
+animal_id                     INTEGER          Uniquely identifies   A unique integer       Automatically
+                    each animal record   stops confusion       generated
+                                         between animals with
+                                         similar names and
+                                         allows the correct to
+                                         be updated and
+                                         deleted
+
+name      string    Stores the animals   The name is required       Can’t be blank
+                    name                 to identify the animal
+                                         throughout the
+                                         interface and allows
+                                         the user to remember
+                                         the animal with a
+                                         specific name. A
+                                         string is suitable as it
+                                         allows letters spaces
+                                         and punctuation.
+
+species   string    Stores the type of   Species is required for    dog, cat or rabbit
+                    animal               searching, filtering
+                                         and matching against
+                                         user preferences.
+
+breed     string    Stores the animals   Breeds provides users      Can't be blank or
+                    breed                with important             might be ‘unknown’
+                                         information and may
+                                         help describe likely
+                                         size or care
+                                         requirements
+
+age       INTEGER   Stores the animals   Age affects care           cannot be zero
+                    age                  needs. An integer is
+                                         suitable as it allows
+                                         the value to be
+                                         validated sorted and
+                                         compared
+
+sex       string    Stores the animals   This is relevant profile male, female
+                    sex                  information and may
+                                         be considered by the
+                                         potential adopters
+
+size      string    Stores the animals   Size affects space         small medium or large
+                                  size and is used in    requirements and is
+                                  filtering              needed by the
+                                                         filtering and
+                                                         compatibility systems
+
+personality             string    Stores a description   A text field will allow   Cant be blank but a
+                                  of the animals         the admin to explain      character limit may be
+                                  behaviour and          the animals               applied
+                                  personality            personality and
+                                                         background in more
+                                                         detail to help attract
+                                                         possible adopters
+
+Exercise_needs          INTEGER   Stores whether the     This can be compared      1 to 3 (low medium or
+                                  animal has low,        with the adopters         high)
+                                  medium or high         lifestyle to produce a
+                                  exercise needs         more appropriate
+                                                         compatibility score.
+                                                         An integer is
+                                                         suitability for easier
+                                                         comparison
+
+minimum_housing_level   INTEGER   Stores the amount      This can be compared      1 to 3
+                                  of living space        with adopters
+                                  required               lifestyle to aid the
+                                                         algorithm when
+                                                         creating the
+                                                         compatibility score
+
+garden_required         boolean   Records whether        This may act as a         True or false
+                                  the animal requires    compulsory suitability
+                                  access to a garden     rule. A boolean value
+                                                         is useful as it is
+                                                         simple to input.
+
+child_compatible        boolean   Records whether        There are only two        True or false
+                                  the animal is          options which make
+                                  suitable for a         boolean values
+                                  household with         suitable. This is very
+                                  children               important for the
+                                                         safety and welfare of
+                                                         the children and
+                                                         animals.
+max_hours_left_alone   INTEGER       Stores value for       This is important if a Cant be blank
+                                     which the animal       user works long hours
+                                     can be left home       and the animal
+                                     alone for, and         requires a lot of
+                                     representing if more   attention it may cause
+                                     independent or         neglect of the animal
+                                     clingy                 which is a key issue
+                                                            we are trying to
+                                                            prevent.
+
+Medical_notes          string/list   Stores any medical     Potential adopters        May be blank or ‘N/A’
+                                     conditions,            need to understand
+                                     treatments or          any medical needs
+                                     special                before making a
+                                     requirements           decision. A string will
+                                                            allow multiple to be
+                                                            described.
+
+image                  string        Stores the location    This allows the           Must use an accepted
+                                     of the animals         correct photo to be       file extension
+                                     image                  displayed without
+                                                            storing the full image
+                                                            directly in database
+
+form_action            string        Stores the operation The same form may           ‘Add’ or ‘edit’ or
+                                     the admin is         be used for adding          ‘delete’ or ‘view’
+                                     performing           and editing variables.
+                                                          This variable will
+                                                          allow the program to
+                                                          select the right query.
+
+delete_confirmation    boolean       Records whether        Deletion is permanent     True or false
+                                     the administrator      so confirmation
+                                     has confirmed          reduces risk of animal
+                                     deletion               being removed
+                                                            accidentally and not
+                                                            being considered for
+                                                            adoption
+
+record_found           boolean       Records whether        This prevents the         True or false
+                                     the database has       program from
+                                     retrieved the animal   attempting to edit or
+                                     record successfully    delete a record not
+                                                      present in the
+                                                      database
+
+
+
+Validation
+
+  1.​ Animal name
+  -​ Presence check: Cannot be empty
+  -​ Length check: Between 1 and 50 characters
+  -​ Format check: Letters, spaces, apostrophes, hyphens and appropriate numbers may be
+      allowed
+  2.​ Species
+  -​ Presence check: Must be selected.
+  -​ Lookup check: Must be Dog, Cat or Rabbit.
+  -​ A drop-down menu will restrict the choices.
+  3.​ Breed
+  -​ Presence check: Cannot be empty
+  -​ Length check: For example, between 2 and 50 characters
+  -​ Format check: Must not consist entirely of unsupported symbols
+  4.​Age
+  -​ Presence check: Must be provided
+  -​ Type check: Must be a whole number
+  -​ Range check: Cannot be negative and must be within the designed maximum animal
+     age
+  5.​Sex
+  -​ Lookup check: Must be Male, Female or Unknown
+  -​ A drop-down menu prevents invalid values
+  6.​Size
+  -​ Lookup check: Must be Small, Medium or Large
+
+  7.​Personality
+  -​ Presence check: A description must be provided
+  -​ Length check: For example, between 20 and 1,000 characters
+  -​ Whitespace check: A value consisting only of spaces will be rejected
+
+  8.​Exercise need
+  -​ Presence check: An option must be selected
+  -​ Range check: Must be between 1 and 3
+   9.​Minimum housing requirement
+   -​ Presence check: Must be selected
+   -​ Range check: Must be between 1 and 3
+
+   10.​ Maximum hours alone
+   -​ Type check: Must be an integer
+   -​ Range check: Must be between 0 and 24
+
+   11.​ Garden required
+   -​ Type check: Must be stored as a Boolean value 0 or 1
+   12.​Child compatibility
+   -​ Type check: Must be stored as a Boolean value 0 or 1
+   13.​Medical notes
+   -​ This field may be optional
+   -​ Type check: it will have a maximum length
+   -​ Text will be stored as plain text rather than interpreted as code
+   14.​Animal image
+   -​ Presence check : An image must be uploaded if every profile requires one
+   -​ File-type check : Only approved formats such as JPG, JPEG and PNG will be accepted
+   -​ File-size check : The file must not exceed the chosen maximum size
+   -​ Filename handling : A safe, unique filename will be generated to avoid overwriting
+       existing images
+
+The animal record will only be inserted after all required fields pass validation. The SQL
+statement will be parameterised and committed only after successful validation. A success
+message will then confirm that the record has been created.
+🩷 Main Menu/INterface
+                                    Main Menu
+
+User             Will provide the main navigation area after    The system will check the user's session
+Homepage/Main    the user logs in. It will allow the user to    to make sure they are logged in. It may
+                 access the questionnaire, browse available     retrieve the user's name and recent
+Menu
+                 animals and view their account. It will also   questionnaire information from the
+                 explain the purpose of the adoption            database so that personalised information
+                 matching system. It will be clear and          can be displayed.
+                 welcoming, and not overwhelming for the
+                 user.
+
+
+       Interface Design
+Algorithm (Flow chart, pseudocode)
+Pseudocode
+
+
+
+
+Variables
+Variable             Data      Purpose             Justification           E.g or
+Name                 Type                                                  validation
+current_user_id      INTEGER   Identifies user     Ensures that the        Retrieved
+                               currently           dashboard displays      from session
+                               accessing           information
+                               dashboard           belonging to the
+                                                   correct account
+
+current_user_name    STRING    Stores the logged   This will allow the     ‘Welcome
+                               in users name       interface to display    sienna’
+                                                   personalised
+                                                   information and
+                                                   reassures user they
+                                                   are accessing
+                                                   correct account
+
+animal_count         INTEGER   Stores the          It will provide a       Must be zero
+                               number of           useful summary of       or larger
+                               animals currently   information on the
+                               available           dashboard. An
+                                                   integer is a suitable
+                                                   data type as the
+                                                   number of animals
+                                                   is a whole number
+
+questionaire_compl   BOOLEAN   Records whether     This variable allows    True or False
+eted                           the user has        the system to
+                               completed the       display
+                               questionnaire       recommendations or
+                                                   prompt the user to
+                                                   complete the
+                                                   questionnaire.
+                                                   Boolean is suitable
+                                                   as there is only two
+                                                   possible states
+
+reccomended_anim     LIST      Stores the          Multiple animals        Ordered from
+als                            animals             will need to be         lowest to
+                               recommended to      displayed in ranked     highest
+                               the users           order so a list is a    compatibility
+                                                   suitable data type
+selected_page         STRING   Stores the page   This allows the        Animals or
+                               selected from     program to choose      questionaire
+                               navigation menu   which page or
+                                                 section should be
+                                                 selected
+
+notification_messag   STRING   Stores            The user will need     ‘Questionaire
+e                              confirmation or   clear feedback after   submitted
+                               status feedback   completing actions     successfully’
+                                                 such as submitting
+                                                 questionnaire
+🩷 Animal Viewing Page
+                        Animal Viewing Page
+
+Animal Viewing    Allows users to browse available animals        Animal records will be retrieved from the
+                  using clearly presented animal cards. Each      animals table. Search and filter selections
+                  card will show information such as the          will be used to change the database query
+                  animal name, image, species, breed and age.     or filter the retrieved records. Selecting an
+                  Users will be able to select a card to view a   animal will use its unique animal ID to
+                  more detailed animal profile.                   load the correct profile.
+
+
+        Interface Design
+Algorithm (Flow chart, pseudocode)
+Pseudocode
+              Variables
+
+
+Variable Name             Data Type Purpose               Justification            E.g or validation
+search_term               String    Stores text entered   A string allows users    Leading and trailing
+                                    into the search bar   to search using          spaces should be
+                                                          names, breeds or         removed
+                                                          other information
+
+species_filter            String    Filters animals by    This is required to      ‘Dog’, ‘cat’, ‘rabbit’ are
+                                    species               reduce the displayed     the specified filters
+                                                          records to animals
+                                                          matching the users
+                                                          chosen species
+
+size_filter               String    Filters animals by    Size may affect          ‘Small’, ‘medium’, large’
+                                    size                  whether an animal is
+                                                          suitable for the users
+                                                          home so it is suitable
+                                                          for narrowing the
+                                                          results
+
+sort_option               String    Determines the        Users may wish to        ‘Compatibility’
+                                    order of results      order the results by
+                                                          suitability or animal
+                                                          information. The
+                                                          value determines
+                                                          which sorting
+                                                          operation is applied.
+
+animal_results            list      Holds the records     A list is suitable     May be empty is no
+                                    returned from the     because a search may matching results
+                                    database              return multiple animal
+                                                          records. It can be
+                                                          iterated through to
+                                                          generate animal cards
+                                                          on the interface
+
+selected_animal_id        integer   Identifies the        Using the unique id      Must match an existing
+                                    animal whose          ensures the correct      record
+                                    profile is opened     animal is retrieved
+                                                                even when animals
+                                                                have the same name
+
+compatibility_score       float            Displays or sorts    A float is a more        Between 0 and 100
+                                           by compatibility     suitable data type
+                                                                than an integer as it
+                                                                allows the result to
+                                                                include decimal
+                                                                values, which will
+                                                                produce a more
+                                                                precise % than an
+                                                                integer.
+
+no_results                boolean          Feedback             Without feedback an      ‘No animals match your
+                                           displayed if there   empty page could         search’
+                                           is any animals       appear to be an error,
+                                           which meet the       so the message
+                                           filters              informs the user that
+                                                                they should change
+                                                                the filters
+
+
+
+          Validation
+
+             1.​ Search input
+             -​ Length check: the text will not exceed 20 characters
+             -​ Whitespace check: leading and trailing spaces will be removed
+             -​ Empty input handling: an empty search will be treated as a request to display all
+                 available animals rather than as an error
+
+
+             2.​ Filter inputs
+          Drop down menus or selection controls will be used for:
+             -​ Species
+                      -​ Dog
+                      -​ Cat
+                      -​ Rabbit
+             -​ Size
+                      -​ Small
+                      -​ Medium
+-​ Large
+🩷 Compatibility algorithms
+          Compatibility algorithm and questionnaire
+
+Questionnaire and   Will use a form in order to allow users to      Responses will be validated and
+Recommendations     answer questions about their home, lifestyle,   compared with the requirements of each
+                    experience and preferences. The                 available animal. A weighted compatibility
+                    questionnaire will have questions such as       algorithm will calculate a percentage
+                    the housing type, access to garden, animal      score for every animal. The animals will
+                    loneliness times, children, pets, experience,   then be sorted from highest to lowest
+                    activity labels, what species and size          score so the top recommendations can be
+                    preferred. These questions would not appear     displayed. The questionnaire responses
+                    all at one time to not overwhelm the user       and match results may also be stored
+                    and the input type would be drop downs or       within the database with the users ID
+                    radio buttons. After submitting the
+                    questionnaire, the system will display
+                    compatibility scores almost immediately and
+                    recommended animals. It will also explain
+                    requirements the user does not meet.
+
+
+        Interface Design
+Algorithm (Flow chart, pseudocode)
+Pseudocode
+Validation - questionnaire
+    1.​ Housing type or housing level
+    -​ Presence check: The user must select an answer
+    -​ Lookup check: The answer must be one of the permitted housing options
+    -​ A radio button or drop-down will prevent unsupported values
+1 = Flat or limited space
+2 = Small or medium house
+3 = Large house
+
+   2.​ Garden access
+   -​ Presence check: Yes or No must be selected
+   -​ Boolean check: The stored result must be 1 or 0
+
+   3.​ Hours the animal will be left alone
+   -​ Presence check : a value must be provided
+   -​ Type check : a whole number
+   -​ Range check : between 0 and 24 hours
+
+   4.​ Children in the home
+   -​ Presence check: Yes or No must be selected
+   -​ Boolean check: The stored result must be 1 or 0
+
+   5.​ Preferred activity level
+   -​ Presence check: an option must be selected
+   -​ Boolean check: The stored result must be 1, 2 or 3
+
+After
+
+   6.​ Preferred species
+   -​ Presence check: The user must select an answer
+   -​ Lookup check: The answer must be a dog, cat, rabbit or no preference
+
+   7.​ Preferred size
+   -​ Presence check: The user must select an answer
+   -​ Lookup check: answer must be small, medium, large or no preference
+
+Validation is necessary within this compatibility algorithm to ensure that the recommendations
+produced are reliable and that invalid data does not cause incorrect results.
+    Questionnaire Response table
+
+
+Field                        Data type      Key/validation
+response_id                  INTEGER        Primary key, auto increment
+
+user_id                      INTEGER        Foreign key linked to Users.userid
+
+housing_level                INTEGER        Required range 1-3
+
+garden_access                BOOLEAN        Required 0 or 1
+
+hours_left_alone             INTEGER        Required valid range
+
+has_children                 BOOLEAN        Required 0 or 1
+
+preferred_activity_level     INTEGER        Required range 1 - 3
+
+preffered_species            TEXT           Required dog, cat, rabbit or no preference
+
+preferred_size               TEXT           Required small, medium, large or no
+                                            preference
+
+completed_at                 DATE           required
+
+
+
+    Match Results Table
+
+
+Field                      Data type     Key/validation
+match_id                   INTEGER       Primary key autoincrement
+
+response_id                INTEGER       Foreign key linked to
+                                         QuestionaireReponses.response_id
+
+animal_id                  INTEGER       Foreign key linked to animals.animal_id
+
+compatibility_score        REAL          Required range 0 to 100
+
+match_category             TEXT          Required strong, good, possible or low
+
+unmet_requirements         TEXT          optional
+  Calculated_at                  DATE                      required
+
+
+
+
+       Adoption Questionnaire Variables
+
+
+Variable Name              Data         Purpose             Justification            Validation or e.g
+                           Type
+housing_level              integer      Stores amount       The available space      Required range 1-3
+                                        of living space     may affect whether
+                                        available           or not the home is
+                                                            suitable for different
+                                                            sizes and exercise
+                                                            needs
+
+garden_access              boolean      Records             Some animals may         0 or 1
+                                        whether user        require regular
+                                        has access to a     access to an outdoor
+                                        garden              space. A boolean
+                                                            value is suitable as
+                                                            the answer has two
+                                                            possible values
+
+hours_left_alone           integer      Stores how long     Time availability can    Required valid range such
+                                        the animal          be numerically           as 0-24
+                                        would normally      compared with the
+                                        be left alone       animals required
+                                                            attention and
+                                                            exercise time
+
+has_children               boolean      Records             Some animals may         0 or 1
+                                        whether             not be suitable for
+                                        children live in    homes with children
+                                        the household       making this an
+                                                            important safety
+                                                            factor
+
+preferred_activity_level   integer      Stores the users    Matching activity        range 1 - 3
+                                        preferred           level helps ensure
+                                        animal activity     the adopter can meet
+                               level               the animals exercise
+                                                   requirements
+
+preffered_species     string   Stores the users    This ensures that the    Required ‘dog’, ‘cat’,
+                               preferred           recommendations          ‘rabbit’ or ‘no preference’
+                               species             remain relevant to
+                                                   the type of animal
+                                                   the user is interested
+                                                   in adopting
+
+preferred_size        string   Stores the users    The user may have        ‘small’, ‘medium’, ‘large’
+                               preferred size      practical or personal    or ‘no preference’
+                                                   reasons for preferring
+                                                   a particular size.
+
+
+
+
+      Compatibility scoring algorithm variable names
+
+
+Variable Name Data Type        Purpose             Justification            Validation or
+                                                                            e.g
+animal_id           integer    Stores the          It ensures that each     Must match an
+                               unique identifier   calculated score is      existing record in the
+                               of the animal       linked to the correct    animals table e.g 12
+                               being assessed      animal, even when
+                                                   animals have the
+                                                   same name
+
+maximum_score       integer    Stores the          This is required so      Must be greater than
+                               highest possible    that the user's raw      0
+                               number of           score can be
+                               points that can     converted into a
+                               be awarded by       percentage. An
+                               the                 integer is suitable
+                               compatibility       because the
+                               algorithm           algorithm awards
+                                                   whole number points
+                                                   for each matching
+                                                   factor.
+total_score           integer   Stores the total   The value begins at       Begins at 0 and
+                                compatibility      zero and increases        cannot exceed
+                                points awarded     whenever the user's       maximum_score
+                                for the animal     answers from the
+                                currently being    questionnaire match
+                                assessed           an animal's
+                                                   requirements. It must
+                                                   be reset before the
+                                                   algorithm assesses
+                                                   the next animal.
+
+animal_scores         list      Stores the ID      This will allow the       [{"animal_id": 3,
+                                and                results to be sorted      "score": 92.5},
+                                compatibility      from highest to           {"animal_id": 7,
+                                score for all      lowest compatibility.     "score": 78.0}]
+                                available          A list is suitable
+                                animals            because the
+                                                   algorithm processes
+                                                   multiple animals
+
+compatibility_score   float     Stores the         A percentage is           Must be between
+                                calculated         easier for users to       0-100 and can have
+                                compatibility      understand and            decimals
+                                percentage         compare than a raw
+                                                   points total, a float
+                                                   will allow decimal
+                                                   results to be stored.
+
+match_category        string    Stores an          A category makes          strong, good,
+                                understandable     the numerical result      possible or low
+                                category for the   easier for the user to
+                                calculated score   interpret. It is
+                                                   selected according to
+                                                   predefined
+                                                   percentage ranges.
+
+unmet_requirements    list      Stores             There may be several      Example: "Requires a
+                                explanations of    reasons why an            secure garden", "Not
+                                requirements       animal is not fully       suitable with cats". It
+                                the user did not   suitable so a list will   may be empty when
+                                meet               allow multiple            all essential
+                                                   explanations to be        requirements are
+                                                   stored and displayed.     met.
+Questionnaire Plan
+
+Section 1: House environment
+   -​ Amount of living space
+   -​ Garden access?
+
+
+Section 2:
+   -​ Children in the home?
+
+
+Section 3:
+   -​ Preferred activity level / time available for exercise and care
+   -​ Hours the animal would be left alone
+
+
+Section 4:
+   -​ Preferred species
+   -​ Preferred animal size
+
+
+Section 5:
+   -​ Submit
+
+
+Where it links
+   -​ Amount of living space → minimum housing level
+   -​ Garden access → garden required
+   -​ Children in the home → child compatible
+   -​ Preferred activity level → exercise need
+   -​ Hours left alone → maximum hours left alone
+   -​ Preferred species → animal species
+   -​ Preferred size → animal size
+
+
+First Matching part
+
+
+
+ Factor                          Suggested weight                 Justification
+                                 (can be changed)
+ Hours Left alone                20                               Strongly will affect whether
+                                                                  the adopter can meet the
+                                                                  animals needs
+ Child compatibility              15                                Important for safety and
+                                                                    suitability
+
+ Housing space                    15                                Ensures the home provides
+                                                                    enough room
+
+ Activity                         12                                Matches exercise needs with
+                                                                    users lifestyle and what they
+                                                                    can provide
+
+ Garden access                    10                                Important for animals
+                                                                    requiring outdoor access, but
+                                                                    can even use a park so not as
+                                                                    important factor
+
+
+   -​ Calculate the suitability score
+   -​ Remove animals with low suitability
+   -​ Prioritise animals matching users preferred species
+   -​ Prioritise animals matching users preferred size
+   -​ Sort remaining animals by suitability score
+   -​ Show top 3 or 5 (depending how many animals are in the system)
+
+
+ Factor                                            Suggested weight
+
+ Species                                           10
+
+ Size                                              5
+
+
+However, these weights will not add to the compatibility percentage as their preferences do
+not reflect animal suitability. It will influence the order in which suitable animals are displayed.
+This will prevent an unsuitable animal from receiving a misleading high compatibility
+percentage as it matches the users preferences, but still ensuring preferred animals are
+presented as users top choices as this will make them more inclined to adopt. If the user picks
+‘no preference’ no animal will receive a bonus.
+Development Test plan
+Development Test Plan
+

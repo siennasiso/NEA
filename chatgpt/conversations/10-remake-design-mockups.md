@@ -1,0 +1,310 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - heading "ChatGPT said:" [level=4]
+  - 'button "Generated image: Animal adoption UI system mockup"':
+    - progressbar "Generating image...":
+  - button:
+    - progressbar "Generating image...":
+  - button:
+    - progressbar "Generating image...":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - heading "ChatGPT said:" [level=4]
+  - 'button "Generated image: Animal adoption system design mockup"':
+    - progressbar "Generating image...":
+  - button:
+    - progressbar "Generating image...":
+  - button:
+    - progressbar "Generating image...":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: You are right.
+    - strong: Applications should be removed completely
+    - text: unless you have explicitly decided that users will submit adoption applications. Your current project is mainly an
+    - strong: animal browsing and compatibility matching system
+    - text: ", not a full adoption-processing system."
+  - heading "Interfaces you actually need" [level=2]
+  - heading "1. Login and registration" [level=3]
+  - paragraph: "Keep this simple using Streamlit tabs:"
+  - list:
+    - paragraph: "Login tab:"
+    - list:
+      - paragraph: Email
+      - paragraph: Password
+      - paragraph: Login button
+      - paragraph: Error message for incorrect details
+    - paragraph: "Registration tab:"
+    - list:
+      - paragraph: Full name
+      - paragraph: Email
+      - paragraph: Age
+      - paragraph: Password
+      - paragraph: Confirm password
+      - paragraph: Register button
+      - paragraph: Validation messages
+  - paragraph: "This can be made using:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: login_tab, register_tab = st.tabs(["Login", "Register"])
+  - paragraph: You do not need a complicated split-screen design. Streamlit tabs will be easier to code and test.
+  - separator
+  - heading "2. User homepage" [level=3]
+  - paragraph: "Your user homepage should contain:"
+  - list:
+    - paragraph: Welcome message
+    - paragraph: Short explanation of the system
+    - paragraph: Start questionnaire button
+    - paragraph: Browse animals button
+    - paragraph: Logout button
+  - paragraph: "You can remove:"
+  - list:
+    - paragraph: My Applications
+    - paragraph: Adoption tracking
+    - paragraph: Reports
+    - paragraph: Notifications
+    - paragraph: User profile editing, unless you specifically need it
+  - paragraph: "A realistic Streamlit design could use two columns:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "left, right = st.columns([2, 1]) with left: st.title(\"Find your perfect companion\") st.write( \"Complete the questionnaire to receive animal recommendations \" \"based on your home, lifestyle and experience.\" ) if st.button(\"Start Questionnaire\", type=\"primary\"): st.session_state.page = \"questionnaire\" st.rerun() if st.button(\"Browse Animals\"): st.session_state.page = \"browse\" st.rerun() with right: st.image(\"images/dog_and_cat.png\")"
+  - separator
+  - heading "3. Animal browsing page" [level=3]
+  - paragraph: "This should include the features already mentioned in your project:"
+  - list:
+    - paragraph: View all available animals
+    - paragraph: Search by animal name
+    - paragraph: Filter by species
+    - paragraph: Filter by age
+    - paragraph: Filter by size
+    - paragraph: Filter by whether the animal is suitable with children
+    - paragraph: Possibly filter by compatibility with other pets
+    - paragraph: View more details about an animal
+  - paragraph: "Streamlit already provides suitable widgets:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: search = st.text_input("Search by animal name") species = st.selectbox( "Species", ["All", "Dog", "Cat", "Rabbit"] ) size = st.selectbox( "Size", ["All", "Small", "Medium", "Large"] ) good_with_children = st.selectbox( "Suitable with children", ["All", "Yes", "No"] )
+  - paragraph: "Animal results can be displayed using columns:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "columns = st.columns(3) for index, animal in enumerate(filtered_animals): with columns[index % 3]: st.image(animal[\"image_path\"]) st.subheader(animal[\"name\"]) st.write(f'{animal[\"age\"]} years old') st.write(animal[\"species\"]) if st.button( \"View Details\", key=f'view_{animal[\"animal_id\"]}' ): st.session_state.selected_animal = animal[\"animal_id\"] st.session_state.page = \"animal_details\" st.rerun()"
+  - paragraph: This card layout is achievable, but it will look more like a standard Streamlit application than the highly polished generated mockup.
+  - separator
+  - heading "4. Animal details page" [level=3]
+  - paragraph: "This page should show:"
+  - list:
+    - paragraph: Animal image
+    - paragraph: Name
+    - paragraph: Species
+    - paragraph: Breed
+    - paragraph: Age
+    - paragraph: Sex
+    - paragraph: Size
+    - paragraph: Personality
+    - paragraph: Exercise needs
+    - paragraph: Medical information
+    - paragraph: Suitable with children
+    - paragraph: Suitable with other pets
+    - paragraph: Garden requirements
+    - paragraph: Special requirements
+    - paragraph: Back button
+  - paragraph: "You could use two columns:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "image_column, details_column = st.columns([1, 2]) with image_column: st.image(animal[\"image_path\"], use_container_width=True) with details_column: st.title(animal[\"name\"]) st.write(f'**Species:** {animal[\"species\"]}') st.write(f'**Breed:** {animal[\"breed\"]}') st.write(f'**Age:** {animal[\"age\"]}') st.write(f'**Sex:** {animal[\"sex\"]}') st.write(f'**Personality:** {animal[\"personality\"]}')"
+  - paragraph: This is much easier than trying to create a complex custom animal profile.
+  - separator
+  - heading "5. Questionnaire page" [level=3]
+  - paragraph: "The questionnaire should collect factors used by your matching algorithm, such as:"
+  - list:
+    - paragraph: Living space
+    - paragraph: Garden access
+    - paragraph: Experience with animals
+    - paragraph: Time available
+    - paragraph: Presence of children
+    - paragraph: Other pets
+    - paragraph: Preferred species
+    - paragraph: Preferred animal size
+    - paragraph: Exercise level
+  - paragraph: You do not need a five-stage progress bar like the generated image. That would create unnecessary complexity.
+  - paragraph: "A single Streamlit form is easier:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "with st.form(\"questionnaire_form\"): living_space = st.selectbox( \"What type of home do you live in?\", [\"House\", \"Flat or apartment\", \"Other\"] ) garden_access = st.radio( \"Do you have access to a secure garden?\", [\"Yes\", \"No\"] ) experience = st.selectbox( \"How much experience do you have with animals?\", [\"None\", \"Some experience\", \"Experienced\"] ) time_available = st.slider( \"How many hours can you spend with an animal each day?\", min_value=1, max_value=12 ) children = st.radio( \"Are there children in your household?\", [\"Yes\", \"No\"] ) other_pets = st.radio( \"Are there other pets in your household?\", [\"Yes\", \"No\"] ) preferred_species = st.selectbox( \"Which species would you prefer?\", [\"No preference\", \"Dog\", \"Cat\", \"Rabbit\"] ) submitted = st.form_submit_button( \"Calculate Matches\", type=\"primary\" )"
+  - paragraph: A form is useful because Streamlit waits until the user presses the submit button before processing all the answers.
+  - separator
+  - heading "6. Compatibility results page" [level=3]
+  - paragraph: "This page should include:"
+  - list:
+    - paragraph: Animals ranked from highest to lowest compatibility
+    - paragraph: Compatibility percentage
+    - paragraph: Animal name and image
+    - paragraph: Short explanation of why the animal is suitable
+    - paragraph: Warnings about unmet requirements
+    - paragraph: View animal details button
+    - paragraph: Retake questionnaire button
+  - paragraph: "For example:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "st.title(\"Your recommended animals\") for result in ranked_results: with st.container(border=True): image_col, information_col = st.columns([1, 2]) with image_col: st.image(result[\"image_path\"]) with information_col: st.subheader(result[\"name\"]) st.metric( \"Compatibility score\", f'{result[\"score\"]}%' ) st.write(result[\"explanation\"]) if result[\"warnings\"]: st.warning(\"\\n\".join(result[\"warnings\"])) if st.button( \"View Animal\", key=f'result_{result[\"animal_id\"]}' ): st.session_state.selected_animal = result[\"animal_id\"] st.session_state.page = \"animal_details\" st.rerun()"
+  - paragraph: Do not show only three perfect-looking cards. Your actual program should generate however many animal records match the filters and rank them using your algorithm.
+  - separator
+  - heading "7. Admin dashboard" [level=3]
+  - paragraph: "Your admin system should focus on CRUD functionality:"
+  - list:
+    - paragraph: View animal records
+    - paragraph: Add an animal
+    - paragraph: Edit an animal
+    - paragraph: Delete an animal
+    - paragraph: Possibly view registered users
+    - paragraph: Logout
+  - paragraph: "You do not need:"
+  - list:
+    - paragraph: Pending applications
+    - paragraph: Successful adoptions
+    - paragraph: Application statistics
+    - paragraph: Reports
+    - paragraph: Graphs or pie charts
+  - paragraph: "A realistic admin homepage could display:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: st.title("Admin Dashboard") total_animals = get_total_animals() total_users = get_total_users() animal_col, user_col = st.columns(2) animal_col.metric("Animals", total_animals) user_col.metric("Registered users", total_users) action = st.radio( "Choose an action", ["View animals", "Add animal", "Edit animal", "Delete animal"], horizontal=True )
+  - paragraph:
+    - text: For viewing records, you could use
+    - code: st.dataframe()
+    - text: or
+    - code: st.data_editor()
+    - text: . Streamlit supports displaying and editing tabular information directly.
+    - link "Streamlit Docs":
+      - /url: https://docs.streamlit.io/develop/concepts/design/dataframes?utm_source=chatgpt.com
+      - generic: Streamlit Docs
+  - separator
+  - heading "Recommended final page structure" [level=2]
+  - button "Copy":
+  - code: app.py database.py matching_algorithm.py validation.py pages/ login.py user_home.py browse_animals.py animal_details.py questionnaire.py results.py admin_dashboard.py
+  - paragraph:
+    - text: Alternatively, for your first version, everything can remain in
+    - code: app.py
+    - text: "using a page variable:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "if \"page\" not in st.session_state: st.session_state.page = \"login\" if st.session_state.page == \"login\": show_login_page() elif st.session_state.page == \"user_home\": show_user_home() elif st.session_state.page == \"browse\": show_browse_page() elif st.session_state.page == \"questionnaire\": show_questionnaire() elif st.session_state.page == \"results\": show_results() elif st.session_state.page == \"admin\": show_admin_dashboard()"
+  - paragraph:
+    - code: st.session_state
+    - text: is designed to preserve values across Streamlit reruns and across pages in a multipage application.
+    - link "Streamlit Docs +1":
+      - /url: https://docs.streamlit.io/develop/api-reference/caching-and-state/st.session_state?utm_source=chatgpt.com
+      - generic: Streamlit Docs
+      - generic: "+1"
+  - paragraph:
+    - text: For a cleaner final version, Streamlit currently recommends
+    - code: st.Page
+    - text: and
+    - code: st.navigation
+    - text: for defining multipage apps.
+    - link "Streamlit Docs +1":
+      - /url: https://docs.streamlit.io/develop/api-reference/navigation/st.navigation?utm_source=chatgpt.com
+      - generic: Streamlit Docs
+      - generic: "+1"
+    - text: However, manually controlling the current page with session state may be easier to understand and explain in your NEA.
+  - heading "What your revised mockup should contain" [level=2]
+  - paragraph: "Your pink design should show only:"
+  - list:
+    - paragraph: Login and registration
+    - paragraph: User homepage
+    - paragraph: Browse animals and filters
+    - paragraph: Animal details
+    - paragraph: Compatibility questionnaire
+    - paragraph: Compatibility results
+    - paragraph: Admin animal management
+  - paragraph: "The admin screen should show a table of animals and buttons labelled:"
+  - list:
+    - paragraph: Add Animal
+    - paragraph: Edit Selected Animal
+    - paragraph: Delete Selected Animal
+    - paragraph: View Users
+    - paragraph: Logout
+  - paragraph: That design would accurately reflect your planned features and remain realistic to implement using standard Streamlit widgets.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: so remake the design please
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - 'button "Generated image: Animal adoption system UI mockups"':
+    - progressbar "Generating image...":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - heading "You said:" [level=4]
+  - generic: do this properly, so its not hard to make but also simple but preety and aesthetic and that it matches all my requirements and all the features i had made inlcuding feedback from competitor reports and the stakeholder surveys and the client interview and matching my sucess criteria that it is at a a* standrard, which can be made using streamlit
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 10m 26s":
+    - text: Worked for 10m 26s
+  - 'button "Generated image: Animal adoption system UI design"':
+    - progressbar "Generating image...":
+  - group "Response actions":
+    - button "Copy response":
+    - button "Like this image":
+    - button "Dislike this image":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status

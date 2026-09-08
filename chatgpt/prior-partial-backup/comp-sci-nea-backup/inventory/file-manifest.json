@@ -1,0 +1,211 @@
+{
+  "snapshot_date": "2026-09-07",
+  "scope": "Partial visible source excerpts and newly organised backup materials only.",
+  "full_project_backup": false,
+  "github_upload_performed": false,
+  "algorithm": "SHA-256",
+  "self_exclusion": "This manifest excludes itself and local .git metadata; it includes every other distributed snapshot file.",
+  "file_count": 40,
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 319,
+      "sha256": "e5f0d4e130a0ea47e699bfcf79a3c082ab5792c36a4966639b0732a7a78c5bed"
+    },
+    {
+      "path": "BACKUP_STATUS.md",
+      "bytes": 3026,
+      "sha256": "ceaefcc4f16538a8bbfeb361b1106644af4a4a19328712cde13fad249171af58"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2723,
+      "sha256": "658af45a96fa4c18d3f07c9026b7a0e5d4d5326499d20e0b5442091d7e436c53"
+    },
+    {
+      "path": "RESTORE_AND_PUBLISH.md",
+      "bytes": 3509,
+      "sha256": "2a5cacddae3c51760810963fbabaf6588f4f2fc85ca90e9f9c3a83e5cb16ff66"
+    },
+    {
+      "path": "START_HERE.html",
+      "bytes": 36293,
+      "sha256": "eb8f8e5ffabcc88f5967d39fa6641e03c2911157bb7aa7388f35290e9f6fbfbd"
+    },
+    {
+      "path": "inventory/MISSING_ORIGINALS.md",
+      "bytes": 2971,
+      "sha256": "0961d7eb45370ede8c820299fbf916feb31dc044c53946913f179172d7bfae2c"
+    },
+    {
+      "path": "inventory/backup-validation.json",
+      "bytes": 1205,
+      "sha256": "483051dac64e6a8c86147cd3eb8df52543d33a2ca4496376412cab4200972aea"
+    },
+    {
+      "path": "inventory/chat-inventory.json",
+      "bytes": 10677,
+      "sha256": "86c459dfa8577bffa73c786a17674895cb30448e9d96afa99b80421e0c37d5d8"
+    },
+    {
+      "path": "inventory/missing-assets.json",
+      "bytes": 9836,
+      "sha256": "a775f1c1f0a36b7a81df0a2e1704535b224dcda0c4688be9ca586025c7e07b2e"
+    },
+    {
+      "path": "inventory/source-counts.json",
+      "bytes": 198,
+      "sha256": "63b58faef683766ffcb4a97cfdf3b4082b9eace24bdbaccce0d86bd192fe5fd7"
+    },
+    {
+      "path": "original-code/README.md",
+      "bytes": 383,
+      "sha256": "12cd18586262ecceeadab414115c38ac016f7e93cb79258d6534f1dabdfcc56f"
+    },
+    {
+      "path": "original-documents/README.md",
+      "bytes": 343,
+      "sha256": "4d9342d0839ab8a71245c8037fef9b337005beffca2dbf0023bd60e024669e03"
+    },
+    {
+      "path": "original-images/README.md",
+      "bytes": 337,
+      "sha256": "d0a45b9f0ff4726e4ddb80cc8bd431af639cc029d617de55a02b6f14def3ad7a"
+    },
+    {
+      "path": "recovered-notes/01-project-overview.md",
+      "bytes": 1682,
+      "sha256": "a4bb01f4864f906b38bfaf8880cadf79b69f54619b98b1f799d6f9495f25e406"
+    },
+    {
+      "path": "recovered-notes/02-analysis-and-scope.md",
+      "bytes": 1452,
+      "sha256": "2192d51f036534e41da0cb5a35bcc777cebaa240b0923f2e9a2d777068671c6c"
+    },
+    {
+      "path": "recovered-notes/03-interface-and-flowchart-requirements.md",
+      "bytes": 1645,
+      "sha256": "f7a6435be6212bd6bf74a107c1659a377c189e52af59fcf6b2d9d27b9e3425a2"
+    },
+    {
+      "path": "recovered-notes/04-authentication-and-validation.md",
+      "bytes": 1840,
+      "sha256": "01aff39fc164565e1fcf53cebf1448e09df3c50cb3502302954e3650a2784c34"
+    },
+    {
+      "path": "recovered-notes/05-database-design.md",
+      "bytes": 1557,
+      "sha256": "3536b6c04a1fccb2de2dc1b393c302830589929c1ae541c2d6cb01160be4dd3b"
+    },
+    {
+      "path": "recovered-notes/06-compatibility-scoring.md",
+      "bytes": 1308,
+      "sha256": "dcd5accbf1c20beca1bf310ff7e7341b0e7fd5d4cb876160d4fb320ce76693a2"
+    },
+    {
+      "path": "recovered-notes/07-variables.md",
+      "bytes": 1364,
+      "sha256": "257b50b7f9aeb950dc458eb4d7574ede19ffdc4b3fa7794203f86f9bf456308a"
+    },
+    {
+      "path": "recovered-notes/08-test-planning.md",
+      "bytes": 1222,
+      "sha256": "1e6c6c78296610f370e4b72ce2a864bea1cddbc6c268c19654ed73988d9eccee"
+    },
+    {
+      "path": "recovered-notes/09-development-setup-and-timeline.md",
+      "bytes": 1610,
+      "sha256": "b5a3ac68a7e6b8c20c56f3e496679e1ec54ef89a8ff418d16ff621859c320684"
+    },
+    {
+      "path": "scripts/publish_private_github.py",
+      "bytes": 5662,
+      "sha256": "4ab8808d72b44fa31d95f2d0323dfe4ca79766ffe4d851e34374bee20f23a694"
+    },
+    {
+      "path": "scripts/verify_backup.py",
+      "bytes": 2656,
+      "sha256": "256d7d92541a3ef2273739b1bd3bb7a6599bc7ee97996954a063cdad476d18e2"
+    },
+    {
+      "path": "source-excerpts/01-2026-09-07-set-up-nea.md",
+      "bytes": 719,
+      "sha256": "85da887b0cf23a0f903efedbdb616713db747031513c86d41ab8c0170d59121e"
+    },
+    {
+      "path": "source-excerpts/02-2026-08-06-pseudocode-for-login-and-registration.md",
+      "bytes": 1873,
+      "sha256": "fcdda6dade09d0a2060098f6551dae71e1589c78fbd66fff2b63dcadbf7cadd1"
+    },
+    {
+      "path": "source-excerpts/03-2026-08-06-login-interface-design.md",
+      "bytes": 2586,
+      "sha256": "b702236c8054a389a6b092fdb7d60bd6c69da4afc095497593a5e5f25ecc50dc"
+    },
+    {
+      "path": "source-excerpts/04-2026-08-08-test-plan-guidance.md",
+      "bytes": 937,
+      "sha256": "a5f7745d17299c391b4bd6386dfbc3ba09b20b0e7d76fb6ad06d5dd6439250ea"
+    },
+    {
+      "path": "source-excerpts/05-2026-08-05-streamlit-database-compatibility.md",
+      "bytes": 867,
+      "sha256": "fc76af5ee33cf77dcbb1e03b677343040264f074bd6b227b822c6d1c58b72d1f"
+    },
+    {
+      "path": "source-excerpts/06-2026-07-20-variables-section-guidance.md",
+      "bytes": 2506,
+      "sha256": "df217bd00a8cb339a178dd7bedcfebb31d214fb7c2515b08af63d70bb27cb4aa"
+    },
+    {
+      "path": "source-excerpts/07-2026-07-22-branch-starting-design-phase.md",
+      "bytes": 2056,
+      "sha256": "7475daa71855d46e907cca561a3d9e1336660249076ddbc4211b7da4784b1be5"
+    },
+    {
+      "path": "source-excerpts/08-2026-07-22-flow-chart-request.md",
+      "bytes": 2327,
+      "sha256": "5eb4d5f63dd5163d875abee1d9c415331d0e6463b493290ea6a5a83c8d2d044b"
+    },
+    {
+      "path": "source-excerpts/09-2026-07-22-remake-design-mockups.md",
+      "bytes": 1590,
+      "sha256": "1754601aba702104b0367ce60fae512fc869010997475ba235b98758d91060f2"
+    },
+    {
+      "path": "source-excerpts/10-2026-07-11-starting-design-phase.md",
+      "bytes": 2023,
+      "sha256": "b868a30d8b5214311e91bdde72933d3187f917d80dacefe3e792e6c21bc790c3"
+    },
+    {
+      "path": "source-excerpts/11-2026-06-27-features-section-example.md",
+      "bytes": 2060,
+      "sha256": "ed96a3f20f921e28cfe0679cae607fd40a25f05a8dc0546ccd0fa588049d65e6"
+    },
+    {
+      "path": "source-excerpts/12-2026-07-12-design-task-timeline.md",
+      "bytes": 1166,
+      "sha256": "d76f7e8be6cf37e8cfe6ffb76da1105525e372cea416372c7270b5914a68454d"
+    },
+    {
+      "path": "source-excerpts/13-2026-07-09-hardware-and-software-req.md",
+      "bytes": 1874,
+      "sha256": "ff2192ab993902a0f6f41b0ea03ae5992b5a73b2b98e3bac164523f37f4edf29"
+    },
+    {
+      "path": "source-excerpts/INDEX.md",
+      "bytes": 1995,
+      "sha256": "9232b56a7c77fa2d0c8c90a28c8e3dc6593820d12fe8c0f165a9ac8d75a814b3"
+    },
+    {
+      "path": "source-excerpts/current-backup-request.md",
+      "bytes": 327,
+      "sha256": "4509fca0dc09c4b00b1bdfd49e90e787db80c64a9d98a051b7dafd86249e2fd6"
+    },
+    {
+      "path": "source-excerpts/visible-project-excerpts.json",
+      "bytes": 29272,
+      "sha256": "7233f4c9dfd148a7fd9aca2271a4115c6397e8bf0ea8cca83458a887a7dcf822"
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - button "Share chat" [disabled]:
+  - button "More":
+- main:
+  - separator "Wed, Aug 5 at 2:53 PM":
+    - generic: Wed, Aug 5 at 2:53 PM
+  - heading "You said:" [level=4]
+  - generic: considering i am using streamlit with my projetc, should i be using sqlite and is it compatible or shall i use a different type of database software
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - button "Worked for 3m 46s":
+    - text: Worked for 3m 46s
+  - heading "Recommendation" [level=2]
+  - paragraph:
+    - strong: Use SQLite for your animal-adoption matching project.
+    - text: It is fully compatible with Streamlit and is probably the most appropriate database for the scope of your A-level NEA.
+  - paragraph:
+    - text: SQLite stores the whole relational database in a single
+    - code: .db
+    - text: file and does not require a separate database server to be installed or managed. Python provides the
+    - code: sqlite3
+    - text: interface, and Streamlit also supports SQLite through its SQL connection system.
+    - link "Python documentation +2 Streamlit Docs +2":
+      - /url: https://docs.python.org/3/library/sqlite3.html?utm_source=chatgpt.com
+      - generic: Python documentation
+      - generic: "+2"
+      - generic: Streamlit Docs
+      - generic: "+2"
+  - heading "Why SQLite suits your project" [level=3]
+  - paragraph: "Your system is likely to contain relational tables such as:"
+  - list:
+    - paragraph:
+      - code: users
+    - paragraph:
+      - code: animals
+    - paragraph:
+      - code: questionnaire_responses
+    - paragraph:
+      - code: compatibility_results
+    - paragraph:
+      - text: possibly
+      - code: saved_animals
+  - paragraph:
+    - text: These tables can be connected using primary and foreign keys. For example, a questionnaire response can contain a
+    - code: user_id
+    - text: ", and a compatibility result can contain both a"
+    - code: user_id
+    - text: and an
+    - code: animal_id
+    - text: .
+  - paragraph: "SQLite will support everything you need:"
+  - list:
+    - paragraph: user registration and login
+    - paragraph: adding, editing and deleting animal records
+    - paragraph: storing questionnaire responses
+    - paragraph: retrieving animal records for the matching algorithm
+    - paragraph: searching and filtering animals
+    - paragraph: storing compatibility results
+    - paragraph:
+      - text: applying validation through constraints such as
+      - code: NOT NULL
+      - text: ","
+      - code: UNIQUE
+      - text: ","
+      - code: CHECK
+      - text: and foreign keys
+    - paragraph: performing SQL queries, joins and sorting
+  - paragraph:
+    - text: It is also a good match because your application is for one animal shelter and is unlikely to have hundreds of people modifying the database simultaneously. SQLite permits multiple readers but normally processes one database writer at a time; for a small school application, write operations such as registering a user or editing an animal record should be brief enough that this is not a practical problem.
+    - link "SQLite +1":
+      - /url: https://sqlite.org/whentouse.html?utm_source=chatgpt.com
+      - generic: SQLite
+      - generic: "+1"
+  - heading "Recommended setup" [level=3]
+  - paragraph: "You can access the database directly using Python:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "import sqlite3 DATABASE_PATH = \"animal_adoption.db\" def get_database_connection(): connection = sqlite3.connect(DATABASE_PATH) connection.row_factory = sqlite3.Row # Foreign-key checking must be enabled for each connection. connection.execute(\"PRAGMA foreign_keys = ON\") return connection"
+  - paragraph: "You can then use it in functions such as:"
+  - text: Python
+  - button "Copy":
+  - button "Run code":
+    - text: Run
+  - code: "def find_user_by_email(email): connection = get_database_connection() try: user = connection.execute( \"\"\" SELECT user_id, name, email, age, password_hash, role FROM users WHERE email = ? \"\"\", (email,) ).fetchone() return user finally: connection.close()"
+  - paragraph:
+    - text: Use parameterised queries containing
+    - code: "?"
+    - text: placeholders rather than joining user input directly into an SQL string. This protects your database against SQL injection and prevents quotation marks in user input from breaking a query.
+  - paragraph:
+    - text: You do
+    - strong: not
+    - text: need to use
+    - code: st.connection()
+    - text: or SQLAlchemy for this project unless you specifically want to demonstrate them. Directly using Python’s
+    - code: sqlite3
+    - text: module will be easier to understand, implement, explain and test in your documentation. Streamlit’s own SQL connection system supports SQLite as well, but it requires SQLAlchemy, whereas direct
+    - code: sqlite3
+    - text: keeps the number of dependencies lower.
+    - link "Streamlit Docs +1":
+      - /url: https://docs.streamlit.io/develop/concepts/connections/connecting-to-data?utm_source=chatgpt.com
+      - generic: Streamlit Docs
+      - generic: "+1"
+  - heading "SQLite software versus DB Browser for SQLite" [level=3]
+  - paragraph: "It is useful to distinguish between the two:"
+  - list:
+    - paragraph:
+      - strong: SQLite
+      - text: is the actual database engine used by your Python program.
+    - paragraph:
+      - strong: DB Browser for SQLite
+      - text: is an optional graphical program that lets you inspect your tables and records manually.
+  - paragraph: "You can therefore use:"
+  - blockquote:
+    - paragraph:
+      - strong: "Database:"
+      - text: SQLite
+      - strong: "Python interface:"
+      - text: Python
+      - code: sqlite3
+      - text: module
+      - strong: "Database management/testing tool:"
+      - text: DB Browser for SQLite
+      - strong: "Front end:"
+      - text: Streamlit
+  - paragraph:
+    - text: DB Browser would be useful when testing because you could open
+    - code: animal_adoption.db
+    - text: and demonstrate that registrations, questionnaire responses and animal records have been inserted correctly.
+  - heading "Important issue if you deploy the application" [level=2]
+  - paragraph: There is one major exception to my recommendation.
+  - heading "Running and demonstrating it locally" [level=3]
+  - paragraph: "If the application will be run from your MacBook using:"
+  - text: Bash
+  - button "Copy":
+  - code: streamlit run app.py
+  - paragraph:
+    - text: then
+    - strong: SQLite is the best choice
+    - text: . The database file will remain on your laptop and changes will persist normally.
+  - heading "Deploying on Streamlit Community Cloud" [level=3]
+  - paragraph:
+    - text: If you deploy the application to Streamlit Community Cloud and expect real users or administrators to create permanent records, a local SQLite file is not reliable. Streamlit states that Community Cloud does not guarantee persistence of local file storage, meaning registrations, questionnaire answers or admin changes could be deleted when the application restarts or is redeployed.
+    - link "Streamlit Docs +1":
+      - /url: https://docs.streamlit.io/develop/concepts/connections/connecting-to-data?utm_source=chatgpt.com
+      - generic: Streamlit Docs
+      - generic: "+1"
+  - paragraph:
+    - text: In that situation, use a remotely hosted relational database such as
+    - strong: PostgreSQL
+    - text: . Streamlit can connect to remote SQL databases and store credentials securely through its secrets system.
+    - link "Streamlit Docs +1":
+      - /url: https://docs.streamlit.io/develop/api-reference/connections/st.connections.sqlconnection?utm_source=chatgpt.com
+      - generic: Streamlit Docs
+      - generic: "+1"
+  - paragraph: "The decision is therefore:"
+  - table:
+    - rowgroup:
+      - row "How the project will be used Recommended database":
+        - columnheader "How the project will be used"
+        - columnheader "Recommended database"
+    - rowgroup:
+      - row "Developed, tested and assessed locally SQLite":
+        - cell "Developed, tested and assessed locally"
+        - cell "SQLite":
+          - strong: SQLite
+      - row "Deployed only as a temporary demonstration with read-only sample data SQLite can be acceptable":
+        - cell "Deployed only as a temporary demonstration with read-only sample data"
+        - cell "SQLite can be acceptable":
+          - strong: SQLite can be acceptable
+      - row "Deployed publicly with permanent registrations and admin updates Hosted PostgreSQL":
+        - cell "Deployed publicly with permanent registrations and admin updates"
+        - cell "Hosted PostgreSQL":
+          - strong: Hosted PostgreSQL
+      - row "Large system with many shelters and simultaneous users PostgreSQL or MySQL":
+        - cell "Large system with many shelters and simultaneous users"
+        - cell "PostgreSQL or MySQL":
+          - strong: PostgreSQL or MySQL
+  - button "Copy table":
+  - paragraph:
+    - text: For your current one-shelter NEA, I would build it with
+    - strong: SQLite
+    - text: . Changing to PostgreSQL now would introduce account setup, network connections, credentials, deployment configuration and additional error handling without significantly improving the assessed functionality.
+  - heading "Suggested justification for your design document" [level=2]
+  - blockquote:
+    - paragraph:
+      - strong:
+        - text: SQLite will be used as the database management system for the animal adoption matching application. It is compatible with Python and Streamlit through Python’s built-in
+        - code: sqlite3
+        - text: module. SQLite is a relational database, allowing related information such as users, animals, questionnaire responses and compatibility results to be separated into structured tables and connected using primary and foreign keys. It stores the database in a single local file and does not require a separate database server, making the system easier to develop, test, back up and demonstrate. It supports the SQL queries, validation constraints and CRUD operations required by the administrator features. Although SQLite is less appropriate for systems with a large number of simultaneous database writes, this is not a significant limitation because the proposed solution is designed for one animal shelter and a relatively small number of users. If the application were later expanded or publicly deployed with a requirement for permanent cloud storage, the database could be migrated to a client-server system such as PostgreSQL.
+  - paragraph:
+    - text: "One final practical point: store each animal photograph’s"
+    - strong: relative file path or hosted URL
+    - text: "in the database rather than storing the entire image as binary data. For example:"
+  - button "Copy":
+  - code: static/animals/bella.jpg
+  - paragraph: That will make the animal records easier to manage and keep your SQLite file small.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - generic: GitHub
+  - button "Send prompt":
+  - button [disabled]
+  - button [disabled]
+- alert
+- status

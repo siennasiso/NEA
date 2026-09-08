@@ -1,0 +1,554 @@
+{
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 90,
+      "sha256": "2e79c324a7bd572395612a9413c2ff694ecbaf6c903fb80854955c01dd404b22"
+    },
+    {
+      "path": "NEA/README.md",
+      "bytes": 27,
+      "sha256": "cb279409ac8a0695034a1dd3b3b8b41ebd4eff98c982224f0f0bce9892eaf227"
+    },
+    {
+      "path": "NEA/requirements.txt",
+      "bytes": 10,
+      "sha256": "57716129b9bb1b62e7474b384b2b5abeb8c83cd221bdcb001977d81c0c2d433c"
+    },
+    {
+      "path": "PROJECT_STATUS.md",
+      "bytes": 2059,
+      "sha256": "53a9e0afa35e13a4a7fda8ad22a1a67399bc80e8b90dfc4d72200adcf17f79cd"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1818,
+      "sha256": "ac7216c423abffb610abbbb731a096b38997198df4d17b1f7efabef598c6c489"
+    },
+    {
+      "path": "app/.streamlit/config.toml",
+      "bytes": 180,
+      "sha256": "b6ff8a9d6d4a5fb80ba0f7462fb143d3a577b0648f1b404d7ecf8e98412ed187"
+    },
+    {
+      "path": "app/README.md",
+      "bytes": 1211,
+      "sha256": "24c5c9572f66edc6a4c7bd2a1d6993e419cea429152b7f886a6687408bae396b"
+    },
+    {
+      "path": "app/app.py",
+      "bytes": 5504,
+      "sha256": "c82d6d48c7dd16d3b5cc614c78cc9d2300b1d3d19ec505b7ff01d195ee5d31e9"
+    },
+    {
+      "path": "app/create_admin.py",
+      "bytes": 1059,
+      "sha256": "b11b74c1214b7fbc89449461083be910ce20e8b38bd3ac14a0a086bdd93cc757"
+    },
+    {
+      "path": "app/load_demo_animals.py",
+      "bytes": 282,
+      "sha256": "a2d3b54c78c38bd25414bc47d98e27fad2f3682e0270a9c9364f7366e98049d8"
+    },
+    {
+      "path": "app/pages/1_Home.py",
+      "bytes": 11343,
+      "sha256": "1de9f81c8a783c9341321d9b3e8b1d4ee5c41b5481abf49181b3411ec07eaf09"
+    },
+    {
+      "path": "app/pages/2_Registration.py",
+      "bytes": 10052,
+      "sha256": "f6a3941ab2d4495d20ddb8bb387a73953e5c7901e481e94c20528c8fbbc94e00"
+    },
+    {
+      "path": "app/pages/3_Questionnaire.py",
+      "bytes": 803,
+      "sha256": "5f4ac58010fef0993e8f7b8c06150aa5f0c80b204b91d247b8de350894ada68c"
+    },
+    {
+      "path": "app/pages/4_Browse_Animals.py",
+      "bytes": 707,
+      "sha256": "faf0e5e5cbb34f39205d5948863056336edd34924e860c3c14734b3ab4c14513"
+    },
+    {
+      "path": "app/pages/5_My_Account.py",
+      "bytes": 748,
+      "sha256": "ec486f565a7e3a0af951cb94311d0079ff7afb5b23eda4aa7aaa4b4219bbc89b"
+    },
+    {
+      "path": "app/pages/6_My_Matches.py",
+      "bytes": 1194,
+      "sha256": "4a4753220098e5c27c2cd6193c44d50bdffc1347dac456e3168e86a8c37c4c4c"
+    },
+    {
+      "path": "app/pages/7_Admin_Dashboard.py",
+      "bytes": 22815,
+      "sha256": "15bc8f6456330258bb24c78a05b009c47365396c718f368451689ef8f86c6076"
+    },
+    {
+      "path": "app/pawmatch_animals.py",
+      "bytes": 16851,
+      "sha256": "ad5409df58a80c821f1015618e27ac556d3afecace3b7bee5f146ec2a443bf1b"
+    },
+    {
+      "path": "app/pawmatch_auth.py",
+      "bytes": 8507,
+      "sha256": "841b3ba12b37fb74e440b4889dc78051a077354aea0181671b708f37ceddf0c3"
+    },
+    {
+      "path": "app/pawmatch_style.py",
+      "bytes": 50861,
+      "sha256": "dfbe031fa39bb9105cbd6e62c7462619e53f2432c0dffa506d89db33b8847e3d"
+    },
+    {
+      "path": "app/requirements.txt",
+      "bytes": 23,
+      "sha256": "2a1ba02adaf01d5384e76cf15c0a4fdc0d67e8ecba3ab4bb41c83b81d5481694"
+    },
+    {
+      "path": "chatgpt/README.md",
+      "bytes": 1080,
+      "sha256": "41809ca463d368d33042db5936f979584bce5f470546e0d4921599352ec3de47"
+    },
+    {
+      "path": "chatgpt/conversations/01-set-up-nea.md",
+      "bytes": 14156,
+      "sha256": "5aa3f396079bb049303137bb790711385ce9d6f47aabfe188f4e844725826b15"
+    },
+    {
+      "path": "chatgpt/conversations/02-back-up-chats-github.md",
+      "bytes": 5907,
+      "sha256": "d4e236012cee2d5fac8dfc8ffa625d485268bb2b726b928c7f26030b080e2aad"
+    },
+    {
+      "path": "chatgpt/conversations/03-pseudocode-login-registration.md",
+      "bytes": 38557,
+      "sha256": "a62d48a38b531fd4ec35b970130a6d1762587d01e4bb747a91162d7baa21c49b"
+    },
+    {
+      "path": "chatgpt/conversations/04-login-interface-design.md",
+      "bytes": 16587,
+      "sha256": "2a1833406e904344823ba2039aa91ffa9ecb6dfcd5c0ccd5ef50e46ee4681138"
+    },
+    {
+      "path": "chatgpt/conversations/05-test-plan-guidance.md",
+      "bytes": 75838,
+      "sha256": "2d3986a9ad657d9301376ed1fbeafa082b98e2fa5bed78e038c0af32d3e17171"
+    },
+    {
+      "path": "chatgpt/conversations/06-streamlit-database-compatibility.md",
+      "bytes": 11838,
+      "sha256": "f226fb68532eb81bc4329441057ccd437c9bd83409b109cf43118ae9651e263d"
+    },
+    {
+      "path": "chatgpt/conversations/07-variables-section-guidance.md",
+      "bytes": 30319,
+      "sha256": "1070abba68217c1c81b43bf86418b76602c6e3e8025d93d38ebc79e73f973caf"
+    },
+    {
+      "path": "chatgpt/conversations/08-branch-starting-design-phase.md",
+      "bytes": 34284,
+      "sha256": "c2add3413f182c93b69f4e4ef7edd1f5e0b35b891ed98666c6117c6486f69bf6"
+    },
+    {
+      "path": "chatgpt/conversations/09-flow-chart-request.md",
+      "bytes": 2514,
+      "sha256": "d62adaf01b6263326e75a79ed6619f5561b819b9f4576ad9330a84fef81d91bd"
+    },
+    {
+      "path": "chatgpt/conversations/10-remake-design-mockups.md",
+      "bytes": 15946,
+      "sha256": "ca9307b3a85e93a50760542325079a2c7628fd7a7194783114cbdf6efddf37c2"
+    },
+    {
+      "path": "chatgpt/conversations/11-starting-design-phase.md",
+      "bytes": 16371,
+      "sha256": "973151e7971d3601f4178747a51b760deaacf53133ce2c6b99882a668a5363b7"
+    },
+    {
+      "path": "chatgpt/conversations/12-features-section-example.md",
+      "bytes": 19367,
+      "sha256": "c795f63713ae6af84612ca6cfc39a5640d7241992ad24bfe4c7397ead7f019fe"
+    },
+    {
+      "path": "chatgpt/conversations/13-design-task-timeline.md",
+      "bytes": 5293,
+      "sha256": "ae0c50ff100892fdacb8132a37391f3de3e08360d793fe95f97693c3eaffed53"
+    },
+    {
+      "path": "chatgpt/conversations/14-hardware-software-requirements.md",
+      "bytes": 19839,
+      "sha256": "2ffa11dfcb45c2bb16e6d49c4d00b3139249fa56b6ad0725df507a6905555328"
+    },
+    {
+      "path": "chatgpt/conversations/15-design-system-breakdown.md",
+      "bytes": 13265,
+      "sha256": "26342618d9ffc45e202d48daec00b082d054d0e90ae17251e00dab0f78c2f5e2"
+    },
+    {
+      "path": "chatgpt/conversations/16-research-approach-objectives.md",
+      "bytes": 10882,
+      "sha256": "5804af1c3c7745dec46a4537c9629cf0c1e129a97b90c9abdd645ed4aa228711"
+    },
+    {
+      "path": "chatgpt/conversations/17-computational-approach-ocr.md",
+      "bytes": 33031,
+      "sha256": "f8a2677f03d7d4c855a6614ea450947847b136b9b93d16112d2189bb8a37c857"
+    },
+    {
+      "path": "chatgpt/conversations/18-competitor-research-planning.md",
+      "bytes": 10402,
+      "sha256": "a19c0d901e67b94558bd817f91ea3eb437bc0720112e14743b7ec58c340e683f"
+    },
+    {
+      "path": "chatgpt/conversations/19-stakeholder-survey-analysis.md",
+      "bytes": 10940,
+      "sha256": "271b5a89906af592f18e225c8b903881ec01dc8411eeae8e9371a1899e26c924"
+    },
+    {
+      "path": "chatgpt/conversations/20-ocr-a-level-project-ideas.md",
+      "bytes": 16327,
+      "sha256": "92f89c7d6f0d4d4f36336ca56502b8aeca5f3d8ea3ee75ddf1a1880d7bcf6634"
+    },
+    {
+      "path": "chatgpt/inventory/conversations.md",
+      "bytes": 3990,
+      "sha256": "7623f64f5058f45f028466f85ee33aab97842db2138f54af25f5b46c08361a4d"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/.gitignore",
+      "bytes": 319,
+      "sha256": "e5f0d4e130a0ea47e699bfcf79a3c082ab5792c36a4966639b0732a7a78c5bed"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/BACKUP_STATUS.md",
+      "bytes": 3026,
+      "sha256": "ceaefcc4f16538a8bbfeb361b1106644af4a4a19328712cde13fad249171af58"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/README.md",
+      "bytes": 2723,
+      "sha256": "658af45a96fa4c18d3f07c9026b7a0e5d4d5326499d20e0b5442091d7e436c53"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/RESTORE_AND_PUBLISH.md",
+      "bytes": 3509,
+      "sha256": "2a5cacddae3c51760810963fbabaf6588f4f2fc85ca90e9f9c3a83e5cb16ff66"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/START_HERE.html",
+      "bytes": 36293,
+      "sha256": "eb8f8e5ffabcc88f5967d39fa6641e03c2911157bb7aa7388f35290e9f6fbfbd"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/inventory/MISSING_ORIGINALS.md",
+      "bytes": 2971,
+      "sha256": "0961d7eb45370ede8c820299fbf916feb31dc044c53946913f179172d7bfae2c"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/inventory/backup-validation.json",
+      "bytes": 1205,
+      "sha256": "483051dac64e6a8c86147cd3eb8df52543d33a2ca4496376412cab4200972aea"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/inventory/chat-inventory.json",
+      "bytes": 10677,
+      "sha256": "86c459dfa8577bffa73c786a17674895cb30448e9d96afa99b80421e0c37d5d8"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/inventory/file-manifest.json",
+      "bytes": 7358,
+      "sha256": "98862cedce6cb82e5029824929d7f98099ea4a141731df8635dcc1c58d966a90"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/inventory/missing-assets.json",
+      "bytes": 9836,
+      "sha256": "a775f1c1f0a36b7a81df0a2e1704535b224dcda0c4688be9ca586025c7e07b2e"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/inventory/source-counts.json",
+      "bytes": 198,
+      "sha256": "63b58faef683766ffcb4a97cfdf3b4082b9eace24bdbaccce0d86bd192fe5fd7"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/original-code/README.md",
+      "bytes": 383,
+      "sha256": "12cd18586262ecceeadab414115c38ac016f7e93cb79258d6534f1dabdfcc56f"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/original-documents/README.md",
+      "bytes": 343,
+      "sha256": "4d9342d0839ab8a71245c8037fef9b337005beffca2dbf0023bd60e024669e03"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/original-images/README.md",
+      "bytes": 337,
+      "sha256": "d0a45b9f0ff4726e4ddb80cc8bd431af639cc029d617de55a02b6f14def3ad7a"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/01-project-overview.md",
+      "bytes": 1682,
+      "sha256": "a4bb01f4864f906b38bfaf8880cadf79b69f54619b98b1f799d6f9495f25e406"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/02-analysis-and-scope.md",
+      "bytes": 1452,
+      "sha256": "2192d51f036534e41da0cb5a35bcc777cebaa240b0923f2e9a2d777068671c6c"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/03-interface-and-flowchart-requirements.md",
+      "bytes": 1645,
+      "sha256": "f7a6435be6212bd6bf74a107c1659a377c189e52af59fcf6b2d9d27b9e3425a2"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/04-authentication-and-validation.md",
+      "bytes": 1840,
+      "sha256": "01aff39fc164565e1fcf53cebf1448e09df3c50cb3502302954e3650a2784c34"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/05-database-design.md",
+      "bytes": 1557,
+      "sha256": "3536b6c04a1fccb2de2dc1b393c302830589929c1ae541c2d6cb01160be4dd3b"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/06-compatibility-scoring.md",
+      "bytes": 1308,
+      "sha256": "dcd5accbf1c20beca1bf310ff7e7341b0e7fd5d4cb876160d4fb320ce76693a2"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/07-variables.md",
+      "bytes": 1364,
+      "sha256": "257b50b7f9aeb950dc458eb4d7574ede19ffdc4b3fa7794203f86f9bf456308a"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/08-test-planning.md",
+      "bytes": 1222,
+      "sha256": "1e6c6c78296610f370e4b72ce2a864bea1cddbc6c268c19654ed73988d9eccee"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/recovered-notes/09-development-setup-and-timeline.md",
+      "bytes": 1610,
+      "sha256": "b5a3ac68a7e6b8c20c56f3e496679e1ec54ef89a8ff418d16ff621859c320684"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/scripts/publish_private_github.py",
+      "bytes": 5662,
+      "sha256": "4ab8808d72b44fa31d95f2d0323dfe4ca79766ffe4d851e34374bee20f23a694"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/scripts/verify_backup.py",
+      "bytes": 2656,
+      "sha256": "256d7d92541a3ef2273739b1bd3bb7a6599bc7ee97996954a063cdad476d18e2"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/01-2026-09-07-set-up-nea.md",
+      "bytes": 719,
+      "sha256": "85da887b0cf23a0f903efedbdb616713db747031513c86d41ab8c0170d59121e"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/02-2026-08-06-pseudocode-for-login-and-registration.md",
+      "bytes": 1873,
+      "sha256": "fcdda6dade09d0a2060098f6551dae71e1589c78fbd66fff2b63dcadbf7cadd1"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/03-2026-08-06-login-interface-design.md",
+      "bytes": 2586,
+      "sha256": "b702236c8054a389a6b092fdb7d60bd6c69da4afc095497593a5e5f25ecc50dc"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/04-2026-08-08-test-plan-guidance.md",
+      "bytes": 937,
+      "sha256": "a5f7745d17299c391b4bd6386dfbc3ba09b20b0e7d76fb6ad06d5dd6439250ea"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/05-2026-08-05-streamlit-database-compatibility.md",
+      "bytes": 867,
+      "sha256": "fc76af5ee33cf77dcbb1e03b677343040264f074bd6b227b822c6d1c58b72d1f"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/06-2026-07-20-variables-section-guidance.md",
+      "bytes": 2506,
+      "sha256": "df217bd00a8cb339a178dd7bedcfebb31d214fb7c2515b08af63d70bb27cb4aa"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/07-2026-07-22-branch-starting-design-phase.md",
+      "bytes": 2056,
+      "sha256": "7475daa71855d46e907cca561a3d9e1336660249076ddbc4211b7da4784b1be5"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/08-2026-07-22-flow-chart-request.md",
+      "bytes": 2327,
+      "sha256": "5eb4d5f63dd5163d875abee1d9c415331d0e6463b493290ea6a5a83c8d2d044b"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/09-2026-07-22-remake-design-mockups.md",
+      "bytes": 1590,
+      "sha256": "1754601aba702104b0367ce60fae512fc869010997475ba235b98758d91060f2"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/10-2026-07-11-starting-design-phase.md",
+      "bytes": 2023,
+      "sha256": "b868a30d8b5214311e91bdde72933d3187f917d80dacefe3e792e6c21bc790c3"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/11-2026-06-27-features-section-example.md",
+      "bytes": 2060,
+      "sha256": "ed96a3f20f921e28cfe0679cae607fd40a25f05a8dc0546ccd0fa588049d65e6"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/12-2026-07-12-design-task-timeline.md",
+      "bytes": 1166,
+      "sha256": "d76f7e8be6cf37e8cfe6ffb76da1105525e372cea416372c7270b5914a68454d"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/13-2026-07-09-hardware-and-software-req.md",
+      "bytes": 1874,
+      "sha256": "ff2192ab993902a0f6f41b0ea03ae5992b5a73b2b98e3bac164523f37f4edf29"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/INDEX.md",
+      "bytes": 1995,
+      "sha256": "9232b56a7c77fa2d0c8c90a28c8e3dc6593820d12fe8c0f165a9ac8d75a814b3"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/current-backup-request.md",
+      "bytes": 327,
+      "sha256": "4509fca0dc09c4b00b1bdfd49e90e787db80c64a9d98a051b7dafd86249e2fd6"
+    },
+    {
+      "path": "chatgpt/prior-partial-backup/comp-sci-nea-backup/source-excerpts/visible-project-excerpts.json",
+      "bytes": 29272,
+      "sha256": "7233f4c9dfd148a7fd9aca2271a4115c6397e8bf0ea8cca83458a887a7dcf822"
+    },
+    {
+      "path": "database.py",
+      "bytes": 930,
+      "sha256": "955103618955fa9f212e1a06850d63b9bfb1939fa855c6dd632fe83584403270"
+    },
+    {
+      "path": "documents/analysis/archive/analysis-draft-1.pdf",
+      "bytes": 11359969,
+      "sha256": "130eddcef2d034a515ea8f3bf3faa3953f6f910f200d5221216df24a41bb3203"
+    },
+    {
+      "path": "documents/analysis/current/analysis.pdf",
+      "bytes": 11369531,
+      "sha256": "e3892996fe87a012192c0bdd488cab5cbb86188e9e62730db387b76a15fcf785"
+    },
+    {
+      "path": "documents/analysis/current/analysis.txt",
+      "bytes": 66071,
+      "sha256": "23b98176ba0a3979affca1cee2f833ae7c027f2f99e545000acc40cbb559ec5c"
+    },
+    {
+      "path": "documents/analysis/current/summary.md",
+      "bytes": 1871,
+      "sha256": "9e7cab14ed673277975c3d89768a4057c78134b552b509ab07bfbd7ac5447312"
+    },
+    {
+      "path": "documents/design/archive/design-first-draft-original.pdf",
+      "bytes": 9361347,
+      "sha256": "eba7dc4fc3fa87e03916e536c638d0b92d944a085756692e2f5d81167b71ee6f"
+    },
+    {
+      "path": "documents/design/archive/design-first-draft-v1.pdf",
+      "bytes": 5855,
+      "sha256": "0b2fc848f0e2731f56b73f9ae9f49a77ef2e7802f2cd2f2027b5c7c429d05a59"
+    },
+    {
+      "path": "documents/design/archive/design-first-draft-v2.pdf",
+      "bytes": 7535828,
+      "sha256": "626fff4e58c93b145b43659a95a01c453dd5f5756aef3e748510eabd58334894"
+    },
+    {
+      "path": "documents/design/current/design-first-draft.pdf",
+      "bytes": 7535828,
+      "sha256": "1f53fcff881ea7df262a936873e4c6221779575a4c8ef86bc623c5640e931be9"
+    },
+    {
+      "path": "documents/design/current/design-first-draft.txt",
+      "bytes": 57917,
+      "sha256": "614562bc888b6a8a80dbd9b8ab7757c2837e15f933d590b4fee66268fbd5265e"
+    },
+    {
+      "path": "documents/design/current/summary.md",
+      "bytes": 1696,
+      "sha256": "54b0dd42bfd81d01ef1a7974295f393d5a95791f7aee6662e6202f7ffab7aaab"
+    },
+    {
+      "path": "documents/design/flowcharts/administration-flowchart.jpg",
+      "bytes": 162760,
+      "sha256": "0397a89d52d54d3a07285d17c5967ab7d9e71568adb99b034e0d952e56830978"
+    },
+    {
+      "path": "documents/design/flowcharts/login-administration-flowchart.jpg",
+      "bytes": 147779,
+      "sha256": "cde1bf547129c7ae2ffee3e9b63a126721dd42d53c63fa8e94179d29983427d0"
+    },
+    {
+      "path": "documents/guidance/coursework-marksheet-sample.docx",
+      "bytes": 85118,
+      "sha256": "e254db1bafd578de1a6c410d6b1119dd25fbb2c4cce90f2dcfc60f607cfed968"
+    },
+    {
+      "path": "documents/guidance/coursework-sample.docx",
+      "bytes": 79731022,
+      "sha256": "4da28b093bf6f669dcc8cd93a9bb74bd3b214f00f08c97c473f90fa8068d0e8c"
+    },
+    {
+      "path": "documents/guidance/design-section-guidance.docx",
+      "bytes": 381079,
+      "sha256": "8eff4e8060273184900852e6cfd952407c7b977735bf799f8c13cc975cac7de2"
+    },
+    {
+      "path": "notes/next-actions.md",
+      "bytes": 831,
+      "sha256": "fcb03396d279a4896195cb5a2c024de8f2aa2ffd8bee0d3a7207d250291c2432"
+    },
+    {
+      "path": "references/ocr-a-level-computer-science-h446-specification.pdf",
+      "bytes": 11361264,
+      "sha256": "26ecb7e6fef215e636bcd09873cd6c5697eb8488b71b27ad03bf4bd3fba7dd41"
+    },
+    {
+      "path": "source-bundles/COMP-SCI-NEA-partial-backup-2026-09-07.bundle",
+      "bytes": 47893,
+      "sha256": "0e4e5866512a942919b0085eca8770dc2bad4643400a1f14c8d92665dc94d1d0"
+    },
+    {
+      "path": "source-bundles/COMP-SCI-NEA-partial-backup-2026-09-07.zip",
+      "bytes": 60409,
+      "sha256": "68b504fc7d7b7863c94990d1eefaed42e5d313fb5fe9984a430da5a88a4feb36"
+    },
+    {
+      "path": "source-bundles/SHA256SUMS.txt",
+      "bytes": 222,
+      "sha256": "8354ed88854dbbb0a710c56587995b5caf59b837f86cf494b05798a777e840b1"
+    },
+    {
+      "path": "source-bundles/pawmatch-admin-dashboard-streamlit-app.zip",
+      "bytes": 91350,
+      "sha256": "1b2da6a5080cfae01438a9d94309472d4f16e270d9cd9e081f64477c59191604"
+    },
+    {
+      "path": "test/loginpagetest.py",
+      "bytes": 10699,
+      "sha256": "781a974f1f9bacafb10f123e1f11ff22edb39e83a96a00c508c50dcb71483611"
+    },
+    {
+      "path": "test/registrationtest.py",
+      "bytes": 10063,
+      "sha256": "ca8f8b03aa0d27bdf6af85dc20881c423da532c6f9482f0971efff2fc6d14147"
+    },
+    {
+      "path": "tools/build_file_inventory.py",
+      "bytes": 1116,
+      "sha256": "b2b06e778a550a79d595afce53768d774c6e91d12b66b3cce565f8a75dfb9e5b"
+    },
+    {
+      "path": "tools/chatgpt_transcript_receiver.py",
+      "bytes": 2290,
+      "sha256": "5c844e999bffe0f2da166c44859f618bc3d780d1498f01b988bbffcddfa0268f"
+    }
+  ]
+}

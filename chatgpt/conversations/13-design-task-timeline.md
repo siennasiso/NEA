@@ -1,0 +1,121 @@
+- link "Skip to content":
+  - /url: "#main"
+- banner:
+  - button "Open sidebar":
+    - generic: Open sidebar
+  - link "Open COMP SCI NEA project":
+    - /url: /g/g-p-6a21ce7dbae481919fdaaad3361a5c6d-comp-sci-nea/project
+    - img "Default color, black in light mode, white in dark mode Shared folder"
+    - generic: COMP SCI NEA
+  - generic "shaan sisodia": SS
+  - generic "shaan sisodia": SS
+  - generic: "+1"
+  - button "Share chat":
+  - button "More":
+- main:
+  - separator "Sun, Jul 12 at 12:52 PM":
+    - generic: Sun, Jul 12 at 12:52 PM
+  - heading "You said:" [level=4]
+  - generic: Design - Sienna Task Status Sienna Due date Day Introduction Not started Jun 21, 2026 22nd June Login/ Registration Page Not started Date Admin Page Not started Date Main Menu/ Dashboard Not started Date Animal Viewing Page Not started Date Questionnaire Page Not started Date i need all these sections done by 28th august, bear in mind i am working the whole of august so will have barely any time to complete so want most done in july
+  - button "Show more":
+    - generic: Show more
+  - group "Your message actions":
+    - button "Copy message":
+  - heading "ChatGPT said:" [level=4]
+  - paragraph:
+    - text: Because you will have very little time during August, aim to complete
+    - strong: all first drafts by 31 July
+    - text: ", leaving August only for improvements, corrections and final formatting."
+  - table:
+    - rowgroup:
+      - row "Design task Status Due date Day":
+        - columnheader "Design task"
+        - columnheader "Status"
+        - columnheader "Due date"
+        - columnheader "Day"
+    - rowgroup:
+      - row "Introduction Not started 14 July 2026 Tuesday":
+        - cell "Introduction"
+        - cell "Not started"
+        - cell "14 July 2026"
+        - cell "Tuesday"
+      - row "Login / Registration Page Not started 18 July 2026 Saturday":
+        - cell "Login / Registration Page"
+        - cell "Not started"
+        - cell "18 July 2026"
+        - cell "Saturday"
+      - row "Admin Page Not started 23 July 2026 Thursday":
+        - cell "Admin Page"
+        - cell "Not started"
+        - cell "23 July 2026"
+        - cell "Thursday"
+      - row "Main Menu / Dashboard Not started 26 July 2026 Sunday":
+        - cell "Main Menu / Dashboard"
+        - cell "Not started"
+        - cell "26 July 2026"
+        - cell "Sunday"
+      - row "Animal Viewing Page Not started 29 July 2026 Wednesday":
+        - cell "Animal Viewing Page"
+        - cell "Not started"
+        - cell "29 July 2026"
+        - cell "Wednesday"
+      - row "Questionnaire Page Not started 2 August 2026 Sunday":
+        - cell "Questionnaire Page"
+        - cell "Not started"
+        - cell "2 August 2026"
+        - cell "Sunday"
+      - row "Review and improve all designs Not started 9 August 2026 Sunday":
+        - cell "Review and improve all designs"
+        - cell "Not started"
+        - cell "9 August 2026"
+        - cell "Sunday"
+      - row "Add annotations and links to success criteria Not started 16 August 2026 Sunday":
+        - cell "Add annotations and links to success criteria"
+        - cell "Not started"
+        - cell "16 August 2026"
+        - cell "Sunday"
+      - row "Final corrections and formatting Not started 23 August 2026 Sunday":
+        - cell "Final corrections and formatting"
+        - cell "Not started"
+        - cell "23 August 2026"
+        - cell "Sunday"
+      - row "Final design section completed Not started 28 August 2026 Friday":
+        - cell "Final design section completed"
+        - cell "Not started"
+        - cell "28 August 2026"
+        - cell "Friday"
+  - button "Copy table":
+  - heading "Recommended working pattern" [level=3]
+  - paragraph: "Try to complete each page using the same structure:"
+  - list:
+    - paragraph: Explain the purpose of the page.
+    - paragraph: Include a labelled or annotated interface design.
+    - paragraph: Explain each important component.
+    - paragraph: Link design decisions to your research, client interview and success criteria.
+    - paragraph: Include validation and navigation where relevant.
+    - paragraph: Explain what data enters or leaves the page.
+  - paragraph:
+    - text: By
+    - strong: 2 August
+    - text: ", every main page should be designed. The remaining weeks are deliberately lighter so that they remain manageable while you are working throughout August. Your original Introduction deadline of"
+    - strong: 21 June 2026
+    - text: has already passed, so that should be completed first.
+  - group "Response actions":
+    - button "Copy response":
+    - button "Rate response":
+    - button "More actions":
+  - generic: ChatGPT can make mistakes. Check important info.
+  - button:
+  - paragraph: This is a conversation between ChatGPT and shaan sisodia. Responding will create a branch.
+  - button "Add files and more":
+  - textbox "Chat with ChatGPT" [active]:
+    - paragraph:
+      - link "GitHub":
+        - /url: /plugins/plugin_connector_1p_1a69035c238881919c4190932b2df699?plugin_detail_origin=inline_selection_pill
+        - generic: GitHub
+  - button "Send prompt":
+  - button
+  - button
+  - button
+- alert
+- status
