@@ -21,7 +21,11 @@ def hash_file(path: Path) -> str:
 records = []
 for path in sorted(ROOT.rglob("*")):
     relative = path.relative_to(ROOT)
-    if not path.is_file() or any(part in EXCLUDED_PARTS for part in relative.parts):
+    if (
+        not path.is_file()
+        or path.suffix == ".db"
+        or any(part in EXCLUDED_PARTS for part in relative.parts)
+    ):
         continue
     if relative == OUTPUT.relative_to(ROOT):
         continue

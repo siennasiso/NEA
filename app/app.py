@@ -53,7 +53,7 @@ else:
                     <p class="eyebrow" style="color:#d93679;">Welcome back</p>
                     <h2 class="form-title">Log in to your account</h2>
                     <p class="form-copy">
-                        Enter the email address and password used when you registered.
+                        Enter your email address or administrator username and password.
                     </p>
                     """,
                     unsafe_allow_html=True,
@@ -63,17 +63,21 @@ else:
 
                 with st.form("login_form", clear_on_submit=False, border=False):
                     with st.container(
-                        key="login_email_error" if "email" in previous_errors else "login_email_field"
-                    ):
-                        email = st.text_input(
-                            "Email address",
-                            placeholder="name@example.com",
-                            key="login_email",
-                            autocomplete="email",
+                        key=(
+                            "login_identifier_error"
+                            if "identifier" in previous_errors
+                            else "login_identifier_field"
                         )
-                        if "email" in previous_errors:
+                    ):
+                        identifier = st.text_input(
+                            "Email address or username",
+                            placeholder="name@example.com or admin123",
+                            key="login_identifier",
+                            autocomplete="username",
+                        )
+                        if "identifier" in previous_errors:
                             st.markdown(
-                                f'<p class="field-error">{previous_errors["email"]}</p>',
+                                f'<p class="field-error">{previous_errors["identifier"]}</p>',
                                 unsafe_allow_html=True,
                             )
 
@@ -105,12 +109,12 @@ else:
                     )
 
                 if submitted:
-                    errors, cleaned_email = validate_login(email, password)
+                    errors, cleaned_identifier = validate_login(identifier, password)
                     if errors:
                         st.session_state.login_errors = errors
                         st.rerun()
 
-                    user = authenticate_user(cleaned_email, password)
+                    user = authenticate_user(cleaned_identifier, password)
                     if user is None:
                         st.session_state.login_errors = {
                             "password": "The email address or password is incorrect."

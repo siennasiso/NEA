@@ -12,6 +12,7 @@ from typing import Any
 
 DATABASE_PATH = Path(__file__).resolve().parent / "pawmatch.db"
 EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+USERNAME_PATTERN = re.compile(r"^[A-Za-z0-9_]{3,30}$")
 
 # These values are stored with each password hash so they can be changed later.
 _SCRYPT_N = 2**14
@@ -35,6 +36,7 @@ def initialise_database() -> None:
             CREATE TABLE IF NOT EXISTS users (
                 user_id       INTEGER PRIMARY KEY AUTOINCREMENT,
                 name          TEXT NOT NULL,
+                username      TEXT COLLATE NOCASE,
                 email         TEXT NOT NULL COLLATE NOCASE UNIQUE,
                 age           INTEGER NOT NULL CHECK (age BETWEEN 18 AND 120),
                 password_hash TEXT NOT NULL,
@@ -42,6 +44,23 @@ def initialise_database() -> None:
                               CHECK (role IN ('user', 'admin')),
                 created_at    TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             )
+            """
+        )
+        # Existing PawMatch databases pre-date username login. SQLite cannot add
+        # a UNIQUE column in-place, so add the nullable column and enforce
+        # uniqueness with a partial index.
+        columns = {
+            row["name"] for row in connection.execute("PRAGMA table_info(users)")
+        }
+        if "username" not in columns:
+            connection.execute(
+                "ALTER TABLE users ADD COLUMN username TEXT COLLATE NOCASE"
+            )
+        connection.execute(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_users_username
+            ON users (username COLLATE NOCASE)
+            WHERE username IS NOT NULL
             """
         )
 
@@ -54,6 +73,11 @@ def normalise_name(name: str) -> str:
 def normalise_email(email: str) -> str:
     """Make email comparison consistent."""
     return email.strip().lower()
+
+
+def normalise_username(username: str) -> str:
+    """Make username comparison consistent."""
+    return username.strip().lower()
 
 
 def validate_registration(
@@ -119,20 +143,25 @@ def validate_registration(
     return errors, cleaned_values
 
 
-def validate_login(email: str, password: str) -> tuple[dict[str, str], str]:
-    """Validate the main login inputs."""
-    cleaned_email = normalise_email(email)
+def validate_login(identifier: str, password: str) -> tuple[dict[str, str], str]:
+    """Validate an email address or username plus password."""
+    cleaned_identifier = identifier.strip().lower()
     errors: dict[str, str] = {}
 
-    if not cleaned_email:
-        errors["email"] = "Enter your email address."
-    elif EMAIL_PATTERN.fullmatch(cleaned_email) is None:
-        errors["email"] = "Enter a valid email address."
+    if not cleaned_identifier:
+        errors["identifier"] = "Enter your email address or username."
+    elif "@" in cleaned_identifier:
+        if EMAIL_PATTERN.fullmatch(cleaned_identifier) is None:
+            errors["identifier"] = "Enter a valid email address."
+    elif USERNAME_PATTERN.fullmatch(cleaned_identifier) is None:
+        errors["identifier"] = (
+            "A username must contain 3-30 letters, numbers or underscores."
+        )
 
     if not password:
         errors["password"] = "Enter your password."
 
-    return errors, cleaned_email
+    return errors, cleaned_identifier
 
 
 def hash_password(password: str) -> str:
@@ -192,16 +221,17 @@ def create_user(name: str, email: str, age: int, password: str) -> tuple[bool, s
         return False, "The database is unavailable. Please try again."
 
 
-def authenticate_user(email: str, password: str) -> dict[str, Any] | None:
+def authenticate_user(identifier: str, password: str) -> dict[str, Any] | None:
     """Return safe user details when the supplied login is correct."""
+    cleaned_identifier = identifier.strip().lower()
     with get_connection() as connection:
         row = connection.execute(
             """
-            SELECT user_id, name, email, password_hash, role
+            SELECT user_id, name, username, email, password_hash, role
             FROM users
-            WHERE email = ?
+            WHERE email = ? OR username = ? COLLATE NOCASE
             """,
-            (normalise_email(email),),
+            (cleaned_identifier, cleaned_identifier),
         ).fetchone()
 
     if row is None or not verify_password(password, row["password_hash"]):
@@ -210,22 +240,33 @@ def authenticate_user(email: str, password: str) -> dict[str, Any] | None:
     return {
         "user_id": row["user_id"],
         "name": row["name"],
+        "username": row["username"],
         "email": row["email"],
         "role": row["role"],
     }
 
 
-def create_admin_user(name: str, email: str, age: int, password: str) -> tuple[bool, str]:
+def create_admin_user(
+    name: str,
+    email: str,
+    age: int,
+    password: str,
+    username: str | None = None,
+) -> tuple[bool, str]:
     """Create an administrator account during one-time project setup."""
+    cleaned_username = normalise_username(username or "") or None
+    if cleaned_username is not None and USERNAME_PATTERN.fullmatch(cleaned_username) is None:
+        return False, "Use 3-30 letters, numbers or underscores for the username."
     try:
         with get_connection() as connection:
             connection.execute(
                 """
-                INSERT INTO users (name, email, age, password_hash, role)
-                VALUES (?, ?, ?, ?, 'admin')
+                INSERT INTO users (name, username, email, age, password_hash, role)
+                VALUES (?, ?, ?, ?, ?, 'admin')
                 """,
                 (
                     normalise_name(name),
+                    cleaned_username,
                     normalise_email(email),
                     int(age),
                     hash_password(password),
@@ -236,7 +277,70 @@ def create_admin_user(name: str, email: str, age: int, password: str) -> tuple[b
         return False, "Enter a valid age for the administrator account."
     except sqlite3.IntegrityError as error:
         if "users.email" in str(error) or "UNIQUE constraint failed" in str(error):
-            return False, "An account already exists for this email address."
+            return False, "An account already exists for this email address or username."
         return False, "The administrator account could not be created because the data was invalid."
     except sqlite3.Error:
         return False, "The database is unavailable. Please try again."
+
+
+def ensure_demo_admin(
+    username: str = "admin123",
+    password: str = "password123",
+) -> tuple[int, bool]:
+    """Create or refresh the documented local demo administrator.
+
+    This deliberately weak credential is for coursework demonstration only.
+    Re-running setup replaces only this demo account's password and role.
+    """
+    initialise_database()
+    cleaned_username = normalise_username(username)
+    if USERNAME_PATTERN.fullmatch(cleaned_username) is None:
+        raise ValueError("The demo administrator username is invalid.")
+
+    with get_connection() as connection:
+        existing = connection.execute(
+            """
+            SELECT user_id
+            FROM users
+            WHERE username = ? COLLATE NOCASE OR email = ? COLLATE NOCASE
+            ORDER BY CASE WHEN username = ? COLLATE NOCASE THEN 0 ELSE 1 END
+            LIMIT 1
+            """,
+            (cleaned_username, "admin123@pawmatch.local", cleaned_username),
+        ).fetchone()
+        new_hash = hash_password(password)
+        if existing is None:
+            cursor = connection.execute(
+                """
+                INSERT INTO users (
+                    name, username, email, age, password_hash, role
+                )
+                VALUES (?, ?, ?, ?, ?, 'admin')
+                """,
+                (
+                    "PawMatch Administrator",
+                    cleaned_username,
+                    "admin123@pawmatch.local",
+                    18,
+                    new_hash,
+                ),
+            )
+            return int(cursor.lastrowid), True
+
+        user_id = int(existing["user_id"])
+        connection.execute(
+            """
+            UPDATE users
+            SET name = ?, username = ?, email = ?, age = ?, password_hash = ?, role = 'admin'
+            WHERE user_id = ?
+            """,
+            (
+                "PawMatch Administrator",
+                cleaned_username,
+                "admin123@pawmatch.local",
+                18,
+                new_hash,
+                user_id,
+            ),
+        )
+        return user_id, False

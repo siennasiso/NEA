@@ -9,6 +9,7 @@ def main() -> None:
     initialise_database()
     print("\nCreate a PawMatch administrator account\n")
     name = input("Full name: ").strip()
+    username = input("Username (3-30 letters, numbers or underscores): ").strip()
     email = input("Email address: ").strip()
     try:
         age = int(input("Age: ").strip())
@@ -25,7 +26,11 @@ def main() -> None:
         return
 
     success, message = create_admin_user(
-        cleaned["name"], cleaned["email"], int(cleaned["age"]), cleaned["password"]
+        cleaned["name"],
+        cleaned["email"],
+        int(cleaned["age"]),
+        cleaned["password"],
+        username=username,
     )
     print("\nAdministrator account created." if success else f"\n{message}")
 

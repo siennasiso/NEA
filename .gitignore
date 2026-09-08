@@ -5,6 +5,6 @@ __pycache__/
 venv/
 data/*.db
 app/data/*.db
+/app/pawmatch.db
 app/uploads/
 *.log
-
