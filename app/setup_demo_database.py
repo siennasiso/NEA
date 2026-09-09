@@ -2,11 +2,13 @@
 
 from pawmatch_animals import initialise_animals_table, seed_demo_animals
 from pawmatch_auth import DATABASE_PATH, ensure_demo_admin, initialise_database
+from pawmatch_matching import initialise_matching_tables
 
 
 def setup_demo_database() -> dict[str, int | bool | str]:
     initialise_database()
     initialise_animals_table()
+    initialise_matching_tables()
     admin_id, admin_created = ensure_demo_admin()
     animals_added = seed_demo_animals()
     return {

@@ -13,9 +13,9 @@ python3 setup_demo_database.py
 This command is safe to repeat. It:
 
 1. creates or upgrades the `users` table;
-2. creates the `animals` table and indexes;
+2. creates the `animals`, `questionnaire_responses` and `match_results` tables and indexes;
 3. creates or refreshes the demonstration administrator;
-4. adds four demonstration animals only when the animal table is empty.
+4. adds any missing records from the 13-animal demonstration dataset.
 
 Demo administrator:
 
@@ -45,6 +45,8 @@ The `users` table contains:
 
 `pawmatch_animals.py` owns animal validation and CRUD operations. The `animals` table stores the public profile, matching requirements, adoption status, image URL and timestamps. Check constraints reject unsupported values even if invalid data bypasses the interface.
 
+`pawmatch_matching.py` owns questionnaire validation, response storage and match calculation. `questionnaire_responses` stores the seven submitted answers. `match_results` links each response to each available animal and records its compatibility, category and explanations. See `MATCHING_ALGORITHM.md` for the precise weights and ranking rules.
+
 ## View the data safely
 
 These commands deliberately omit password hashes:
@@ -53,6 +55,8 @@ These commands deliberately omit password hashes:
 python3 view_database.py
 python3 view_database.py users
 python3 view_database.py animals
+python3 view_database.py responses
+python3 view_database.py matches
 ```
 
 You can also inspect the file with DB Browser for SQLite, or use the SQLite command line:
@@ -98,6 +102,7 @@ record = {
     "size": "Medium",
     "activity_level": "High",
     "home_type": "House",
+    "minimum_housing_level": 2,
     "garden_required": True,
     "child_friendly": "Older children only",
     "other_pets": "Depends",

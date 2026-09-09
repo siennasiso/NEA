@@ -6,6 +6,7 @@ import html
 
 import streamlit as st
 
+from pawmatch_matching import fetch_latest_matches, fetch_latest_response
 from pawmatch_style import apply_sidebar_dashboard_style
 
 st.set_page_config(
@@ -36,12 +37,24 @@ def log_out() -> None:
         "questionnaire_progress",
         "questionnaire_complete",
         "match_count",
+        "questionnaire_answers",
+        "questionnaire_step",
+        "latest_response_id",
     ):
         st.session_state.pop(state_key, None)
     st.switch_page("app.py")
 
 
-# These values can later be loaded from the users/questionnaire tables after login.
+# Restore completed questionnaire state when a returning user signs in again.
+if "questionnaire_complete" not in st.session_state:
+    latest_response = fetch_latest_response(int(st.session_state.user_id))
+    if latest_response is not None:
+        st.session_state.questionnaire_complete = True
+        st.session_state.questionnaire_progress = 100
+        st.session_state.match_count = min(
+            5, len(fetch_latest_matches(int(st.session_state.user_id)))
+        )
+
 full_name = str(st.session_state.get("user_name", "PawMatch user")).strip()
 first_name = full_name.split()[0] if full_name else "there"
 email = str(st.session_state.get("user_email", ""))

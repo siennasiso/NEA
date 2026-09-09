@@ -20,9 +20,19 @@ _SCRYPT_R = 8
 _SCRYPT_P = 1
 
 
+class _ClosingConnection(sqlite3.Connection):
+    """Commit or roll back a context block, then close its SQLite connection."""
+
+    def __exit__(self, exc_type: object, exc_value: object, traceback: object) -> bool:
+        """Complete the transaction and release the database file handle."""
+        suppress = super().__exit__(exc_type, exc_value, traceback)
+        self.close()
+        return bool(suppress)
+
+
 def get_connection() -> sqlite3.Connection:
     """Open a database connection and return rows by column name."""
-    connection = sqlite3.connect(DATABASE_PATH, timeout=5)
+    connection = sqlite3.connect(DATABASE_PATH, timeout=5, factory=_ClosingConnection)
     connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
     return connection

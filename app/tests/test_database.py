@@ -60,9 +60,10 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(account["role"], "user")
 
     def test_demo_animals_are_added_only_once(self) -> None:
-        self.assertEqual(seed_demo_animals(), 4)
+        self.assertEqual(seed_demo_animals(), 13)
         self.assertEqual(seed_demo_animals(), 0)
-        self.assertEqual(len(fetch_animals()), 4)
+        self.assertEqual(len(fetch_animals()), 13)
+        self.assertGreaterEqual(len(fetch_animals(status="Available")), 10)
 
 
 if __name__ == "__main__":

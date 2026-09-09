@@ -32,8 +32,13 @@
     },
     {
       "path": "app/DATABASE_GUIDE.md",
-      "bytes": 4763,
-      "sha256": "86718e7eb9a0a5c0ae66ddd1472e2ac506025610835c53093945b9746eec996c"
+      "bytes": 5256,
+      "sha256": "ea6945e84cd34e0764b95a3f179c59d68a1c29970cb1f906cfda0f4ed13c3792"
+    },
+    {
+      "path": "app/MATCHING_ALGORITHM.md",
+      "bytes": 3634,
+      "sha256": "229b0736561d7863e683332f22233ed26256c32513b6aa63086cbb66a5a538cd"
     },
     {
       "path": "app/README.md",
@@ -57,8 +62,8 @@
     },
     {
       "path": "app/pages/1_Home.py",
-      "bytes": 11343,
-      "sha256": "1de9f81c8a783c9341321d9b3e8b1d4ee5c41b5481abf49181b3411ec07eaf09"
+      "bytes": 11904,
+      "sha256": "5107568201e0fd2aa1d44ce1ce8b797bd3fcf46e8563e35c17d73c9404da52db"
     },
     {
       "path": "app/pages/2_Registration.py",
@@ -67,8 +72,8 @@
     },
     {
       "path": "app/pages/3_Questionnaire.py",
-      "bytes": 803,
-      "sha256": "5f4ac58010fef0993e8f7b8c06150aa5f0c80b204b91d247b8de350894ada68c"
+      "bytes": 7330,
+      "sha256": "09093779b56c9fe19ebcdcf3d1d1aa3f78affb3a4c06913aa07d9004acb2c0d8"
     },
     {
       "path": "app/pages/4_Browse_Animals.py",
@@ -82,8 +87,8 @@
     },
     {
       "path": "app/pages/6_My_Matches.py",
-      "bytes": 1194,
-      "sha256": "4a4753220098e5c27c2cd6193c44d50bdffc1347dac456e3168e86a8c37c4c4c"
+      "bytes": 3002,
+      "sha256": "531256c54f88d9ef7ac8a41ca168184f7b5e5c7a6ed3da580ebab7ed72530653"
     },
     {
       "path": "app/pages/7_Admin_Dashboard.py",
@@ -92,13 +97,18 @@
     },
     {
       "path": "app/pawmatch_animals.py",
-      "bytes": 16851,
-      "sha256": "ad5409df58a80c821f1015618e27ac556d3afecace3b7bee5f146ec2a443bf1b"
+      "bytes": 24909,
+      "sha256": "ef50316dbb730e348d25885543cd4d0118be0351dbf8c151253b9d1b67213d96"
     },
     {
       "path": "app/pawmatch_auth.py",
-      "bytes": 12346,
-      "sha256": "8327dce796fe3588e670e461fc839a27ffe14f29f8c58ab6826be98d4b34eb54"
+      "bytes": 12788,
+      "sha256": "a3a9413b5117773f6fad8c273494a3863d45e3061af1461265b8053b16814fc3"
+    },
+    {
+      "path": "app/pawmatch_matching.py",
+      "bytes": 12813,
+      "sha256": "14e0cf3c49df8c2a9cd3175ba04262ac8295c6e58c0a2d365c22946e14fe4b8a"
     },
     {
       "path": "app/pawmatch_style.py",
@@ -112,18 +122,23 @@
     },
     {
       "path": "app/setup_demo_database.py",
-      "bytes": 1118,
-      "sha256": "146c57c24f5d0a1955d1949ac15f35da381902fac9dd27c903a98ee14f1214ca"
+      "bytes": 1208,
+      "sha256": "f9a6c567a0c82a8524224ff54d42c750a8c406ec6181d3e7b7b8e3d5972cf436"
     },
     {
       "path": "app/tests/test_database.py",
-      "bytes": 2393,
-      "sha256": "84afa5ad17bbd4c81e9f1fea5b22972feb1a8e5a68207f2418bb4dcd316cf83b"
+      "bytes": 2471,
+      "sha256": "f0ecb6c09fc6d52b3c08fb3e9441643da4600d09c9df09cafed38041345e4a1e"
+    },
+    {
+      "path": "app/tests/test_matching.py",
+      "bytes": 4813,
+      "sha256": "f07b6e6de52e4e2a978c41f028bc451ec4c61896626a82e925d619d26352e4a3"
     },
     {
       "path": "app/view_database.py",
-      "bytes": 1926,
-      "sha256": "0f261e29180ea56aa0431c4e0d636d71b08927a0bcc98a5d8ee4b795eda0dd4d"
+      "bytes": 3676,
+      "sha256": "ff9be62123eadd0706afb026f062c04ebaa58b201ed8bd524f9bc663ebdc8dff"
     },
     {
       "path": "chatgpt/README.md",

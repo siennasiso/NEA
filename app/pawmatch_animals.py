@@ -43,6 +43,8 @@ def initialise_animals_table() -> None:
                                    CHECK (activity_level IN ('Low', 'Moderate', 'High')),
                 home_type          TEXT NOT NULL
                                    CHECK (home_type IN ('Flat or apartment', 'House', 'Either')),
+                minimum_housing_level INTEGER NOT NULL DEFAULT 1
+                                   CHECK (minimum_housing_level BETWEEN 1 AND 3),
                 garden_required    INTEGER NOT NULL DEFAULT 0
                                    CHECK (garden_required IN (0, 1)),
                 child_friendly     TEXT NOT NULL
@@ -66,6 +68,27 @@ def initialise_animals_table() -> None:
             )
             """
         )
+        columns = {
+            row["name"] for row in connection.execute("PRAGMA table_info(animals)")
+        }
+        if "minimum_housing_level" not in columns:
+            connection.execute(
+                """
+                ALTER TABLE animals
+                ADD COLUMN minimum_housing_level INTEGER NOT NULL DEFAULT 1
+                CHECK (minimum_housing_level BETWEEN 1 AND 3)
+                """
+            )
+            connection.execute(
+                """
+                UPDATE animals
+                SET minimum_housing_level = CASE
+                    WHEN home_type = 'Flat or apartment' OR home_type = 'Either' THEN 1
+                    WHEN size = 'Large' THEN 3
+                    ELSE 2
+                END
+                """
+            )
         connection.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_animals_species_status
@@ -84,6 +107,13 @@ def _clean_text(value: Any) -> str:
     return " ".join(str(value or "").strip().split())
 
 
+def _default_housing_level(home_type: str, size: str) -> int:
+    """Derive the design's 1-3 housing requirement for older form records."""
+    if home_type in {"Flat or apartment", "Either"}:
+        return 1
+    return 3 if size == "Large" else 2
+
+
 def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, Any]]:
     """Validate an animal record and return field errors plus cleaned values."""
     cleaned: dict[str, Any] = {
@@ -95,6 +125,7 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
         "size": _clean_text(values.get("size")),
         "activity_level": _clean_text(values.get("activity_level")),
         "home_type": _clean_text(values.get("home_type")),
+        "minimum_housing_level": values.get("minimum_housing_level"),
         "garden_required": bool(values.get("garden_required", False)),
         "child_friendly": _clean_text(values.get("child_friendly")),
         "other_pets": _clean_text(values.get("other_pets")),
@@ -153,6 +184,18 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
         if cleaned[field] not in valid_options:
             errors[field] = messages[field]
 
+    if cleaned["minimum_housing_level"] is None:
+        cleaned["minimum_housing_level"] = _default_housing_level(
+            cleaned["home_type"], cleaned["size"]
+        )
+    try:
+        cleaned["minimum_housing_level"] = int(cleaned["minimum_housing_level"])
+    except (TypeError, ValueError):
+        errors["minimum_housing_level"] = "Select a housing level from 1 to 3."
+    else:
+        if cleaned["minimum_housing_level"] not in {1, 2, 3}:
+            errors["minimum_housing_level"] = "Select a housing level from 1 to 3."
+
     try:
         cleaned["max_hours_alone"] = int(cleaned["max_hours_alone"])
     except (TypeError, ValueError):
@@ -184,6 +227,7 @@ def _database_values(animal: dict[str, Any]) -> tuple[Any, ...]:
         animal["size"],
         animal["activity_level"],
         animal["home_type"],
+        animal["minimum_housing_level"],
         int(animal["garden_required"]),
         animal["child_friendly"],
         animal["other_pets"],
@@ -202,10 +246,11 @@ def create_animal(animal: dict[str, Any]) -> tuple[bool, int | None, str]:
                 """
                 INSERT INTO animals (
                     name, species, breed, age_years, sex, size, activity_level,
-                    home_type, garden_required, child_friendly, other_pets,
+                    home_type, minimum_housing_level, garden_required,
+                    child_friendly, other_pets,
                     experience_level, max_hours_alone, status, description, image_url
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 _database_values(animal),
             )
@@ -224,8 +269,8 @@ def update_animal(animal_id: int, animal: dict[str, Any]) -> tuple[bool, str]:
                 """
                 UPDATE animals
                 SET name = ?, species = ?, breed = ?, age_years = ?, sex = ?,
-                    size = ?, activity_level = ?, home_type = ?, garden_required = ?,
-                    child_friendly = ?, other_pets = ?, experience_level = ?,
+                    size = ?, activity_level = ?, home_type = ?, minimum_housing_level = ?,
+                    garden_required = ?, child_friendly = ?, other_pets = ?, experience_level = ?,
                     max_hours_alone = ?, status = ?, description = ?, image_url = ?,
                     updated_at = CURRENT_TIMESTAMP
                 WHERE animal_id = ?
@@ -320,14 +365,14 @@ def get_admin_summary() -> dict[str, int]:
 def profile_completion(animal: dict[str, Any]) -> int:
     required_fields: Iterable[str] = (
         "name", "species", "breed", "age_years", "sex", "size",
-        "activity_level", "home_type", "child_friendly", "other_pets",
+        "activity_level", "home_type", "minimum_housing_level", "child_friendly", "other_pets",
         "experience_level", "max_hours_alone", "status", "description", "image_url",
     )
     completed = sum(
         1 for field in required_fields
         if animal.get(field) is not None and str(animal.get(field)).strip() != ""
     )
-    return round((completed / 15) * 100)
+    return round((completed / 16) * 100)
 
 
 def format_age(age_years: Any) -> str:
@@ -341,17 +386,15 @@ def format_age(age_years: Any) -> str:
 
 
 def seed_demo_animals() -> int:
-    """Insert optional sample records only when the table is empty."""
+    """Insert missing design-aligned sample animals without creating duplicates."""
     initialise_animals_table()
-    with get_connection() as connection:
-        if int(connection.execute("SELECT COUNT(*) FROM animals").fetchone()[0]):
-            return 0
 
     records = [
         {
             "name": "Luna", "species": "Dog", "breed": "Labrador cross",
             "age_years": 3, "sex": "Female", "size": "Large",
             "activity_level": "High", "home_type": "House", "garden_required": True,
+            "minimum_housing_level": 3,
             "child_friendly": "Yes", "other_pets": "Depends",
             "experience_level": "Some experience", "max_hours_alone": 4,
             "status": "Available",
@@ -362,6 +405,7 @@ def seed_demo_animals() -> int:
             "name": "Milo", "species": "Cat", "breed": "Domestic shorthair",
             "age_years": 5, "sex": "Male", "size": "Medium",
             "activity_level": "Moderate", "home_type": "Either", "garden_required": False,
+            "minimum_housing_level": 1,
             "child_friendly": "Older children only", "other_pets": "No",
             "experience_level": "First-time owner", "max_hours_alone": 7,
             "status": "Reserved",
@@ -372,6 +416,7 @@ def seed_demo_animals() -> int:
             "name": "Poppy", "species": "Rabbit", "breed": "Mini lop",
             "age_years": 2, "sex": "Female", "size": "Small",
             "activity_level": "Moderate", "home_type": "Either", "garden_required": False,
+            "minimum_housing_level": 1,
             "child_friendly": "Yes", "other_pets": "Depends",
             "experience_level": "Some experience", "max_hours_alone": 5,
             "status": "Available",
@@ -382,18 +427,132 @@ def seed_demo_animals() -> int:
             "name": "Archie", "species": "Dog", "breed": "Cocker spaniel",
             "age_years": 7, "sex": "Male", "size": "Medium",
             "activity_level": "Moderate", "home_type": "House", "garden_required": True,
+            "minimum_housing_level": 2,
             "child_friendly": "Yes", "other_pets": "Yes",
             "experience_level": "First-time owner", "max_hours_alone": 4,
             "status": "Adopted",
             "description": "Archie is a friendly older dog who enjoys steady walks, human company and relaxing in a comfortable home.",
             "image_url": "https://example.com/archie.jpg",
         },
+        {
+            "name": "Bella", "species": "Cat", "breed": "British shorthair cross",
+            "age_years": 4, "sex": "Female", "size": "Small",
+            "activity_level": "Low", "home_type": "Flat or apartment",
+            "minimum_housing_level": 1, "garden_required": False,
+            "child_friendly": "Yes", "other_pets": "Depends",
+            "experience_level": "First-time owner", "max_hours_alone": 8,
+            "status": "Available",
+            "description": "Bella is a gentle indoor cat who enjoys quiet company, soft beds and short play sessions each day.",
+            "image_url": "",
+        },
+        {
+            "name": "Teddy", "species": "Rabbit", "breed": "Lionhead",
+            "age_years": 1.5, "sex": "Male", "size": "Small",
+            "activity_level": "Low", "home_type": "Either",
+            "minimum_housing_level": 1, "garden_required": False,
+            "child_friendly": "Older children only", "other_pets": "No",
+            "experience_level": "Some experience", "max_hours_alone": 6,
+            "status": "Available",
+            "description": "Teddy is a shy rabbit who needs patient handling, a roomy enclosure and calm daily interaction.",
+            "image_url": "",
+        },
+        {
+            "name": "Nala", "species": "Dog", "breed": "Staffordshire bull terrier cross",
+            "age_years": 2, "sex": "Female", "size": "Medium",
+            "activity_level": "High", "home_type": "House",
+            "minimum_housing_level": 2, "garden_required": True,
+            "child_friendly": "Older children only", "other_pets": "Depends",
+            "experience_level": "Experienced owner", "max_hours_alone": 3,
+            "status": "Available",
+            "description": "Nala is a bright and energetic dog who needs consistent training, active walks and careful introductions.",
+            "image_url": "",
+        },
+        {
+            "name": "Simba", "species": "Cat", "breed": "Domestic longhair",
+            "age_years": 6, "sex": "Male", "size": "Medium",
+            "activity_level": "Moderate", "home_type": "Either",
+            "minimum_housing_level": 1, "garden_required": False,
+            "child_friendly": "No", "other_pets": "No",
+            "experience_level": "Some experience", "max_hours_alone": 8,
+            "status": "Reserved",
+            "description": "Simba is an independent long-haired cat who prefers a peaceful adult home and regular grooming.",
+            "image_url": "",
+        },
+        {
+            "name": "Daisy", "species": "Rabbit", "breed": "Dutch rabbit",
+            "age_years": 3, "sex": "Female", "size": "Small",
+            "activity_level": "Moderate", "home_type": "Either",
+            "minimum_housing_level": 1, "garden_required": False,
+            "child_friendly": "Yes", "other_pets": "Depends",
+            "experience_level": "First-time owner", "max_hours_alone": 6,
+            "status": "Available",
+            "description": "Daisy is a sociable rabbit who enjoys enrichment, supervised exploration and gentle family attention.",
+            "image_url": "",
+        },
+        {
+            "name": "Max", "species": "Dog", "breed": "German shepherd cross",
+            "age_years": 5, "sex": "Male", "size": "Large",
+            "activity_level": "High", "home_type": "House",
+            "minimum_housing_level": 3, "garden_required": True,
+            "child_friendly": "No", "other_pets": "No",
+            "experience_level": "Experienced owner", "max_hours_alone": 2,
+            "status": "Available",
+            "description": "Max is a loyal working-breed dog who needs an experienced adult home, structured training and daily exercise.",
+            "image_url": "",
+        },
+        {
+            "name": "Willow", "species": "Cat", "breed": "Domestic shorthair",
+            "age_years": 9, "sex": "Female", "size": "Small",
+            "activity_level": "Low", "home_type": "Flat or apartment",
+            "minimum_housing_level": 1, "garden_required": False,
+            "child_friendly": "Yes", "other_pets": "Depends",
+            "experience_level": "First-time owner", "max_hours_alone": 9,
+            "status": "Available",
+            "description": "Willow is a relaxed older cat who enjoys warm resting places, gentle affection and a predictable routine.",
+            "image_url": "",
+        },
+        {
+            "name": "Oscar", "species": "Dog", "breed": "Jack Russell terrier cross",
+            "age_years": 4, "sex": "Male", "size": "Small",
+            "activity_level": "Moderate", "home_type": "Either",
+            "minimum_housing_level": 1, "garden_required": False,
+            "child_friendly": "Yes", "other_pets": "Depends",
+            "experience_level": "Some experience", "max_hours_alone": 5,
+            "status": "Available",
+            "description": "Oscar is a cheerful small dog who likes brisk walks, puzzle toys and being involved in family life.",
+            "image_url": "",
+        },
+        {
+            "name": "Clover", "species": "Rabbit", "breed": "Rex rabbit",
+            "age_years": 2.5, "sex": "Male", "size": "Medium",
+            "activity_level": "Moderate", "home_type": "House",
+            "minimum_housing_level": 2, "garden_required": True,
+            "child_friendly": "Older children only", "other_pets": "No",
+            "experience_level": "Some experience", "max_hours_alone": 5,
+            "status": "Available",
+            "description": "Clover is an inquisitive rabbit who needs generous indoor space, secure outdoor exercise and patient care.",
+            "image_url": "",
+        },
     ]
 
     inserted = 0
+    connection = get_connection()
+    try:
+        existing_records = {
+            (str(row["name"]).casefold(), str(row["species"]))
+            for row in connection.execute("SELECT name, species FROM animals")
+        }
+    finally:
+        connection.close()
+
     for record in records:
+        identity = (record["name"].casefold(), record["species"])
+        if identity in existing_records:
+            continue
         errors, cleaned = validate_animal(record)
         if not errors:
             success, _, _ = create_animal(cleaned)
             inserted += int(success)
+            if success:
+                existing_records.add(identity)
     return inserted
