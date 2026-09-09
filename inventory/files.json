@@ -37,8 +37,8 @@
     },
     {
       "path": "app/MATCHING_ALGORITHM.md",
-      "bytes": 3634,
-      "sha256": "229b0736561d7863e683332f22233ed26256c32513b6aa63086cbb66a5a538cd"
+      "bytes": 3664,
+      "sha256": "5f72abda9611dd6b3a5f9a5d61d96520d2a7312d3068d7311cfc1f1726eab9ae"
     },
     {
       "path": "app/README.md",
@@ -63,7 +63,7 @@
     {
       "path": "app/pages/1_Home.py",
       "bytes": 11904,
-      "sha256": "5107568201e0fd2aa1d44ce1ce8b797bd3fcf46e8563e35c17d73c9404da52db"
+      "sha256": "06ce9501447127db3f113012c82f1e04de3a1f05d42c1bc9829af5d58b348ab5"
     },
     {
       "path": "app/pages/2_Registration.py",
@@ -72,8 +72,8 @@
     },
     {
       "path": "app/pages/3_Questionnaire.py",
-      "bytes": 7330,
-      "sha256": "09093779b56c9fe19ebcdcf3d1d1aa3f78affb3a4c06913aa07d9004acb2c0d8"
+      "bytes": 9327,
+      "sha256": "6511bedb1d0041f7a2ae3c0473dce4afc225cd305aaf7c78afd233557f6b3db8"
     },
     {
       "path": "app/pages/4_Browse_Animals.py",
@@ -87,8 +87,8 @@
     },
     {
       "path": "app/pages/6_My_Matches.py",
-      "bytes": 3002,
-      "sha256": "531256c54f88d9ef7ac8a41ca168184f7b5e5c7a6ed3da580ebab7ed72530653"
+      "bytes": 4296,
+      "sha256": "f0774d567be1f832e0ad25ed120794455af415541f502e084cd6429ccc87a593"
     },
     {
       "path": "app/pages/7_Admin_Dashboard.py",
@@ -112,8 +112,8 @@
     },
     {
       "path": "app/pawmatch_style.py",
-      "bytes": 50861,
-      "sha256": "dfbe031fa39bb9105cbd6e62c7462619e53f2432c0dffa506d89db33b8847e3d"
+      "bytes": 62931,
+      "sha256": "9ab79ac242e37421a6bf28f47bf2636f168cf7d54bea80c459ecff98af0fc076"
     },
     {
       "path": "app/requirements.txt",

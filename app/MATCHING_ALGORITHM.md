@@ -57,7 +57,7 @@ Species and size preferences must not disguise a welfare mismatch, so they do no
 - matching preferred size: `+5` ranking points;
 - No preference: no bonus.
 
-Results are sorted by the internal ranking score, then compatibility. The page shows up to five results but does not display the internal ranking score.
+Results are sorted by the internal ranking score, then compatibility. The page shows the top three results from the interface design but does not display the internal ranking score.
 
 ## Program flow
 
@@ -76,7 +76,7 @@ apply preference bonuses only when compatibility ≥ 60%
         ↓
 insert match_results rows
         ↓
-remove Low matches from the displayed list and show the top five
+remove Low matches from the displayed list and show the top three
 ```
 
 The implementation is in `pawmatch_matching.py`. Its functions have docstrings and keep database operations separate from the Streamlit pages.

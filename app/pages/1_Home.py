@@ -52,7 +52,7 @@ if "questionnaire_complete" not in st.session_state:
         st.session_state.questionnaire_complete = True
         st.session_state.questionnaire_progress = 100
         st.session_state.match_count = min(
-            5, len(fetch_latest_matches(int(st.session_state.user_id)))
+            3, len(fetch_latest_matches(int(st.session_state.user_id)))
         )
 
 full_name = str(st.session_state.get("user_name", "PawMatch user")).strip()

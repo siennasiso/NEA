@@ -1271,6 +1271,406 @@ def apply_sidebar_dashboard_style() -> None:
     )
 
 
+def apply_questionnaire_matches_style(active_page: str) -> None:
+    """Apply the interface-design typography and layout to the two matching pages."""
+    apply_pawmatch_style()
+    active_key = (
+        "flow_nav_questionnaire" if active_page == "questionnaire" else "flow_nav_account"
+    )
+    st.markdown(
+        """
+        <style>
+        .stApp, .stApp button, .stApp input, .stApp select {
+            font-family: "Avenir Next", "Nunito", Arial, sans-serif;
+        }
+
+        .stApp {
+            background:
+                radial-gradient(circle at 92% 8%, rgba(252, 207, 232, .72), transparent 27%),
+                linear-gradient(135deg, #fffafd 0%, #fff0f8 100%);
+            color: #454047;
+        }
+
+        .block-container {
+            max-width: 1180px;
+            padding: 1.45rem 1.3rem 2rem;
+        }
+
+        .st-key-design_sidebar {
+            min-height: 690px;
+            padding: 1.15rem 1.25rem;
+            border: 1px solid #ead6e0;
+            border-radius: 3px 0 0 3px;
+            background: rgba(253, 244, 249, .88);
+        }
+
+        .flow-brand {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            min-height: 64px;
+            margin-bottom: 3.5rem;
+            padding: .65rem .75rem;
+            border: 1px solid #bfaeb7;
+            background: rgba(255,255,255,.48);
+        }
+
+        .flow-brand-mark {
+            display: grid;
+            place-items: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 11px;
+            background: #db4f8c;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .flow-brand strong, .flow-brand small { display: block; }
+        .flow-brand strong { color: #282329; font-size: .86rem; font-weight: 800; }
+        .flow-brand small { margin-top: .08rem; color: #8a727e; font-size: .58rem; }
+
+        .st-key-design_sidebar .stButton > button {
+            min-height: 42px;
+            margin-bottom: .42rem;
+            border: 1px solid #efb7d0;
+            border-radius: 8px;
+            background: rgba(255,255,255,.34);
+            color: #272329;
+            font-size: .88rem;
+            font-weight: 700;
+            box-shadow: none;
+        }
+
+        .st-key-design_sidebar .stButton > button:hover {
+            border-color: #dc4f8c;
+            background: #fff8fb;
+            color: #ba326f;
+        }
+
+        .st-key-flow_logout { margin-top: 9.2rem; }
+        .st-key-flow_logout button { background: transparent !important; }
+
+        .st-key-design_main {
+            min-height: 690px;
+            padding: 2.3rem 1.7rem 2rem;
+            border: 1px solid #ead6e0;
+            border-left: 0;
+            border-radius: 0 3px 3px 0;
+            background: rgba(255,250,253,.36);
+        }
+
+        .flow-page-header {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .flow-page-header h1 {
+            margin: 0;
+            color: #4a454b;
+            font-size: 1.82rem !important;
+            line-height: 1.08 !important;
+            letter-spacing: -.035em;
+            font-weight: 750 !important;
+        }
+
+        .flow-page-header p {
+            margin: .35rem 0 0;
+            color: #948b91;
+            font-size: .69rem !important;
+            font-weight: 500;
+        }
+
+        .flow-page-header > span {
+            padding-top: .18rem;
+            color: #c06a92;
+            font-size: .61rem !important;
+            white-space: nowrap;
+        }
+
+        .flow-progress {
+            height: 8px;
+            margin: .7rem 0 1.5rem;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #ecd9e3;
+        }
+
+        .flow-progress span {
+            display: block;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #cf3e7d, #df5b96);
+        }
+
+        .st-key-question_card {
+            min-height: 310px;
+            padding: 1.55rem 1.4rem 1.25rem;
+            border: 1px solid #d9ccd2;
+            border-radius: 42px;
+            background: rgba(255,255,255,.96);
+            box-shadow: 0 6px 12px rgba(70,48,59,.18);
+        }
+
+        .question-prompt {
+            margin: 0 0 1.5rem;
+            color: #161317;
+            font-size: 1rem !important;
+            line-height: 1.35;
+            font-weight: 750;
+        }
+
+        [class*="st-key-choice_"] button {
+            min-height: 112px;
+            padding: .8rem .75rem;
+            border: 1px solid #efd5e2;
+            border-radius: 18px;
+            background: #fbe9f4;
+            color: #4a3b43;
+            font-size: .72rem;
+            font-weight: 650;
+            line-height: 1.55;
+            box-shadow: 0 4px 6px rgba(76,51,64,.18);
+        }
+
+        [class*="st-key-choice_"] button:hover {
+            border-color: #d74d89;
+            background: #fae4f0;
+            color: #352c31;
+        }
+
+        .question-help {
+            margin: -.9rem 0 1rem;
+            color: #9b8992;
+            font-size: .68rem;
+        }
+
+        .st-key-question_hours [data-baseweb="input"] {
+            min-height: 58px;
+            border: 2px solid #e8abc7;
+            border-radius: 15px;
+            background: #fff7fb;
+        }
+
+        .st-key-question_hours label {
+            color: #654b58;
+            font-size: .72rem;
+            font-weight: 700;
+        }
+
+        .st-key-flow_back button,
+        .st-key-flow_next button,
+        .st-key-flow_submit button {
+            min-height: 47px;
+            margin-top: 1rem;
+            border-radius: 8px;
+            font-size: .72rem;
+            font-weight: 800;
+        }
+
+        .st-key-flow_back button {
+            border: 1px solid #d6538e;
+            background: white;
+            color: #c4427e;
+        }
+
+        .st-key-flow_next button,
+        .st-key-flow_submit button {
+            border: 1px solid #d84d8b;
+            background: #d84d8b;
+            color: white;
+        }
+
+        .st-key-flow_next button:disabled,
+        .st-key-flow_submit button:disabled {
+            border-color: #e1ccd6;
+            background: #e9dde3;
+            color: #a58f99;
+        }
+
+        .matches-heading { margin-bottom: 1.2rem; }
+
+        .match-card {
+            display: grid;
+            grid-template-columns: 34px 155px minmax(230px, 1fr) 150px;
+            align-items: center;
+            gap: 1rem;
+            min-height: 132px;
+            margin-bottom: .85rem;
+            padding: .8rem 1rem;
+            border: 1px solid #d8ced3;
+            border-radius: 24px;
+            background: rgba(255,255,255,.97);
+            box-shadow: 0 5px 9px rgba(65,45,55,.20);
+        }
+
+        .match-rank {
+            align-self: start;
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 1px;
+            background: #d84d8b;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .match-photo {
+            display: grid;
+            place-items: center;
+            height: 102px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #f9c7e2, #f2d1e2);
+            font-size: 4rem;
+        }
+
+        .match-card:nth-of-type(odd) .match-photo {
+            background: linear-gradient(145deg, #ded7ef, #f2dceb);
+        }
+
+        .match-name {
+            margin: 0;
+            color: #595158;
+            font-size: 1.35rem !important;
+            line-height: 1.05 !important;
+            font-weight: 750 !important;
+        }
+
+        .match-meta {
+            margin: .18rem 0 .8rem;
+            color: #d04e88;
+            font-size: .65rem !important;
+            font-weight: 550;
+        }
+
+        .match-reason {
+            margin: .28rem 0;
+            padding: .32rem .45rem;
+            border-radius: 3px;
+            color: #77947d;
+            background: #eef8ee;
+            font-size: .55rem !important;
+            line-height: 1.25;
+        }
+
+        .match-reason.consideration {
+            color: #947b53;
+            background: #fff6e6;
+        }
+
+        .match-score-area { text-align: center; }
+        .match-category { margin-bottom: .45rem; color: #c75a8b; font-size: .61rem !important; }
+        .score-ring {
+            display: grid;
+            place-items: center;
+            width: 57px;
+            height: 57px;
+            margin: 0 auto .6rem;
+            border-radius: 50%;
+            color: #cf4c88;
+            font-size: .9rem;
+            font-weight: 800;
+        }
+
+        .score-ring span {
+            display: grid;
+            place-items: center;
+            width: 47px;
+            height: 47px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .profile-button {
+            display: block;
+            padding: .66rem .45rem;
+            border-radius: 7px;
+            background: #d84d8b;
+            color: white !important;
+            font-size: .62rem !important;
+            font-weight: 750;
+            text-align: center;
+            text-decoration: none !important;
+        }
+
+        .no-matches-card {
+            padding: 2rem;
+            border: 1px solid #e6c8d7;
+            border-radius: 22px;
+            background: white;
+            color: #705a65;
+            font-size: .85rem;
+        }
+
+        @media (max-width: 900px) {
+            .st-key-design_sidebar { min-height: auto; }
+            .st-key-flow_logout { margin-top: 1rem; }
+            .st-key-design_main { border-left: 1px solid #ead6e0; }
+            .match-card { grid-template-columns: 30px 110px 1fr; }
+            .match-score-area { grid-column: 2 / -1; display: flex; align-items: center; gap: 1rem; }
+            .score-ring { margin: 0; }
+        }
+
+        @media (max-width: 650px) {
+            .block-container { padding: .65rem; }
+            .st-key-design_main { padding: 1.4rem .85rem; }
+            .flow-page-header h1 { font-size: 1.55rem; }
+            .st-key-question_card { border-radius: 26px; }
+            .match-card { grid-template-columns: 30px 1fr; }
+            .match-photo { height: 95px; font-size: 3rem; }
+            .match-details, .match-score-area { grid-column: 1 / -1; }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"""
+        <style>
+        .st-key-{active_key} button,
+        .st-key-{active_key} button:hover {{
+            border-color: #eaa5c3 !important;
+            background: #f3b8d5 !important;
+            color: #241f24 !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_questionnaire_matches_sidebar() -> None:
+    """Render the four navigation buttons shown in the interface design."""
+    st.markdown(
+        """
+        <div class="flow-brand">
+            <span class="flow-brand-mark">🐾</span>
+            <span><strong>PawMatch</strong><small>Adoption matching</small></span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    if st.button("Home", key="flow_nav_home", width="stretch"):
+        st.switch_page("pages/1_Home.py")
+    if st.button("Browse animals", key="flow_nav_animals", width="stretch"):
+        st.switch_page("pages/4_Browse_Animals.py")
+    if st.button("Questionnaire", key="flow_nav_questionnaire", width="stretch"):
+        st.switch_page("pages/3_Questionnaire.py")
+    if st.button("My account", key="flow_nav_account", width="stretch"):
+        st.switch_page("pages/5_My_Account.py")
+    if st.button("Log out", key="flow_logout", width="stretch"):
+        for state_key in (
+            "logged_in", "user_id", "user_name", "user_email", "role",
+            "questionnaire_progress", "questionnaire_complete", "match_count",
+            "questionnaire_answers", "questionnaire_step", "latest_response_id",
+        ):
+            st.session_state.pop(state_key, None)
+        st.switch_page("app.py")
+
+
 def apply_admin_dashboard_style(active_view: str = "overview") -> None:
     """Apply the pink PawMatch styling used by the administrator page."""
     apply_sidebar_dashboard_style()
