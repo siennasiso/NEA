@@ -1272,11 +1272,15 @@ def apply_sidebar_dashboard_style() -> None:
 
 
 def apply_questionnaire_matches_style(active_page: str) -> None:
-    """Apply the interface-design typography and layout to the two matching pages."""
+    """Apply the interface-design typography and layout to all signed-in pages."""
     apply_pawmatch_style()
-    active_key = (
-        "flow_nav_questionnaire" if active_page == "questionnaire" else "flow_nav_account"
-    )
+    active_key = {
+        "home": "flow_nav_home",
+        "browse": "flow_nav_animals",
+        "questionnaire": "flow_nav_questionnaire",
+        "account": "flow_nav_account",
+        "matches": "flow_nav_matches",
+    }.get(active_page, "flow_nav_home")
     st.markdown(
         """
         <style>
@@ -1605,6 +1609,109 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             font-size: .85rem;
         }
 
+        .page-back-row { margin-bottom: .85rem; }
+        .st-key-page_back button,
+        .st-key-profile_back button {
+            min-height: 38px;
+            border: 1px solid #dc5b92;
+            border-radius: 8px;
+            background: white;
+            color: #c5417b;
+            font-size: .7rem;
+            font-weight: 800;
+        }
+
+        .completion-card {
+            max-width: 660px;
+            margin: 2rem auto;
+            padding: 2.4rem;
+            border: 1px solid #dfc2d0;
+            border-radius: 32px;
+            background: white;
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(72,45,59,.16);
+        }
+        .completion-card .completion-icon { font-size: 2.5rem; }
+        .completion-card h1 { margin: .5rem 0; font-size: 1.8rem !important; color: #4b4147; }
+        .completion-card p { color: #8b7882; font-size: .78rem; }
+        .st-key-view_matches_primary button {
+            min-height: 48px;
+            border: 1px solid #d84d8b;
+            border-radius: 8px;
+            background: #d84d8b;
+            color: white;
+            font-weight: 800;
+        }
+
+        .st-key-browse_filter_card {
+            margin: 1.2rem 0;
+            padding: 1rem 1.15rem;
+            border: 1px solid #ddd0d6;
+            border-radius: 12px;
+            background: rgba(255,255,255,.96);
+            box-shadow: 0 4px 10px rgba(70,48,59,.08);
+        }
+        .browse-section-title { margin: 1rem 0 .7rem; color: #4c4549; font-size: .92rem; font-weight: 800; }
+        [class*="st-key-animal_card_"] {
+            min-height: 390px;
+            padding: .8rem;
+            border: 1px solid #ddcfd6;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 5px 10px rgba(65,45,55,.12);
+        }
+        [class*="st-key-animal_card_"] [data-testid="stImage"] img {
+            height: 155px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #f9d9e8, #f4e9f1);
+        }
+        .animal-card-copy h3 { margin: .35rem 0 .12rem; color: #4d464a; font-size: 1.05rem; }
+        .animal-card-copy .animal-breed { margin: 0 0 .4rem; color: #cf4d88; font-size: .64rem; }
+        .animal-card-copy .animal-facts { margin: 0 0 .55rem; color: #6e6268; font-size: .62rem; }
+        .animal-card-copy .animal-description { min-height: 48px; color: #8b7c84; font-size: .61rem; line-height: 1.45; }
+        [class*="st-key-view_profile_"] button {
+            min-height: 38px;
+            border: 1px solid #d84d8b;
+            border-radius: 7px;
+            background: #d84d8b;
+            color: white;
+            font-size: .65rem;
+            font-weight: 800;
+        }
+
+        .profile-title h1 { margin: 0; color: #4c4549; font-size: 1.85rem !important; }
+        .profile-title p { margin: .25rem 0 1.25rem; color: #cf4d88; font-size: .7rem; }
+        .profile-description { color: #786b72; font-size: .75rem; line-height: 1.65; }
+        .profile-fact {
+            padding: .75rem;
+            border: 1px solid #ead3df;
+            border-radius: 10px;
+            background: #fff6fa;
+            text-align: center;
+            color: #685b62;
+            font-size: .66rem;
+        }
+        .profile-fact strong { display: block; color: #d24986; font-size: .78rem; }
+        .needs-card, .account-card {
+            margin-top: 1.2rem;
+            padding: 1.2rem;
+            border: 1px solid #ddd0d6;
+            border-radius: 17px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(70,48,59,.08);
+        }
+        .needs-card h2, .account-card h2 { margin: 0 0 .8rem; color: #51484d; font-size: 1rem !important; }
+        .need-line, .account-line { margin: .45rem 0; color: #75656d; font-size: .7rem; }
+        .need-line strong, .account-line strong { color: #4e4449; }
+        .account-avatar { font-size: 2.4rem; }
+
+        .match-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
         @media (max-width: 900px) {
             .st-key-design_sidebar { min-height: auto; }
             .st-key-flow_logout { margin-top: 1rem; }
@@ -1643,7 +1750,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
 
 
 def render_questionnaire_matches_sidebar() -> None:
-    """Render the four navigation buttons shown in the interface design."""
+    """Render the persistent navigation shown throughout the interface design."""
     st.markdown(
         """
         <div class="flow-brand">
@@ -1661,6 +1768,15 @@ def render_questionnaire_matches_sidebar() -> None:
         st.switch_page("pages/3_Questionnaire.py")
     if st.button("My account", key="flow_nav_account", width="stretch"):
         st.switch_page("pages/5_My_Account.py")
+    matches_ready = bool(st.session_state.get("questionnaire_complete", False))
+    if st.button(
+        "My matches",
+        key="flow_nav_matches",
+        width="stretch",
+        disabled=not matches_ready,
+        help=None if matches_ready else "Complete the questionnaire first.",
+    ):
+        st.switch_page("pages/6_My_Matches.py")
     if st.button("Log out", key="flow_logout", width="stretch"):
         for state_key in (
             "logged_in", "user_id", "user_name", "user_email", "role",

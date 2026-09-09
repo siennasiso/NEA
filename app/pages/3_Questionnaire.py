@@ -115,6 +115,9 @@ if "questionnaire_answers" not in st.session_state:
     st.session_state.questionnaire_answers = _initial_answers()
 if "questionnaire_step" not in st.session_state:
     st.session_state.questionnaire_step = 0
+if fetch_latest_response(int(st.session_state.user_id)) is not None:
+    st.session_state.questionnaire_complete = True
+    st.session_state.questionnaire_progress = 100
 
 answers = st.session_state.questionnaire_answers
 step = max(0, min(len(QUESTIONS) - 1, int(st.session_state.questionnaire_step)))
@@ -129,6 +132,25 @@ with sidebar_column:
 
 with main_column:
     with st.container(key="design_main"):
+        if st.session_state.get("questionnaire_just_completed", False):
+            st.markdown(
+                """
+                <div class="completion-card">
+                    <div class="completion-icon">💗</div>
+                    <h1>Your questionnaire is complete</h1>
+                    <p>Your answers have been saved and your personalised animal matches are ready.</p>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+            if st.button("View matches", key="view_matches_primary", type="primary", width="stretch"):
+                st.session_state.questionnaire_just_completed = False
+                st.switch_page("pages/6_My_Matches.py")
+            if st.button("Back to questionnaire", key="flow_back", width="stretch"):
+                st.session_state.questionnaire_just_completed = False
+                st.rerun()
+            st.stop()
+
         st.markdown(
             f"""
             <div class="flow-page-header">
@@ -142,6 +164,10 @@ with main_column:
             """,
             unsafe_allow_html=True,
         )
+
+        if st.session_state.get("questionnaire_complete", False):
+            if st.button("View matches", key="view_matches_primary", type="primary", width="stretch"):
+                st.switch_page("pages/6_My_Matches.py")
 
         with st.container(key="question_card"):
             st.markdown(
@@ -239,4 +265,5 @@ with main_column:
                         st.session_state.questionnaire_progress = 100
                         st.session_state.match_count = min(3, len(recommendations))
                         st.session_state.latest_response_id = response_id
-                        st.switch_page("pages/6_My_Matches.py")
+                        st.session_state.questionnaire_just_completed = True
+                        st.rerun()

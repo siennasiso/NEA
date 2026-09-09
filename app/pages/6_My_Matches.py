@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import base64
 import html
 
 import streamlit as st
 
-from pawmatch_animals import format_age
+from pawmatch_animals import animal_image_path, format_age
 from pawmatch_matching import fetch_latest_matches, fetch_latest_response
 from pawmatch_style import (
     apply_questionnaire_matches_style,
@@ -33,6 +34,8 @@ with sidebar_column:
 
 with main_column:
     with st.container(key="design_main"):
+        if st.button("← Back to questionnaire", key="page_back"):
+            st.switch_page("pages/3_Questionnaire.py")
         st.markdown(
             """
             <div class="flow-page-header matches-heading">
@@ -66,7 +69,12 @@ with main_column:
                 species = html.escape(str(match["species"]))
                 breed = html.escape(str(match["breed"]))
                 age = html.escape(format_age(match["age_years"]))
-                icon = species_icons.get(str(match["species"]), "🐾")
+                portrait = animal_image_path(match["name"])
+                if portrait.exists():
+                    encoded = base64.b64encode(portrait.read_bytes()).decode("ascii")
+                    image_markup = f'<img src="data:image/png;base64,{encoded}" alt="{name}">'
+                else:
+                    image_markup = species_icons.get(str(match["species"]), "🐾")
                 category = html.escape(str(match["match_category"]))
                 met = html.escape(
                     str(match["matched_requirements"][0])
@@ -82,7 +90,7 @@ with main_column:
                     f"""
                     <article class="match-card">
                         <div class="match-rank">{position}</div>
-                        <div class="match-photo" aria-label="{species}">{icon}</div>
+                        <div class="match-photo" aria-label="{species}">{image_markup}</div>
                         <div class="match-details">
                             <h2 class="match-name">{name}</h2>
                             <p class="match-meta">{species} | {breed} | {age}</p>
@@ -92,7 +100,7 @@ with main_column:
                         <div class="match-score-area">
                             <div class="match-category">{category} Match</div>
                             <div class="score-ring" style="background:conic-gradient(#d84d8b {score}%, #f1d8e4 0)"><span>{score}%</span></div>
-                            <a class="profile-button" href="/Browse_Animals" target="_self">View animal profile</a>
+                            <a class="profile-button" href="/Browse_Animals?animal={int(match['animal_id'])}" target="_self">View animal profile</a>
                         </div>
                     </article>
                     """,

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import sqlite3
+from pathlib import Path
 from typing import Any, Iterable
 
 from pawmatch_auth import get_connection
@@ -17,9 +18,16 @@ CHILD_FRIENDLY_OPTIONS = ("Yes", "No", "Older children only")
 OTHER_PETS_OPTIONS = ("Yes", "No", "Depends")
 EXPERIENCE_LEVELS = ("First-time owner", "Some experience", "Experienced owner")
 ANIMAL_STATUSES = ("Available", "Reserved", "Adopted")
+ANIMAL_IMAGE_DIRECTORY = Path(__file__).resolve().parent / "assets" / "animals"
 
 _IMAGE_URL_PATTERN = re.compile(r"^https?://[^\s]+$", re.IGNORECASE)
 _NAME_PATTERN = re.compile(r"^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$")
+
+
+def animal_image_path(name: Any) -> Path:
+    """Return the generated local portrait belonging to a seeded animal."""
+    filename = re.sub(r"[^a-z0-9]+", "-", str(name).casefold()).strip("-")
+    return ANIMAL_IMAGE_DIRECTORY / f"{filename}.png"
 
 
 def initialise_animals_table() -> None:
