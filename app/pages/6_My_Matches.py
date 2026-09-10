@@ -8,7 +8,7 @@ import html
 import streamlit as st
 
 from pawmatch_animals import animal_image_path, format_age
-from pawmatch_matching import fetch_latest_matches, fetch_latest_response
+from pawmatch_matching import calculate_match, fetch_latest_matches, fetch_latest_response
 from pawmatch_style import (
     apply_questionnaire_matches_style,
     render_questionnaire_matches_sidebar,
@@ -72,30 +72,31 @@ with main_column:
                 portrait = animal_image_path(match["name"])
                 if portrait.exists():
                     encoded = base64.b64encode(portrait.read_bytes()).decode("ascii")
-                    image_markup = f'<img src="data:image/png;base64,{encoded}" alt="{name}">'
+                    photo_style = ""
+                    image_markup = f'<img src="data:image/png;base64,{encoded}" alt="Portrait of {name}">'
                 else:
+                    photo_style = ""
                     image_markup = species_icons.get(str(match["species"]), "🐾")
                 category = html.escape(str(match["match_category"]))
-                met = html.escape(
-                    str(match["matched_requirements"][0])
-                    if match["matched_requirements"]
-                    else "Suitable requirements were identified."
+                detailed_result = calculate_match(match, latest_response)
+                met_lines = "".join(
+                    f'<span class="requirement-line">✓ {html.escape(str(reason))}</span>'
+                    for reason in detailed_result["matched_requirements"]
                 )
-                unmet = html.escape(
-                    str(match["unmet_requirements"][0])
-                    if match["unmet_requirements"]
-                    else "No important unmet requirements."
-                )
+                unmet_lines = "".join(
+                    f'<span class="requirement-line">! {html.escape(str(reason))}</span>'
+                    for reason in detailed_result["unmet_requirements"]
+                ) or '<span class="requirement-line">No requirements are unmet for this animal.</span>'
                 st.markdown(
                     f"""
                     <article class="match-card">
                         <div class="match-rank">{position}</div>
-                        <div class="match-photo" aria-label="{species}">{image_markup}</div>
+                        <div class="match-photo" style="{photo_style}" aria-label="{species}">{image_markup}</div>
                         <div class="match-details">
                             <h2 class="match-name">{name}</h2>
                             <p class="match-meta">{species} | {breed} | {age}</p>
-                            <p class="match-reason">✓ {met}</p>
-                            <p class="match-reason consideration">! {unmet}</p>
+                            <div class="match-reason"><strong class="requirement-heading">Requirements met</strong>{met_lines}</div>
+                            <div class="match-reason consideration"><strong class="requirement-heading">Requirements not met</strong>{unmet_lines}</div>
                         </div>
                         <div class="match-score-area">
                             <div class="match-category">{category} Match</div>

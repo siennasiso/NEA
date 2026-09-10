@@ -184,40 +184,84 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
     points = 0
     matched: list[str] = []
     unmet: list[str] = []
+    animal_name = str(animal["name"])
+    selected_hours = int(cleaned["hours_left_alone"])
+    maximum_hours = int(animal["max_hours_alone"])
 
-    if cleaned["hours_left_alone"] <= int(animal["max_hours_alone"]):
+    if selected_hours <= maximum_hours:
         points += WEIGHTS["hours_left_alone"]
-        matched.append("Time left alone is within this animal's limit.")
+        matched.append(
+            f"Time alone: you selected {selected_hours} hour(s) per day; "
+            f"{animal_name} can be left for up to {maximum_hours} hour(s)."
+        )
     else:
         unmet.append(
-            f"Needs no more than {animal['max_hours_alone']} hours alone each day."
+            f"Time alone: you selected {selected_hours} hour(s) per day, but "
+            f"{animal_name} can be left for no more than {maximum_hours} hour(s)."
         )
 
     children_suitable = not cleaned["has_children"] or animal["child_friendly"] == "Yes"
     if children_suitable:
         points += WEIGHTS["children"]
-        matched.append("The household's child requirements are suitable.")
+        if cleaned["has_children"]:
+            matched.append(
+                f"Children: you selected a home with children and {animal_name} "
+                "is listed as child friendly."
+            )
+        else:
+            matched.append(
+                f"Children: you selected a home without children, which meets "
+                f"{animal_name}'s child-suitability requirement ({animal['child_friendly']})."
+            )
     else:
-        unmet.append(f"Child suitability is listed as: {animal['child_friendly']}.")
+        unmet.append(
+            f"Children: you selected a home with children, but {animal_name}'s "
+            f"profile is listed as '{animal['child_friendly']}'."
+        )
 
-    if cleaned["housing_level"] >= int(animal["minimum_housing_level"]):
+    selected_housing = int(cleaned["housing_level"])
+    required_housing = int(animal["minimum_housing_level"])
+    if selected_housing >= required_housing:
         points += WEIGHTS["housing"]
-        matched.append("The available housing space meets the requirement.")
+        matched.append(
+            f"Indoor space: your selected space level is {selected_housing} of 3; "
+            f"{animal_name} requires level {required_housing} of 3."
+        )
     else:
-        unmet.append("This animal needs a larger home than the selected housing level.")
+        unmet.append(
+            f"Indoor space: your selected space level is {selected_housing} of 3, "
+            f"but {animal_name} requires level {required_housing} of 3."
+        )
 
     animal_activity = ACTIVITY_OPTIONS[str(animal["activity_level"])]
     if cleaned["preferred_activity_level"] >= animal_activity:
         points += WEIGHTS["activity"]
-        matched.append("The supported activity level meets this animal's needs.")
+        matched.append(
+            f"Activity: you can support level {cleaned['preferred_activity_level']} of 3; "
+            f"{animal_name} needs {str(animal['activity_level']).lower()} activity "
+            f"(level {animal_activity} of 3)."
+        )
     else:
-        unmet.append(f"This animal needs a {str(animal['activity_level']).lower()} activity level.")
+        unmet.append(
+            f"Activity: you can support level {cleaned['preferred_activity_level']} of 3, "
+            f"but {animal_name} needs {str(animal['activity_level']).lower()} activity "
+            f"(level {animal_activity} of 3)."
+        )
 
     if not bool(animal["garden_required"]) or cleaned["garden_access"]:
         points += WEIGHTS["garden"]
-        matched.append("The garden requirement is met.")
+        if bool(animal["garden_required"]):
+            matched.append(
+                f"Garden: you selected secure garden access and {animal_name} requires a garden."
+            )
+        else:
+            matched.append(
+                f"Garden: {animal_name} does not require a garden, so your selected home is suitable."
+            )
     else:
-        unmet.append("This animal requires access to a garden.")
+        unmet.append(
+            f"Garden: you selected no garden access, but {animal_name} requires a secure garden."
+        )
 
     compatibility = round((points / MAX_COMPATIBILITY_POINTS) * 100)
     ranking = compatibility
@@ -307,7 +351,10 @@ def fetch_latest_matches(user_id: int, include_low: bool = False) -> list[dict[s
         rows = connection.execute(
             f"""
             SELECT mr.*, a.name, a.species, a.breed, a.age_years, a.sex,
-                   a.size, a.activity_level, a.description, a.image_url
+                   a.size, a.activity_level, a.home_type,
+                   a.minimum_housing_level, a.garden_required,
+                   a.child_friendly, a.max_hours_alone,
+                   a.description, a.image_url
             FROM match_results AS mr
             JOIN animals AS a ON a.animal_id = mr.animal_id
             WHERE mr.response_id = ? {condition}

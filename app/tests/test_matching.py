@@ -78,6 +78,17 @@ class MatchingTests(unittest.TestCase):
         self.assertEqual(preferred["compatibility_score"], neutral["compatibility_score"])
         self.assertEqual(preferred["ranking_score"], neutral["ranking_score"] + 15)
 
+    def test_requirement_explanations_include_selected_and_required_values(self) -> None:
+        """Result explanations state the user's value and the animal's requirement."""
+        oscar = next(animal for animal in fetch_animals() if animal["name"] == "Oscar")
+        result = calculate_match(oscar, self.answers)
+        explanations = " ".join(
+            result["matched_requirements"] + result["unmet_requirements"]
+        )
+        self.assertIn("you selected 2 hour(s)", explanations)
+        self.assertIn("Oscar can be left for up to 5 hour(s)", explanations)
+        self.assertIn("your selected space level is 3 of 3", explanations)
+
     def test_low_score_never_receives_preference_bonus(self) -> None:
         """Species and size cannot promote an animal below the 60% threshold."""
         max_profile = next(animal for animal in fetch_animals() if animal["name"] == "Max")

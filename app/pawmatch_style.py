@@ -1279,7 +1279,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         "browse": "flow_nav_animals",
         "questionnaire": "flow_nav_questionnaire",
         "account": "flow_nav_account",
-        "matches": "flow_nav_matches",
+        "matches": "flow_nav_account",
     }.get(active_page, "flow_nav_home")
     st.markdown(
         """
@@ -1296,13 +1296,14 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         }
 
         .block-container {
-            max-width: 1180px;
-            padding: 1.45rem 1.3rem 2rem;
+            width: calc(100% - 1.5rem);
+            max-width: 1500px;
+            padding: .75rem .75rem 1.25rem;
         }
 
         .st-key-design_sidebar {
-            min-height: 690px;
-            padding: 1.15rem 1.25rem;
+            min-height: calc(100vh - 1.5rem);
+            padding: 1.45rem 1.45rem;
             border: 1px solid #ead6e0;
             border-radius: 3px 0 0 3px;
             background: rgba(253, 244, 249, .88);
@@ -1331,17 +1332,17 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         }
 
         .flow-brand strong, .flow-brand small { display: block; }
-        .flow-brand strong { color: #282329; font-size: .86rem; font-weight: 800; }
-        .flow-brand small { margin-top: .08rem; color: #8a727e; font-size: .58rem; }
+        .flow-brand strong { color: #282329; font-size: 1rem; font-weight: 800; }
+        .flow-brand small { margin-top: .08rem; color: #8a727e; font-size: .7rem; }
 
         .st-key-design_sidebar .stButton > button {
-            min-height: 42px;
+            min-height: 49px;
             margin-bottom: .42rem;
             border: 1px solid #efb7d0;
             border-radius: 8px;
             background: rgba(255,255,255,.34);
             color: #272329;
-            font-size: .88rem;
+            font-size: 1rem;
             font-weight: 700;
             box-shadow: none;
         }
@@ -1352,12 +1353,12 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             color: #ba326f;
         }
 
-        .st-key-flow_logout { margin-top: 9.2rem; }
+        .st-key-flow_logout { margin-top: 13rem; }
         .st-key-flow_logout button { background: transparent !important; }
 
         .st-key-design_main {
-            min-height: 690px;
-            padding: 2.3rem 1.7rem 2rem;
+            min-height: calc(100vh - 1.5rem);
+            padding: 2.7rem 2.35rem 2.4rem;
             border: 1px solid #ead6e0;
             border-left: 0;
             border-radius: 0 3px 3px 0;
@@ -1374,7 +1375,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .flow-page-header h1 {
             margin: 0;
             color: #4a454b;
-            font-size: 1.82rem !important;
+            font-size: 2.25rem !important;
             line-height: 1.08 !important;
             letter-spacing: -.035em;
             font-weight: 750 !important;
@@ -1383,7 +1384,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .flow-page-header p {
             margin: .35rem 0 0;
             color: #948b91;
-            font-size: .69rem !important;
+            font-size: .9rem !important;
             font-weight: 500;
         }
 
@@ -1498,12 +1499,12 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
 
         .match-card {
             display: grid;
-            grid-template-columns: 34px 155px minmax(230px, 1fr) 150px;
+            grid-template-columns: 42px 190px minmax(340px, 1fr) 175px;
             align-items: center;
             gap: 1rem;
-            min-height: 132px;
-            margin-bottom: .85rem;
-            padding: .8rem 1rem;
+            min-height: 245px;
+            margin-bottom: 1.15rem;
+            padding: 1.1rem 1.25rem;
             border: 1px solid #d8ced3;
             border-radius: 24px;
             background: rgba(255,255,255,.97);
@@ -1525,7 +1526,10 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .match-photo {
             display: grid;
             place-items: center;
-            height: 102px;
+            width: 190px;
+            height: 165px;
+            padding: .6rem;
+            overflow: hidden;
             border-radius: 18px;
             background: linear-gradient(145deg, #f9c7e2, #f2d1e2);
             font-size: 4rem;
@@ -1538,7 +1542,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .match-name {
             margin: 0;
             color: #595158;
-            font-size: 1.35rem !important;
+            font-size: 1.7rem !important;
             line-height: 1.05 !important;
             font-weight: 750 !important;
         }
@@ -1546,18 +1550,18 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .match-meta {
             margin: .18rem 0 .8rem;
             color: #d04e88;
-            font-size: .65rem !important;
+            font-size: .82rem !important;
             font-weight: 550;
         }
 
         .match-reason {
-            margin: .28rem 0;
-            padding: .32rem .45rem;
-            border-radius: 3px;
+            margin: .55rem 0;
+            padding: .65rem .75rem;
+            border-radius: 8px;
             color: #77947d;
             background: #eef8ee;
-            font-size: .55rem !important;
-            line-height: 1.25;
+            font-size: .92rem !important;
+            line-height: 1.5;
         }
 
         .match-reason.consideration {
@@ -1565,25 +1569,38 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             background: #fff6e6;
         }
 
+        .requirement-heading {
+            display: block;
+            margin-bottom: .28rem;
+            color: inherit;
+            font-size: 1rem;
+            font-weight: 850;
+        }
+
+        .requirement-line {
+            display: block;
+            margin: .22rem 0;
+        }
+
         .match-score-area { text-align: center; }
-        .match-category { margin-bottom: .45rem; color: #c75a8b; font-size: .61rem !important; }
+        .match-category { margin-bottom: .55rem; color: #c75a8b; font-size: .8rem !important; font-weight: 750; }
         .score-ring {
             display: grid;
             place-items: center;
-            width: 57px;
-            height: 57px;
+            width: 76px;
+            height: 76px;
             margin: 0 auto .6rem;
             border-radius: 50%;
             color: #cf4c88;
-            font-size: .9rem;
+            font-size: 1.05rem;
             font-weight: 800;
         }
 
         .score-ring span {
             display: grid;
             place-items: center;
-            width: 47px;
-            height: 47px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: white;
         }
@@ -1594,7 +1611,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             border-radius: 7px;
             background: #d84d8b;
             color: white !important;
-            font-size: .62rem !important;
+            font-size: .78rem !important;
             font-weight: 750;
             text-align: center;
             text-decoration: none !important;
@@ -1707,9 +1724,13 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .account-avatar { font-size: 2.4rem; }
 
         .match-photo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+            display: block;
+            width: auto !important;
+            height: auto !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            object-fit: contain !important;
+            object-position: center !important;
         }
 
         @media (max-width: 900px) {
@@ -1727,7 +1748,7 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             .flow-page-header h1 { font-size: 1.55rem; }
             .st-key-question_card { border-radius: 26px; }
             .match-card { grid-template-columns: 30px 1fr; }
-            .match-photo { height: 95px; font-size: 3rem; }
+            .match-photo { width: 165px; height: 150px; font-size: 3rem; }
             .match-details, .match-score-area { grid-column: 1 / -1; }
         }
         </style>
@@ -1768,15 +1789,6 @@ def render_questionnaire_matches_sidebar() -> None:
         st.switch_page("pages/3_Questionnaire.py")
     if st.button("My account", key="flow_nav_account", width="stretch"):
         st.switch_page("pages/5_My_Account.py")
-    matches_ready = bool(st.session_state.get("questionnaire_complete", False))
-    if st.button(
-        "My matches",
-        key="flow_nav_matches",
-        width="stretch",
-        disabled=not matches_ready,
-        help=None if matches_ready else "Complete the questionnaire first.",
-    ):
-        st.switch_page("pages/6_My_Matches.py")
     if st.button("Log out", key="flow_logout", width="stretch"):
         for state_key in (
             "logged_in", "user_id", "user_name", "user_email", "role",
