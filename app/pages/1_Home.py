@@ -64,11 +64,6 @@ with main_column:
                 if st.button("View account", key="home_account", width="stretch"):
                     st.switch_page("pages/5_My_Account.py")
 
-        if questionnaire_complete:
-            st.markdown('<p class="browse-section-title">YOUR QUESTIONNAIRE IS COMPLETE</p>', unsafe_allow_html=True)
-            if st.button("View matches", key="view_matches_primary", type="primary", width="stretch"):
-                st.switch_page("pages/6_My_Matches.py")
-
         st.markdown('<p class="browse-section-title">HOW IT WORKS</p>', unsafe_allow_html=True)
         step_columns = st.columns(3, gap="medium")
         steps = (
