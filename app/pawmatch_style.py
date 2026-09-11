@@ -1669,63 +1669,6 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             box-shadow: 0 4px 10px rgba(70,48,59,.08);
         }
         .browse-section-title { margin: 1rem 0 .7rem; color: #4c4549; font-size: .92rem; font-weight: 800; }
-
-        .home-design-header h1 { font-size: 2.35rem !important; }
-        .home-design-header p { color: #d9a8be; font-size: 1rem !important; }
-        [class*="st-key-home_action_"] {
-            min-height: 250px;
-            padding: 1.25rem;
-            border: 1px solid #d8d0d4;
-            border-radius: 2px;
-            background: white;
-            box-shadow: 0 5px 9px rgba(65,45,55,.20);
-        }
-        .home-design-icon {
-            display: grid;
-            place-items: center;
-            width: 45px;
-            height: 45px;
-            border: 1px solid #5c5559;
-            background: white;
-            font-size: 1.2rem;
-        }
-        [class*="st-key-home_action_"] .stButton { margin-top: 2rem; }
-        [class*="st-key-home_action_"] .stButton > button,
-        [class*="st-key-home_action_"] .stButton > button:hover {
-            min-height: 54px;
-            padding: 0;
-            border: 0;
-            background: transparent;
-            color: #4f484c;
-            font-size: 1.08rem;
-            font-weight: 650;
-            text-align: left;
-            justify-content: flex-start;
-            box-shadow: none;
-        }
-        .home-step-card {
-            min-height: 165px;
-            padding: 1.1rem;
-            border: 1px solid #d8d0d4;
-            background: white;
-            text-align: center;
-            box-shadow: 0 5px 9px rgba(65,45,55,.18);
-        }
-        .home-step-number {
-            display: grid;
-            place-items: center;
-            width: 58px;
-            height: 58px;
-            margin: 0 auto .65rem;
-            border: 1px solid #e995bc;
-            border-radius: 50%;
-            background: #f7c9df;
-            color: #d86a9c;
-            font-weight: 800;
-        }
-        .home-step-card h3 { margin: .25rem 0; color: #554e52; font-size: .95rem; }
-        .home-step-card p { margin: .3rem 0 0; color: #8b7f85; font-size: .72rem; line-height: 1.4; }
-
         [class*="st-key-animal_card_"] {
             min-height: 390px;
             padding: .8rem;
@@ -1754,80 +1697,19 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             font-weight: 800;
         }
 
-        .profile-title h1 { margin: 0; color: #4c4549; font-size: 2rem !important; }
-        .profile-title p { margin: .25rem 0 1.15rem; color: #857981; font-size: .9rem; font-weight: 650; }
-        .st-key-profile_hero_card {
-            padding: 1.15rem;
-            border: 1px solid #d8ced3;
-            border-radius: 42px;
-            background: white;
-            box-shadow: 0 5px 9px rgba(65,45,55,.20);
-        }
-        .st-key-profile_image {
-            display: grid;
-            place-items: center;
-            height: 285px;
-            padding: .8rem;
-            border-radius: 30px;
-            background: #f5c1df;
-            overflow: hidden;
-        }
-        .st-key-profile_image [data-testid="stImage"] img {
-            width: 100%;
-            height: 255px;
-            object-fit: contain;
-        }
-        .profile-description-title { margin: .2rem 0 .55rem; color: #514a4e; font-size: 1.35rem !important; }
-        .profile-description-box {
-            min-height: 105px;
-            padding: .8rem;
-            border: 1px solid #5e575b;
-            background: white;
-            color: #71666c;
-            font-size: .82rem;
-            line-height: 1.55;
-        }
+        .profile-title h1 { margin: 0; color: #4c4549; font-size: 1.85rem !important; }
+        .profile-title p { margin: .25rem 0 1.25rem; color: #cf4d88; font-size: .7rem; }
+        .profile-description { color: #786b72; font-size: .75rem; line-height: 1.65; }
         .profile-fact {
-            min-height: 80px;
-            margin-top: .85rem;
-            padding: .7rem .75rem;
-            border: 1px solid #efbfd5;
-            border-radius: 12px;
-            background: #fff1f8;
-            text-align: left;
+            padding: .75rem;
+            border: 1px solid #ead3df;
+            border-radius: 10px;
+            background: #fff6fa;
+            text-align: center;
+            color: #685b62;
+            font-size: .66rem;
         }
-        .profile-fact span { display: block; color: #d24986; font-size: .76rem; font-weight: 750; }
-        .profile-fact strong { display: block; margin-top: .25rem; color: #4f474b; font-size: .88rem; }
-        .profile-needs-card, .profile-match-card {
-            min-height: 255px;
-            margin-top: 1rem;
-            padding: 1rem 1.15rem;
-            border: 1px solid #d8ced3;
-            border-radius: 28px;
-            background: white;
-            box-shadow: 0 5px 9px rgba(65,45,55,.18);
-        }
-        .profile-needs-card h2, .profile-match-card h2 { margin: 0 0 .7rem; color: #514a4e; font-size: 1.35rem !important; }
-        .profile-needs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
-        .profile-needs-grid > div {
-            min-height: 56px;
-            padding: .45rem .65rem;
-            border: 1px solid #efbfd5;
-            border-radius: 8px;
-            background: #fff1f8;
-        }
-        .profile-needs-grid span, .profile-needs-grid strong { display: block; }
-        .profile-needs-grid span { color: #d24986; font-size: .72rem; font-weight: 750; }
-        .profile-needs-grid strong { margin-top: .12rem; color: #4e474a; font-size: .78rem; }
-        .profile-score-row { display: flex; align-items: center; gap: .8rem; }
-        .profile-score-row strong, .profile-score-row small { display: block; }
-        .profile-score-row strong { color: #c7427c; font-size: .7rem; }
-        .profile-score-row small { max-width: 125px; margin-top: .25rem; color: #81747a; font-size: .62rem; line-height: 1.4; }
-        .profile-score-track { height: 7px; margin: .7rem 0; border-radius: 99px; background: #efdde6; overflow: hidden; }
-        .profile-score-track span { display: block; height: 100%; border-radius: inherit; background: #d84d8b; }
-        .profile-met, .profile-unmet { margin: .4rem 0; padding: .45rem .55rem; border-radius: 5px; font-size: .62rem; line-height: 1.35; }
-        .profile-met { color: #66816b; background: #eef8ee; }
-        .profile-unmet { color: #92794f; background: #fff6e6; }
+        .profile-fact strong { display: block; color: #d24986; font-size: .78rem; }
         .needs-card, .account-card {
             margin-top: 1.2rem;
             padding: 1.2rem;
