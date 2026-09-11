@@ -75,3 +75,39 @@ with main_column:
             ).replace("\n", ""),
             unsafe_allow_html=True,
         )
+<<<<<<< HEAD
+=======
+
+        browse_column, questionnaire_column, account_column = st.columns(3, gap="medium")
+        with browse_column:
+            with st.container(key="animal_card_home_browse"):
+                st.markdown('<div class="account-avatar">🐾</div><div class="animal-card-copy"><h3>Browse animals</h3><p class="animal-description">Search the available animals and open their full profiles.</p></div>', unsafe_allow_html=True)
+                if st.button("Browse animals", key="home_browse", width="stretch"):
+                    st.switch_page("pages/4_Browse_Animals.py")
+        with questionnaire_column:
+            with st.container(key="animal_card_home_questionnaire"):
+                st.markdown('<div class="account-avatar">📝</div><div class="animal-card-copy"><h3>Take questionnaire</h3><p class="animal-description">Answer seven questions to calculate your best matches.</p></div>', unsafe_allow_html=True)
+                if st.button("Open questionnaire", key="home_questionnaire", width="stretch"):
+                    st.switch_page("pages/3_Questionnaire.py")
+        with account_column:
+            with st.container(key="animal_card_home_account"):
+                st.markdown('<div class="account-avatar">👤</div><div class="animal-card-copy"><h3>My account</h3><p class="animal-description">View your profile and access My Matches under your account.</p></div>', unsafe_allow_html=True)
+                if st.button("View account", key="home_account", width="stretch"):
+                    st.switch_page("pages/5_My_Account.py")
+
+        if questionnaire_complete:
+            st.markdown('<p class="browse-section-title">YOUR QUESTIONNAIRE IS COMPLETE</p>', unsafe_allow_html=True)
+            if st.button("View matches", key="view_matches_primary", type="primary", width="stretch"):
+                st.switch_page("pages/6_My_Matches.py")
+
+        st.markdown('<p class="browse-section-title">HOW IT WORKS</p>', unsafe_allow_html=True)
+        step_columns = st.columns(3, gap="medium")
+        steps = (
+            ("1", "Tell us about your lifestyle", "Answer questions about your home, routine and preferences."),
+            ("2", "We compare requirements", "The algorithm compares your answers with each animal's needs."),
+            ("3", "View explained matches", "See ranked animals, compatibility scores and clear reasons."),
+        )
+        for column, (number, title, copy) in zip(step_columns, steps):
+            with column:
+                st.markdown(f'<div class="needs-card"><div class="flow-brand-mark">{number}</div><h2>{title}</h2><p class="need-line">{copy}</p></div>', unsafe_allow_html=True)
+>>>>>>> parent of 1166e2d (Match sidebar colors to interface design)

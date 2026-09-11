@@ -1304,9 +1304,9 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .st-key-design_sidebar {
             min-height: calc(100vh - 1.5rem);
             padding: 1.45rem 1.45rem;
-            border: 1px solid #efd5e2;
+            border: 1px solid #ead6e0;
             border-radius: 3px 0 0 3px;
-            background: #fff1f8;
+            background: rgba(253, 244, 249, .88);
         }
 
         .flow-brand {
@@ -1338,19 +1338,19 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .st-key-design_sidebar .stButton > button {
             min-height: 49px;
             margin-bottom: .42rem;
-            border: 2px solid #efbfd5;
+            border: 1px solid #efb7d0;
             border-radius: 8px;
-            background: #fff8fc;
-            color: #171318;
+            background: rgba(255,255,255,.34);
+            color: #272329;
             font-size: 1rem;
-            font-weight: 800;
+            font-weight: 700;
             box-shadow: none;
         }
 
         .st-key-design_sidebar .stButton > button:hover {
-            border-color: #e79fbe;
-            background: #fde8f3;
-            color: #171318;
+            border-color: #dc4f8c;
+            background: #fff8fb;
+            color: #ba326f;
         }
 
         .st-key-flow_logout { margin-top: 13rem; }
@@ -1925,9 +1925,9 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         <style>
         .st-key-{active_key} button,
         .st-key-{active_key} button:hover {{
-            border-color: #f2aed0 !important;
-            background: #f2aed0 !important;
-            color: #171318 !important;
+            border-color: #eaa5c3 !important;
+            background: #f3b8d5 !important;
+            color: #241f24 !important;
         }}
         </style>
         """,
