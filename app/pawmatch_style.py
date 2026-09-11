@@ -1304,9 +1304,9 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .st-key-design_sidebar {
             min-height: calc(100vh - 1.5rem);
             padding: 1.45rem 1.45rem;
-            border: 1px solid #ead6e0;
+            border: 1px solid #efd5e2;
             border-radius: 3px 0 0 3px;
-            background: rgba(253, 244, 249, .88);
+            background: #fff1f8;
         }
 
         .flow-brand {
@@ -1338,19 +1338,19 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .st-key-design_sidebar .stButton > button {
             min-height: 49px;
             margin-bottom: .42rem;
-            border: 1px solid #efb7d0;
+            border: 2px solid #efbfd5;
             border-radius: 8px;
-            background: rgba(255,255,255,.34);
-            color: #272329;
+            background: #fff8fc;
+            color: #171318;
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 800;
             box-shadow: none;
         }
 
         .st-key-design_sidebar .stButton > button:hover {
-            border-color: #dc4f8c;
-            background: #fff8fb;
-            color: #ba326f;
+            border-color: #e79fbe;
+            background: #fde8f3;
+            color: #171318;
         }
 
         .st-key-flow_logout { margin-top: 13rem; }
@@ -1670,111 +1670,61 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         }
         .browse-section-title { margin: 1rem 0 .7rem; color: #4c4549; font-size: .92rem; font-weight: 800; }
 
-        .st-key-home_intro h1 {
-            margin: 0;
-            color: #4a454b;
-            font-size: 2.2rem !important;
-            line-height: 1.08;
-            letter-spacing: -.035em;
-        }
-        .st-key-home_intro [data-testid="stCaptionContainer"] {
-            margin: .35rem 0 .08rem;
-            color: #d9a8be !important;
-            font-size: 1rem !important;
-            font-weight: 650 !important;
-        }
-        .st-key-home_intro [data-testid="stMarkdownContainer"] p {
-            margin: 0;
-            color: #302b2e;
-            font-size: .82rem;
-            line-height: 1.35;
-        }
-        .st-key-home_actions_heading h3,
-        .st-key-home_how_heading h3 {
-            margin: 2.25rem 0 .85rem;
-            color: #e8abc7 !important;
-            font-size: 1.18rem !important;
-            font-weight: 650 !important;
-            letter-spacing: .01em;
-        }
+        .home-design-header h1 { font-size: 2.35rem !important; }
+        .home-design-header p { color: #d9a8be; font-size: 1rem !important; }
         [class*="st-key-home_action_"] {
-            min-height: 215px;
-            padding: 1.05rem;
-            border: 1px solid #ddd7da;
-            border-radius: 1px;
+            min-height: 250px;
+            padding: 1.25rem;
+            border: 1px solid #d8d0d4;
+            border-radius: 2px;
             background: white;
-            box-shadow: 0 5px 8px rgba(65,45,55,.22);
-            transition: transform .15s ease, box-shadow .15s ease;
+            box-shadow: 0 5px 9px rgba(65,45,55,.20);
         }
-        [class*="st-key-home_action_"]:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 14px rgba(65,45,55,.22);
-        }
-        [class*="st-key-home_icon_"] button,
-        [class*="st-key-home_icon_"] button:disabled {
-            width: 43px;
-            height: 43px;
-            padding: 0;
+        .home-design-icon {
+            display: grid;
+            place-items: center;
+            width: 45px;
+            height: 45px;
             border: 1px solid #5c5559;
-            border-radius: 0;
             background: white;
-            color: #4b4548 !important;
-            font-size: 1rem;
-            opacity: 1;
+            font-size: 1.2rem;
         }
-        [class*="st-key-home_action_"] [data-testid="stPageLink"] { margin-top: 2rem; }
-        [class*="st-key-home_action_"] [data-testid="stPageLink"] a,
-        [class*="st-key-home_action_"] [data-testid="stPageLink"] a:hover {
-            min-height: 48px;
+        [class*="st-key-home_action_"] .stButton { margin-top: 2rem; }
+        [class*="st-key-home_action_"] .stButton > button,
+        [class*="st-key-home_action_"] .stButton > button:hover {
+            min-height: 54px;
             padding: 0;
             border: 0;
             background: transparent;
-            color: #5c5559;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            white-space: normal;
-            overflow: visible;
+            color: #4f484c;
+            font-size: 1.08rem;
+            font-weight: 650;
+            text-align: left;
+            justify-content: flex-start;
+            box-shadow: none;
         }
-        [class*="st-key-home_action_"] [data-testid="stPageLink"] p {
-            white-space: normal;
-            overflow: visible;
-            text-overflow: clip;
-        }
-        .st-key-home_how_heading h3 { margin-top: 1.4rem; }
-        [class*="st-key-home_step_"] {
-            min-height: 145px;
-            padding: .75rem 1rem;
+        .home-step-card {
+            min-height: 165px;
+            padding: 1.1rem;
             border: 1px solid #d8d0d4;
-            border-radius: 1px;
             background: white;
             text-align: center;
             box-shadow: 0 5px 9px rgba(65,45,55,.18);
         }
-        [class*="st-key-home_step_"][class*="_number"] button,
-        [class*="st-key-home_step_"][class*="_number"] button:disabled {
-            width: 54px;
-            height: 54px;
-            margin: 0 auto .45rem;
-            padding: 0;
+        .home-step-number {
+            display: grid;
+            place-items: center;
+            width: 58px;
+            height: 58px;
+            margin: 0 auto .65rem;
             border: 1px solid #e995bc;
             border-radius: 50%;
             background: #f7c9df;
-            color: #d86a9c !important;
+            color: #d86a9c;
             font-weight: 800;
-            opacity: 1;
         }
-        [class*="st-key-home_step_"] strong { color: #554e52; font-size: .85rem; font-weight: 700; }
-        [class*="st-key-home_step_"] [data-testid="stCaptionContainer"] { color: #8b7f85; font-size: .63rem; line-height: 1.35; }
-
-        @media (max-width: 850px) {
-            [class*="st-key-home_action_"] { min-height: 180px; }
-        }
-
-        @media (max-width: 620px) {
-            [class*="st-key-home_action_"] { min-height: 130px; }
-            [class*="st-key-home_action_"] [data-testid="stPageLink"] { margin-top: 1rem; }
-        }
+        .home-step-card h3 { margin: .25rem 0; color: #554e52; font-size: .95rem; }
+        .home-step-card p { margin: .3rem 0 0; color: #8b7f85; font-size: .72rem; line-height: 1.4; }
 
         [class*="st-key-animal_card_"] {
             min-height: 390px;
@@ -1928,9 +1878,9 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         <style>
         .st-key-{active_key} button,
         .st-key-{active_key} button:hover {{
-            border-color: #eaa5c3 !important;
-            background: #f3b8d5 !important;
-            color: #241f24 !important;
+            border-color: #f2aed0 !important;
+            background: #f2aed0 !important;
+            color: #171318 !important;
         }}
         </style>
         """,
