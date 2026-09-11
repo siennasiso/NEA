@@ -1670,43 +1670,78 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         }
         .browse-section-title { margin: 1rem 0 .7rem; color: #4c4549; font-size: .92rem; font-weight: 800; }
 
-        .home-design-header h1 { font-size: 2.35rem !important; }
-        .home-design-header p { color: #d9a8be; font-size: 1rem !important; }
-        [class*="st-key-home_action_"] {
-            min-height: 250px;
-            padding: 1.25rem;
-            border: 1px solid #d8d0d4;
-            border-radius: 2px;
+        .home-mockup { width: 100%; }
+        .home-mockup-header h1 {
+            margin: 0;
+            color: #4a454b;
+            font-size: 2.2rem;
+            line-height: 1.08;
+            letter-spacing: -.035em;
+        }
+        .home-mockup-subtitle {
+            margin: .35rem 0 .08rem;
+            color: #d9a8be;
+            font-size: 1rem;
+            font-weight: 650;
+        }
+        .home-mockup-intro {
+            margin: 0;
+            color: #302b2e;
+            font-size: .82rem;
+            line-height: 1.35;
+        }
+        .home-mockup-label {
+            margin: 2.25rem 0 .85rem;
+            color: #e8abc7 !important;
+            font-size: 1.18rem !important;
+            font-weight: 650 !important;
+            letter-spacing: .01em;
+        }
+        .home-actions-grid, .home-steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 2.7rem;
+        }
+        .home-action-card {
+            display: block;
+            min-height: 215px;
+            padding: 1.05rem;
+            border: 1px solid #ddd7da;
+            border-radius: 1px;
             background: white;
-            box-shadow: 0 5px 9px rgba(65,45,55,.20);
+            color: #514b4e !important;
+            text-decoration: none !important;
+            box-shadow: 0 5px 8px rgba(65,45,55,.22);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .home-action-card:hover {
+            color: #514b4e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 14px rgba(65,45,55,.22);
         }
         .home-design-icon {
             display: grid;
             place-items: center;
-            width: 45px;
-            height: 45px;
+            width: 43px;
+            height: 43px;
             border: 1px solid #5c5559;
             background: white;
-            font-size: 1.2rem;
+            color: #4b4548;
+            font-size: 1rem;
         }
-        [class*="st-key-home_action_"] .stButton { margin-top: 2rem; }
-        [class*="st-key-home_action_"] .stButton > button,
-        [class*="st-key-home_action_"] .stButton > button:hover {
-            min-height: 54px;
-            padding: 0;
-            border: 0;
-            background: transparent;
-            color: #4f484c;
-            font-size: 1.08rem;
-            font-weight: 650;
-            text-align: left;
-            justify-content: flex-start;
-            box-shadow: none;
+        .home-action-card strong {
+            display: block;
+            margin-top: 2.15rem;
+            color: #5c5559;
+            font-size: 1rem;
+            font-weight: 600;
         }
+        .home-how-label { margin-top: 1.4rem; }
         .home-step-card {
-            min-height: 165px;
-            padding: 1.1rem;
+            min-height: 145px;
+            padding: .75rem 1rem;
             border: 1px solid #d8d0d4;
+            border-radius: 1px;
             background: white;
             text-align: center;
             box-shadow: 0 5px 9px rgba(65,45,55,.18);
@@ -1714,17 +1749,29 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         .home-step-number {
             display: grid;
             place-items: center;
-            width: 58px;
-            height: 58px;
-            margin: 0 auto .65rem;
+            width: 54px;
+            height: 54px;
+            margin: 0 auto .45rem;
             border: 1px solid #e995bc;
             border-radius: 50%;
             background: #f7c9df;
             color: #d86a9c;
             font-weight: 800;
         }
-        .home-step-card h3 { margin: .25rem 0; color: #554e52; font-size: .95rem; }
-        .home-step-card p { margin: .3rem 0 0; color: #8b7f85; font-size: .72rem; line-height: 1.4; }
+        .home-step-card h3 { margin: .12rem 0; color: #554e52; font-size: .85rem; font-weight: 650; }
+        .home-step-card p { margin: .22rem 0 0; color: #8b7f85; font-size: .63rem; line-height: 1.35; }
+
+        @media (max-width: 850px) {
+            .home-actions-grid, .home-steps-grid { gap: .9rem; }
+            .home-action-card { min-height: 180px; }
+            .home-mockup-intro br { display: none; }
+        }
+
+        @media (max-width: 620px) {
+            .home-actions-grid, .home-steps-grid { grid-template-columns: 1fr; }
+            .home-action-card { min-height: 130px; }
+            .home-action-card strong { margin-top: 1rem; }
+        }
 
         [class*="st-key-animal_card_"] {
             min-height: 390px;
