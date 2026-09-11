@@ -1670,74 +1670,79 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         }
         .browse-section-title { margin: 1rem 0 .7rem; color: #4c4549; font-size: .92rem; font-weight: 800; }
 
-        .home-mockup { width: 100%; }
-        .home-mockup-header h1 {
+        .st-key-home_intro h1 {
             margin: 0;
             color: #4a454b;
-            font-size: 2.2rem;
+            font-size: 2.2rem !important;
             line-height: 1.08;
             letter-spacing: -.035em;
         }
-        .home-mockup-subtitle {
+        .st-key-home_intro [data-testid="stCaptionContainer"] {
             margin: .35rem 0 .08rem;
-            color: #d9a8be;
-            font-size: 1rem;
-            font-weight: 650;
+            color: #d9a8be !important;
+            font-size: 1rem !important;
+            font-weight: 650 !important;
         }
-        .home-mockup-intro {
+        .st-key-home_intro [data-testid="stMarkdownContainer"] p {
             margin: 0;
             color: #302b2e;
             font-size: .82rem;
             line-height: 1.35;
         }
-        .home-mockup-label {
+        .st-key-home_actions_heading h3,
+        .st-key-home_how_heading h3 {
             margin: 2.25rem 0 .85rem;
             color: #e8abc7 !important;
             font-size: 1.18rem !important;
             font-weight: 650 !important;
             letter-spacing: .01em;
         }
-        .home-actions-grid, .home-steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 2.7rem;
-        }
-        .home-action-card {
-            display: block;
+        [class*="st-key-home_action_"] {
             min-height: 215px;
             padding: 1.05rem;
             border: 1px solid #ddd7da;
             border-radius: 1px;
             background: white;
-            color: #514b4e !important;
-            text-decoration: none !important;
             box-shadow: 0 5px 8px rgba(65,45,55,.22);
             transition: transform .15s ease, box-shadow .15s ease;
         }
-        .home-action-card:hover {
-            color: #514b4e !important;
+        [class*="st-key-home_action_"]:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 14px rgba(65,45,55,.22);
         }
-        .home-design-icon {
-            display: grid;
-            place-items: center;
+        [class*="st-key-home_icon_"] button,
+        [class*="st-key-home_icon_"] button:disabled {
             width: 43px;
             height: 43px;
+            padding: 0;
             border: 1px solid #5c5559;
+            border-radius: 0;
             background: white;
-            color: #4b4548;
+            color: #4b4548 !important;
             font-size: 1rem;
+            opacity: 1;
         }
-        .home-action-card strong {
-            display: block;
-            margin-top: 2.15rem;
+        [class*="st-key-home_action_"] [data-testid="stPageLink"] { margin-top: 2rem; }
+        [class*="st-key-home_action_"] [data-testid="stPageLink"] a,
+        [class*="st-key-home_action_"] [data-testid="stPageLink"] a:hover {
+            min-height: 48px;
+            padding: 0;
+            border: 0;
+            background: transparent;
             color: #5c5559;
             font-size: 1rem;
             font-weight: 600;
+            text-decoration: none;
+            white-space: normal;
+            overflow: visible;
         }
-        .home-how-label { margin-top: 1.4rem; }
-        .home-step-card {
+        [class*="st-key-home_action_"] [data-testid="stPageLink"] p {
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+        }
+        .st-key-home_how_heading h3 { margin-top: 1.4rem; }
+        [class*="st-key-home_step_"] {
             min-height: 145px;
             padding: .75rem 1rem;
             border: 1px solid #d8d0d4;
@@ -1746,31 +1751,29 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             text-align: center;
             box-shadow: 0 5px 9px rgba(65,45,55,.18);
         }
-        .home-step-number {
-            display: grid;
-            place-items: center;
+        [class*="st-key-home_step_"][class*="_number"] button,
+        [class*="st-key-home_step_"][class*="_number"] button:disabled {
             width: 54px;
             height: 54px;
             margin: 0 auto .45rem;
+            padding: 0;
             border: 1px solid #e995bc;
             border-radius: 50%;
             background: #f7c9df;
-            color: #d86a9c;
+            color: #d86a9c !important;
             font-weight: 800;
+            opacity: 1;
         }
-        .home-step-card h3 { margin: .12rem 0; color: #554e52; font-size: .85rem; font-weight: 650; }
-        .home-step-card p { margin: .22rem 0 0; color: #8b7f85; font-size: .63rem; line-height: 1.35; }
+        [class*="st-key-home_step_"] strong { color: #554e52; font-size: .85rem; font-weight: 700; }
+        [class*="st-key-home_step_"] [data-testid="stCaptionContainer"] { color: #8b7f85; font-size: .63rem; line-height: 1.35; }
 
         @media (max-width: 850px) {
-            .home-actions-grid, .home-steps-grid { gap: .9rem; }
-            .home-action-card { min-height: 180px; }
-            .home-mockup-intro br { display: none; }
+            [class*="st-key-home_action_"] { min-height: 180px; }
         }
 
         @media (max-width: 620px) {
-            .home-actions-grid, .home-steps-grid { grid-template-columns: 1fr; }
-            .home-action-card { min-height: 130px; }
-            .home-action-card strong { margin-top: 1rem; }
+            [class*="st-key-home_action_"] { min-height: 130px; }
+            [class*="st-key-home_action_"] [data-testid="stPageLink"] { margin-top: 1rem; }
         }
 
         [class*="st-key-animal_card_"] {
