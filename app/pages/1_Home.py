@@ -35,7 +35,7 @@ with main_column:
     with st.container(key="design_main"):
         st.markdown(
             f"""
-            <div class="flow-page-header">
+            <div class="flow-page-header home-design-header">
                 <div>
                     <h1>Welcome Back {first_name}</h1>
                     <p>Time to find your purrfect companion!</p>
@@ -49,18 +49,18 @@ with main_column:
 
         browse_column, questionnaire_column, account_column = st.columns(3, gap="medium")
         with browse_column:
-            with st.container(key="animal_card_home_browse"):
-                st.markdown('<div class="account-avatar">🐾</div><div class="animal-card-copy"><h3>Browse animals</h3><p class="animal-description">Search the available animals and open their full profiles.</p></div>', unsafe_allow_html=True)
+            with st.container(key="home_action_browse"):
+                st.markdown('<div class="home-design-icon">🐾</div>', unsafe_allow_html=True)
                 if st.button("Browse animals", key="home_browse", width="stretch"):
                     st.switch_page("pages/4_Browse_Animals.py")
         with questionnaire_column:
-            with st.container(key="animal_card_home_questionnaire"):
-                st.markdown('<div class="account-avatar">📝</div><div class="animal-card-copy"><h3>Take questionnaire</h3><p class="animal-description">Answer seven questions to calculate your best matches.</p></div>', unsafe_allow_html=True)
-                if st.button("Open questionnaire", key="home_questionnaire", width="stretch"):
+            with st.container(key="home_action_questionnaire"):
+                st.markdown('<div class="home-design-icon">📝</div>', unsafe_allow_html=True)
+                if st.button("Take questionnaire", key="home_questionnaire", width="stretch"):
                     st.switch_page("pages/3_Questionnaire.py")
         with account_column:
-            with st.container(key="animal_card_home_account"):
-                st.markdown('<div class="account-avatar">👤</div><div class="animal-card-copy"><h3>My account</h3><p class="animal-description">View your profile and access My Matches under your account.</p></div>', unsafe_allow_html=True)
+            with st.container(key="home_action_account"):
+                st.markdown('<div class="home-design-icon">👤</div>', unsafe_allow_html=True)
                 if st.button("View account", key="home_account", width="stretch"):
                     st.switch_page("pages/5_My_Account.py")
 
@@ -73,4 +73,4 @@ with main_column:
         )
         for column, (number, title, copy) in zip(step_columns, steps):
             with column:
-                st.markdown(f'<div class="needs-card"><div class="flow-brand-mark">{number}</div><h2>{title}</h2><p class="need-line">{copy}</p></div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="home-step-card"><div class="home-step-number">{number}</div><h3>{title}</h3><p>{copy}</p></div>', unsafe_allow_html=True)

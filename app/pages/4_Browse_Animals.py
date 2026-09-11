@@ -7,7 +7,7 @@ import html
 import streamlit as st
 
 from pawmatch_animals import SPECIES, animal_image_path, fetch_animal, fetch_animals, format_age, seed_demo_animals
-from pawmatch_matching import fetch_latest_matches
+from pawmatch_matching import calculate_match, fetch_latest_matches, fetch_latest_response
 from pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
 
 st.set_page_config(page_title="PawMatch | Browse animals", page_icon="🐾", layout="wide")
@@ -53,36 +53,66 @@ with main_column:
                 f'<div class="profile-title"><h1>Meet {name}</h1><p>{html.escape(str(selected_animal["species"]))} · {html.escape(str(selected_animal["breed"]))}</p></div>',
                 unsafe_allow_html=True,
             )
-            image_column, description_column = st.columns([1, 1.25], gap="large")
-            with image_column:
-                portrait = animal_image_path(selected_animal["name"])
-                if portrait.exists():
-                    st.image(str(portrait), width="stretch")
-            with description_column:
-                st.markdown(f'<p class="profile-description">{html.escape(str(selected_animal["description"]))}</p>', unsafe_allow_html=True)
-                fact_columns = st.columns(3, gap="small")
-                facts = (("Age", format_age(selected_animal["age_years"])), ("Sex", selected_animal["sex"]), ("Size", selected_animal["size"]))
-                for column, (label, value) in zip(fact_columns, facts):
-                    with column:
-                        st.markdown(f'<div class="profile-fact"><strong>{html.escape(str(value))}</strong>{label}</div>', unsafe_allow_html=True)
+            with st.container(key="profile_hero_card"):
+                image_column, description_column = st.columns([1, 1.45], gap="medium")
+                with image_column:
+                    with st.container(key="profile_image"):
+                        portrait = animal_image_path(selected_animal["name"])
+                        if portrait.exists():
+                            st.image(str(portrait), width="stretch")
+                with description_column:
+                    st.markdown(f'<h2 class="profile-description-title">{name} description</h2>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="profile-description-box">{html.escape(str(selected_animal["description"]))}</div>', unsafe_allow_html=True)
+                    fact_columns = st.columns(3, gap="small")
+                    facts = (("Age", format_age(selected_animal["age_years"])), ("Sex", selected_animal["sex"]), ("Size", selected_animal["size"]))
+                    for column, (label, value) in zip(fact_columns, facts):
+                        with column:
+                            st.markdown(f'<div class="profile-fact"><span>{label}</span><strong>{html.escape(str(value))}</strong></div>', unsafe_allow_html=True)
 
-                score = next((int(match["compatibility_score"]) for match in fetch_latest_matches(int(st.session_state.user_id)) if int(match["animal_id"]) == int(selected_animal["animal_id"])), None)
-                score_text = f"{score}% compatible" if score is not None else "Complete the questionnaire to see compatibility"
-                st.markdown(f'<div class="needs-card"><h2>Your compatibility</h2><p class="need-line"><strong>{score_text}</strong></p></div>', unsafe_allow_html=True)
+            latest_response = fetch_latest_response(int(st.session_state.user_id))
+            stored_match = next((match for match in fetch_latest_matches(int(st.session_state.user_id), include_low=True) if int(match["animal_id"]) == int(selected_animal["animal_id"])), None)
+            detailed_match = calculate_match(selected_animal, latest_response) if latest_response is not None else None
 
-            st.markdown(
-                f"""
-                <div class="needs-card">
-                    <h2>What {name} Needs from a Home</h2>
-                    <p class="need-line"><strong>Activity:</strong> {html.escape(str(selected_animal['activity_level']))}</p>
-                    <p class="need-line"><strong>Home type:</strong> {html.escape(str(selected_animal['home_type']))}</p>
-                    <p class="need-line"><strong>Garden:</strong> {'Required' if selected_animal['garden_required'] else 'Not required'}</p>
-                    <p class="need-line"><strong>Children:</strong> {html.escape(str(selected_animal['child_friendly']))}</p>
-                    <p class="need-line"><strong>Maximum time alone:</strong> {int(selected_animal['max_hours_alone'])} hours</p>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+            needs_column, match_column = st.columns([1.7, 1], gap="medium")
+            with needs_column:
+                st.markdown(
+                    f"""
+                    <div class="profile-needs-card">
+                        <h2>What {name} Needs from a Home</h2>
+                        <div class="profile-needs-grid">
+                            <div><span>Activity</span><strong>{html.escape(str(selected_animal['activity_level']))}</strong></div>
+                            <div><span>Home Type</span><strong>{html.escape(str(selected_animal['home_type']))}</strong></div>
+                            <div><span>Garden</span><strong>{'Required' if selected_animal['garden_required'] else 'Not required'}</strong></div>
+                            <div><span>Children</span><strong>{html.escape(str(selected_animal['child_friendly']))}</strong></div>
+                            <div><span>Time alone</span><strong>{int(selected_animal['max_hours_alone'])} hours</strong></div>
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            with match_column:
+                if detailed_match is None:
+                    st.markdown('<div class="profile-match-card"><h2>Your match</h2><p>Complete the questionnaire to see your compatibility.</p></div>', unsafe_allow_html=True)
+                else:
+                    score = int(stored_match["compatibility_score"] if stored_match else detailed_match["compatibility_score"])
+                    category = html.escape(str(detailed_match["match_category"]))
+                    met = html.escape(str(detailed_match["matched_requirements"][0])) if detailed_match["matched_requirements"] else "No requirements met."
+                    unmet = html.escape(str(detailed_match["unmet_requirements"][0])) if detailed_match["unmet_requirements"] else "No important concerns."
+                    st.markdown(
+                        f"""
+                        <div class="profile-match-card">
+                            <h2>A {category.lower()} match</h2>
+                            <div class="profile-score-row">
+                                <div class="score-ring" style="background:conic-gradient(#d84d8b {score}%, #f1d8e4 0)"><span>{score}%</span></div>
+                                <div><strong>{category.upper()} MATCH</strong><small>Compatibility with your home and lifestyle.</small></div>
+                            </div>
+                            <div class="profile-score-track"><span style="width:{score}%"></span></div>
+                            <p class="profile-met">✓ {met}</p>
+                            <p class="profile-unmet">! {unmet}</p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
         else:
             st.session_state.pop("browse_animal_id", None)
             if st.button("← Back to home", key="page_back"):
