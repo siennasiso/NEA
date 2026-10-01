@@ -1,4 +1,4 @@
-"""Show the three highest ranked matches using the interface-design cards."""
+"""Show up to five ranked matches using the interface-design cards."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ apply_questionnaire_matches_style("matches")
 
 user_id = int(st.session_state.user_id)
 latest_response = fetch_latest_response(user_id)
-matches = fetch_latest_matches(user_id)[:3] if latest_response else []
+matches = fetch_latest_matches(user_id)[:5] if latest_response else []
 species_icons = {"Dog": "🐕", "Cat": "🐈", "Rabbit": "🐇"}
 
 sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
@@ -41,7 +41,7 @@ with main_column:
             <div class="flow-page-header matches-heading">
                 <div>
                     <h1>Your ranked matches</h1>
-                    <p>Animals are ranked from highest compatibility to the lowest compatibility.</p>
+                    <p>Eligible animals are ranked by your preferences, then compatibility.</p>
                 </div>
             </div>
             """,
@@ -55,7 +55,7 @@ with main_column:
             )
         elif not matches:
             st.markdown(
-                '<div class="no-matches-card">No available animals currently reach the minimum possible-match score.</div>',
+                '<div class="no-matches-card">No animals currently meet the minimum recommendation score.</div>',
                 unsafe_allow_html=True,
             )
         else:
@@ -64,7 +64,7 @@ with main_column:
             st.session_state.match_count = len(matches)
 
             for position, match in enumerate(matches, start=1):
-                score = int(match["compatibility_score"])
+                score = float(match["compatibility_score"])
                 name = html.escape(str(match["name"]))
                 species = html.escape(str(match["species"]))
                 breed = html.escape(str(match["breed"]))
@@ -100,7 +100,7 @@ with main_column:
                         </div>
                         <div class="match-score-area">
                             <div class="match-category">{category} Match</div>
-                            <div class="score-ring" style="background:conic-gradient(#d84d8b {score}%, #f1d8e4 0)"><span>{score}%</span></div>
+                            <div class="score-ring" style="background:conic-gradient(#d84d8b {score}%, #f1d8e4 0)"><span>{score:.1f}%</span></div>
                             <a class="profile-button" href="/Browse_Animals?animal={int(match['animal_id'])}" target="_self">View animal profile</a>
                         </div>
                     </article>

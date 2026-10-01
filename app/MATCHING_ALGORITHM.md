@@ -18,7 +18,7 @@ Boolean answers are stored as `1` for Yes and `0` for No. Input is validated bot
 
 `questionnaire_responses` stores each completed set of answers. Its `user_id` foreign key connects a response to the `users` table.
 
-`match_results` stores one calculated result for every available animal at submission time. Its foreign keys connect each result to both `questionnaire_responses` and `animals`. It stores the compatibility score, internal ranking score, category, requirements met, requirements not met and calculation time.
+`match_results` stores one calculated result for every available animal that reaches the 70% recommendation threshold. Its foreign keys connect each result to both `questionnaire_responses` and `animals`. It stores the compatibility score, preference score, category, requirements met, requirements not met and calculation time.
 
 The `animals` table stores the requirements used by the algorithm, including minimum housing level, garden requirement, activity level, child suitability and maximum hours alone. The setup script inserts 13 sample animals and can be repeated without duplicating them.
 
@@ -47,17 +47,17 @@ The fixed categories are:
 - **Possible:** 50–64%
 - **Low:** below 50%
 
-Low matches are stored for traceability but removed from the recommendation page.
+Animals below 70% are not added to the recommendation results.
 
 ## Preference ranking
 
-Species and size preferences must not disguise a welfare mismatch, so they do not change the displayed compatibility percentage. Only animals with at least 60% compatibility receive preference bonuses:
+Species and size preferences do not change the displayed compatibility percentage. Only animals with at least 70% compatibility become recommendations; each qualifying animal then receives a separate preference score:
 
 - matching preferred species: `+10` ranking points;
 - matching preferred size: `+5` ranking points;
 - No preference: no bonus.
 
-Results are sorted by the internal ranking score, then compatibility. The page shows the top three results from the interface design but does not display the internal ranking score.
+Results are sorted by preference score first and compatibility second, both highest first. The page shows up to five results and does not display the internal preference score.
 
 ## Program flow
 
@@ -72,11 +72,11 @@ fetch animals with status = Available
         ↓
 calculate welfare compatibility for each animal
         ↓
-apply preference bonuses only when compatibility ≥ 60%
+discard animals below 70% compatibility
         ↓
-insert match_results rows
+calculate preference scores and insert qualifying match_results rows
         ↓
-remove Low matches from the displayed list and show the top three
+sort by preference score, then compatibility, and show up to five
 ```
 
 The implementation is in `pawmatch_matching.py`. Its functions have docstrings and keep database operations separate from the Streamlit pages.

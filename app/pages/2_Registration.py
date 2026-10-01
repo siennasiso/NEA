@@ -89,7 +89,7 @@ else:
                             "Full name",
                             placeholder="Enter your full name",
                             key="registration_name",
-                            max_chars=60,
+                            max_chars=50,
                             autocomplete="name",
                         )
                         if "name" in errors:
@@ -141,7 +141,7 @@ else:
                             autocomplete="new-password",
                         )
                         st.markdown(
-                            '<p class="password-hint">Use 8 or more characters with an uppercase letter, lowercase letter and number.</p>',
+                            '<p class="password-hint">Use more than 8 characters.</p>',
                             unsafe_allow_html=True,
                         )
                         if "password" in errors:

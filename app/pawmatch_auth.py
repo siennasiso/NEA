@@ -106,8 +106,8 @@ def validate_registration(
         errors["name"] = "Enter your full name."
     elif len(cleaned_name) < 2:
         errors["name"] = "Your name must contain at least 2 characters."
-    elif len(cleaned_name) > 60:
-        errors["name"] = "Your name must be 60 characters or fewer."
+    elif len(cleaned_name) > 50:
+        errors["name"] = "Your name must be 50 characters or fewer."
     elif not all(
         character.isalpha() or character in {" ", "-", "'", "."}
         for character in cleaned_name
@@ -118,6 +118,19 @@ def validate_registration(
         errors["email"] = "Enter your email address."
     elif EMAIL_PATTERN.fullmatch(cleaned_email) is None:
         errors["email"] = "Enter a valid email address, such as name@example.com."
+    else:
+        try:
+            with get_connection() as connection:
+                existing_email = connection.execute(
+                    "SELECT 1 FROM users WHERE email = ? COLLATE NOCASE LIMIT 1",
+                    (cleaned_email,),
+                ).fetchone()
+        except sqlite3.OperationalError:
+            # Setup scripts initialise the table before validation. Retaining
+            # this fallback keeps the validator usable in isolation too.
+            existing_email = None
+        if existing_email is not None:
+            errors["email"] = "An account already exists for this email address."
 
     if age is None:
         errors["age"] = "Enter your age."
@@ -128,16 +141,10 @@ def validate_registration(
 
     if not password:
         errors["password"] = "Create a password."
-    elif len(password) < 8:
-        errors["password"] = "Your password must contain at least 8 characters."
+    elif len(password) <= 8:
+        errors["password"] = "Your password must contain more than 8 characters."
     elif len(password) > 128:
         errors["password"] = "Your password must contain no more than 128 characters."
-    elif not any(character.islower() for character in password):
-        errors["password"] = "Include at least one lowercase letter."
-    elif not any(character.isupper() for character in password):
-        errors["password"] = "Include at least one uppercase letter."
-    elif not any(character.isdigit() for character in password):
-        errors["password"] = "Include at least one number."
 
     if not confirm_password:
         errors["confirm_password"] = "Repeat your password."

@@ -6,7 +6,7 @@ import html
 
 import streamlit as st
 
-from pawmatch_animals import SPECIES, animal_image_path, fetch_animal, fetch_animals, format_age, seed_demo_animals
+from pawmatch_animals import SPECIES, animal_image_path, fetch_animal, fetch_animals, format_age, seed_demo_animals, validate_animal_search
 from pawmatch_matching import fetch_latest_matches
 from pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
 
@@ -66,8 +66,8 @@ with main_column:
                     with column:
                         st.markdown(f'<div class="profile-fact"><strong>{html.escape(str(value))}</strong>{label}</div>', unsafe_allow_html=True)
 
-                score = next((int(match["compatibility_score"]) for match in fetch_latest_matches(int(st.session_state.user_id)) if int(match["animal_id"]) == int(selected_animal["animal_id"])), None)
-                score_text = f"{score}% compatible" if score is not None else "Complete the questionnaire to see compatibility"
+                score = next((float(match["compatibility_score"]) for match in fetch_latest_matches(int(st.session_state.user_id)) if int(match["animal_id"]) == int(selected_animal["animal_id"])), None)
+                score_text = f"{score:.1f}% compatible" if score is not None else "Complete the questionnaire to see compatibility"
                 st.markdown(f'<div class="needs-card"><h2>Your compatibility</h2><p class="need-line"><strong>{score_text}</strong></p></div>', unsafe_allow_html=True)
 
             st.markdown(
@@ -92,7 +92,7 @@ with main_column:
             with st.container(key="browse_filter_card"):
                 search_column, species_column, clear_column = st.columns([1.5, 1, .75], gap="small")
                 with search_column:
-                    search = st.text_input("Search", key="browse_search", placeholder="Name or breed")
+                    search = st.text_input("Search", key="browse_search", placeholder="Name or breed", max_chars=20)
                 with species_column:
                     species = st.selectbox("Species", ("All species", *SPECIES), key="browse_species")
                 with clear_column:
@@ -100,7 +100,17 @@ with main_column:
                     st.write("")
                     st.button("Clear filters", on_click=_clear_filters, width="stretch")
 
-            animals = fetch_animals(search, species, "Available")
+            search_errors, filters = validate_animal_search(search, species)
+            if search_errors:
+                st.error("Please correct the search or filter values.")
+                animals = []
+            else:
+                animals = fetch_animals(
+                    filters["search"],
+                    filters["species"],
+                    "Available",
+                    size=filters["size"],
+                )
             st.markdown(f'<p class="browse-section-title">Available animals · {len(animals)}</p>', unsafe_allow_html=True)
             if not animals:
                 st.info("No available animals match those filters.")

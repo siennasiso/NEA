@@ -20,7 +20,7 @@ questionnaire_complete = latest_response is not None
 if questionnaire_complete:
     st.session_state.questionnaire_complete = True
     st.session_state.questionnaire_progress = 100
-    st.session_state.match_count = min(3, len(fetch_latest_matches(int(st.session_state.user_id))))
+    st.session_state.match_count = min(5, len(fetch_latest_matches(int(st.session_state.user_id))))
 
 apply_questionnaire_matches_style("home")
 full_name = str(st.session_state.get("user_name", "PawMatch user")).strip()

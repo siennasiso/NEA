@@ -30,7 +30,7 @@ WEIGHTS = {
     "garden": 10,
 }
 MAX_COMPATIBILITY_POINTS = sum(WEIGHTS.values())
-PREFERENCE_BONUS_THRESHOLD = 60
+MINIMUM_RECOMMENDATION_SCORE = 70
 
 
 def initialise_matching_tables() -> None:
@@ -164,7 +164,7 @@ def save_questionnaire_response(user_id: int, values: dict[str, Any]) -> int:
         return int(cursor.lastrowid)
 
 
-def _match_category(score: int) -> str:
+def _match_category(score: float) -> str:
     """Convert a 0-100 compatibility score into the designed category labels."""
     if score >= 80:
         return "Strong"
@@ -176,7 +176,7 @@ def _match_category(score: int) -> str:
 
 
 def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str, Any]:
-    """Calculate one animal's welfare score and preference-based ranking score."""
+    """Calculate one animal's welfare score and separate preference score."""
     errors, cleaned = validate_questionnaire(answers)
     if errors:
         raise ValueError("The questionnaire contains invalid answers.")
@@ -263,18 +263,21 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
             f"Garden: you selected no garden access, but {animal_name} requires a secure garden."
         )
 
-    compatibility = round((points / MAX_COMPATIBILITY_POINTS) * 100)
-    ranking = compatibility
-    if compatibility >= PREFERENCE_BONUS_THRESHOLD:
+    compatibility = round((points / MAX_COMPATIBILITY_POINTS) * 100, 1)
+    preference_score = 0
+    if compatibility >= MINIMUM_RECOMMENDATION_SCORE:
         if cleaned["preferred_species"] != "No preference" and cleaned["preferred_species"] == animal["species"]:
-            ranking += 10
+            preference_score += 10
         if cleaned["preferred_size"] != "No preference" and cleaned["preferred_size"] == animal["size"]:
-            ranking += 5
+            preference_score += 5
 
     return {
         "animal_id": int(animal["animal_id"]),
         "compatibility_score": compatibility,
-        "ranking_score": ranking,
+        "preference_score": preference_score,
+        # Keep the existing database field as a backwards-compatible alias. It now
+        # stores the pseudocode's preference score, not compatibility + bonus.
+        "ranking_score": preference_score,
         "match_category": _match_category(compatibility),
         "matched_requirements": matched,
         "unmet_requirements": unmet,
@@ -282,15 +285,20 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
 
 
 def calculate_and_store_matches(response_id: int, answers: dict[str, Any]) -> list[dict[str, Any]]:
-    """Calculate all available animals, persist them, and return ranking order."""
+    """Persist eligible animals and return preference-first ranking order."""
     initialise_matching_tables()
     results = [
         calculate_match(animal, answers)
         for animal in fetch_animals(status="Available")
     ]
+    results = [
+        result
+        for result in results
+        if result["compatibility_score"] >= MINIMUM_RECOMMENDATION_SCORE
+    ]
     results.sort(
         key=lambda item: (
-            item["ranking_score"], item["compatibility_score"], -item["animal_id"]
+            item["preference_score"], item["compatibility_score"], -item["animal_id"]
         ),
         reverse=True,
     )
@@ -309,7 +317,7 @@ def calculate_and_store_matches(response_id: int, answers: dict[str, Any]) -> li
                     response_id,
                     result["animal_id"],
                     result["compatibility_score"],
-                    result["ranking_score"],
+                    result["preference_score"],
                     result["match_category"],
                     json.dumps(result["matched_requirements"]),
                     json.dumps(result["unmet_requirements"]),
@@ -342,26 +350,34 @@ def fetch_latest_response(user_id: int) -> dict[str, Any] | None:
 
 
 def fetch_latest_matches(user_id: int, include_low: bool = False) -> list[dict[str, Any]]:
-    """Return the newest response's stored matches joined to animal details."""
+    """Return the newest response's recommendation-eligible animal matches."""
     latest = fetch_latest_response(user_id)
     if latest is None:
         return []
-    condition = "" if include_low else "AND mr.match_category != 'Low'"
+    condition = "" if include_low else "AND mr.compatibility_score >= ?"
+    parameters: tuple[Any, ...] = (latest["response_id"],)
+    if not include_low:
+        parameters += (MINIMUM_RECOMMENDATION_SCORE,)
     with get_connection() as connection:
         rows = connection.execute(
             f"""
-            SELECT mr.*, a.name, a.species, a.breed, a.age_years, a.sex,
+            SELECT mr.*,
+                   (CASE WHEN qr.preferred_species = a.species THEN 10 ELSE 0 END
+                    + CASE WHEN qr.preferred_size = a.size THEN 5 ELSE 0 END)
+                       AS preference_score,
+                   a.name, a.species, a.breed, a.age_years, a.sex,
                    a.size, a.activity_level, a.home_type,
                    a.minimum_housing_level, a.garden_required,
                    a.child_friendly, a.max_hours_alone,
                    a.description, a.image_url
             FROM match_results AS mr
             JOIN animals AS a ON a.animal_id = mr.animal_id
+            JOIN questionnaire_responses AS qr ON qr.response_id = mr.response_id
             WHERE mr.response_id = ? {condition}
-            ORDER BY mr.ranking_score DESC, mr.compatibility_score DESC,
+            ORDER BY preference_score DESC, mr.compatibility_score DESC,
                      mr.animal_id ASC
             """,
-            (latest["response_id"],),
+            parameters,
         ).fetchall()
     matches = [dict(row) for row in rows]
     for match in matches:

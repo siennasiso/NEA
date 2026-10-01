@@ -219,7 +219,7 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
                 key=f"{prefix}_activity",
             )
             max_hours_alone = st.number_input(
-                "Maximum hours left alone", min_value=0, max_value=12,
+                "Maximum hours left alone", min_value=0, max_value=24,
                 value=int(defaults.get("max_hours_alone", 4)), step=1,
                 key=f"{prefix}_alone",
             )

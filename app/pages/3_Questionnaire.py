@@ -256,14 +256,10 @@ with main_column:
                             int(st.session_state.user_id), cleaned
                         )
                         results = calculate_and_store_matches(response_id, cleaned)
-                        recommendations = [
-                            result for result in results
-                            if result["match_category"] != "Low"
-                        ]
                         st.session_state.questionnaire_answers = cleaned
                         st.session_state.questionnaire_complete = True
                         st.session_state.questionnaire_progress = 100
-                        st.session_state.match_count = min(3, len(recommendations))
+                        st.session_state.match_count = min(5, len(results))
                         st.session_state.latest_response_id = response_id
                         st.session_state.questionnaire_just_completed = True
                         st.rerun()

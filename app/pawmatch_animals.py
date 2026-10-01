@@ -21,7 +21,7 @@ ANIMAL_STATUSES = ("Available", "Reserved", "Adopted")
 ANIMAL_IMAGE_DIRECTORY = Path(__file__).resolve().parent / "assets" / "animals"
 
 _IMAGE_URL_PATTERN = re.compile(r"^https?://[^\s]+$", re.IGNORECASE)
-_NAME_PATTERN = re.compile(r"^[A-Za-zÀ-ÖØ-öø-ÿ' -]+$")
+_NAME_PATTERN = re.compile(r"^[A-Za-zÀ-ÖØ-öø-ÿ0-9' -]+$")
 
 
 def animal_image_path(name: Any) -> Path:
@@ -30,12 +30,13 @@ def animal_image_path(name: Any) -> Path:
     return ANIMAL_IMAGE_DIRECTORY / f"{filename}.png"
 
 
-def initialise_animals_table() -> None:
-    """Create the animals table when the administration feature first runs."""
-    with get_connection() as connection:
-        connection.execute(
-            """
-            CREATE TABLE IF NOT EXISTS animals (
+def _create_animals_table(connection: sqlite3.Connection, table_name: str) -> None:
+    """Create the current animal schema under one of two internal names."""
+    if table_name not in {"animals", "animals_rebuilt"}:
+        raise ValueError("Unsupported internal animals table name.")
+    connection.execute(
+        f"""
+            CREATE TABLE IF NOT EXISTS {table_name} (
                 animal_id          INTEGER PRIMARY KEY AUTOINCREMENT,
                 name               TEXT NOT NULL,
                 species            TEXT NOT NULL
@@ -66,7 +67,7 @@ def initialise_animals_table() -> None:
                                        'Experienced owner'
                                    )),
                 max_hours_alone    INTEGER NOT NULL
-                                   CHECK (max_hours_alone BETWEEN 0 AND 12),
+                                   CHECK (max_hours_alone BETWEEN 0 AND 24),
                 status             TEXT NOT NULL DEFAULT 'Available'
                                    CHECK (status IN ('Available', 'Reserved', 'Adopted')),
                 description        TEXT NOT NULL,
@@ -74,8 +75,47 @@ def initialise_animals_table() -> None:
                 created_at         TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at         TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             )
-            """
+        """
+    )
+
+
+def _expand_max_hours_constraint(connection: sqlite3.Connection) -> None:
+    """Upgrade older local databases whose animal limit stopped at 12 hours."""
+    schema_row = connection.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'animals'"
+    ).fetchone()
+    schema_sql = str(schema_row["sql"] or "") if schema_row is not None else ""
+    if "max_hours_alone BETWEEN 0 AND 12" not in schema_sql:
+        return
+
+    columns = (
+        "animal_id, name, species, breed, age_years, sex, size, activity_level, "
+        "home_type, minimum_housing_level, garden_required, child_friendly, "
+        "other_pets, experience_level, max_hours_alone, status, description, "
+        "image_url, created_at, updated_at"
+    )
+    connection.commit()
+    connection.execute("PRAGMA foreign_keys = OFF")
+    try:
+        connection.execute("DROP TABLE IF EXISTS animals_rebuilt")
+        _create_animals_table(connection, "animals_rebuilt")
+        connection.execute(
+            f"INSERT INTO animals_rebuilt ({columns}) SELECT {columns} FROM animals"
         )
+        connection.execute("DROP TABLE animals")
+        connection.execute("ALTER TABLE animals_rebuilt RENAME TO animals")
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        connection.execute("PRAGMA foreign_keys = ON")
+
+
+def initialise_animals_table() -> None:
+    """Create or migrate the animals table used by administration."""
+    with get_connection() as connection:
+        _create_animals_table(connection, "animals")
         columns = {
             row["name"] for row in connection.execute("PRAGMA table_info(animals)")
         }
@@ -97,6 +137,7 @@ def initialise_animals_table() -> None:
                 END
                 """
             )
+        _expand_max_hours_constraint(connection)
         connection.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_animals_species_status
@@ -122,6 +163,31 @@ def _default_housing_level(home_type: str, size: str) -> int:
     return 3 if size == "Large" else 2
 
 
+def validate_animal_search(
+    search_text: Any,
+    species: Any,
+    size: Any = "All",
+) -> tuple[dict[str, str], dict[str, str]]:
+    """Validate the browse-page search and documented lookup filters."""
+    cleaned_search = _clean_text(search_text)
+    cleaned_species = _clean_text(species)
+    cleaned_size = _clean_text(size)
+    errors: dict[str, str] = {}
+
+    if len(cleaned_search) > 20:
+        errors["search"] = "Search cannot exceed 20 characters."
+    if cleaned_species not in {"All", "All species", *SPECIES}:
+        errors["species"] = "Please select a valid species."
+    if cleaned_size not in {"All", "All sizes", *SIZES}:
+        errors["size"] = "Please select a valid size."
+
+    return errors, {
+        "search": cleaned_search,
+        "species": cleaned_species,
+        "size": cleaned_size,
+    }
+
+
 def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, Any]]:
     """Validate an animal record and return field errors plus cleaned values."""
     cleaned: dict[str, Any] = {
@@ -134,7 +200,7 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
         "activity_level": _clean_text(values.get("activity_level")),
         "home_type": _clean_text(values.get("home_type")),
         "minimum_housing_level": values.get("minimum_housing_level"),
-        "garden_required": bool(values.get("garden_required", False)),
+        "garden_required": values.get("garden_required", False),
         "child_friendly": _clean_text(values.get("child_friendly")),
         "other_pets": _clean_text(values.get("other_pets")),
         "experience_level": _clean_text(values.get("experience_level")),
@@ -147,8 +213,8 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
 
     if not cleaned["name"]:
         errors["name"] = "Enter the animal's name."
-    elif not 2 <= len(cleaned["name"]) <= 40:
-        errors["name"] = "The name must contain between 2 and 40 characters."
+    elif not 1 <= len(cleaned["name"]) <= 50:
+        errors["name"] = "The name must contain between 1 and 50 characters."
     elif _NAME_PATTERN.fullmatch(cleaned["name"]) is None:
         errors["name"] = "Use letters, spaces, hyphens or apostrophes only."
 
@@ -157,8 +223,10 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
 
     if not cleaned["breed"]:
         errors["breed"] = "Enter a breed or use 'Mixed breed'."
-    elif len(cleaned["breed"]) > 60:
-        errors["breed"] = "The breed must contain 60 characters or fewer."
+    elif not 2 <= len(cleaned["breed"]) <= 50:
+        errors["breed"] = "The breed must contain between 2 and 50 characters."
+    elif not any(character.isalnum() for character in cleaned["breed"]):
+        errors["breed"] = "The breed cannot contain only symbols."
 
     try:
         cleaned["age_years"] = float(cleaned["age_years"])
@@ -209,15 +277,20 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
     except (TypeError, ValueError):
         errors["max_hours_alone"] = "Enter the maximum number of hours alone."
     else:
-        if not 0 <= cleaned["max_hours_alone"] <= 12:
-            errors["max_hours_alone"] = "Enter a value between 0 and 12 hours."
+        if not 0 <= cleaned["max_hours_alone"] <= 24:
+            errors["max_hours_alone"] = "Enter a value between 0 and 24 hours."
+
+    if type(cleaned["garden_required"]) not in {bool, int} or cleaned["garden_required"] not in {0, 1}:
+        errors["garden_required"] = "Garden required must be Yes or No."
+    else:
+        cleaned["garden_required"] = bool(cleaned["garden_required"])
 
     if not cleaned["description"]:
         errors["description"] = "Enter a short profile description."
-    elif len(cleaned["description"]) < 30:
-        errors["description"] = "Use at least 30 characters so adopters receive useful information."
-    elif len(cleaned["description"]) > 1200:
-        errors["description"] = "The description must contain no more than 1,200 characters."
+    elif len(cleaned["description"]) < 20:
+        errors["description"] = "Use at least 20 characters so adopters receive useful information."
+    elif len(cleaned["description"]) > 1000:
+        errors["description"] = "The description must contain no more than 1,000 characters."
 
     if cleaned["image_url"] and _IMAGE_URL_PATTERN.fullmatch(cleaned["image_url"]) is None:
         errors["image_url"] = "Enter a complete http:// or https:// image address."
@@ -316,6 +389,7 @@ def fetch_animals(
     species: str = "All species",
     status: str = "All statuses",
     limit: int | None = None,
+    size: str = "All sizes",
 ) -> list[dict[str, Any]]:
     clauses: list[str] = []
     parameters: list[Any] = []
@@ -332,6 +406,9 @@ def fetch_animals(
     if status in ANIMAL_STATUSES:
         clauses.append("status = ?")
         parameters.append(status)
+    if size in SIZES:
+        clauses.append("size = ?")
+        parameters.append(size)
 
     query = "SELECT * FROM animals"
     if clauses:
