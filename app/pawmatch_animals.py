@@ -216,7 +216,7 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
     elif not 1 <= len(cleaned["name"]) <= 50:
         errors["name"] = "The name must contain between 1 and 50 characters."
     elif _NAME_PATTERN.fullmatch(cleaned["name"]) is None:
-        errors["name"] = "Use letters, spaces, hyphens or apostrophes only."
+        errors["name"] = "Use letters, numbers, spaces, hyphens or apostrophes only."
 
     if cleaned["species"] not in SPECIES:
         errors["species"] = "Select a supported species."
@@ -228,6 +228,9 @@ def validate_animal(values: dict[str, Any]) -> tuple[dict[str, str], dict[str, A
     elif not any(character.isalnum() for character in cleaned["breed"]):
         errors["breed"] = "The breed cannot contain only symbols."
 
+    # The design pseudocode models age as a whole number. PawMatch's existing
+    # interface and sample profiles use half-year ages for young animals, so
+    # this compatible extension preserves those visible records and controls.
     try:
         cleaned["age_years"] = float(cleaned["age_years"])
     except (TypeError, ValueError):

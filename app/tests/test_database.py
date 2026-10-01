@@ -122,6 +122,21 @@ class DatabaseTests(unittest.TestCase):
         errors, _ = validate_animal_search("x" * 21, "Horse", "Huge")
         self.assertEqual(set(errors), {"search", "species", "size"})
 
+    def test_old_twelve_hour_database_constraint_is_migrated(self) -> None:
+        with pawmatch_auth.get_connection() as connection:
+            schema = connection.execute(
+                "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'animals'"
+            ).fetchone()["sql"]
+            connection.execute("DROP TABLE animals")
+            connection.execute(str(schema).replace("BETWEEN 0 AND 24", "BETWEEN 0 AND 12"))
+
+        initialise_animals_table()
+        with pawmatch_auth.get_connection() as connection:
+            migrated_schema = connection.execute(
+                "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'animals'"
+            ).fetchone()["sql"]
+        self.assertIn("max_hours_alone BETWEEN 0 AND 24", migrated_schema)
+
 
 if __name__ == "__main__":
     unittest.main()
