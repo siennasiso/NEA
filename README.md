@@ -25,7 +25,7 @@ python -m pip install -r requirements.txt
 streamlit run app.py
 ```
 
-For a ready-to-use local database with four example animals and the demonstration administrator, run `python3 setup_demo_database.py` from `app/` first.
+For a ready-to-use local database with 33 example animals and the demonstration administrator, run `python3 setup_demo_database.py` from `app/` first.
 
 Runtime databases, uploaded images, virtual environments and Python cache files are intentionally ignored by Git.
 
