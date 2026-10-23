@@ -1,6 +1,6 @@
 # PawMatch tester script (facilitator's copy)
 
-**App:** https://shaans-mac-mini.tail100d11.ts.net/pawmatch · **Time:** about 3 minutes per tester · **You need:** this sheet, one feedback form per tester, a phone stopwatch.
+**App:** https://pawmatch.dtc-storefront.workers.dev · **Time:** about 3 minutes per tester · **You need:** this sheet, one feedback form per tester, a phone stopwatch.
 
 ## Before each tester (30 s)
 1. Open the app on the device the tester will use (phone or laptop). Make sure nobody is signed in.

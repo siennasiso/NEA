@@ -28,7 +28,7 @@ td:first-child, th:first-child { width: 1%; white-space: nowrap; }
 .form td:nth-child(5) { width: 13%; }
 .sus td { padding: 4px 5px; }
 .sus td:nth-child(n+3), .sus th:nth-child(n+3) { text-align: center; width: 30px; font-size: 13pt; }
-h2:last-of-type { page-break-before: always; }
+body.doc-form h2:last-of-type { page-break-before: always; }
 .lines { border-bottom: 1px solid #c9b3bd; height: 26px; }
 """
 
@@ -41,7 +41,7 @@ def render(md: str, cls: str = "") -> None:
         html = html.replace("<table", "<table class=\"form\"", 1)
         first = html.index("<table") + 6
         html = html[:first] + html[first:].replace("<table", "<table class=\"sus\"", 1)
-    page_html = f"<!doctype html><meta charset='utf-8'><style>{CSS}</style><body>{html}</body>"
+    page_html = f"<!doctype html><meta charset='utf-8'><style>{CSS}</style><body class='doc-{cls}'>{html}</body>"
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
