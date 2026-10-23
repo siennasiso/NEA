@@ -215,10 +215,7 @@ def adopter_flow(s: Shooter) -> None:
     s.fill("Age", age)
     s.fill("Password", password)
     s.fill("Confirm password", password)
-    s.click("Create account")
-    s.shot("05-register-done")
-    s.click("Go to login")
-    s.log_in(email, password)
+    s.click("Create account")  # a new account is signed straight in and lands on home
     s.shot("06-home")
     s.click("Browse animals", ".st-key-design_main")
     s.shot("07-browse")
