@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS match_results (
     bonus         INTEGER NOT NULL,
     met           TEXT    NOT NULL,
     unmet         TEXT    NOT NULL,
-    warnings      TEXT    NOT NULL
+    warnings      TEXT    NOT NULL,
+    calculated_at TEXT    NOT NULL DEFAULT ''
 );
 """
 
@@ -97,6 +98,10 @@ def connect(path: str | Path) -> Iterator[sqlite3.Connection]:
 
 def init_schema(conn: sqlite3.Connection) -> None:
     conn.executescript(SCHEMA)
+    # Databases made before stage 5 lack calculated_at (Design, Match Results table): add it in place.
+    columns = {row[1] for row in conn.execute("PRAGMA table_info(match_results)")}
+    if "calculated_at" not in columns:
+        conn.execute("ALTER TABLE match_results ADD COLUMN calculated_at TEXT NOT NULL DEFAULT ''")
 
 
 # ---- users ---------------------------------------------------------------
@@ -223,11 +228,12 @@ def latest_response(conn: sqlite3.Connection, user_id: int) -> tuple[int, Answer
 
 def save_results(conn: sqlite3.Connection, response_id: int, results: list[MatchResult]) -> None:
     conn.execute("DELETE FROM match_results WHERE response_id = ?", (response_id,))
+    calculated_at = _now()  # one timestamp for the whole ranking
     conn.executemany(
         """INSERT INTO match_results (response_id, animal_id, rank, compatibility, category, bonus,
-               met, unmet, warnings) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+               met, unmet, warnings, calculated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         [(response_id, r.animal.animal_id, rank, r.compatibility, r.category, r.bonus,
-          json.dumps(r.met), json.dumps(r.unmet), json.dumps(r.warnings))
+          json.dumps(r.met), json.dumps(r.unmet), json.dumps(r.warnings), calculated_at)
          for rank, r in enumerate(results, start=1)],
     )
 

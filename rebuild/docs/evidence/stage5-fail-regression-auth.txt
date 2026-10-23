@@ -1,0 +1,17 @@
+....F.....                                                               [100%]
+=================================== FAILURES ===================================
+___________ test_register_rejects_duplicate_email_case_insensitively ___________
+
+conn = <sqlite3.Connection object at 0x105d762f0>
+
+    def test_register_rejects_duplicate_email_case_insensitively(conn):
+        auth.register(conn, "Sam", "sam@example.com", 30, "longenough", "longenough")
+        user, errors = auth.register(conn, "Sam 2", "SAM@example.com", 31, "longenough", "longenough")
+>       assert user is None and "already exists" in errors["email"]
+                                                    ^^^^^^^^^^^^^^^
+E       KeyError: 'email'
+
+tests/test_auth.py:34: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_auth.py::test_register_rejects_duplicate_email_case_insensitively
+1 failed, 9 passed in 0.53s

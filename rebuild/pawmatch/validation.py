@@ -50,12 +50,21 @@ def _yes_no(value: Any) -> bool | None:
     return {"yes": True, "no": False, "1": True, "0": False}.get(_text(value).lower())
 
 
-def _check_name(value: Any, errors: Errors, field: str = "name") -> str:
+def _has_letter(text: str) -> bool:
+    return any(ch.isalpha() for ch in text)
+
+
+def _check_name(value: Any, errors: Errors, field: str = "name", allow_digits: bool = False) -> str:
+    """Person names: letters, spaces, hyphens, apostrophes. Animal names may also use digits ("R2")."""
     name = _text(value)
+    allowed = " '-" + ("0123456789" if allow_digits else "")
     if not name:
         errors[field] = "Enter a name."
     elif not NAME_MIN <= len(name) <= NAME_MAX:
         errors[field] = f"Name must be {NAME_MIN} to {NAME_MAX} characters."
+    elif not _has_letter(name) or any(not (ch.isalpha() or ch in allowed) for ch in name):
+        errors[field] = "Name can only use letters, spaces, hyphens and apostrophes" + (
+            " (and numbers)." if allow_digits else ".")
     return name
 
 
@@ -122,13 +131,15 @@ def validate_login(email: Any, password: Any) -> tuple[dict[str, str], Errors]:
 def validate_animal(raw: dict[str, Any]) -> tuple[dict[str, Any], Errors]:
     """Validate an admin's add or edit form (criteria 8.2 and 8.3)."""
     errors: Errors = {}
-    cleaned: dict[str, Any] = {"name": _check_name(raw.get("name"), errors)}
+    cleaned: dict[str, Any] = {"name": _check_name(raw.get("name"), errors, allow_digits=True)}
     cleaned["species"] = _check_choice(raw.get("species"), SPECIES, "species", "species", errors)
     breed = _text(raw.get("breed"))
     if not breed:
         errors["breed"] = "Enter a breed (use 'Mixed' if unknown)."
-    elif len(breed) > NAME_MAX:
-        errors["breed"] = f"Breed must be at most {NAME_MAX} characters."
+    elif not NAME_MIN <= len(breed) <= NAME_MAX:
+        errors["breed"] = f"Breed must be {NAME_MIN} to {NAME_MAX} characters."
+    elif not _has_letter(breed):
+        errors["breed"] = "Breed must contain letters."
     cleaned["breed"] = breed
     cleaned["age"] = _check_range(raw.get("age"), 1, ANIMAL_AGE_MAX, "age", "Age", errors)
     cleaned["sex"] = _check_choice(raw.get("sex"), SEXES, "sex", "sex", errors)

@@ -126,3 +126,24 @@ def test_image_type_and_size(name, size, ok):
     from pawmatch.validation import validate_image
 
     assert (validate_image(name, size) is None) is ok
+
+
+# Design re-check (stage 5): rules from the Design variables and validation tables.
+@pytest.mark.parametrize("name,ok", [("Sam Lee", True), ("Mary-Jane", True), ("Siobhan O'Neill", True),
+                                     ("12345", False), ("Sam3", False), ("Sam!", False)])
+def test_registration_name_is_letters_spaces_and_hyphens(name, ok):
+    _, errors = validate_registration(name, "sam@x.com", "30", "longenough", "longenough")
+    assert ("name" not in errors) is ok
+
+
+@pytest.mark.parametrize("name,ok", [("Luna", True), ("R2", True), ("Mr Whiskers", True),
+                                     ("123", False), ("Luna!", False)])
+def test_animal_name_format(name, ok):
+    _, errors = validate_animal(dict(GOOD_ANIMAL, name=name))
+    assert ("name" not in errors) is ok
+
+
+@pytest.mark.parametrize("breed,ok", [("Mixed", True), ("Labrador cross", True), ("X", False), ("###", False)])
+def test_breed_length_and_not_only_symbols(breed, ok):
+    _, errors = validate_animal(dict(GOOD_ANIMAL, breed=breed))
+    assert ("breed" not in errors) is ok

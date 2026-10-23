@@ -103,3 +103,26 @@ def test_connect_rolls_back_on_error(tmp_path):
         raise RuntimeError("boom")
     with db.connect(path) as conn:
         assert conn.execute("SELECT COUNT(*) FROM users").fetchone()[0] == 0
+
+
+def test_saved_results_record_when_they_were_calculated(conn):
+    """Design, Match Results table: calculated_at is required."""
+    seed_animals(conn)
+    user_id = conn.execute(
+        "INSERT INTO users (name, email, age, password_hash, created_at) VALUES ('Sam', 's@x.com', 30, 'h', '2026-10-23')"
+    ).lastrowid
+    response_id = db.save_response(conn, user_id, ANSWERS)
+    db.save_results(conn, response_id, rank_animals(db.list_animals(conn), ANSWERS))
+    stamps = {r[0] for r in conn.execute("SELECT calculated_at FROM match_results")}
+    assert len(stamps) == 1 and stamps.pop()[:4].isdigit()
+
+
+def test_old_database_gains_calculated_at_column(tmp_path):
+    path = tmp_path / "old.db"
+    old = sqlite3.connect(path)
+    old.executescript(db.SCHEMA.replace(",\n    calculated_at TEXT    NOT NULL DEFAULT ''", ""))  # schema before stage 5
+    old.close()
+    with db.connect(str(path)) as conn:
+        db.init_schema(conn)
+        columns = {r[1] for r in conn.execute("PRAGMA table_info(match_results)")}
+    assert "calculated_at" in columns

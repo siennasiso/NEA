@@ -1,0 +1,130 @@
+...........................................................FF........... [ 53%]
+..................................................FFF...FF..FF           [100%]
+=================================== FAILURES ===================================
+_____________ test_saved_results_record_when_they_were_calculated ______________
+
+conn = <sqlite3.Connection object at 0x106ff9b70>
+
+    def test_saved_results_record_when_they_were_calculated(conn):
+        """Design, Match Results table: calculated_at is required."""
+        seed_animals(conn)
+        user_id = conn.execute(
+            "INSERT INTO users (name, email, age, password_hash, created_at) VALUES ('Sam', 's@x.com', 30, 'h', '2026-10-23')"
+        ).lastrowid
+        response_id = db.save_response(conn, user_id, ANSWERS)
+        db.save_results(conn, response_id, rank_animals(db.list_animals(conn), ANSWERS))
+>       stamps = {r[0] for r in conn.execute("SELECT calculated_at FROM match_results")}
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       sqlite3.OperationalError: no such column: calculated_at
+
+tests/test_repository.py:116: OperationalError
+_________________ test_old_database_gains_calculated_at_column _________________
+
+tmp_path = PosixPath('/private/var/folders/_g/n9v_ywr5173f74ywkzf843vr0000gn/T/pytest-of-shaansisodia/pytest-15/test_old_database_gains_calcul0')
+
+    def test_old_database_gains_calculated_at_column(tmp_path):
+        path = tmp_path / "old.db"
+        old = sqlite3.connect(path)
+        old.executescript(db.SCHEMA.replace("    warnings      TEXT    NOT NULL\n", "    warnings      TEXT    NOT NULL").replace(
+            ",\n    calculated_at TEXT    NOT NULL DEFAULT ''", ""))
+        old.close()
+        with db.connect(str(path)) as conn:
+            db.init_schema(conn)
+            columns = {r[1] for r in conn.execute("PRAGMA table_info(match_results)")}
+>       assert "calculated_at" in columns
+E       AssertionError: assert 'calculated_at' in {'animal_id', 'bonus', 'category', 'compatibility', 'match_id', 'met', ...}
+
+tests/test_repository.py:129: AssertionError
+______ test_registration_name_is_letters_spaces_and_hyphens[12345-False] _______
+
+name = '12345', ok = False
+
+    @pytest.mark.parametrize("name,ok", [("Sam Lee", True), ("Mary-Jane", True), ("Siobhan O'Neill", True),
+                                         ("12345", False), ("Sam3", False), ("Sam!", False)])
+    def test_registration_name_is_letters_spaces_and_hyphens(name, ok):
+        _, errors = validate_registration(name, "sam@x.com", "30", "longenough", "longenough")
+>       assert ("name" not in errors) is ok
+E       AssertionError: assert ('name' not in {}) is False
+
+tests/test_validation.py:136: AssertionError
+_______ test_registration_name_is_letters_spaces_and_hyphens[Sam3-False] _______
+
+name = 'Sam3', ok = False
+
+    @pytest.mark.parametrize("name,ok", [("Sam Lee", True), ("Mary-Jane", True), ("Siobhan O'Neill", True),
+                                         ("12345", False), ("Sam3", False), ("Sam!", False)])
+    def test_registration_name_is_letters_spaces_and_hyphens(name, ok):
+        _, errors = validate_registration(name, "sam@x.com", "30", "longenough", "longenough")
+>       assert ("name" not in errors) is ok
+E       AssertionError: assert ('name' not in {}) is False
+
+tests/test_validation.py:136: AssertionError
+_______ test_registration_name_is_letters_spaces_and_hyphens[Sam!-False] _______
+
+name = 'Sam!', ok = False
+
+    @pytest.mark.parametrize("name,ok", [("Sam Lee", True), ("Mary-Jane", True), ("Siobhan O'Neill", True),
+                                         ("12345", False), ("Sam3", False), ("Sam!", False)])
+    def test_registration_name_is_letters_spaces_and_hyphens(name, ok):
+        _, errors = validate_registration(name, "sam@x.com", "30", "longenough", "longenough")
+>       assert ("name" not in errors) is ok
+E       AssertionError: assert ('name' not in {}) is False
+
+tests/test_validation.py:136: AssertionError
+______________________ test_animal_name_format[123-False] ______________________
+
+name = '123', ok = False
+
+    @pytest.mark.parametrize("name,ok", [("Luna", True), ("R2", True), ("Mr Whiskers", True),
+                                         ("123", False), ("Luna!", False)])
+    def test_animal_name_format(name, ok):
+        _, errors = validate_animal(dict(GOOD_ANIMAL, name=name))
+>       assert ("name" not in errors) is ok
+E       AssertionError: assert ('name' not in {}) is False
+
+tests/test_validation.py:143: AssertionError
+_____________________ test_animal_name_format[Luna!-False] _____________________
+
+name = 'Luna!', ok = False
+
+    @pytest.mark.parametrize("name,ok", [("Luna", True), ("R2", True), ("Mr Whiskers", True),
+                                         ("123", False), ("Luna!", False)])
+    def test_animal_name_format(name, ok):
+        _, errors = validate_animal(dict(GOOD_ANIMAL, name=name))
+>       assert ("name" not in errors) is ok
+E       AssertionError: assert ('name' not in {}) is False
+
+tests/test_validation.py:143: AssertionError
+_______________ test_breed_length_and_not_only_symbols[X-False] ________________
+
+breed = 'X', ok = False
+
+    @pytest.mark.parametrize("breed,ok", [("Mixed", True), ("Labrador cross", True), ("X", False), ("###", False)])
+    def test_breed_length_and_not_only_symbols(breed, ok):
+        _, errors = validate_animal(dict(GOOD_ANIMAL, breed=breed))
+>       assert ("breed" not in errors) is ok
+E       AssertionError: assert ('breed' not in {}) is False
+
+tests/test_validation.py:149: AssertionError
+______________ test_breed_length_and_not_only_symbols[###-False] _______________
+
+breed = '###', ok = False
+
+    @pytest.mark.parametrize("breed,ok", [("Mixed", True), ("Labrador cross", True), ("X", False), ("###", False)])
+    def test_breed_length_and_not_only_symbols(breed, ok):
+        _, errors = validate_animal(dict(GOOD_ANIMAL, breed=breed))
+>       assert ("breed" not in errors) is ok
+E       AssertionError: assert ('breed' not in {}) is False
+
+tests/test_validation.py:149: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_repository.py::test_saved_results_record_when_they_were_calculated
+FAILED tests/test_repository.py::test_old_database_gains_calculated_at_column
+FAILED tests/test_validation.py::test_registration_name_is_letters_spaces_and_hyphens[12345-False]
+FAILED tests/test_validation.py::test_registration_name_is_letters_spaces_and_hyphens[Sam3-False]
+FAILED tests/test_validation.py::test_registration_name_is_letters_spaces_and_hyphens[Sam!-False]
+FAILED tests/test_validation.py::test_animal_name_format[123-False] - Asserti...
+FAILED tests/test_validation.py::test_animal_name_format[Luna!-False] - Asser...
+FAILED tests/test_validation.py::test_breed_length_and_not_only_symbols[X-False]
+FAILED tests/test_validation.py::test_breed_length_and_not_only_symbols[###-False]
+9 failed, 125 passed in 5.32s

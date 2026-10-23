@@ -30,7 +30,7 @@ def test_register_stores_hash_not_password(conn):
 
 def test_register_rejects_duplicate_email_case_insensitively(conn):
     auth.register(conn, "Sam", "sam@example.com", 30, "longenough", "longenough")
-    user, errors = auth.register(conn, "Sam 2", "SAM@example.com", 31, "longenough", "longenough")
+    user, errors = auth.register(conn, "Sam Two", "SAM@example.com", 31, "longenough", "longenough")
     assert user is None and "already exists" in errors["email"]
 
 
