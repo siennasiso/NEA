@@ -92,6 +92,12 @@ def main(out: Path) -> None:
             shot(page, out, "02-browse")
             choose(page, "Species", "Rabbit")
             shot(page, out, "03-browse-filter-rabbit")
+            page.set_viewport_size({"width": 820, "height": 1180})
+            page.goto(f"{BASE}/browse")
+            settle(page)
+            page.screenshot(path=str(out / "16-tablet-browse.png"))
+            print("saved 16-tablet-browse", flush=True)
+            page.set_viewport_size({"width": 1280, "height": 860})
             page.goto(f"{BASE}/profile?id=2")
             shot(page, out, "04-profile")
 

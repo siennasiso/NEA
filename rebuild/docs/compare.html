@@ -1,0 +1,64 @@
+<section id="how">
+  <h2>How it should be done</h2>
+  <p class="muted">A factual side-by-side of the original app (<code>app/</code>) and the rebuild
+  (<code>rebuild/</code>). Both use Python, Streamlit and SQLite and follow the same analysis and
+  design. Line counts were measured with <code>wc -l</code>; test counts by running each suite.</p>
+
+  <div class="card">
+    <h3>The two apps side by side</h3>
+    <table>
+      <thead><tr><th></th><th>Original <code>app/</code></th><th>Rebuild <code>rebuild/</code></th></tr></thead>
+      <tbody>
+        <tr><td>Python files (excluding tests)</td><td>16</td><td>19</td></tr>
+        <tr><td>Lines of app code</td><td>5,632, of which 2,256 are the style module and 1,578 are pages</td><td>1,466: 937 domain, 529 pages and UI helpers</td></tr>
+        <tr><td>Where logic lives</td><td><code>pawmatch_auth.py</code>, <code>pawmatch_animals.py</code>, <code>pawmatch_matching.py</code>; pages also hold view state and form helpers (admin page 567 lines)</td><td><code>pawmatch/</code> (models, validation, auth, matching, db, services); each page file is 25-110 lines</td></tr>
+        <tr><td>Separation of UI and logic</td><td class="ok">Domain modules do not import Streamlit</td><td class="ok">Same, plus pages call one <code>services</code> module and never open SQL</td></tr>
+        <tr><td>Database access</td><td>Each function opens its own connection from a module-level path</td><td>Functions take a connection; one context manager commits, rolls back or closes</td></tr>
+        <tr><td>Automated tests</td><td class="ok">14 unittest tests, all passing</td><td class="ok">117 pytest cases (73 test functions), all passing, incl. 10 headless page tests</td></tr>
+        <tr><td>Password handling</td><td class="ok">Salted scrypt, constant-time compare</td><td class="ok">Salted scrypt, constant-time compare; one message for wrong email or password</td></tr>
+        <tr><td>SQL safety</td><td class="ok">Parameterised values; table names in a migration come from a fixed list</td><td class="ok">Parameterised values; column lists are constants; a test feeds <code>' OR 1=1 --</code> into search</td></tr>
+        <tr><td>Staff access control</td><td>Admin page checks the session role and redirects</td><td>Admin page not in the menu for adopters, page guard, and every add/edit/delete checks the role again</td></tr>
+        <tr><td>Matching</td><td>Animals under 70 % are dropped, then sorted preference first, so fewer than four can be shown</td><td>Nothing is dropped; animals with a welfare warning go last; order is score plus preference bonus; at least four shown</td></tr>
+        <tr><td>Animal status</td><td class="ok">Available / Reserved / Adopted</td><td class="warn">No status: removing an animal deletes it</td></tr>
+        <tr><td>Docs</td><td>README, database guide, matching guide (295 lines)</td><td>README, short write-up, full NEA document, 16 screenshots</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>What a strong developer does differently</h3>
+    <ol>
+      <li><strong>Pass the database in, don't reach for it.</strong> Repository functions take a
+      connection, so tests use a temporary file and one transaction can cover several steps.
+      <span class="muted">Original: <code>app/pawmatch_auth.py</code> (<code>get_connection</code>, used by every module).
+      Rebuild: <code>rebuild/pawmatch/db.py</code> (<code>connect</code>) and <code>rebuild/tests/conftest.py</code>.</span></li>
+      <li><strong>Check permissions where the action happens.</strong> The page hides the button, and
+      the function refuses anyway. <span class="muted">Original: <code>app/pages/7_Admin_Dashboard.py</code> lines 41-45.
+      Rebuild: <code>rebuild/pawmatch/services.py</code> and <code>rebuild/tests/test_admin_access.py</code>.</span></li>
+      <li><strong>Write the rule once, then test its edges.</strong> Each form has one validator returning
+      errors by field, tested with normal, boundary and wrong data. <span class="muted">Original:
+      <code>app/pawmatch_auth.py</code>, <code>app/pawmatch_animals.py</code>, <code>app/pawmatch_matching.py</code>.
+      Rebuild: <code>rebuild/pawmatch/validation.py</code> and <code>rebuild/tests/test_validation.py</code> (48 cases).</span></li>
+      <li><strong>Define the algorithm so it can't be misread.</strong> The normalisation (÷ 72), the
+      partial activity credit, the warning factors and the tie-break order are written at the top of
+      the module and each has a test. <span class="muted">Original: <code>app/pawmatch_matching.py</code>.
+      Rebuild: <code>rebuild/pawmatch/matching.py</code> and <code>rebuild/tests/test_matching.py</code>.</span></li>
+      <li><strong>Keep pages thin.</strong> A page reads input, calls one service and draws the result.
+      <span class="muted">Original: <code>app/pages/7_Admin_Dashboard.py</code> (567 lines).
+      Rebuild: <code>rebuild/webui/views/admin.py</code> (110 lines).</span></li>
+      <li><strong>Let the theme do the styling.</strong> Colours come from one theme file instead of
+      custom CSS. <span class="muted">Original: <code>app/pawmatch_style.py</code> (2,256 lines).
+      Rebuild: <code>rebuild/.streamlit/config.toml</code> (15 lines).</span></li>
+      <li><strong>Back validation with the database.</strong> CHECK and UNIQUE constraints repeat the
+      rules, so bad data can't arrive by another route. <span class="muted">Original: <code>app/pawmatch_animals.py</code>
+      (CHECKs on animals). Rebuild: <code>rebuild/pawmatch/db.py</code> (CHECKs on all four tables) and
+      the constraints test in <code>rebuild/tests/test_repository.py</code>.</span></li>
+      <li><strong>Test the pages too.</strong> Streamlit's <code>AppTest</code> runs pages headless, so
+      "adopters can't open the staff page" is checked automatically, not by hand. <span class="muted">Original:
+      <code>app/tests/</code> (no page tests). Rebuild: <code>rebuild/tests/test_ui_smoke.py</code>.</span></li>
+    </ol>
+    <p class="muted">Where the original is ahead: it tracks an animal's status (Available, Reserved,
+    Adopted) and stores extra fields such as other pets and experience on each animal, which the
+    rebuild does not.</p>
+  </div>
+</section>
