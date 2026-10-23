@@ -8,18 +8,21 @@ SPECIES: tuple[str, ...] = ("Dog", "Cat", "Rabbit")
 SIZES: tuple[str, ...] = ("Small", "Medium", "Large")
 SEXES: tuple[str, ...] = ("Male", "Female", "Unknown")
 ROLES: tuple[str, ...] = ("user", "admin")
+# Adoption status (the original admin form): only Available animals are shown to adopters and scored.
+STATUSES: tuple[str, ...] = ("Available", "Reserved", "Adopted")
 NO_PREFERENCE = "No preference"
 
-# Ordinal scales: the stored integer is the level, the label is what users see.
+# Ordinal scales: the stored integer is the level, the label is what users see
+# (the original questionnaire's wording: indoor space and activity level).
 HOUSING_LEVELS: dict[int, str] = {
-    1: "Flat or limited space",
-    2: "Small or medium house",
-    3: "Large house",
+    1: "Limited space",
+    2: "Moderate space",
+    3: "Plenty of space",
 }
 ACTIVITY_LEVELS: dict[int, str] = {
-    1: "Low - short walks or indoor play",
-    2: "Medium - about an hour of activity a day",
-    3: "High - long walks, running or training every day",
+    1: "Low",
+    2: "Moderate",
+    3: "High",
 }
 EXPERIENCE_LEVELS: tuple[str, ...] = (
     "None",
@@ -62,6 +65,8 @@ class Animal:
     max_hours_alone: int
     medical_notes: str = ""
     image_path: str = ""
+    status: str = "Available"
+    date_added: str = ""  # set by the database; read-only
 
 
 @dataclass(frozen=True)
@@ -100,3 +105,18 @@ class MatchResult:
     def suitable(self) -> bool:
         """True when no important (welfare) requirement is unmet."""
         return not self.warnings
+
+
+@dataclass(frozen=True)
+class ShelterStats:
+    """Counts for the staff dashboard (criterion 8): what is in the shelter and who is using it."""
+
+    by_species: dict[str, int]
+    adopters: int
+    staff: int
+    questionnaires: int
+    by_status: dict[str, int] = field(default_factory=dict)
+
+    @property
+    def animals(self) -> int:
+        return sum(self.by_species.values())

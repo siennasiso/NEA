@@ -17,6 +17,7 @@ from .models import (
     SEXES,
     SIZES,
     SPECIES,
+    STATUSES,
     Answers,
 )
 
@@ -91,10 +92,8 @@ def _check_flag(value: Any, field: str, label: str, errors: Errors) -> bool:
     return bool(flag)
 
 
-def validate_registration(
-    name: Any, email: Any, age: Any, password: Any, confirm: Any
-) -> tuple[dict[str, Any], Errors]:
-    """Validate a sign-up form (criteria 5.1 and 5.2)."""
+def validate_person(name: Any, email: Any, age: Any) -> tuple[dict[str, Any], Errors]:
+    """Name, email and age: shared by sign-up and by finishing a Google account (criteria 5.1, 5.2)."""
     errors: Errors = {}
     clean_name = _check_name(name, errors)
     clean_email = _text(email).lower()
@@ -105,6 +104,14 @@ def validate_registration(
     clean_age = _check_range(age, MIN_AGE, MAX_AGE, "age", "Age", errors)
     if "age" in errors and clean_age is not None and clean_age < MIN_AGE:
         errors["age"] = f"You must be {MIN_AGE} or over to adopt."
+    return {"name": clean_name, "email": clean_email, "age": clean_age}, errors
+
+
+def validate_registration(
+    name: Any, email: Any, age: Any, password: Any, confirm: Any
+) -> tuple[dict[str, Any], Errors]:
+    """Validate a sign-up form (criteria 5.1 and 5.2)."""
+    cleaned, errors = validate_person(name, email, age)
     raw_password = "" if password is None else str(password)
     if not raw_password.strip():
         errors["password"] = "Enter a password."
@@ -112,7 +119,7 @@ def validate_registration(
         errors["password"] = f"Password must be at least {PASSWORD_MIN} characters."
     elif raw_password != ("" if confirm is None else str(confirm)):
         errors["confirm"] = "The two passwords do not match."
-    cleaned = {"name": clean_name, "email": clean_email, "age": clean_age, "password": raw_password}
+    cleaned["password"] = raw_password
     return cleaned, errors
 
 
@@ -162,6 +169,8 @@ def validate_animal(raw: dict[str, Any]) -> tuple[dict[str, Any], Errors]:
         errors["medical_notes"] = f"Medical notes must be at most {TEXT_MAX} characters."
     cleaned["medical_notes"] = notes
     cleaned["image_path"] = _text(raw.get("image_path"))
+    # A new record is Available unless staff choose otherwise (the original form's default).
+    cleaned["status"] = _check_choice(raw.get("status") or STATUSES[0], STATUSES, "status", "adoption status", errors)
     return cleaned, errors
 
 
@@ -209,6 +218,13 @@ def validate_step(step: int, raw: dict[str, Any]) -> Errors:
     errors: Errors = {}
     for name in QUESTION_STEPS[step][1]:
         QUESTION_VALIDATORS[name](raw.get(name), errors)
+    return errors
+
+
+def validate_question(name: str, value: Any) -> Errors:
+    """Validate one answer, so the one-question-per-screen form stops at a gap or a bad value."""
+    errors: Errors = {}
+    QUESTION_VALIDATORS[name](value, errors)
     return errors
 
 

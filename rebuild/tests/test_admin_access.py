@@ -1,8 +1,11 @@
 """Access control: only staff can change animal records; users can still match."""
 
+from dataclasses import replace
+
 import pytest
 
 from pawmatch import auth, db, services
+from pawmatch.models import Animal
 from pawmatch.seed import create_admin, demo_animal_values, seed_animals
 
 GOOD = demo_animal_values()[0]
@@ -65,7 +68,8 @@ def test_adopter_submission_stores_ranked_results(conn, people):
     _, adopter = people
     seed_animals(conn)
     results, errors = services.submit_questionnaire(conn, adopter, GOOD_ANSWERS)
-    assert errors == {} and len(results) == db.count_animals(conn) >= 4
+    # reserved and adopted animals are not scored
+    assert errors == {} and len(results) == len(db.list_animals(conn, status="Available")) >= 4
     stored = services.latest_results(conn, adopter)
     assert [r.animal.animal_id for r in stored] == [r.animal.animal_id for r in results]
     scores = [r.ranking_points for r in results if r.suitable]
@@ -77,3 +81,17 @@ def test_incomplete_submission_saves_nothing(conn, people):
     results, errors = services.submit_questionnaire(conn, adopter, GOOD_ANSWERS | {"hours_alone": ""})
     assert results == [] and "hours_alone" in errors
     assert services.latest_results(conn, adopter) is None
+
+
+def test_profile_issues_flag_missing_photo_and_short_description():
+    animal = Animal(1, "Luna", "Dog", "Labrador", 4, "Female", "Large", "Too short.", 3, 2, True, True, 4)
+    assert services.profile_issues(animal) == ["photo", "description"]
+    complete = replace(animal, personality="x" * services.PROFILE_TEXT_MIN, image_path="assets/animals/luna.png")
+    assert services.profile_issues(complete) == []
+
+
+def test_profile_completion_counts_filled_fields():
+    animal = Animal(1, "Luna", "Dog", "Labrador", 4, "Female", "Large", "Gentle.", 3, 2, False, False, 4)
+    # 15 fields; medical notes and photo are empty, a False answer still counts as filled
+    assert services.profile_completion(animal) == round(100 * 13 / 15)
+    assert services.profile_completion(replace(animal, medical_notes="None", image_path="x.png")) == 100

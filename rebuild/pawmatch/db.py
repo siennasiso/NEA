@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from .models import Animal, Answers, MatchResult, User
+from .models import SPECIES, STATUSES, Animal, Answers, MatchResult, ShelterStats, User
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS users (
@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS animals (
     max_hours_alone   INTEGER NOT NULL CHECK (max_hours_alone BETWEEN 0 AND 24),
     medical_notes     TEXT    NOT NULL DEFAULT '',
     image_path        TEXT    NOT NULL DEFAULT '',
+    status            TEXT    NOT NULL DEFAULT 'Available' CHECK (status IN ('Available', 'Reserved', 'Adopted')),
     date_added        TEXT    NOT NULL
 );
 CREATE TABLE IF NOT EXISTS questionnaire_responses (
@@ -72,7 +73,7 @@ CREATE TABLE IF NOT EXISTS match_results (
 ANIMAL_FIELDS = (
     "name", "species", "breed", "age", "sex", "size", "personality", "exercise_needs",
     "min_housing_level", "garden_required", "child_compatible", "max_hours_alone",
-    "medical_notes", "image_path",
+    "medical_notes", "image_path", "status",
 )
 
 
@@ -102,6 +103,10 @@ def init_schema(conn: sqlite3.Connection) -> None:
     columns = {row[1] for row in conn.execute("PRAGMA table_info(match_results)")}
     if "calculated_at" not in columns:
         conn.execute("ALTER TABLE match_results ADD COLUMN calculated_at TEXT NOT NULL DEFAULT ''")
+    # Databases made before round 2 lack the adoption status: every existing animal starts Available.
+    if "status" not in {row[1] for row in conn.execute("PRAGMA table_info(animals)")}:
+        conn.execute("ALTER TABLE animals ADD COLUMN status TEXT NOT NULL DEFAULT 'Available' "
+                     "CHECK (status IN ('Available', 'Reserved', 'Adopted'))")
 
 
 # ---- users ---------------------------------------------------------------
@@ -139,7 +144,7 @@ def set_role(conn: sqlite3.Connection, user_id: int, role: str) -> None:
 # ---- animals -------------------------------------------------------------
 
 def _animal(row: sqlite3.Row) -> Animal:
-    data = {k: row[k] for k in ("animal_id",) + ANIMAL_FIELDS}
+    data = {k: row[k] for k in ("animal_id",) + ANIMAL_FIELDS + ("date_added",)}
     data["garden_required"] = bool(data["garden_required"])
     data["child_compatible"] = bool(data["child_compatible"])
     return Animal(**data)
@@ -174,11 +179,15 @@ def get_animal(conn: sqlite3.Connection, animal_id: int) -> Animal | None:
 
 
 def list_animals(
-    conn: sqlite3.Connection, species: str | None = None, size: str | None = None, search: str = ""
+    conn: sqlite3.Connection, species: str | None = None, size: str | None = None, search: str = "",
+    status: str | None = None,
 ) -> list[Animal]:
     """Browse query with optional filters; the search term is bound, never concatenated."""
     sql = "SELECT * FROM animals WHERE 1 = 1"
     params: list[Any] = []
+    if status:
+        sql += " AND status = ?"
+        params.append(status)
     if species:
         sql += " AND species = ?"
         params.append(species)
@@ -195,6 +204,27 @@ def list_animals(
 
 def count_animals(conn: sqlite3.Connection) -> int:
     return conn.execute("SELECT COUNT(*) FROM animals").fetchone()[0]
+
+
+def use_png_pictures(conn: sqlite3.Connection) -> int:
+    """Point round-1 demo animals (.jpg on black) at the transparent .png cut-outs; returns rows changed."""
+    return conn.execute(
+        """UPDATE animals SET image_path = substr(image_path, 1, length(image_path) - 4) || '.png'
+           WHERE image_path LIKE 'assets/animals/%.jpg'"""
+    ).rowcount
+
+
+def shelter_stats(conn: sqlite3.Connection) -> ShelterStats:
+    """Dashboard counts in five aggregate queries; a species or status with no animals still shows as 0."""
+    by_species = dict.fromkeys(SPECIES, 0)
+    for species, count in conn.execute("SELECT species, COUNT(*) FROM animals GROUP BY species"):
+        by_species[species] = count
+    roles = dict(conn.execute("SELECT role, COUNT(*) FROM users GROUP BY role").fetchall())
+    questionnaires = conn.execute("SELECT COUNT(*) FROM questionnaire_responses").fetchone()[0]
+    by_status = dict.fromkeys(STATUSES, 0)
+    for status, count in conn.execute("SELECT status, COUNT(*) FROM animals GROUP BY status"):
+        by_status[status] = count
+    return ShelterStats(by_species, roles.get("user", 0), roles.get("admin", 0), questionnaires, by_status)
 
 
 # ---- questionnaire and results -------------------------------------------

@@ -63,3 +63,40 @@ def test_role_is_read_from_database(conn):
     db.set_role(conn, user.user_id, "admin")
     logged_in, _ = auth.login(conn, "staff@example.com", "longenough")
     assert logged_in.is_admin
+
+
+def test_external_login_finds_an_existing_adopter_by_verified_email(conn):
+    made, _ = auth.register(conn, "Sam Lee", "sam@example.com", 30, "longenough", "longenough")
+    user, errors = auth.external_login(conn, " SAM@example.com ", True)
+    assert user == made and errors == {}
+
+
+def test_external_login_asks_a_newcomer_to_finish_their_account(conn):
+    assert auth.external_login(conn, "new@example.com", True) == (None, {})
+
+
+def test_external_login_refuses_unverified_or_missing_emails(conn):
+    assert "not verified" in auth.external_login(conn, "new@example.com", False)[1]["email"]
+    assert "not verified" in auth.external_login(conn, "new@example.com", "true")[1]["email"]
+    assert "valid email" in auth.external_login(conn, None, True)[1]["email"]
+
+
+def test_external_login_refuses_staff_accounts(conn):
+    from pawmatch.seed import create_admin
+
+    create_admin(conn, "Staff", "staff@example.com", 40, "staffpass1")
+    user, errors = auth.external_login(conn, "staff@example.com", True)
+    assert user is None and errors == {"login": auth.STAFF_USE_PASSWORD}
+
+
+def test_finished_external_account_is_an_adopter_without_a_password(conn):
+    user, errors = auth.finish_external_account(conn, "Sam Lee", "sam@example.com", "30")
+    assert errors == {} and user.role == "user"
+    assert auth.login(conn, "sam@example.com", auth.EXTERNAL_ONLY)[1] == {"login": auth.LOGIN_FAILED}
+    assert auth.external_login(conn, "sam@example.com", True)[0] == user
+
+
+def test_finished_external_account_still_checks_age_and_duplicates(conn):
+    assert "18 or over" in auth.finish_external_account(conn, "Sam Lee", "sam@example.com", "16")[1]["age"]
+    auth.finish_external_account(conn, "Sam Lee", "sam@example.com", "30")
+    assert "already exists" in auth.finish_external_account(conn, "Sam Lee", "sam@example.com", "30")[1]["email"]
