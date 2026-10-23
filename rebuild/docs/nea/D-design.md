@@ -417,6 +417,8 @@ ENDFUNCTION
 `validate_animal` (staff form) and `validate_answers` (questionnaire) follow the same pattern with the rules in the table.
 
 ## 2.8 Usability features {#d-usability}
+**Approach.** Many adopters will use PawMatch once, some are older or not confident online, and staff are volunteers, so every screen should be usable without help or training. Each screen does one job: one question at a time, one animal's profile, one staff form. Choices are large card buttons in plain words instead of dropdowns or jargon, and a problem is explained in a message right under the box that caused it. Every page keeps the client's soft pink design, the same menu and the same button styles, so once a user has learnt one page they know them all. The table lists each feature, where it appears, why it was chosen and how it will be evaluated.
+
 @widths 1.8 2.2 3 1
 | Usability feature | Where it appears | Why (source) | Evaluated |
 |---|---|---|---|
@@ -443,6 +445,7 @@ These tests are run during development, stage by stage, to inform it. Each has a
 | T1.1 | Register a valid adopter | N | Sam Lee, sam@example.com, 30, password1 twice | Account created, password stored as a hash, signed straight in |
 | T1.2 | Required fields blank (V1 to V4) | I | Every box empty | A message under each of the five boxes; nothing saved |
 | T1.3 | Email format (V2) | I | no-at-sign.com, a@b, two@@x.com, spa ce@x.com | "Enter a valid email address…" |
+| T1.3a | Email format accepted (V2) | N | sam@example.com, a.b-c@school.org.uk, x@y.co | Accepted, no message |
 | T1.4 | Age limits (V3) | B | 17, 18, 120, 121, 2.5, abc | 18 and 120 accepted; others refused with a reason |
 | T1.5 | Password length (V4) | B | 7 characters, 8 characters | 7 refused, 8 accepted |
 | T1.6 | Confirm password (V4) | I | different second password; blank second box | "The two passwords do not match." / "Type your password again…" |
@@ -457,6 +460,7 @@ These tests are run during development, stage by stage, to inform it. Each has a
 | T2.4 | Fixed lists (V9, V10, V12) | I | species Hamster, size Huge, sex ?, exercise 4, experience 3 | Refused with a reason |
 | T2.5 | Photo type and size (V14) | B/I | a.png 100 B, b.JPG 2 097 152 B / c.gif, d.jpg 2 097 153 B | First two accepted, last two refused |
 | T2.6 | Text length (V13) | B | Medical notes of 501 characters | Refused (limit 500) |
+| T2.6a | Text length at the limit (V13) | B | Personality and medical notes of exactly 500 characters | Accepted and stored in full |
 | T2.7 | Edit an animal deleted meanwhile | I | Edit animal_id that no longer exists | "That animal no longer exists." |
 | T2.8 | Adopter or signed-out user tries every staff action | I | role = user; no user | Every add, edit and delete refused |
 | T2.9 | Delete removes stored results too | N | Animal with match results | Animal and its results removed |

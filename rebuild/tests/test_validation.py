@@ -78,6 +78,17 @@ def test_login_presence_checks():
     assert set(errors) == {"email", "password"}
 
 
+@pytest.mark.parametrize("email", ["sam@example.com", "a.b-c@school.org.uk", "x@y.co"])
+def test_registration_accepts_valid_email_formats(email):
+    assert "email" not in register(email=email)[1]
+
+
+@pytest.mark.parametrize("field", ["medical_notes", "personality"])
+def test_text_of_exactly_500_characters_is_accepted(field):
+    cleaned, errors = validate_animal(GOOD_ANIMAL | {field: "x" * 500})
+    assert field not in errors and len(cleaned[field]) == 500
+
+
 def test_valid_animal_passes_and_converts_types():
     cleaned, errors = validate_animal(GOOD_ANIMAL)
     assert errors == {}

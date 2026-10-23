@@ -153,6 +153,8 @@ A new account is now signed in straight away and taken to the home page (commit 
 | T2.10 | Overview flags weak records | `test_profile_issues_flag_missing_photo_and_short_description` | Pass |
 | T2.11 | Database rejects a bad row | `test_database_constraints_back_up_validation` | Pass |
 
+The saved run at the end of this stage (`stage2-pytest.txt`) shows **103 passed, 0 failed**. No failure was recorded in this stage beyond those shown above, because the staff rules were built on the account functions already tested in stage 1.
+
 ### Client feedback 2 {#s-feedback2}
 @feedback 2
 
@@ -191,6 +193,8 @@ A new account is now signed in straight away and taken to the home page (commit 
 | T3.3 | Search text is data | `test_search_text_is_treated_as_data_not_sql` | Pass |
 | T3.4 | Profile shows needs | `test_view_profile_opens_the_animal_with_its_needs` | Pass |
 | T3.5 | Signed-out visitor | `test_adopter_pages_send_visitors_to_log_in` | Pass |
+
+The saved run at the end of this stage (`stage3-pytest.txt`) shows **117 passed, 0 failed**. The two failures saved as `stage3-fail1-apptest-path.txt` and `stage3-fail2-error-box.txt` came from the first page tests and are shown with their fixes under prototype 1 (page [[s-proto1]]); no other failure was recorded in this stage.
 
 ### Client feedback 3 {#s-feedback3}
 @feedback 3
@@ -359,7 +363,7 @@ The AI role-played client signed off the final stage (rating 7 out of 10). All {
 :::
 
 ## 3.9 Stage 7: changes from the reviews, and staying signed in {#s-stage7}
-**Aim.** Make every change the six client reviews and the four usability testers asked for (listed under each stage's "Changes made" above), then fix the last problem on my own list: a browser reload signed the user out.
+**Aim.** Make every change the six client reviews and the four usability testers asked for (listed under each stage's "Changes made" above), then fix the last problem on my own list: a browser reload signed the user out. Covers SC6 and SC7 (registration messages), SC4 and SC5 (browse and profile), SC8 (questionnaire), SC11 (explaining matches) and SC14 (staying signed in safely).
 
 **What was built.**
 - All review changes in one commit (`77ef20a`), each with a test named after the review that asked for it.
@@ -383,6 +387,8 @@ The AI role-played client signed off the final stage (rating 7 out of 10). All {
 | T7.9 | A reload with the token keeps the adopter signed in | `test_reload_keeps_the_adopter_signed_in` | Pass |
 | T7.10 | A made-up token signs nobody in | `test_signed_out_or_unknown_token_does_not_sign_in` | Pass |
 | T7.11 | A token stops working when signed out or expired | `test_session_token_finds_its_user_until_ended_or_expired` | Pass |
+| T1.3a | Valid emails are accepted (added in stage 7: the plan only had invalid cases) | `test_registration_accepts_valid_email_formats` (3 cases) | Pass |
+| T2.6a | Exactly 500 characters is accepted (added in stage 7: the plan only had 501) | `test_text_of_exactly_500_characters_is_accepted` (2 cases) | Pass |
 | All | Every earlier test still passes (regression) | Full suite | {{tests_total}} passed, {{tests_failed}} failed |
 
 :::fail The blank confirm box failed first (also shown under stage 1)
@@ -392,6 +398,20 @@ The new rule for an empty confirm box changed what `test_registration_reports_ev
 :::fix Fix and retest
 The test's expected list was updated to include the new message, because the extra message is the change the review asked for. Retest: passed, and the whole suite passed (`review-pytest.txt`).
 :::
+
+### Client feedback 7 {#s-feedback7}
+No separate review was held after stage 7, because stage 7 only built what the six earlier reviews had asked for. Instead I checked each of the client's earlier requests (made by the AI role-played client, see [[s-method]]) against the stage 7 screens and tests.
+
+@widths 2.6 1 2.4
+| Earlier request (review) | Met? | Evidence |
+|---|---|---|
+| Say the age rule on the form; flag an empty confirm box (1) | Met | T7.1, T7.2 |
+| Filter by size; the questionnaire as a button on the profile (3) | Met | T7.3, T7.4 |
+| Hours box should not start at 0 (4) | Met | T7.6 |
+| Explain warnings and the order in plain words (5) | Met | T7.7; still to be re-tested with real users (evaluation, U3) |
+| Red outline on the box with the error; a Cancel button (1, 2) | Not met | Not possible in Streamlit; limitation 4 |
+
+This check is mine, not a new client review; a walk-through with the real client is the first item of future development ([[e-future]]).
 
 :::verdict Development assessment 7
 Every change the reviews asked for that fits the design is built and tested, and a reload no longer signs the user out. Requests that were not built (address fields, a red outline on error boxes, a Cancel button) are explained under each stage and carried into the evaluation. Next: the post-development tests on [[e-results]].

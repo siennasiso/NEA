@@ -38,7 +38,7 @@ The finished system (commit `77ef20a` plus the worked-example test) was tested a
 | P12 | Staff add / edit / delete with validation | Pages [[fig-s2-add]], [[fig-s2-manage]]; T2.1 to T2.7, T2.9; photo type and size `test_image_type_and_size` | Pass |
 | P13 | Adopters cannot use staff functions | T2.8 (every action, both adopter and signed out) | Pass |
 | P14 | Storage and capacity | T2.11, T4.5; 500 animals / 100 users above | Pass |
-| P15 | Usability (SUS ≥ 68) and client sign-off | Section 4.3: mean SUS {{sus_mean}} from simulated testers; AI role-played client signed off | Partly |
+| P15 | Usability (SUS ≥ 68) and client sign-off | Section 4.3: mean SUS {{sus_mean}} from simulated testers; the AI role-played client signed off, not the real client | Partly |
 | P16 | Laptop and tablet widths | Page [[fig-s6-tablet]]; audit of {{audit_screens}} screens at 1440 px and 16 at 1024 px | Pass |
 
 @img 06-home-desktop.png | The adopter's menu: home, browse, questionnaire, matches, account (no staff items) | 12 | key=fig-e-menu-adopter crop=0-700
@@ -96,14 +96,16 @@ These four testers were **simulated by an AI model** given each profile, not rea
 @suschart SUS score for each tester; the dashed line is the average website (68)
 
 ### What the usability testing showed {#e-ufindings}
-@widths 1 1.2 0.6 3 2.4
-| Task | Screen | Criterion | What testers found | What happened |
-|---|---|---|---|---|
-| U1 register and log in | Register, login | SC6, SC7 | All four completed it without help (P1 rated it 9/10). P1 noticed that an empty confirm box was not flagged. | Fixed in stage 7 (confirm box flagged) |
-| U2 questionnaire | Questionnaire (10 screens) | SC8 | Completed by all; the progress bar and "Question N of 10" were liked. The hours box started at 0. | Fixed: hours box starts empty |
-| U3 explain the top match | Matches | SC11 | The lowest-rated task (5 to 7 out of 10). Testers did not know what "welfare need" meant, could not see why a warned animal ranked lower, and wanted the warning to stand out. | Fixed: red welfare box in plain words, a line explaining the order, and a score key |
-| U4 staff add, edit, delete | Staff manage, add animal | SC12 | P4 completed add and edit, but rated it 6/10: the Delete button was not visible enough. | Partly met: the tick-box confirmation stays; making Delete more visible is future development |
-| U5 browse and return | Browse, profile | SC4, SC5 | Easy for everyone (8 to 9 out of 10); "Back to all animals" kept the list. | No change needed |
+@widths 1 1.1 0.6 2.8 2.1 0.8
+| Task | Screen | Criterion | What testers found | What happened | Verdict |
+|---|---|---|---|---|---|
+| U1 register and log in | Register, login | SC6, SC7 | All four completed it without help (P1 rated it 9/10). P1 noticed that an empty confirm box was not flagged. | Fixed in stage 7 (confirm box flagged) | Met |
+| U2 questionnaire | Questionnaire (10 screens) | SC8 | Completed by all; the progress bar and "Question N of 10" were liked. The hours box started at 0. | Fixed: hours box starts empty | Met |
+| U3 explain the top match | Matches | SC11 | The lowest-rated task (5 to 7 out of 10). Testers did not know what "welfare need" meant, could not see why a warned animal ranked lower, and wanted the warning to stand out. | Fixed: red welfare box in plain words, a line explaining the order, and a score key | Partly met |
+| U4 staff add, edit, delete | Staff manage, add animal | SC12 | P4 completed add and edit, but rated it 6/10: the Delete button was not visible enough. | Partly met: the tick-box confirmation stays; making Delete more visible is future development | Partly met |
+| U5 browse and return | Browse, profile | SC4, SC5 | Easy for everyone (8 to 9 out of 10); "Back to all animals" kept the list. | No change needed | Met |
+
+The verdict is for the task's success criterion after the stage 7 changes. U3 is only partly met because the plain-words fix was made after the testing and has not been re-tested; U4 is partly met because Delete is still not easy to see.
 
 The common request from all four testers was the same as the client's in review 5: say in plain words what a warning means. That is the strongest evidence that the stage 7 change to the matches page was the right one.
 
@@ -154,18 +156,19 @@ The analysis survey of 27 adopters ([[a-survey]]) is the baseline for what adopt
 @widths 2 3.5 1
 | Feature (from [[d-usability]]) | Evidence of how well it worked | Effective? |
 |---|---|---|
-| Pink palette, Nunito, large photos | Liked by the client in every review and by all four testers | Yes |
+| Pink palette, Nunito, large photos | Liked by the AI role-played client in every review and by all four simulated testers; the audit shows it is readable | Yes |
 | Contrast and text size | Audit passes; P3 (older user) could read every page | Yes |
 | One consistent menu | Every tester found every page | Yes |
-| One question per screen with progress | Liked in U2; no tester got lost | Yes |
+| One question per screen with progress | Liked by the simulated testers in U2; no tester got lost | Yes |
 | Card buttons | Every choice visible at once and easy to tap; the selected state could be stronger (client review 4) | Partly |
 | Next disabled until answered | No incomplete questionnaire stored (T4.6); disabled buttons look faint | Partly |
 | Error under each box | Every tester fixed errors without help in U1; no red outline on the box | Partly |
-| One generic login error | Client agreed it was right for security | Yes |
+| One generic login error | The AI role-played client agreed it was right for security; T1.4 shows both wrong cases give the same message | Yes |
 | Met / not met / warnings | Lowest task score (U3, on the pre-stage-7 screenshots); clearer after the stage 7 changes, but not re-tested | Partly |
 | "Staff make the final decision" | On home, profile and matches pages | Yes |
 | Tick-box before delete | No accidental deletes; Delete button not visible enough (U4) | Partly |
 | Keyboard focus outline | Audit shows a focus outline on every control | Yes |
+| Red outline on the box with the error (asked for in the reviews) | Not possible: Streamlit cannot outline one box, so the message under the box is the only cue (limitation 4) | No |
 
 ## 5.4 Maintenance {#e-maintenance}
 - **Modular structure.** All rules live in `pawmatch/` and all screens in `webui/`. A change to how a page looks cannot break the scoring, and the {{tests_total}} tests show at once if a change to the rules does.
@@ -216,3 +219,4 @@ PawMatch stores personal data, so it has to follow UK GDPR: collect only what is
 | "Delete my account" button | A button on the account page that asks for the password again, then deletes the user (their answers and scores go with it) | Limitation 9, privacy |
 | Save answers part way | Store the answers given so far in a draft row and reopen the questionnaire at the first unanswered question | Limitation 12, SC8 |
 | Run the stakeholder survey | Send the survey on [[e-survey]] after a week of real use and compare with the analysis baseline | Limitation 1, SC15 |
+| The rescue's own Google sign-in | Create a Google Cloud project in the rescue's name, add its client ID and secret to the server's secrets file, and test the sign-in with a staff account | Limitation 6 |
