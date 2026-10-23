@@ -28,3 +28,13 @@ def animal():
 @pytest.fixture
 def answers():
     return lambda **changes: replace(BASE_ANSWERS, **changes)
+
+
+@pytest.fixture
+def conn(tmp_path):
+    """A fresh on-disk database per test, with the schema but no rows."""
+    from pawmatch import db
+
+    with db.connect(tmp_path / "test.db") as connection:
+        db.init_schema(connection)
+        yield connection
