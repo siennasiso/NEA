@@ -2,3 +2,4 @@
 streamlit==1.66.1       # the web interface (pages, forms, sessions); 1.42 or later is needed for st.login
 pillow==13.0.0          # reads, checks and resizes animal photos (webui/images.py)
 Authlib==1.9.1          # only used by the optional "Continue with Google" button (st.login)
+httpx==0.28.1           # Authlib needs it for the Google sign-in hand-off (st.login)
