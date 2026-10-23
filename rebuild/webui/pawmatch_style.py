@@ -55,6 +55,34 @@ def apply_pawmatch_style() -> None:
             --error: #bd294b;
         }
 
+        /* Found by the rendered audit (docs/evidence/rendered-audit-*.json), for every page:
+           the upload hint was Streamlit's faded grey (3.2:1), and the sign-in switch showed no
+           focus ring for keyboard users. */
+        [data-testid="stFileUploaderDropzoneInstructions"] small,
+        [data-testid="stFileUploaderDropzoneInstructions"] span { color: var(--pm-text) !important; }
+        .st-key-auth_tab_login button:focus-visible,
+        .st-key-auth_tab_registration button:focus-visible {
+            outline: 3px solid var(--pm-deep) !important;
+            outline-offset: 2px;
+        }
+        /* When hovered or focused, Streamlit gives a button a pale pink fill. White labels would
+           vanish on it (1.2:1) and pink labels drop to about 4.1:1, so these states keep a deep pink. */
+        [class*="st-key-view_profile_"] button:hover, [class*="st-key-view_profile_"] button:focus,
+        .st-key-view_matches_primary button:hover, .st-key-view_matches_primary button:focus {
+            background: var(--pm-deep) !important;
+            color: white !important;
+        }
+        .st-key-secondary_button button:hover, .st-key-secondary_button button:focus,
+        .st-key-login_button button:hover, .st-key-login_button button:focus,
+        .st-key-logout_button button:hover, .st-key-logout_button button:focus,
+        .st-key-page_back button:hover, .st-key-page_back button:focus,
+        .st-key-profile_back button:hover, .st-key-profile_back button:focus,
+        .st-key-flow_back button:hover, .st-key-flow_back button:focus,
+        .st-key-overview_manage button:hover, .st-key-overview_manage button:focus,
+        .st-key-overview_add button:hover, .st-key-overview_add button:focus {
+            color: var(--pm-deep) !important;
+        }
+
         /* Streamlit's own chrome: visitors never see the developer menu, deploy button or footer. */
         #MainMenu, footer, [data-testid="stToolbar"], [data-testid="stMainMenu"],
         [data-testid="stAppDeployButton"], [data-testid="stStatusWidget"],
@@ -133,13 +161,13 @@ def apply_pawmatch_style() -> None:
         .brand-copy {
             max-width: 430px;
             margin: 1.15rem 0 1.7rem;
-            color: rgba(255,255,255,.88);
+            color: white;
             line-height: 1.65;
         }
 
         .benefit {
             margin: .85rem 0;
-            color: rgba(255,255,255,.96);
+            color: white;
             font-size: .94rem;
             font-weight: 650;
         }
@@ -150,8 +178,9 @@ def apply_pawmatch_style() -> None:
             width: 28px;
             height: 28px;
             margin-right: .55rem;
+            border: 1.5px solid rgba(255,255,255,.75);
             border-radius: 9px;
-            background: rgba(255,255,255,.18);
+            background: transparent;
         }
 
         .form-title {
@@ -427,14 +456,14 @@ def apply_sidebar_dashboard_style() -> None:
 
         .sidebar-brand-subtitle {
             margin: .18rem 0 0;
-            color: #876473;
+            color: #6e525e;
             font-size: .78rem;
             font-weight: 650;
         }
 
         .sidebar-section-label {
             margin: .4rem .55rem .55rem;
-            color: #a24a75;
+            color: #8d4066;
             font-size: .78rem;
             font-weight: 850;
             letter-spacing: .11em;
@@ -518,14 +547,14 @@ def apply_sidebar_dashboard_style() -> None:
 
         .sidebar-user-card small {
             margin-top: .12rem;
-            color: #866575;
+            color: #6d525f;
             font-size: .78rem;
         }
 
         [data-testid="stSidebar"] .st-key-nav_logout button {
             border-color: #dca5bf;
             background: transparent;
-            color: #9c3c68;
+            color: #953963;
         }
 
         .st-key-home_page_shell {
@@ -1422,7 +1451,7 @@ def apply_admin_dashboard_style(active_view: str = "overview") -> None:
         .admin-sidebar-note strong {{ color: #71384f; font-size: .76rem; }}
         .admin-sidebar-note span {{
             margin-top: .34rem;
-            color: #8a6576;
+            color: #6f525f;
             font-size: .78rem;
             line-height: 1.45;
         }}
@@ -1430,7 +1459,7 @@ def apply_admin_dashboard_style(active_view: str = "overview") -> None:
         [data-testid="stSidebar"] .st-key-admin_nav_logout button {{
             border-color: #dca5bf;
             background: transparent;
-            color: #9c3c68;
+            color: #953963;
         }}
 
         .st-key-admin_page_shell {{ padding: .35rem .1rem 1.5rem; }}

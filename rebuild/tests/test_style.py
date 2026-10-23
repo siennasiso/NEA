@@ -2,10 +2,16 @@
 
 The rules come from WCAG 2.2 level AA: text needs a contrast ratio of at least 4.5:1 with what is
 behind it, and no text is set below 12px. A gradient is checked at every colour in it, so the
-lightest point of a pink panel counts. Translucent highlights (rgba) are skipped: they only
-lighten a corner that has no text. Text with no background of its own sits on the page or on a
-card, so it is checked against the pale pink page colour (--pm-blush), the darker of the two.
-Disabled buttons are left out, as WCAG allows: they are not meant to be read as active controls.
+lightest point of a pink panel counts; translucent highlights in a gradient (rgba) are skipped,
+as they only lighten a corner that has no text. A translucent fill on its own is blended over
+what is behind it. Text with no background of its own is checked against what
+is behind it: the side menu's pink for anything in the menu, otherwise the pale pink page colour
+(--pm-blush), the darker of page and card. A hover or focus rule that changes only the background
+keeps the text colour of the control at rest, so that pair is checked too. Disabled buttons are
+left out, as WCAG allows: they are not meant to be read as active controls.
+
+The first two of those rules were added after the rendered audit (docs/tools/capture_screens.py)
+found menu text and a hovered button that this file had passed.
 """
 
 import re
@@ -14,20 +20,21 @@ from pathlib import Path
 STYLE = Path(__file__).resolve().parents[1] / "webui" / "pawmatch_style.py"
 CSS = re.sub(r"/\*.*?\*/", "", STYLE.read_text(encoding="utf-8"), flags=re.S).replace("{{", "{").replace("}}", "}")
 HEX = re.compile(r"#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b")
+RGBA = re.compile(r"rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)")
 MIN_RATIO = 4.5
 MIN_TEXT_PX = 12
 
 
 def _rules() -> list[tuple[str, dict[str, str]]]:
-    """Every innermost `selector { property: value; ... }` block, as (selector, declarations)."""
+    """Every innermost `selector { property: value; ... }` block, one entry per selector in a list."""
     found = []
-    for selector, body in re.findall(r"([^{}]+)\{([^{}]*)\}", CSS):
+    for selectors, body in re.findall(r"([^{}]+)\{([^{}]*)\}", CSS):
         declarations = {}
         for part in body.split(";"):
             name, colon, value = part.partition(":")
             if colon:
                 declarations[name.strip().lower()] = value.replace("!important", "").strip()
-        found.append((" ".join(selector.split()), declarations))
+        found += [(" ".join(selector.split()), declarations) for selector in selectors.split(",")]
     return found
 
 
@@ -51,6 +58,13 @@ def _luminance(colour: str) -> float:
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
+def _blend(layer: tuple[str, str, str, str], under: str) -> str:
+    """A translucent rgba() colour laid over a solid #rrggbb one."""
+    alpha = float(layer[3])
+    base = [int(under.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4)]
+    return "#" + "".join(f"{round(int(top) * alpha + low * (1 - alpha)):02x}" for top, low in zip(layer[:3], base))
+
+
 def contrast(first: str, second: str) -> float:
     light, dark = sorted((_luminance(first), _luminance(second)), reverse=True)
     return (light + 0.05) / (dark + 0.05)
@@ -64,14 +78,30 @@ def _text_colour(value: str) -> str | None:
     return match.group(0) if match else None
 
 
+STATES = re.compile(r":(?:hover|focus-visible|focus-within|focus|active)\b")
+AT_REST = {selector: block["color"] for selector, block in RULES if "color" in block and not STATES.search(selector)}
+SIDEBAR = next(HEX.findall(_resolve(block["background"])) for selector, block in RULES
+               if selector == '[data-testid="stSidebar"]' and "background" in block)
+
+
+def _page_behind(selector: str) -> list[str]:
+    """What shows through text that has no background of its own."""
+    return SIDEBAR if "sidebar" in selector.lower() else [TOKENS["pm-blush"]]
+
+
 def low_contrast_text() -> list[str]:
     problems = []
     for selector, block in RULES:
-        text = _text_colour(block.get("color", ""))
+        colour = block.get("color") or AT_REST.get(STATES.sub("", selector), "")
+        text = _text_colour(colour) if ("color" in block or "background" in block) else None
         if text is None or ":disabled" in selector:
             continue
         background = _resolve(block.get("background", "") or block.get("background-color", ""))
-        behind = HEX.findall(background) or ([] if text == "#ffffff" else [TOKENS["pm-blush"]])
+        behind = HEX.findall(background)
+        if not behind:
+            page = [] if text == "#ffffff" else _page_behind(selector)
+            fill = RGBA.findall(background)
+            behind = [_blend(fill[0], colour) for colour in page] if fill else page
         for colour in behind:
             ratio = contrast(text, colour)
             if ratio < MIN_RATIO:

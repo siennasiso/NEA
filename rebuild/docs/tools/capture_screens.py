@@ -9,8 +9,10 @@ The database is a temporary file, so nothing here touches data/pawmatch.db.
 
 Each screen is also audited as rendered: every piece of visible text is checked for contrast
 against what is actually behind it (WCAG 2.2 AA: 4.5:1, or 3:1 for large text) and for a size
-of at least 12px, and the login page is worked through with the keyboard alone. The results go
-to docs/evidence/rendered-audit-<size>.json.
+of at least 12px. Every button and link is then hovered and focused in turn and its text checked
+again, because a control can pass at rest and fail when the pointer or keyboard is on it. The
+login page is worked through with the keyboard alone. The results go to
+docs/evidence/rendered-audit-<size>.json.
 """
 
 from __future__ import annotations
@@ -43,7 +45,7 @@ EVIDENCE = ROOT / "docs" / "evidence"
 # Backgrounds are blended up through the parents; a gradient behind the text is checked at each
 # solid colour stop (translucent highlights are skipped, as in tests/test_style.py).
 AUDIT_JS = """
-() => {
+(root) => {
   const parse = c => { const m = c && c.match(/rgba?\\(([^)]+)\\)/); if (!m) return null;
     const p = m[1].split(/[\\s,\\/]+/).filter(Boolean).map(Number);
     return {r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1}; };
@@ -66,7 +68,7 @@ AUDIT_JS = """
     return [layers.reduceRight((under, top) => blend(top, under), {r: 255, g: 255, b: 255, a: 1})];
   };
   const found = [];
-  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const walker = document.createTreeWalker(root || document.body, NodeFilter.SHOW_TEXT);
   const seen = new Set();
   while (walker.nextNode()) {
     const el = walker.currentNode.parentElement;
@@ -87,17 +89,18 @@ AUDIT_JS = """
 """
 
 # Runs inside the page: how a keyboard user moves through it. At each Tab stop the focused control
-# is compared with itself unfocused; a focus indicator is "visible" when the two look different.
+# and the boxes around it (an input's border is drawn by its wrapper) are compared with themselves
+# unfocused; a focus indicator is "visible" when they look different.
 FOCUS_JS = """
 async () => {
   const e = document.activeElement; if (!e || e === document.body) return null;
-  const wrap = e.closest('[data-baseweb="input"], [data-baseweb="base-input"], [data-baseweb="textarea"]') || e;
-  const look = () => [e, wrap].map(x => { const s = getComputedStyle(x);
+  const boxes = []; for (let x = e; x && boxes.length < 5; x = x.parentElement) boxes.push(x);
+  const look = () => boxes.map(x => { const s = getComputedStyle(x);
     return [s.outlineStyle, s.outlineWidth, s.outlineColor, s.boxShadow, s.borderColor, s.backgroundColor].join('|'); }).join('||');
   const pause = () => new Promise(done => setTimeout(done, 400));
   const focused = look(); e.blur(); await pause(); const blurred = look(); e.focus(); await pause();
   return {tag: e.tagName.toLowerCase(), label: (e.getAttribute('aria-label') || e.innerText || e.placeholder || '').trim().slice(0, 40),
-          visible: focused !== blurred};
+          control: !['main', 'section', 'div'].includes(e.tagName.toLowerCase()), visible: focused !== blurred};
 }
 """
 
@@ -139,14 +142,37 @@ class Shooter:
         self.page.wait_for_timeout(500)
         self.page.screenshot(path=str(self.out / f"{name}-{self.size}.png"))
         texts = self.page.evaluate(AUDIT_JS)
+        controls, states = self.control_states()
         self.audit[name] = {
             "texts": len(texts),
             "low_contrast": [x for x in texts if x["ratio"] < x["needs"]],
             "below_12px": [x for x in texts if x["size"] < 12],
+            "controls_checked": controls,
+            "low_contrast_hover_or_focus": states,
         }
         self.page.set_viewport_size({"width": width, "height": height})
         print("saved", name, self.size, len(texts), "texts,", len(self.audit[name]["low_contrast"]), "low contrast,",
-              len(self.audit[name]["below_12px"]), "small", flush=True)
+              len(self.audit[name]["below_12px"]), "small,", controls, "controls,", len(states), "state problems",
+              flush=True)
+
+    def control_states(self) -> tuple[int, list[dict]]:
+        """Hover, then focus, every visible enabled button and link, checking its text each time."""
+        problems, checked = [], 0
+        controls = self.page.locator('button:visible:enabled, [data-testid="stPageLink"] a:visible')
+        for index in range(controls.count()):
+            control = controls.nth(index)
+            checked += 1
+            for state in ("hover", "focus"):
+                try:
+                    control.hover(timeout=2000) if state == "hover" else control.focus(timeout=2000)
+                    self.page.wait_for_timeout(150)
+                    found = control.evaluate(AUDIT_JS)
+                except Exception:  # a control that moved or disappeared; it is checked at rest above
+                    continue
+                problems += [dict(x, state=state) for x in found if x["ratio"] < x["needs"]]
+                control.evaluate("e => e.blur()")
+        self.page.mouse.move(0, 0)
+        return checked, problems
 
     def keyboard_tour(self, stops: int = 12) -> None:
         """Press Tab through the login page, recording each stop and whether focus is visible."""

@@ -1,0 +1,187 @@
+{
+ "01-login": {
+  "texts": 18,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 5,
+  "low_contrast_hover_or_focus": []
+ },
+ "keyboard-login": {
+  "stops": [
+   null,
+   {
+    "tag": "a",
+    "label": "Skip to main content",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "main",
+    "label": "\ud83d\udc3e\n\nPAWMATCH ADOPTION\n\nFind a companion ",
+    "control": false,
+    "visible": false
+   },
+   {
+    "tag": "button",
+    "label": "Create an account",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "input",
+    "label": "Email address",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "input",
+    "label": "Password",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "button",
+    "label": "Show password",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "button",
+    "label": "\ud83d\udc3e\n\nLog in",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "button",
+    "label": "Create an account",
+    "control": true,
+    "visible": true
+   },
+   null,
+   {
+    "tag": "a",
+    "label": "Skip to main content",
+    "control": true,
+    "visible": true
+   },
+   {
+    "tag": "main",
+    "label": "\ud83d\udc3e\n\nPAWMATCH ADOPTION\n\nFind a companion ",
+    "control": false,
+    "visible": false
+   }
+  ]
+ },
+ "02-login-error": {
+  "texts": 19,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 5,
+  "low_contrast_hover_or_focus": []
+ },
+ "03-register": {
+  "texts": 20,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 7,
+  "low_contrast_hover_or_focus": []
+ },
+ "04-register-errors": {
+  "texts": 24,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 7,
+  "low_contrast_hover_or_focus": []
+ },
+ "05-register-done": {
+  "texts": 7,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 1,
+  "low_contrast_hover_or_focus": []
+ },
+ "06-home": {
+  "texts": 32,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 8,
+  "low_contrast_hover_or_focus": []
+ },
+ "07-browse": {
+  "texts": 69,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 30,
+  "low_contrast_hover_or_focus": []
+ },
+ "08-profile": {
+  "texts": 32,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 7,
+  "low_contrast_hover_or_focus": []
+ },
+ "09-questionnaire": {
+  "texts": 19,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 8,
+  "low_contrast_hover_or_focus": []
+ },
+ "10-questionnaire-hours": {
+  "texts": 16,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 9,
+  "low_contrast_hover_or_focus": []
+ },
+ "11-questionnaire-done": {
+  "texts": 13,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 7,
+  "low_contrast_hover_or_focus": []
+ },
+ "12-matches": {
+  "texts": 84,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 11,
+  "low_contrast_hover_or_focus": []
+ },
+ "13-profile-scored": {
+  "texts": 37,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 7,
+  "low_contrast_hover_or_focus": []
+ },
+ "14-account": {
+  "texts": 21,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 7,
+  "low_contrast_hover_or_focus": []
+ },
+ "15-admin-overview": {
+  "texts": 44,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 12,
+  "low_contrast_hover_or_focus": []
+ },
+ "16-admin-manage": {
+  "texts": 51,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 27,
+  "low_contrast_hover_or_focus": []
+ },
+ "17-admin-add-errors": {
+  "texts": 46,
+  "low_contrast": [],
+  "below_12px": [],
+  "controls_checked": 18,
+  "low_contrast_hover_or_focus": []
+ }
+}
