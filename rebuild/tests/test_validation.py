@@ -117,3 +117,12 @@ def test_step_validation_only_checks_that_step():
 def test_steps_cover_every_question_once():
     asked = [q for _, names in QUESTION_STEPS for q in names]
     assert sorted(asked) == sorted(GOOD_ANSWERS)
+
+
+@pytest.mark.parametrize("name,size,ok", [
+    ("a.png", 100, True), ("b.JPG", 2 * 1024 * 1024, True), ("c.gif", 100, False), ("d.jpg", 2 * 1024 * 1024 + 1, False),
+])
+def test_image_type_and_size(name, size, ok):
+    from pawmatch.validation import validate_image
+
+    assert (validate_image(name, size) is None) is ok

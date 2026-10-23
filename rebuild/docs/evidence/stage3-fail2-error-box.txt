@@ -1,0 +1,5 @@
+>       assert len(at.error) == 2 and at.session_state["q_step"] == 0
+E       AssertionError: assert (1 == 2)
+E        +  where 1 = len(ElementList(_list=[Error()]))
+E        +    where ElementList(_list=[Error()]) = AppTest(\n    _script_path='rebuild/streamlit_app.py',\n...SpecialBlock(\n            type='sidebar'\n        ),\n        2: SpecialBlock(\n            type='event'\n        )\n    }\n).error
+1 failed in 0.67s

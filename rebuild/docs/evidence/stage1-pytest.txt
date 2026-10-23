@@ -1,5 +1,5 @@
 ============================= test session starts ==============================
-platform darwin -- Python 3.13.6, pytest-9.1.1, pluggy-1.7.0 -- /Users/shaansisodia/SISO_Workspace/personal/sienna/opus-rebuild/rebuild/.venv/bin/python
+platform darwin -- Python 3.13.6, pytest-9.1.1, pluggy-1.7.0 -- rebuild/.venv/bin/python
 cachedir: .pytest_cache
 rootdir: /Users/shaansisodia/SISO_Workspace/personal/sienna/opus-rebuild/rebuild
 configfile: pytest.ini

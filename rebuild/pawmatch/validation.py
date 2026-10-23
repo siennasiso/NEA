@@ -62,7 +62,7 @@ def _check_name(value: Any, errors: Errors, field: str = "name") -> str:
 def _check_range(value: Any, low: int, high: int, field: str, label: str, errors: Errors) -> int | None:
     number = _int(value)
     if number is None:
-        errors[field] = f"{label} must be a whole number."
+        errors[field] = f"{label} is required." if _text(value) == "" else f"{label} must be a whole number."
     elif not low <= number <= high:
         errors[field] = f"{label} must be between {low} and {high}."
     return number
@@ -206,3 +206,16 @@ def validate_answers(raw: dict[str, Any]) -> tuple[Answers | None, Errors]:
     errors: Errors = {}
     cleaned = {name: check(raw.get(name), errors) for name, check in QUESTION_VALIDATORS.items()}
     return (None, errors) if errors else (Answers(**cleaned), errors)
+
+
+IMAGE_TYPES = ("png", "jpg", "jpeg")
+IMAGE_MAX_BYTES = 2 * 1024 * 1024
+
+
+def validate_image(filename: str, size_bytes: int) -> str | None:
+    """Return an error message for an unsuitable upload, or None if it is acceptable."""
+    if filename.rsplit(".", 1)[-1].lower() not in IMAGE_TYPES:
+        return "Images must be PNG or JPG."
+    if size_bytes > IMAGE_MAX_BYTES:
+        return "Images must be 2 MB or smaller."
+    return None
