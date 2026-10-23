@@ -161,7 +161,7 @@ with main_column:
                 for index, (label, hint, value) in enumerate(options):
                     with option_columns[index]:
                         if st.button(
-                            f"{label}\n\n{hint}",
+                            f"**{label}**\n\n{hint}",  # the style file puts the bold title on its own line
                             key=f"choice_{step}_{index}",
                             width="stretch",
                         ):

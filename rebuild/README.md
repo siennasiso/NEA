@@ -113,8 +113,8 @@ Her design is unchanged except where a test showed it was hard to read or use:
   the white "View profile" labels vanish (1.2:1). Those states now keep a deep pink.
 - **Upload hint.** The photo uploader's hint uses the body text colour instead of a faded grey.
 
-The browser check (`docs/tools/capture_screens.py`) now finds no problems on any page: 552 text items
-and 176 buttons and links, checked at rest, hovered and focused.
+The browser check (`docs/tools/capture_screens.py`) now finds no problems on any of the 34 page views
+(desktop and tablet): 1,155 text items and 359 buttons and links, checked at rest, hovered and focused.
 
 `docs/evidence/style-test-before.txt` records the test failing on the original colours.
 

@@ -148,7 +148,7 @@ Cases per file: validation 63, matching 29, repository 14, auth 10, UI 10, admin
 
 | Criterion | Evidence |
 |---|---|
-| 1.1-1.4 | `.streamlit/config.toml` theme; screenshots `docs/img/01`-`16`, incl. `16-tablet-browse.png` at 820 px |
+| 1.1-1.4 | `.streamlit/config.toml` theme; screenshots `docs/img/prototype-1/01`-`16`, incl. `16-tablet-browse.png` at 820 px |
 | 2.1-2.2 | `test_home_page_explains_purpose`; `01-home.png` |
 | 3.1-3.4 | `test_browse_shows_a_card_for_every_animal` (13 cards); `test_seed_has_three_species_and_is_idempotent`; `02`, `03` |
 | 4.1-4.4 | `test_profile_reads_from_database`; `test_insert_then_get_round_trips_every_field`; `04-profile.png` |

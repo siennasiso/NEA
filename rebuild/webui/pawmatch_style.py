@@ -1042,6 +1042,30 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             box-shadow: 0 4px 6px rgba(76,51,64,.18);
         }
 
+        /* Title on its own line, hint below, both allowed to wrap: four cards in a row
+           cut the hints off with an ellipsis before this rule. */
+        [class*="st-key-choice_"] button div,
+        [class*="st-key-choice_"] button p {
+            white-space: normal !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
+        }
+
+        [class*="st-key-choice_"] button p {
+            color: #5b4a53;
+            font-size: .75rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        [class*="st-key-choice_"] button p strong {
+            display: block;
+            margin-bottom: .2rem;
+            color: #352c31;
+            font-size: .86rem;
+            font-weight: 750;
+        }
+
         [class*="st-key-choice_"] button:hover {
             border-color: #d74d89;
             background: #fae4f0;
