@@ -1,0 +1,342 @@
+{
+ "profiles": [
+  {
+   "id": "A1",
+   "who": "Flat, out 8 h a day, first pet, low activity",
+   "include": [
+    "Milo",
+    "Poppy"
+   ],
+   "exclude": [
+    "Luna",
+    "Archie",
+    "Nala",
+    "Oscar"
+   ],
+   "top3": [
+    "Milo 100.0%",
+    "Poppy 100.0%",
+    "Teddy 95.6%"
+   ]
+  },
+  {
+   "id": "A2",
+   "who": "Family house with garden, wants a dog",
+   "include": [
+    "Luna",
+    "Archie"
+   ],
+   "exclude": [
+    "Nala",
+    "Simba",
+    "Teddy"
+   ],
+   "top3": [
+    "Archie 100.0%",
+    "Luna 100.0%",
+    "Oscar 100.0%"
+   ]
+  },
+  {
+   "id": "A3",
+   "who": "Same family, allergic to dogs, wants a rabbit",
+   "include": [
+    "Daisy",
+    "Clover"
+   ],
+   "exclude": [
+    "Luna",
+    "Archie",
+    "Nala",
+    "Oscar",
+    "Teddy"
+   ],
+   "top3": [
+    "Clover 100.0%",
+    "Daisy 100.0%",
+    "Poppy 100.0%"
+   ]
+  },
+  {
+   "id": "A4",
+   "who": "Older experienced owner, flat, out 10 h, likes cats",
+   "include": [
+    "Willow"
+   ],
+   "exclude": [
+    "Luna",
+    "Archie",
+    "Nala",
+    "Oscar"
+   ],
+   "top3": [
+    "Willow 100.0%",
+    "Milo 77.8% (warning)",
+    "Poppy 77.8% (warning)"
+   ]
+  },
+  {
+   "id": "A5",
+   "who": "Already has a pet, wants a second dog",
+   "include": [
+    "Archie",
+    "Oscar"
+   ],
+   "exclude": [
+    "Nala",
+    "Simba",
+    "Teddy"
+   ],
+   "top3": [
+    "Archie 100.0%",
+    "Oscar 100.0%",
+    "Luna 93.3%"
+   ]
+  },
+  {
+   "id": "A6",
+   "who": "First-time owner, out 6 h, wants a rabbit",
+   "include": [
+    "Daisy",
+    "Poppy"
+   ],
+   "exclude": [
+    "Luna",
+    "Nala"
+   ],
+   "top3": [
+    "Daisy 100.0%",
+    "Poppy 100.0%",
+    "Clover 95.6%"
+   ]
+  },
+  {
+   "id": "A7",
+   "who": "Experienced runner, large house, wants a large dog",
+   "include": [
+    "Luna"
+   ],
+   "exclude": [
+    "Poppy",
+    "Teddy",
+    "Daisy",
+    "Clover"
+   ],
+   "top3": [
+    "Luna 100.0%",
+    "Archie 100.0%",
+    "Nala 100.0%"
+   ]
+  },
+  {
+   "id": "A8",
+   "who": "Flat with children and a cat, out 5 h",
+   "include": [
+    "Milo",
+    "Poppy",
+    "Willow"
+   ],
+   "exclude": [
+    "Teddy",
+    "Simba",
+    "Nala"
+   ],
+   "top3": [
+    "Milo 100.0%",
+    "Poppy 100.0%",
+    "Willow 100.0%"
+   ]
+  },
+  {
+   "id": "A9",
+   "who": "Allergic to cats and rabbits, house with garden",
+   "include": [
+    "Archie",
+    "Oscar"
+   ],
+   "exclude": [
+    "Milo",
+    "Simba",
+    "Willow",
+    "Poppy",
+    "Teddy",
+    "Daisy",
+    "Clover"
+   ],
+   "top3": [
+    "Archie 100.0%",
+    "Oscar 100.0%",
+    "Luna 93.3%"
+   ]
+  },
+  {
+   "id": "A10",
+   "who": "Out 12 h with children and a pet: nothing is safe",
+   "include": [],
+   "exclude": [],
+   "top3": [
+    "Milo 77.8% (warning)",
+    "Oscar 77.8% (warning)",
+    "Poppy 77.8% (warning)"
+   ]
+  }
+ ],
+ "sensitivity": [
+  {
+   "factor": "hours_alone",
+   "weight": 20,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "hours_alone",
+   "weight": 20,
+   "change": "+10%",
+   "changed": []
+  },
+  {
+   "factor": "children",
+   "weight": 15,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "children",
+   "weight": 15,
+   "change": "+10%",
+   "changed": []
+  },
+  {
+   "factor": "housing",
+   "weight": 15,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "housing",
+   "weight": 15,
+   "change": "+10%",
+   "changed": []
+  },
+  {
+   "factor": "activity",
+   "weight": 12,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "activity",
+   "weight": 12,
+   "change": "+10%",
+   "changed": []
+  },
+  {
+   "factor": "garden",
+   "weight": 10,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "garden",
+   "weight": 10,
+   "change": "+10%",
+   "changed": []
+  },
+  {
+   "factor": "other_pets",
+   "weight": 10,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "other_pets",
+   "weight": 10,
+   "change": "+10%",
+   "changed": []
+  },
+  {
+   "factor": "experience",
+   "weight": 8,
+   "change": "-10%",
+   "changed": []
+  },
+  {
+   "factor": "experience",
+   "weight": 8,
+   "change": "+10%",
+   "changed": []
+  }
+ ],
+ "wide": [
+  {
+   "factor": "hours_alone",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "children",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "housing",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "activity",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "garden",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "other_pets",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "experience",
+   "change": "-50%",
+   "changed": []
+  },
+  {
+   "factor": "hours_alone",
+   "change": "+50%",
+   "changed": []
+  },
+  {
+   "factor": "children",
+   "change": "+50%",
+   "changed": []
+  },
+  {
+   "factor": "housing",
+   "change": "+50%",
+   "changed": []
+  },
+  {
+   "factor": "activity",
+   "change": "+50%",
+   "changed": []
+  },
+  {
+   "factor": "garden",
+   "change": "+50%",
+   "changed": []
+  },
+  {
+   "factor": "other_pets",
+   "change": "+50%",
+   "changed": []
+  },
+  {
+   "factor": "experience",
+   "change": "+50%",
+   "changed": []
+  }
+ ]
+}

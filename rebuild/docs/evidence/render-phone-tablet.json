@@ -1,0 +1,184 @@
+{
+ "generated": "2026-10-23T18:01:14",
+ "summary": {
+  "phone": {
+   "login": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "register-errors": {
+    "verdict": "2 tap targets under 40x40",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "home": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "browse": {
+    "verdict": "27 tap targets under 40x40",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "profile": {
+    "verdict": "2 tap targets under 40x40",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "questionnaire-q1": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "account": {
+    "verdict": "1 tap targets under 40x40",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "admin-overview": {
+    "verdict": "5 tap targets under 40x40",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "admin-manage-animals": {
+    "verdict": "35 tap targets under 40x40",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "admin-add-animal": {
+    "verdict": "25 tap targets under 40x40",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "_errors": [
+    "Q5: 'Next question' button not found"
+   ]
+  },
+  "tablet-landscape": {
+   "login": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "register-errors": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "home": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "browse": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "profile": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "questionnaire-q1": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "account": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "admin-overview": {
+    "verdict": "PASS",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "admin-manage-animals": {
+    "verdict": "PASS",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "admin-add-animal": {
+    "verdict": "PASS",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "_errors": [
+    "Q5: 'Next question' button not found"
+   ]
+  },
+  "tablet-portrait": {
+   "login": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "register-errors": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "home": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "browse": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "profile": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "questionnaire-q1": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "account": {
+    "verdict": "PASS",
+    "menu": "NO MENU",
+    "overflow_px": 0
+   },
+   "admin-overview": {
+    "verdict": "PASS",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "admin-manage-animals": {
+    "verdict": "PASS",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "admin-add-animal": {
+    "verdict": "PASS",
+    "menu": "reachable",
+    "overflow_px": 0
+   },
+   "_errors": [
+    "Q5: 'Next question' button not found"
+   ]
+  }
+ },
+ "reload_check": [
+  {
+   "viewport": "phone",
+   "still_logged_in": true
+  },
+  {
+   "viewport": "tablet-landscape",
+   "still_logged_in": true
+  },
+  {
+   "viewport": "tablet-portrait",
+   "still_logged_in": true
+  }
+ ]
+}

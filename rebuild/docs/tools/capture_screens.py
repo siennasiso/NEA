@@ -108,7 +108,7 @@ async () => {
 
 def start_server(db_path: Path) -> subprocess.Popen:
     env = dict(os.environ, PAWMATCH_DB=str(db_path), PAWMATCH_ADMIN_EMAIL=STAFF[0],
-               PAWMATCH_ADMIN_PASSWORD=STAFF[1], PAWMATCH_ADMIN_NAME="Matilde Shelter")
+               PAWMATCH_ADMIN_PASSWORD=STAFF[1], PAWMATCH_ADMIN_NAME="Shelter Staff")
     server = subprocess.Popen(
         [sys.executable, "-m", "streamlit", "run", "streamlit_app.py", "--server.port", str(PORT),
          "--server.headless", "true"], cwd=ROOT, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)

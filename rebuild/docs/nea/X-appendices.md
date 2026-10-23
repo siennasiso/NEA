@@ -75,4 +75,4 @@ The full listing of the rules layer (`pawmatch/`) follows. This is where every s
 @code pawmatch/auth.py:1-109 | Accounts and password hashing
 @code pawmatch/matching.py:1-166 | Matching algorithm
 @code pawmatch/services.py:1-102 | Staff-only actions
-@code pawmatch/db.py:1-311 | Database access
+@code pawmatch/db.py:1-345 | Database access

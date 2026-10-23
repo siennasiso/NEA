@@ -181,3 +181,18 @@ My research produced the detailed requirements below (numbered by feature area, 
 @her 539-547
 
 The sources for E4 to E8 are listed in Appendix B ([[x-refs]]).
+
+### Glossary {#a-glossary}
+@widths 1.5 4.5
+| Term | Meaning in this project |
+|---|---|
+| CRUD | Create, read, update and delete: the four things staff can do to an animal record |
+| Hash | A one-way scrambled version of a password. The program can check a typed password against it, but the password cannot be worked back out from it |
+| Salt | Random data added to each password before hashing, so two people with the same password get different hashes |
+| scrypt | The hashing method used for passwords (Python's `hashlib.scrypt`). It is deliberately slow, which makes guessing many passwords expensive |
+| Streamlit | The Python library that turns the program's pages into a website in the browser |
+| SQLite | The database. It keeps all tables in one file and comes with Python, so nothing extra has to be installed |
+| Primary key / foreign key | A primary key is the unique ID of a row (for example animal_id). A foreign key is a column that stores another table's primary key, which links the two rows |
+| Session token | A long random code created at sign-in and stored in the database. It keeps the user signed in when the page is reloaded, and ends at sign-out or after 12 hours |
+| WCAG | Web Content Accessibility Guidelines, the standard for readable and accessible websites (contrast, text size, focus) |
+| SUS | System Usability Scale: ten statements, each rated 1 to 5, that give a usability score out of 100 (Brooke, 1996) |

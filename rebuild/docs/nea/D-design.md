@@ -70,6 +70,34 @@ The table definitions above are the ones built and tested. Where they differ fro
 | Responses . preffered_species | preferred_species, preferred_size; plus other_pets, allergies, experience | Spelling corrected; three questions added (see the final question list on [[d-questions]]) |
 | Match results . total_score, maximum_score (INTEGER) | compatibility REAL 0 to 100, and category | The activity and experience factors can award half their weight, so scores are not whole numbers; the maximum is the constant 90, so it is not stored on every row |
 | unmet_requirements; compatibility_score | met, unmet, warnings; compatibility | Three lists are needed to show met, not met and warnings separately (SC11) |
+| Animals . minimum_housing_level | animals . min_housing_level | The same short name as the code and the CHECK constraint |
+| Variables total_score, maximum_score, animal_scores | earned (a running total), the constant MAX_POINTS = 90, and a list of results | See D6a and D7; the maximum never changes while the program runs, so it is a constant, not a variable |
+| Browse variable sort_option | (removed) | One fixed order, species then name ([[d-browse]]) |
+
+### Example records {#d-example}
+One example row from each of the two main tables, in the form the finished program stores it (the password hash is shortened here; the real salt and hash are 32 and 128 hexadecimal characters).
+
+@widths 1.6 4.4
+| users field | Example value |
+|---|---|
+| user_id | 2 |
+| name | Sam Lee |
+| email | sam@example.com (always stored in lower case) |
+| age | 30 |
+| password_hash | scrypt$16384$8$1$9f2c…e1$5b7d…a0 (method, cost settings, salt, hash) |
+| role | user |
+
+@widths 1.6 4.4
+| animals field | Example value |
+|---|---|
+| animal_id | 1 |
+| name / species / breed | Luna / Dog / Labrador cross |
+| age / sex / size | 4 / Female / Large |
+| exercise_needs / min_housing_level | 3 / 2 |
+| garden_required / child_compatible / good_with_pets | 1 / 1 / 1 |
+| max_hours_alone / experience_needed | 4 / 1 |
+| personality | Luna is an affectionate and energetic dog who enjoys long walks, training games and spending time with people. |
+| medical_notes / image_path / status | (blank) / assets/animals/luna.png / Available |
 
 ```Pseudocode D8: open the database, upgrade an older file, and save safely (R2, R5)
 FUNCTION connect(path)
@@ -131,6 +159,10 @@ ENDFUNCTION
 
 @her 592-618
 
+:::change Final names and rules for this component
+The variables and validation lists above are from the first design. In the build the login uses the email address (there is no username and no postal address), `user_role` is called `role` ([[d-dict-changes]]), a password needs **at least** 8 characters rather than "more than 8", and a person's age must be 18 to 120. The exact rules are V1 to V5 in the validation table on [[d-validation]].
+:::
+
 @design login | Annotated design: login screen (her layout and colours) | fig-design-login
 @design register | Annotated design: registration with a message under each field | fig-design-register
 
@@ -167,6 +199,10 @@ ENDFUNCTION
 
 @her 634-691
 
+:::change Final rules for the animal form
+The first validation list above is kept as the plan; the built rules are V6 to V14 on [[d-validation]]. The changes: an animal's name is 2 to 50 characters and may contain digits (V6); age is a whole number 1 to 30 (V8); personality is required and at most **500** characters, not 20 to 1,000 (one limit for both text boxes is simpler to explain and test, and 500 characters is about five sentences) (V13); medical notes are optional, also at most 500 (V13); a photo is optional, because a new arrival may not have one yet, and the overview lists animals without one (T2.10); if given it must be PNG or JPG and at most 2 MB (V14). `minimum_housing_level` is called `min_housing_level` ([[d-dict-changes]]).
+:::
+
 @design admin-list | Annotated design: staff table of animals | fig-design-admin-list
 @design admin-add | Annotated design: add-animal form with grouped sections | fig-design-admin-add
 
@@ -202,6 +238,10 @@ ENDFUNCTION
 The first browse design had a sort option. It is replaced by one fixed order (species, then name A to Z): with 10 to 20 animals and two filters plus a search, a fixed order is simpler to use and to test (T3.1 to T3.3).
 
 @her 733-746
+
+:::note Final browse variables
+`sort_option` in the variables table above is not used in the final build, because the order is fixed (see above). The search term is trimmed and limited to 20 characters (V16).
+:::
 
 @design home | Annotated design: home page | fig-design-home
 @design browse | Annotated design: browse cards with species and size filters | fig-design-browse
@@ -292,6 +332,10 @@ Sorting uses Python's built-in sort (Timsort, O(n log n)), which is stable and f
 
 @her 767-810
 
+:::note Final scoring variables
+In the build, `total_score` is the running total `earned`, `maximum_score` is the constant MAX_POINTS = 90 (the sum of the weights), and `compatibility_score` is `compatibility`, a percentage with one decimal place (D6a, D7 and [[d-dict-changes]]).
+:::
+
 :::change Design decision: no animal is removed from the results
 The first plan above removed animals with low suitability and showed the top 3 or 5. Removing animals could leave fewer than the 4 that requirement 7 asks for, and would hide an animal the adopter might ask staff about. Instead every Available animal is ranked (D7): animals with a welfare warning go to the bottom, the first 5 are shown, and a "show all" switch lists the rest. T5.9 tests this.
 :::
@@ -328,25 +372,25 @@ Card buttons are used instead of the dropdowns preferred in requirement 6, becau
 ## 2.7 Validation rules {#d-validation}
 Every input is checked in one place (`validation.py`) before it reaches the database, and the same rule is repeated as a database constraint. The rules below are exact; each is tested with normal, boundary and invalid data in the development test plan.
 
-@widths 1.5 2.6 2.6 0.9
-| Input | Rule | Message shown | Tests |
-|---|---|---|---|
-| Name (person) | Required; 2 to 50 characters; letters, spaces, hyphens and apostrophes only | "Enter a name." / "Name must be 2 to 50 characters." / "Name can only use letters, spaces, hyphens and apostrophes." | T1.1, T1.8 |
-| Email | Required; the form name@domain.xx; stored in lower case; not already used | "Enter a valid email address, like name@domain.com." / "An account with this email already exists." | T1.2, T1.3 |
-| Age (person) | Whole number 18 to 120 | "You must be 18 or over to adopt." / "Age must be between 18 and 120." | T1.4 |
-| Password | At least 8 characters; confirm box filled and equal | "Password must be at least 8 characters." / "Type your password again to confirm it." / "The two passwords do not match." | T1.5 to T1.7 |
-| Login | Both boxes filled (presence only); then one message for any wrong detail | "Enter your email address." / "Enter your password." / "Incorrect email or password." | T1.9, T1.10 |
-| Animal name | As person names, but digits allowed ("R2") | As above, "(and numbers)" | T2.2 |
-| Breed | Required; 2 to 50 characters; contains a letter | "Enter a breed (use 'Mixed' if unknown)." | T2.2 |
-| Animal age | Whole number 1 to 30 | "Age must be between 1 and 30." | T2.3 |
-| Species, sex, size, status | One of the fixed lists | "Choose a species." (and so on) | T2.4 |
-| Exercise needs, minimum housing | 1 to 3 | "… must be between 1 and 3." | T2.5 |
-| Hours alone (animal and adopter) | Whole number 0 to 24 | "Hours alone must be between 0 and 24." | T2.5, T4.2 |
-| Experience needed | 0 to 2 | "… must be between 0 and 2." | T2.5 |
-| Personality; medical notes | Personality required; both at most 500 characters | "Describe the animal's personality." / "… at most 500 characters." | T2.6 |
-| Photo | PNG or JPG, at most 2 MB | "Images must be PNG or JPG." / "Images must be 2 MB or smaller." | T2.10, T2.6 |
-| Questionnaire answers | Each answer in its range (final question list); Next disabled until answered | "Choose …" / "Answer yes or no for …" | T4.1 to T4.6 |
-| Search box | At most 20 characters; used only as data | none (no results) | T3.3, R1 |
+@widths 0.45 1.4 2.45 2.5 0.9
+| ID | Input | Rule | Message shown | Tests |
+|---|---|---|---|---|
+| V1 | Name (person) | Required; 2 to 50 characters; letters, spaces, hyphens and apostrophes only | "Enter a name." / "Name must be 2 to 50 characters." / "Name can only use letters, spaces, hyphens and apostrophes." | T1.2, T1.8 |
+| V2 | Email | Required; the form name@domain.xx; stored in lower case; not already used | "Enter a valid email address, like name@domain.com." / "An account with this email already exists." | T1.3, T1.7 |
+| V3 | Age (person) | Whole number 18 to 120 | "You must be 18 or over to adopt." / "Age must be between 18 and 120." | T1.4 |
+| V4 | Password | At least 8 characters; confirm box filled and equal | "Password must be at least 8 characters." / "Type your password again to confirm it." / "The two passwords do not match." | T1.5, T1.6 |
+| V5 | Login | Both boxes filled (presence only); then one message for any wrong detail | "Enter your email address." / "Enter your password." / "Incorrect email or password." | T1.9, T1.10 |
+| V6 | Animal name | As person names, but digits allowed ("R2") | As above, "(and numbers)" | T2.2 |
+| V7 | Breed | Required; 2 to 50 characters; contains a letter | "Enter a breed (use 'Mixed' if unknown)." | T2.2 |
+| V8 | Animal age | Whole number 1 to 30 | "Age must be between 1 and 30." | T2.3 |
+| V9 | Species, sex, size, status | One of the fixed lists | "Choose a species." (and so on) | T2.4 |
+| V10 | Exercise needs, minimum housing | 1 to 3 | "… must be between 1 and 3." | T2.4 |
+| V11 | Hours alone (animal and adopter) | Whole number 0 to 24 | "Hours alone must be between 0 and 24." | T2.3, T4.2 |
+| V12 | Experience needed | 0 to 2 | "… must be between 0 and 2." | T2.4 |
+| V13 | Personality; medical notes | Personality required; both at most 500 characters | "Describe the animal's personality." / "… at most 500 characters." | T2.2, T2.6 |
+| V14 | Photo | PNG or JPG, at most 2 MB | "Images must be PNG or JPG." / "Images must be 2 MB or smaller." | T2.5 |
+| V15 | Questionnaire answers | Each answer in its range (final question list); Next disabled until answered | "Choose …" / "Answer yes or no for …" | T4.1 to T4.6 |
+| V16 | Search box | At most 20 characters; used only as data | none (no results) | T3.3, R1 |
 
 ```Pseudocode D10: the shared checks every validator uses
 FUNCTION check_range(value, low, high, field, label, errors)
@@ -397,22 +441,22 @@ These tests are run during development, stage by stage, to inform it. Each has a
 |---|---|---|---|---|
 | **Stage 1** | **Accounts and login** | | | |
 | T1.1 | Register a valid adopter | N | Sam Lee, sam@example.com, 30, password1 twice | Account created, password stored as a hash, signed straight in |
-| T1.2 | Required fields blank | I | Every box empty | A message under each of the five boxes; nothing saved |
-| T1.3 | Email format | I | no-at-sign.com, a@b, two@@x.com, spa ce@x.com | "Enter a valid email address…" |
-| T1.4 | Age limits | B | 17, 18, 120, 121, 2.5, abc | 18 and 120 accepted; others refused with a reason |
-| T1.5 | Password length | B | 7 characters, 8 characters | 7 refused, 8 accepted |
-| T1.6 | Confirm password | I | different second password; blank second box | "The two passwords do not match." / "Type your password again…" |
-| T1.7 | Duplicate email, different case | I | SAM@example.com after sam@example.com | "An account with this email already exists." |
-| T1.8 | Name format | B/I | Mary-Jane, Siobhan O'Neill / Sam3, 12345, Sam! | First two accepted, the rest refused |
-| T1.9 | Correct login, both roles | N | demo adopter; staff account | Adopter to home page, staff to dashboard |
-| T1.10 | Wrong password and unknown email | I | right email + wrong password; unknown email | The same single message for both |
+| T1.2 | Required fields blank (V1 to V4) | I | Every box empty | A message under each of the five boxes; nothing saved |
+| T1.3 | Email format (V2) | I | no-at-sign.com, a@b, two@@x.com, spa ce@x.com | "Enter a valid email address…" |
+| T1.4 | Age limits (V3) | B | 17, 18, 120, 121, 2.5, abc | 18 and 120 accepted; others refused with a reason |
+| T1.5 | Password length (V4) | B | 7 characters, 8 characters | 7 refused, 8 accepted |
+| T1.6 | Confirm password (V4) | I | different second password; blank second box | "The two passwords do not match." / "Type your password again…" |
+| T1.7 | Duplicate email, different case (V2) | I | SAM@example.com after sam@example.com | "An account with this email already exists." |
+| T1.8 | Name format (V1) | B/I | Mary-Jane, Siobhan O'Neill / Sam3, 12345, Sam! | First two accepted, the rest refused |
+| T1.9 | Correct login, both roles (V5) | N | demo adopter; staff account | Adopter to home page, staff to dashboard |
+| T1.10 | Wrong password and unknown email (V5) | I | right email + wrong password; unknown email | The same single message for both |
 | **Stage 2** | **Staff animal management** | | | |
 | T2.1 | Add, edit, delete as staff | N | A complete valid animal | Saved, changed, then removed |
-| T2.2 | Required fields blank | I | Empty form | A message for each missing field; nothing saved |
-| T2.3 | Animal age and hours alone | B | age 0, 1, 30, 31; hours −1, 0, 24, 25 | Values inside the range accepted, outside refused |
-| T2.4 | Fixed lists | I | species Hamster, size Huge, sex ?, exercise 4 | Refused with a reason |
-| T2.5 | Photo type and size | B/I | a.png 100 B, b.JPG 2 097 152 B / c.gif, d.jpg 2 097 153 B | First two accepted, last two refused |
-| T2.6 | Text length | B | Medical notes of 501 characters | Refused (limit 500) |
+| T2.2 | Required fields blank (V6, V7, V13) | I | Empty form | A message for each missing field; nothing saved |
+| T2.3 | Animal age and hours alone (V8, V11) | B | age 0, 1, 30, 31; hours −1, 0, 24, 25 | Values inside the range accepted, outside refused |
+| T2.4 | Fixed lists (V9, V10, V12) | I | species Hamster, size Huge, sex ?, exercise 4, experience 3 | Refused with a reason |
+| T2.5 | Photo type and size (V14) | B/I | a.png 100 B, b.JPG 2 097 152 B / c.gif, d.jpg 2 097 153 B | First two accepted, last two refused |
+| T2.6 | Text length (V13) | B | Medical notes of 501 characters | Refused (limit 500) |
 | T2.7 | Edit an animal deleted meanwhile | I | Edit animal_id that no longer exists | "That animal no longer exists." |
 | T2.8 | Adopter or signed-out user tries every staff action | I | role = user; no user | Every add, edit and delete refused |
 | T2.9 | Delete removes stored results too | N | Animal with match results | Animal and its results removed |
@@ -421,16 +465,16 @@ These tests are run during development, stage by stage, to inform it. Each has a
 | **Stage 3** | **Home and browse** | | | |
 | T3.1 | Every Available animal has a card | N | Demo data | One card per Available animal; Reserved and Adopted hidden |
 | T3.2 | Species, size and search filters | N | Cat; Small; "lab" | Only matching animals shown |
-| T3.3 | Search text is data, not SQL | I | `' OR 1=1 --` | No results; every animal still in the table |
+| T3.3 | Search text is data, not SQL (V16) | I | `' OR 1=1 --` | No results; every animal still in the table |
 | T3.4 | Profile shows the animal's needs | N | Open Milo | All fields and needs shown, back link works |
 | T3.5 | Signed-out visitor opens a page | I | No session | Sent to the login page |
 | **Stage 4** | **Questionnaire** | | | |
-| T4.1 | Next waits for an answer | I | No card chosen | Next disabled |
-| T4.2 | Hours alone limits | B | −1, 0, 24, 25 | 0 and 24 accepted, −1 and 25 refused |
-| T4.3 | Allergies | N/I | none; Dog and Cat / Ferret; Dog twice | Valid answers stored in a fixed order; others refused |
+| T4.1 | Next waits for an answer (V15) | I | No card chosen | Next disabled |
+| T4.2 | Hours alone limits (V11) | B | −1, 0, 24, 25 | 0 and 24 accepted, −1 and 25 refused |
+| T4.3 | Allergies (V15) | N/I | none; Dog and Cat / Ferret; Dog twice | Valid answers stored in a fixed order; others refused |
 | T4.4 | "No allergies" clears the others | N | Choose Cat, then No allergies | Only No allergies selected |
 | T4.5 | Complete questionnaire | N | 10 valid answers | Every Available animal scored and stored |
-| T4.6 | Incomplete submission | I | 9 of 10 answers | Nothing saved |
+| T4.6 | Incomplete submission (V15) | I | 9 of 10 answers | Nothing saved |
 | **Stage 5** | **Matching and results** | | | |
 | T5.1 | Perfect match | N | Answers meeting every need | 100%, Strong, no warnings |
 | T5.2 | Each factor loses exactly its weight | N | Change one need at a time | Score drops by that weight (half for one level short) |

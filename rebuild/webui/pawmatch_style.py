@@ -373,13 +373,15 @@ def apply_pawmatch_style() -> None:
             [data-testid="stTextArea"] textarea,
             [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
             [data-testid="stMultiSelect"] div[data-baseweb="select"] > div,
-            [data-testid="stDateInput"] input { min-height: 44px; }
-            [data-testid="stTextInput"] button { min-width: 44px; min-height: 44px; }
+            [data-testid="stDateInput"] input,
+            div[data-baseweb="select"] input { min-height: 44px !important; }
+            [data-testid="stTextInput"] button { min-width: 44px; min-height: 44px !important; }
             [data-testid="stButton"] button,
             [data-testid="stDownloadButton"] button,
             [data-testid="stFormSubmitButton"] button,
             [data-testid="stPageLink"] a,
-            [data-testid="stPopover"] button { min-height: 44px; }
+            [data-testid="stPopover"] button,
+            [data-testid="stSidebarCollapseButton"] button { min-height: 44px !important; min-width: 44px; }
             [data-testid="stCheckbox"] label,
             [data-testid="stRadio"] label { min-height: 44px; align-items: center; }
         }

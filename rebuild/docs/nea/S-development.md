@@ -25,6 +25,25 @@ PawMatch was built iteratively, one component at a time, in the order of the dec
 
 The engine and the database were built and tested first, and her interface was then ported onto them in one commit (`847920a`). That is why stages 1 to 3 share a commit: each stage's own tests, failures and fixes are in its section.
 
+### Program files {#s-files}
+The finished program is split into the five components from the decomposition on [[d-decomp]]. The rules (`pawmatch/`) never import Streamlit, so they can be tested without a browser; the pages (`webui/`) call the rules but contain none.
+
+@widths 1.6 0.5 3.4
+| File | Lines | What it does |
+|---|---|---|
+| `streamlit_app.py` | 28 | Starts the app, prepares the database and lists the pages each role may open |
+| `pawmatch/models.py` | 132 | The records (User, Animal, Answers, MatchResult) and the fixed answer scales |
+| `pawmatch/validation.py` | 272 | Every validation rule V1 to V16 ([[d-validation]]) |
+| `pawmatch/auth.py` | 109 | Registration, password hashing with scrypt, login |
+| `pawmatch/matching.py` | 166 | Weights, scoring, warnings, allergy cap and ranking (D6) |
+| `pawmatch/db.py` | 345 | The SQLite tables, all queries, sign-in tokens |
+| `pawmatch/services.py` | 102 | Submitting a questionnaire: validate, score, store (D9) |
+| `pawmatch/seed.py` | 146 | Demo animals and the first staff account |
+| `webui/state.py` | 182 | Who is signed in, access checks, sign in and out |
+| `webui/views/*.py` | 1,484 | One file per page: login, registration, home, browse, questionnaire, matches, account, admin |
+| `webui/pawmatch_style.py` | 1,944 | Her pink design as one stylesheet |
+| `tests/*.py` | {{tests_total}} tests | Unit, database, access and page tests run with pytest |
+
 :::note How the client reviews were carried out
 The client's answers in this section were produced by an AI model role-playing the client: it was given only the client interview from the analysis and the screenshots of each stage, and answered my questions in her voice. This was done because the client was not available for six separate review sessions. It is a limitation, discussed in the evaluation ([[e-limits]]) and logged in Appendix A ([[x-ai]]). The reviews were all held after the build, one per stage, so the changes they asked for were made together in stage 7 (commit `77ef20a`). They are reported under the stage they belong to so each stage's story is complete.
 :::
