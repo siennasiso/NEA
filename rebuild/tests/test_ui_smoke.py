@@ -140,9 +140,11 @@ def test_registration_reports_a_password_mismatch_under_confirm(ids):
     assert set(at.session_state["registration_errors"]) == {"confirm_password"}
 
 
-def test_registration_creates_an_adopter_account(ids):
+def test_registration_creates_an_adopter_account_and_signs_it_in(ids):
     at = fill_registration(app(page="registration"))
-    assert at.session_state["registration_complete"] is True
+    with db.connect(ids["path"]) as conn:
+        new_id = auth.login(conn, "ava@example.com", "longenough")[0].user_id
+    assert at.session_state["user_id"] == new_id
     with db.connect(ids["path"]) as conn:
         user = auth.login(conn, "ava@example.com", "longenough")[0]
     assert user is not None and not user.is_admin

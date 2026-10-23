@@ -10,7 +10,7 @@ from pawmatch import auth
 from pawmatch.validation import PASSWORD_MIN
 from webui.pawmatch_style import apply_pawmatch_style
 from webui.signin import auth_tabs, field, google_button, show_error
-from webui.state import PAGES, current_user, database, home_for
+from webui.state import PAGES, current_user, database, flash, home_for, sign_in
 
 st.set_page_config(
     page_title="PawMatch | Registration",
@@ -166,12 +166,11 @@ else:
                         }
                         st.rerun()
 
-                    st.session_state.registration_errors = {}
-                    st.session_state.registration_complete = True
-                    st.session_state.registered_name = created.name
-                    st.session_state.registered_email = created.email
-                    st.session_state.clear_registration_fields = True
-                    st.rerun()
+                    # Client review 2: going back to the login screen after sign-up felt like
+                    # nothing had happened, so a new account is signed straight in.
+                    sign_in(created)
+                    flash(f"Welcome to PawMatch, {created.name}. Your account is ready.", "success")
+                    st.switch_page(home_for(created))
 
                 google_button("registration")
 
