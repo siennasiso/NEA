@@ -122,8 +122,9 @@ else:
                             step=1,
                             placeholder="Enter your age",
                             key="registration_age",
-                            help="Adopter accounts are available to users aged 18 or over.",
                         )
+                        # Client review 1: the rule was hidden behind a "?" icon, so it is now always shown.
+                        st.caption("You must be 18 or over to adopt.")
                         show_error(errors, "age")
 
                     with st.container(key=field(errors, "password")):

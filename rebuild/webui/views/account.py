@@ -50,3 +50,8 @@ with main_column:
             st.switch_page(PAGES["matches"])
         if not matches_ready and st.button("Go to questionnaire", key="flow_next", width="stretch"):
             st.switch_page(PAGES["questionnaire"])
+        # Client review 5: there was no way back to change answers after moving house or job.
+        if matches_ready and st.button("Update my questionnaire answers", key="update_questionnaire", width="stretch"):
+            st.switch_page(PAGES["questionnaire"])
+        if matches_ready:
+            st.caption("Scores are a guide. Shelter staff always make the final adoption decision.")

@@ -93,15 +93,8 @@
   "controls_checked": 7,
   "low_contrast_hover_or_focus": []
  },
- "05-register-done": {
-  "texts": 7,
-  "low_contrast": [],
-  "below_12px": [],
-  "controls_checked": 1,
-  "low_contrast_hover_or_focus": []
- },
  "06-home": {
-  "texts": 32,
+  "texts": 33,
   "low_contrast": [],
   "below_12px": [],
   "controls_checked": 8,

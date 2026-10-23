@@ -118,7 +118,11 @@ def validate_registration(
         errors["password"] = "Enter a password."
     elif len(raw_password) < PASSWORD_MIN:
         errors["password"] = f"Password must be at least {PASSWORD_MIN} characters."
-    elif raw_password != ("" if confirm is None else str(confirm)):
+    raw_confirm = "" if confirm is None else str(confirm)
+    if not raw_confirm:
+        # Client review 1: a blank confirm box was not flagged when the password was also blank.
+        errors["confirm"] = "Type your password again to confirm it."
+    elif raw_password.strip() and raw_password != raw_confirm:
         errors["confirm"] = "The two passwords do not match."
     cleaned["password"] = raw_password
     return cleaned, errors

@@ -1195,6 +1195,29 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             background: #fff6e6;
         }
 
+        /* Client review 5: warnings in their own red box; a plain-words key to the score bands. */
+        .welfare-warning, .match-reason.welfare {
+            margin: .55rem 0;
+            padding: .65rem .75rem;
+            border-left: 4px solid #b4233f;
+            border-radius: 8px;
+            color: #8a1c33;
+            background: #fdecef;
+            font-size: .92rem !important;
+            line-height: 1.5;
+        }
+        .welfare-warning strong { display: block; color: #8a1c33; }
+        .welfare-warning .need-line { color: #8a1c33; font-size: .85rem; }
+        .score-key { margin: .2rem 0 1rem; color: #5f5258; font-size: .85rem; }
+        .warning-divider {
+            margin: 1.6rem 0 .4rem;
+            padding: .7rem .9rem;
+            border-radius: 10px;
+            color: #8a1c33;
+            background: #fdecef;
+            font-size: .92rem;
+        }
+
         .requirement-heading {
             display: block;
             margin-bottom: .28rem;

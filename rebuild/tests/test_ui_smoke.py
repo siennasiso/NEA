@@ -131,7 +131,7 @@ def test_tab_switch_opens_registration(ids):
 def test_registration_reports_every_missing_field(ids):
     at = app(page="registration")
     button(at, "Create account").click().run()
-    assert set(at.session_state["registration_errors"]) == {"name", "email", "age", "password"}
+    assert set(at.session_state["registration_errors"]) == {"name", "email", "age", "password", "confirm_password"}
     assert "Enter a name." in html(at)
 
 
@@ -234,6 +234,59 @@ def test_matches_page_shows_the_top_five_and_can_show_all(ids):
 def test_matches_page_without_answers_points_to_the_questionnaire(ids):
     at = app(ids["user"], "matches")
     assert "Complete the questionnaire" in html(at)
+
+
+# Changes made after the client reviews (Development, "Changes made after review")
+
+def test_review1_age_rule_is_written_on_the_form(ids):
+    at = app(page="registration")
+    assert any("18 or over" in c.value for c in at.caption)
+
+
+def test_review3_size_filter_narrows_the_list(ids):
+    at = app(ids["user"], "browse")
+    at.selectbox(key="browse_size").set_value("Small").run()
+    with db.connect(ids["path"]) as conn:
+        small = len(services.browse(conn, None, "Small", ""))
+    assert 0 < small < ids["available"] and f"Available animals · {small}" in html(at)
+
+
+def test_review3_profile_offers_the_questionnaire_as_a_button(ids):
+    at = app(ids["user"], "browse")
+    button(at, "View profile").click().run()
+    button(at, "Take the questionnaire").click().run()
+    assert not at.exception, at.exception
+
+
+def test_review3_home_says_staff_make_the_decision(ids):
+    at = app(ids["user"], "home")
+    assert "PawMatch suggests, people decide" in html(at)
+
+
+def test_review4_hours_question_starts_empty(ids):
+    at = app(ids["user"], "questionnaire")
+    at.session_state["questionnaire_step"] = 6  # hours alone
+    at.run()
+    assert at.number_input[0].value is None and button(at, "Next question").disabled
+    at.number_input[0].set_value(0).run()
+    assert not button(at, "Next question").disabled
+
+
+def test_review5_matches_explain_the_score_and_the_order(ids):
+    with db.connect(ids["path"]) as conn:
+        services.submit_questionnaire(conn, db.get_user(conn, ids["user"]), ANSWERS | {"allergies": ("Cat",)})
+    at = app(ids["user"], "matches")
+    at.toggle(key="show_all_matches").set_value(True).run()
+    page = html(at)
+    assert "Score key" in page and "No requirements are unmet" not in page
+    assert page.count("listed after the others") == 1 and "talk to the shelter first" in page
+
+
+def test_review5_account_lets_answers_be_updated(ids):
+    with db.connect(ids["path"]) as conn:
+        services.submit_questionnaire(conn, db.get_user(conn, ids["user"]), ANSWERS)
+    at = app(ids["user"], "account")
+    assert "Update my questionnaire answers" in labels(at)
 
 
 # Staff pages

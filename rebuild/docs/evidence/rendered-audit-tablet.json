@@ -93,15 +93,8 @@
   "controls_checked": 7,
   "low_contrast_hover_or_focus": []
  },
- "05-register-done": {
-  "texts": 7,
-  "low_contrast": [],
-  "below_12px": [],
-  "controls_checked": 1,
-  "low_contrast_hover_or_focus": []
- },
  "06-home": {
-  "texts": 32,
+  "texts": 33,
   "low_contrast": [],
   "below_12px": [],
   "controls_checked": 8,
@@ -143,17 +136,17 @@
   "low_contrast_hover_or_focus": []
  },
  "13-profile-scored": {
-  "texts": 44,
+  "texts": 45,
   "low_contrast": [],
   "below_12px": [],
   "controls_checked": 7,
   "low_contrast_hover_or_focus": []
  },
  "14-account": {
-  "texts": 21,
+  "texts": 23,
   "low_contrast": [],
   "below_12px": [],
-  "controls_checked": 7,
+  "controls_checked": 8,
   "low_contrast_hover_or_focus": []
  },
  "15-admin-overview": {

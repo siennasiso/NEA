@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_review4_hours_question_starts_empty ___________________
+
+ids = {'staff': 1, 'user': 2, 'path': PosixPath('/private/var/folders/_g/n9v_ywr5173f74ywkzf843vr0000gn/T/pytest-of-shaansisodia/pytest-45/test_review4_hours_question_st0/ui.db'), 'available': 11}
+
+    def test_review4_hours_question_starts_empty(ids):
+        at = app(ids["user"], "questionnaire")
+        at.session_state["questionnaire_step"] = 6  # hours alone
+        at.run()
+>       assert at.number_input[0].value is None and button(at, "Next question").disabled
+E       AssertionError: assert (0 is None)
+E        +  where 0 = NumberInput(_value=InitialValue(), label='Hours left alone', max=24.0, step=1.0).value
+
+tests/test_ui_smoke.py:270: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+=========================== short test summary info ============================
+FAILED tests/test_ui_smoke.py::test_review4_hours_question_starts_empty - Ass...
+1 failed in 0.91s

@@ -11,7 +11,7 @@ import html
 import streamlit as st
 
 from pawmatch import db, services
-from pawmatch.models import SPECIES
+from pawmatch.models import SIZES, SPECIES
 from webui.animals import format_age, needs_lines
 from webui.pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
 from webui.state import PAGES, database, picture, require_adopter
@@ -32,6 +32,7 @@ def _clear_filters() -> None:
     """Reset every browse filter to its design default."""
     st.session_state.browse_search = ""
     st.session_state.browse_species = "All species"
+    st.session_state.browse_size = "All sizes"
 
 
 def _selected_animal():
@@ -79,11 +80,22 @@ with main_column:
 
                 if match is not None:
                     score_text = f"{match.compatibility:.1f}% compatible · {match.category} match"
+                    # Client review 5: a welfare warning (such as an allergy) was the last line of the list,
+                    # so warnings now come first, in their own box, in plain words.
+                    warnings = "".join(f'<p class="need-line">! {html.escape(line)}</p>' for line in match.warnings)
+                    warning_box = (f'<div class="welfare-warning" role="alert"><strong>Talk to the shelter before choosing '
+                                   f'{name}</strong>{warnings}</div>') if warnings else ""
                     reasons = "".join(f'<p class="need-line">✓ {html.escape(line)}</p>' for line in match.met)
-                    reasons += "".join(f'<p class="need-line">! {html.escape(line)}</p>' for line in match.unmet)
+                    reasons += "".join(f'<p class="need-line">! {html.escape(line)}</p>'
+                                       for line in match.unmet if line not in match.warnings)
+                    st.html(f'<div class="needs-card"><h2>Your compatibility</h2><p class="need-line"><strong>{score_text}</strong></p>'
+                            f'{warning_box}{reasons}</div>')
                 else:
-                    score_text, reasons = "Complete the questionnaire to see compatibility", ""
-                st.html(f'<div class="needs-card"><h2>Your compatibility</h2><p class="need-line"><strong>{score_text}</strong></p>{reasons}</div>')
+                    st.html('<div class="needs-card"><h2>Your compatibility</h2><p class="need-line">'
+                            '<strong>Answer the questionnaire to see how well you match.</strong></p></div>')
+                    # Client review 3: the message is now a button that goes straight to the questionnaire.
+                    if st.button("Take the questionnaire", key="profile_questionnaire", type="primary", width="stretch"):
+                        st.switch_page(PAGES["questionnaire"])
 
             lines = "".join(f'<p class="need-line"><strong>{label}:</strong> {html.escape(value)}</p>'
                             for label, value in needs_lines(selected_animal))
@@ -97,17 +109,21 @@ with main_column:
             st.html('<div class="flow-page-header"><div><h1>Find your next companion</h1><p>Search and filter the animals currently available for adoption.</p></div></div>')
 
             with st.container(key="browse_filter_card"):
-                search_column, species_column, clear_column = st.columns([1.5, 1, .75], gap="small",
-                                                                         vertical_alignment="bottom")
+                # Client review 3: a size filter, as asked for in the interview and the Design.
+                search_column, species_column, size_column, clear_column = st.columns(
+                    [1.4, 1, 1, .75], gap="small", vertical_alignment="bottom")
                 with search_column:
                     search = st.text_input("Search", key="browse_search", placeholder="Name or breed", max_chars=20)
                 with species_column:
                     species = st.selectbox("Species", ("All species", *SPECIES), key="browse_species")
+                with size_column:
+                    size = st.selectbox("Size", ("All sizes", *SIZES), key="browse_size")
                 with clear_column:
                     st.button("Clear filters", on_click=_clear_filters, width="stretch")
 
             with database() as conn:
-                animals = services.browse(conn, None if species == "All species" else species, None, search)
+                animals = services.browse(conn, None if species == "All species" else species,
+                                          None if size == "All sizes" else size, search)
             st.html(f'<p class="browse-section-title">Available animals · {len(animals)}</p>')
             if not animals:
                 st.info("No available animals match those filters. Try another name, or clear the filters.")

@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_registration_reports_every_missing_field _________________
+
+ids = {'staff': 1, 'user': 2, 'path': PosixPath('/private/var/folders/_g/n9v_ywr5173f74ywkzf843vr0000gn/T/pytest-of-shaansisodia/pytest-43/test_registration_reports_ever0/ui.db'), 'available': 11}
+
+    def test_registration_reports_every_missing_field(ids):
+        at = app(page="registration")
+        button(at, "Create account").click().run()
+>       assert set(at.session_state["registration_errors"]) == {"name", "email", "age", "password"}
+E       AssertionError: assert {'age', 'conf...', 'password'} == {'age', 'emai...', 'password'}
+E         
+E         Extra items in the left set:
+E         'confirm_password'
+E         Use -v to get more diff
+
+tests/test_ui_smoke.py:134: AssertionError
+----------------------------- Captured stderr call -----------------------------
+------------------------------ Captured log call -------------------------------
+=========================== short test summary info ============================
+FAILED tests/test_ui_smoke.py::test_registration_reports_every_missing_field
+1 failed in 2.39s

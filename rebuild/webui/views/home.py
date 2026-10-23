@@ -62,6 +62,10 @@ with main_column:
             ("2", "We compare requirements", "The algorithm compares your answers with each animal's needs."),
             ("3", "View explained matches", "See ranked animals, compatibility scores and clear reasons."),
         )
+        # Client review 3: the home page did not say who decides, so the interview's rule is stated here.
         for column, (number, title, copy) in zip(step_columns, steps):
             with column:
                 st.html(f'<div class="needs-card"><div class="flow-brand-mark">{number}</div><h2>{title}</h2><p class="need-line">{copy}</p></div>')
+        st.html('<p class="score-key"><strong>PawMatch suggests, people decide.</strong> Your matches are a guide. '
+                'You cannot adopt through the website: the shelter team meets you, checks your home and makes '
+                'the final decision.</p>')

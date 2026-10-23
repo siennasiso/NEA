@@ -78,6 +78,16 @@ def table_rows(records: list[Animal]) -> list[dict[str, Any]]:
     ]
 
 
+# Client review 2: the Added column was cut off at laptop width, so the narrow columns are sized.
+TABLE_COLUMNS = {
+    "ID": st.column_config.NumberColumn("ID", width="small"),
+    "Age": st.column_config.TextColumn("Age", width="small"),
+    "Status": st.column_config.TextColumn("Status", width="small"),
+    "Profile": st.column_config.TextColumn("Profile", width="small"),
+    "Added": st.column_config.TextColumn("Added", width="small"),
+}
+
+
 def render_metric(icon: str, label: str, value: int, note: str, tone: str) -> None:
     st.html(
         f"""
@@ -434,7 +444,7 @@ with st.container(key="admin_page_shell"):
                     """
                 )
                 if recent:
-                    st.dataframe(table_rows(recent), hide_index=True, width="stretch")
+                    st.dataframe(table_rows(recent), hide_index=True, width="stretch", column_config=TABLE_COLUMNS)
                 else:
                     st.html(
                         """
@@ -500,11 +510,11 @@ with st.container(key="admin_page_shell"):
             st.html(
                 f"""
                 <div class="admin-card-heading"><div><p class="admin-card-kicker">Search results</p>
-                <h3>{len(records)} record{'s' if len(records) != 1 else ''} found</h3></div><span>Read-only table</span></div>
+                <h3>{len(records)} record{'s' if len(records) != 1 else ''} found</h3></div><span>Pick a record below to edit or delete it</span></div>
                 """
             )
             if records:
-                st.dataframe(table_rows(records), hide_index=True, width="stretch")
+                st.dataframe(table_rows(records), hide_index=True, width="stretch", column_config=TABLE_COLUMNS)
             else:
                 st.info("No animal records match the selected search and filters.")
 

@@ -36,11 +36,20 @@ def _match_card(position: int, match) -> None:
     met_lines = "".join(
         f'<span class="requirement-line">✓ {html.escape(reason)}</span>' for reason in match.met
     ) or '<span class="requirement-line">None of this animal\'s requirements are met yet.</span>'
-    unmet_lines = "".join(
-        f'<span class="requirement-line">! {html.escape(reason)}'
-        + (' <em>(welfare need)</em>' if reason in match.warnings else "") + "</span>"
-        for reason in match.unmet
-    ) or '<span class="requirement-line">No requirements are unmet for this animal.</span>'
+    # Client review 5: an amber "not met" box saying nothing was unmet looked like a warning, and
+    # "(welfare need)" was not explained. Welfare needs now get their own red box in plain words,
+    # and the amber box only appears when something else is unmet.
+    welfare_lines = "".join(f'<span class="requirement-line">! {html.escape(reason)}</span>' for reason in match.warnings)
+    other_lines = "".join(f'<span class="requirement-line">! {html.escape(reason)}</span>'
+                          for reason in match.unmet if reason not in match.warnings)
+    boxes = ""
+    if welfare_lines:
+        boxes += ('<div class="match-reason welfare"><strong class="requirement-heading">Welfare needs your home may '
+                  f'not meet: talk to the shelter first</strong>{welfare_lines}</div>')
+    if other_lines:
+        boxes += f'<div class="match-reason consideration"><strong class="requirement-heading">Requirements not met</strong>{other_lines}</div>'
+    if not match.unmet:
+        boxes = '<div class="match-reason"><strong class="requirement-heading">You meet every requirement for this animal</strong></div>'
     with st.container(key=f"match_card_{position}"):
         rank_column, photo_column, details_column, score_column = st.columns(
             [0.055, 0.235, 0.49, 0.22], gap="medium")
@@ -52,7 +61,7 @@ def _match_card(position: int, match) -> None:
                 <h2 class="match-name">{name}</h2>
                 <p class="match-meta">{html.escape(animal.species)} | {html.escape(animal.breed)} | {format_age(animal.age)}</p>
                 <div class="match-reason"><strong class="requirement-heading">Requirements met</strong>{met_lines}</div>
-                <div class="match-reason consideration"><strong class="requirement-heading">Requirements not met</strong>{unmet_lines}</div>
+                {boxes}
             </div>
             """
         )
@@ -87,6 +96,8 @@ with main_column:
                     <p>Animals whose welfare needs you meet come first, then the best compatibility.</p>
                 </div>
             </div>
+            <p class="score-key"><strong>Score key:</strong> Strong 80% or more · Good 60 to 79% · Possible 40 to 59% ·
+            Low under 40%. Scores are a guide: the shelter team meets you and makes the final decision.</p>
             """
         )
 
@@ -99,6 +110,12 @@ with main_column:
                     'Please check back soon.</div>')
         else:
             show_all = st.toggle(f"Show all {len(results)} animals, not just your top {SHOWN}", key="show_all_matches")
+            divider_shown = False
             for position, match in enumerate(results if show_all else results[:SHOWN], start=1):
+                if match.warnings and not divider_shown:
+                    # Client review 5: the order rule was invisible, so the point where it changes is labelled.
+                    st.html('<div class="warning-divider">The animals below have at least one welfare need your home '
+                            'may not meet, so they are listed after the others even if their score is higher.</div>')
+                    divider_shown = True
                 _match_card(position, match)
             st.caption("Scores help you think about suitability. Shelter staff always make the final adoption decision.")

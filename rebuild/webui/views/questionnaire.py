@@ -39,7 +39,8 @@ def _initial_answers() -> dict[str, object | None]:
     previous = _latest_answers()
     if previous:
         return {question.field: previous[question.field] for question in QUESTIONS}
-    return {question.field: None if question.options else 0 for question in QUESTIONS}
+    # Every answer starts empty, the typed hours question included (it used to start at 0).
+    return {question.field: None for question in QUESTIONS}
 
 
 def _move_to(step: int) -> None:
@@ -124,14 +125,19 @@ with main_column:
             if not question.options:
                 st.html(f'<p class="question-help">{escape(question.hint)}</p>')
                 with st.container(key="question_hours"):
+                    # Client review 4: a pre-filled number could be accepted without being read, so the
+                    # box starts empty and Next stays disabled until the adopter types their own answer.
                     hours = st.number_input(
                         "Hours left alone",
                         min_value=0,
                         max_value=24,
-                        value=int(answers[field] or 0),
+                        value=answers[field],
                         step=1,
+                        placeholder="Type a number from 0 to 24",
                     )
-                answers[field] = int(hours)
+                answers[field] = None if hours is None else int(hours)
+                if hours is None:
+                    st.html('<p class="question-help">Type a number from 0 to 24 to continue.</p>')
             else:
                 options = question.options
                 selected = answers.get(field)
