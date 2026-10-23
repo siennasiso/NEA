@@ -382,8 +382,11 @@ def apply_pawmatch_style() -> None:
             [data-testid="stPageLink"] a,
             [data-testid="stPopover"] button,
             [data-testid="stSidebarCollapseButton"] button { min-height: 44px !important; min-width: 44px; }
+            [data-testid="stNumberInput"] button { min-width: 44px; min-height: 44px !important; }
             [data-testid="stCheckbox"] label,
             [data-testid="stRadio"] label { min-height: 44px; align-items: center; }
+            /* Image and table hover tools (fullscreen, download) are mouse tools: hidden on phones. */
+            [data-testid="stElementToolbar"] { display: none; }
         }
         </style>
         """,
