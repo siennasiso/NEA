@@ -163,3 +163,18 @@ def test_ranking_empty_list(answers):
 def test_ranking_is_deterministic_for_identical_animals(animal, answers):
     pool = [animal(animal_id=i, name="Twin") for i in (3, 1, 2)]
     assert [r.animal.animal_id for r in rank_animals(pool, answers())] == [1, 2, 3]
+
+
+def test_worked_example_in_the_write_up_matches_the_program():
+    # Oscar (demo data) and the worked-example answers in docs/nea/S-development.md, calculated by hand:
+    # 0 + 15 + 15 + 6 + 10 + 10 + 8 = 64 of 90 points = 71.1%, Good, one warning (time alone).
+    from pawmatch.models import Animal, Answers
+    from pawmatch.seed import demo_animal_values
+    values = next(v for v in demo_animal_values() if v["name"] == "Oscar")
+    oscar = Animal(**{"animal_id": 0, **{k: v for k, v in values.items() if k in Animal.__dataclass_fields__}})
+    worked = Answers(housing_level=1, garden_access=False, has_children=True, other_pets=True,
+                     experience="Some (family pet growing up)", activity_level=1, hours_alone=6,
+                     preferred_species="Cat", preferred_size="No preference", allergies=())
+    result = score_animal(oscar, worked)
+    assert (result.compatibility, result.category, len(result.warnings)) == (71.1, "Good", 1)
+    assert result.warnings[0].startswith("Time alone")

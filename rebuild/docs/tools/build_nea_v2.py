@@ -69,7 +69,7 @@ SKIP_PREFIXES = ("[TO WRITE]", "[HOW THIS DOCUMENT", "[NOTE]")
 def _el(tag: str, **attrs) -> OxmlElement:
     element = OxmlElement(tag)
     for name, value in attrs.items():
-        element.set(qn(name), str(value))
+        element.set(qn(name) if ":" in name else name, str(value))
     return element
 
 
@@ -337,6 +337,10 @@ def scan_headings(parts: list[Part]) -> tuple[list[Heading], dict[str, str]]:
                 headings.append(Heading(level, text, key, part.letter, listed))
             for key in re.findall(r"^@anchor\s+([\w.-]+)", line):
                 anchors[key] = part.letter
+            if line.startswith(("@img ", "@herimg ", "@design ")):  # figures bookmark their caption
+                found = re.search(r"key=([\w.-]+)", line) or re.search(r"\|\s*([\w.-]+)\s*$", line)
+                if found:
+                    anchors.setdefault(found.group(1), part.letter)
     for key, stage in nea_data.STAGE_ANCHORS.items():  # test tables put their own anchors down
         anchors.setdefault(key, "S")
     return headings, anchors

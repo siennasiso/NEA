@@ -1,0 +1,10 @@
+{
+ "animals": 500,
+ "users": 100,
+ "scored": 423,
+ "submit_mean": 0.041,
+ "submit_max": 0.098,
+ "browse_found": 423,
+ "browse_query": 0.007,
+ "browse_page": 1.76
+}

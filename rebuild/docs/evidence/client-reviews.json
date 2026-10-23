@@ -1,0 +1,404 @@
+{
+ "note": "AI role-play: a Haiku model played the client (briefed only with the analysis interview and the stage screenshots) and four usability personas. Not real people. See Appendix A.",
+ "reviews": {
+  "1": {
+   "questions": [
+    {
+     "q": "Is the login error message clear enough?",
+     "a": "Yes, \"Incorrect email or password.\" is the right amount of information, because it doesn't tell someone whether the email exists, which matters for security. I'd still make it a bit bigger, as it's quite small under the password box and easy to miss."
+    },
+    {
+     "q": "Would staff understand what the question mark next to Age on the register page means?",
+     "a": "Not really. I can see a little question mark icon by the Age label, but there's no visible text when I look at it, so I'd guess most people would just ignore it. Either show the 18+ rule in plain words underneath, like the password hint does, or leave the icon out."
+    },
+    {
+     "q": "Do the validation messages on the register page tell people what to fix?",
+     "a": "Mostly, yes. \"Enter a name.\", \"Enter an email address.\" and \"Age is required.\" are simple and appear under each box in red, which is easy to spot. But when I look at the Confirm password box, nothing is flagged even though the form was submitted with it empty, so people could think it doesn't matter."
+    },
+    {
+     "q": "Is the home page welcoming enough for someone who has never used it before?",
+     "a": "I like it. The pink colours and the three step \"How it works\" boxes make it clear what the site is for, and the Browse animals and Open questionnaire buttons are clear. The three big cards have a lot of empty white space at the bottom though, so I'd make them shorter or put a photo of an animal in each one, as I asked for lots of photos."
+    },
+    {
+     "q": "Does the register page make people feel safe giving their details?",
+     "a": "Yes, the dashed box at the bottom saying passwords are salted and hashed, and never saved in the database, gives me confidence. I would like the form to ask for the address and phone number too, because I said people should give those when they create an account. It's a small thing, but it's what staff will need when they follow up in person."
+    }
+   ],
+   "summary": "the client's view: the look is friendly and on-brief, the error and validation messages are mostly clear, and the security note helps trust. The main gaps are the unexplained Age help icon, the Confirm password box not being flagged, and missing address and phone fields that she asked for. Overall the stage is a solid start but not yet ready to use.",
+   "next_steps": [
+    "Flag the Confirm password box with its own message when it is empty or doesn't match, and make the login error text larger.",
+    "Replace the Age question-mark icon with visible text, such as \"You must be 18 or over\", and add address and phone number fields on the register page.",
+    "Shorten the three home page cards or add an animal photo to each so the page feels less empty."
+   ],
+   "rating_out_of_10": 7,
+   "signed_off": false
+  },
+  "2": {
+   "questions": [
+    {
+     "q": "Is the error message on the add form clear enough?",
+     "a": "Yes, the client would understand it straight away: 'Correct these details' with three plain bullets like 'Enter a name.' is much friendlier than a technical message. The one thing I would change is that the fields themselves don't go red, so I'd have to hunt for the blank boxes."
+    },
+    {
+     "q": "Would staff understand the overview numbers at the top (Total, Available, Reserved, Needs attention)?",
+     "a": "Mostly, yes: 13 total, 11 available and 1 reserved add up, and the small captions help. 'Needs attention' showing 0 is handy, but I'd want it to say what it counts, such as missing photo or detail, which it does in small print, so that's good."
+    },
+    {
+     "q": "Is the Recently added table on the overview easy to read?",
+     "a": "It's clear and the status and profile percentages are useful for a quick look. However, the 'Added' column is cut off at the right-hand edge, so the date reads '23 Oct' with the year missing, and that needs fixing so the table fits the laptop screen."
+    },
+    {
+     "q": "Is it obvious how to edit or delete an animal on the manage page?",
+     "a": "Yes, you pick the animal from the 'Select a record to edit' dropdown and then use the Edit or Delete tabs, which is simple. I'd like a Cancel button next to 'Save changes' so staff can back out without changing anything, and the 'Read-only table' label is confusing next to a page that lets you edit, so please reword or remove it."
+    },
+    {
+     "q": "Does the add animal form explain the matching fields well enough for staff?",
+     "a": "The 'Algorithm data' note and the help icon next to Adoption status are a good start, and the sections are well grouped. But the Description box says 'temperament, routine, care needs' while the error asks for 'personality', so please use the same word everywhere so staff know what to write."
+    }
+   ],
+   "summary": "the client likes the friendly pink look, the grouped sections and the clear error box on the add form, and she says the layout is easy to follow on a laptop. She wants the tables to fit the screen, the wording to be consistent, and error fields to be obvious. Score 7/10; not yet signed off because this is stage 2, not stage 6.",
+   "next_steps": [
+    "Make the table on the overview fit the screen so the Added column shows the full date, and check it at laptop width.",
+    "Highlight the specific fields in red when validation fails, not only the summary box, and use one term for the description everywhere.",
+    "Add a Cancel button beside Save changes on the edit form and reword the 'Read-only table' label on the manage page."
+   ],
+   "rating_out_of_10": 7,
+   "signed_off": false
+  },
+  "4": {
+   "questions": [
+    {
+     "q": "Q1 (indoor space): Are the three space options clear enough for someone who has never adopted before?",
+     "a": "Yes, I like that each card says what the space looks like, like 'One main room' or 'Most of the home'. That's much easier than a plain dropdown. I would still like the question to say why you're asking, because people often don't think about space until it's too late."
+    },
+    {
+     "q": "Q5 (allergies): If someone ticks 'Cats' and then 'No allergies' by mistake, what happens?",
+     "a": "In the screenshot I can see 'Cats' is outlined, but 'No allergies' doesn't look any different, so I can't tell whether it's still ticked. Please make 'No allergies' clear the other choices, and make the selected state much more obvious, because allergies have to be right for the matching to work."
+    },
+    {
+     "q": "Q7 (hours left alone): The box already says 6. Would someone understand they need to change it, or could they just click Next?",
+     "a": "Pre-filling 6 is a problem, because a person could skip the question without thinking and the system would treat 6 as their real answer. Please leave it empty until they type something, and show a clear message if they try to continue without a number. The minus and plus buttons are nice, though."
+    },
+    {
+     "q": "Q11 (done screen): After 'Your questionnaire is complete', would I know what to do next and whether any animals matched?",
+     "a": "The 'View matches' button is big and clear, which I like. But the message doesn't say how many matches there are, or that staff will look at things next, so people might not know what happens after this. Maybe add a line like 'You have 3 good matches' so they feel the result is useful."
+    },
+    {
+     "q": "Q1 vs Q7 buttons: Are the Back and Next buttons easy to find and understand across the questions?",
+     "a": "The layout is consistent and the pink look is soft and friendly, as I asked for. The 'Next question' button on question 1 is greyed out before anything is chosen, which is good, but the grey text is quite faint and hard to read on a laptop screen. Please make the disabled state a bit darker so it's still easy to see."
+    }
+   ],
+   "summary": "the client is generally happy with the stepped questionnaire: the card choices are friendly and the pink look matches what she asked for. The main concerns are the allergy multi-select not clearly clearing 'No allergies', the pre-filled 6 hours letting people skip the question, and a done screen that doesn't say how many matches there are.",
+   "next_steps": [
+    "Make 'No allergies' exclusive on question 5 and show a clearer selected state on the cards.",
+    "Remove the pre-filled 6 on question 7 and show a validation message until a number is entered.",
+    "Add a match count and a short 'what happens next' line on the 'Your questionnaire is complete' screen."
+   ],
+   "rating_out_of_10": 7,
+   "signed_off": false
+  },
+  "5": {
+   "questions": [
+    {
+     "q": "On Poppy's card (rank 1), the amber 'Requirements not met' box is shown but says 'No requirements are unmet for this animal'. Is that clear enough?",
+     "a": "Not really, the client would be confused. If nothing is unmet, I'd rather that box was hidden or said something green like 'You meet every requirement', because an amber box looks like a warning."
+    },
+    {
+     "q": "Teddy (72.2%) is ranked 4th, above Oscar and Clover, even though Teddy fails two welfare needs (children and other pets). Would staff understand why?",
+     "a": "No. The spec said animals with warnings go last, but on this screen almost every card has amber items and Teddy sits above Oscar, so it looks like the ranking ignores the warnings. Please make the order obvious, or put welfare-need animals below the rest and say so on screen."
+    },
+    {
+     "q": "On Milo's profile, is the allergy line ('! Allergy: someone in your home is allergic to cats; Milo is a cat.') clear enough for an adopter?",
+     "a": "It is easy to miss. It is the last line in a plain list with only a small exclamation mark, and it is the one thing that really matters for a cat. Make it a bold red or amber warning at the top of the compatibility box, with the words 'not recommended'."
+    },
+    {
+     "q": "Does the 'Low match' label with 39.0% on Milo's profile make sense without any explanation?",
+     "a": "Mostly, but the scale is not explained anywhere. A short line such as 'Strong 80%+, Good 60-79%, Low below 60%' under the score, and a note that staff make the final decision, would help people understand it."
+    },
+    {
+     "q": "On the My account page, can a user see how to redo the questionnaire or where the staff decision note is?",
+     "a": "No. It shows 'Questionnaire: Complete' and a 'View my matches' button, but nothing lets them change their answers or see that the shelter decides. Add a 'Update questionnaire' button and a short line under 'My matches' saying that staff make the final decision."
+    }
+   ],
+   "summary": "the client likes the soft pink look, the clear buttons and the 'Requirements met / not met' split, which she says is the most useful part. She is not yet convinced the ranking respects welfare needs, and the allergy warning and the zero-unmet box need clearer styling. Overall the stage is close, but the ordering rule needs to be visible on screen before it is used.",
+   "next_steps": [
+    "Hide or recolour the 'Requirements not met' box when nothing is unmet (Poppy card).",
+    "Make the ranking visibly follow the rule: animals with welfare-need failures go below those without, and show the allergy warning as a bold top-of-box warning on profiles.",
+    "Add a one-line score key and a 'Update questionnaire' button on My account, then re-screenshot the three pages."
+   ],
+   "rating_out_of_10": 7,
+   "signed_off": false
+  },
+  "3": {
+   "questions": [
+    {
+     "q": "Is the Species filter on the Browse animals page clear enough for someone who has never used the site before?",
+     "a": "Yes, I like that it is a simple dropdown that says All species, so people can pick cats, dogs or rabbits straight away. It sits next to the search box, which is where I would look for it. Keep the labels this plain."
+    },
+    {
+     "q": "Can a user filter by size on the Browse animals page?",
+     "a": "Not from what I can see. I asked for size to be a filter, and the screenshot only shows Search, Species and Clear filters. Please add a Size dropdown beside Species, because I think people should be able to narrow it down by size as well as type."
+    },
+    {
+     "q": "Does the 'Your compatibility' box on the animal profile make it clear what the user should do next?",
+     "a": "It says 'Complete the questionnaire to see compatibility', which tells them the score is missing. It would be much friendlier as a button that links straight to the questionnaire, so they do not have to hunt around the menu."
+    },
+    {
+     "q": "Is the 'What Milo Needs from a Home' section easy for a first-time owner to understand?",
+     "a": "Yes, this is the bit I was most keen on, because each need is written as a label and a plain answer, like 'Garden: Not required'. The description text above it is quite small and light grey, though, so please make it a bit bigger and darker."
+    },
+    {
+     "q": "Does the Home page explain that staff make the final decision and that users cannot apply directly?",
+     "a": "Not clearly. The 'How it works' steps talk about lifestyle, comparing requirements and explained matches, but nothing says the adoption team will meet and check people in person. Please add one short line saying that PawMatch helps you find a match and the shelter staff make the final decision."
+    }
+   ],
+   "summary": "Stage 3 looks warm, friendly and on-brief, with soft pink tones, big animal photos and clear buttons, which is what I asked for. The compatibility-led profile needs is the strongest part. The main gaps are the missing size filter and nothing on the Home page saying staff make the final call.",
+   "next_steps": [
+    "Add a Size filter beside Species on the Browse animals page.",
+    "Turn the 'Complete the questionnaire' text on the profile into a button linking to the questionnaire.",
+    "Add one line on the Home page saying shelter staff make the final decision after an in-person check.",
+    "Make the profile description text larger and darker so it is easy to read on a laptop."
+   ],
+   "rating_out_of_10": 7,
+   "signed_off": false
+  },
+  "6": {
+   "questions": [
+    {
+     "q": "Is the login page welcoming enough for adopters, and is the Log in / Create an account switch clear?",
+     "a": "Yes, I like the soft pink and the big 'Find a companion' heading, and the switch at the top is easy to see. My worry is the placeholder text in the email and password boxes, which is very faint on the pale pink, so it is hard to read. Please make it darker."
+    },
+    {
+     "q": "Would an adopter understand the questionnaire, with the Back and Next buttons, on the first question?",
+     "a": "The question and the three big answer cards are clear and simple, which is what I asked for. But on question 1 the Back and Next buttons look almost invisible because they are so pale, so people may not realise they are buttons. Please make the disabled state still readable."
+    },
+    {
+     "q": "Are the matches results clear enough for someone who has never adopted before?",
+     "a": "This is the part I care most about, and it works well: each animal has a score, a green 'Requirements met' box and an amber 'Requirements not met' box with the welfare needs marked. But the percentages are shown as 100.0% and 76.7%, which is fussy, and the rabbits fill the whole top five, so please check the ranking gives a good spread."
+    },
+    {
+     "q": "On Milo's profile, would someone with a cat allergy notice the warning?",
+     "a": "Not quickly enough. The allergy line is a small plain '!' sentence at the bottom of the compatibility box, under all the green ticks, and the score still says 39% without a strong warning. Allergies should be the first thing shown, in a clear warning colour."
+    },
+    {
+     "q": "Would staff understand the admin add-animal errors and the manage table?",
+     "a": "The error list at the top ('Enter a name', 'Enter a breed', 'Describe the personality') is clear and matches what I asked for. But the fields themselves are not highlighted in red, so staff have to hunt for them, and the manage table says 'Read-only table' even though it is where they edit and delete. Also the last row is cut off and the Added column is clipped on the overview."
+    }
+   ],
+   "summary": "the client's view of stage 6: the cute pastel look, clear navigation, separate staff area and the explained match results are what I asked for, and staff-only controls are clearly separated from adopter accounts. The main problems are faint placeholder and disabled-button text, a buried allergy warning, unhighlighted error fields and some clipped table content. These are fixable and need checking on a laptop screen. Note: the three extra image-dimension notes in the request arrived without visible images, so I based this answer on the 15 screenshots I could read.",
+   "next_steps": [
+    "Darken the placeholder and disabled-button text on login, register and questionnaire so it meets the 4.5:1 contrast rule.",
+    "Show allergy conflicts as a red top-level warning on the profile and match cards, and mark invalid fields in red on the admin add/edit form.",
+    "Fix the admin manage table (remove 'Read-only' label, stop clipping the last row and the Added column) and round scores to whole percentages."
+   ],
+   "rating_out_of_10": 7,
+   "signed_off": true
+  }
+ },
+ "personas": [
+  {
+   "tasks": [
+    {
+     "id": "U1",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 9,
+     "comment": "The login screen has a clear Log in / Create an account toggle and a Create an account button, and the register form's inline errors (Enter a name, Enter an email address, Age is required, Enter a password) appear under each field, so I knew exactly what to fix. The screenshots show no error for the confirm-password field, so I could not check it."
+    },
+    {
+     "id": "U2",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "The questionnaire shows Question N of 10, a progress bar and Back/Next buttons, and the hours question has a clear number box with a 0-24 hint. I did not see the screens for questions 2 to 6 or 8 to 10, so I rated from the visible parts only."
+    },
+    {
+     "id": "U3",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 6,
+     "comment": "I found the ranked list, and each card has green Requirements met and amber Requirements not met boxes plus a percentage ring. But the top five are all rabbits or a dog, with no cat in view, even though I want a cat, and the Garden lines say 'you have one' when I have no garden. The amber warnings say '(welfare need)' without explaining what that means, so I had to guess what the warning meant."
+    },
+    {
+     "id": "U4",
+     "completed_without_help": "n/a",
+     "rating_out_of_10": 0,
+     "comment": "Adopter persona, so the staff add, edit and delete screens do not apply to me and I marked this N/A. The add form does show clear error text (Enter a name, Enter a breed, Describe the animal's personality) and an Administrator scope note that adopters cannot access these controls."
+    },
+    {
+     "id": "U5",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 9,
+     "comment": "Browse animals is a clean grid of 11 cards with a Search box, a Species filter and a View profile button on each. Opening Milo and clicking Back to all animals returned me to the list with nothing lost. The profile's compatibility box is clear, but the page does not say which cats are most suitable for me."
+    }
+   ],
+   "sus": [
+    4,
+    2,
+    4,
+    1,
+    4,
+    2,
+    5,
+    2,
+    4,
+    1
+   ],
+   "liked": "Inline register errors under each field, the green Requirements met and amber Requirements not met boxes on each match, and the one-click Back to all animals path from a profile. Browse is simple and easy to scan.",
+   "change_one_thing": "Make the warnings plain English and correct the garden line: say what 'welfare need' means and why an animal is a low match, and stop showing 'you have one' for a garden I do not have, with a cat-first match list.",
+   "id": "P1",
+   "name": "Amira",
+   "who": "19, student renting a small flat, no garden, out 6 to 7 hours a day, wants a cat, confident online"
+  },
+  {
+   "tasks": [
+    {
+     "id": "U1",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "Create-account form was easy to follow and the empty-submit errors (Enter a name, Age is required, Enter a password) told me exactly what was missing. It got in the way when the welcome banner after sign-up said 'Welcome Back Sam' and 'Sam Lee' even though I registered as Daniel, which made me stop and check I was in the right account."
+    },
+    {
+     "id": "U2",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "The 'Question 1 of 10' progress bar and the Back/Next buttons were clear, and the hours-left-alone stepper with its 0-24 hint was simple. Next question stays greyed out until I pick an answer, and nothing on screen says why, so I had to work that out myself."
+    },
+    {
+     "id": "U3",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 6,
+     "comment": "I found the ranked list, but the top match is Poppy, a rabbit, and I wanted a dog for the children, so the list did not feel like it was built for me; Oscar, the dog, is only fifth. The Requirements met and not met boxes explain the score well, but the italic '(welfare need)' tag is never defined, so I was guessing what that warning meant."
+    },
+    {
+     "id": "U4",
+     "completed_without_help": "n/a",
+     "rating_out_of_10": 0,
+     "comment": "N/A: I am an adopter, so the staff add, edit and delete tools do not apply to me and I did not use them."
+    },
+    {
+     "id": "U5",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "Browse showed 11 animals with a search box and a species filter, which helped me narrow to dogs, and View profile opened Milo cleanly. The 'Back to all animals' link returned me to the list straight away, and the profile's compatibility panel before the questionnaire clearly asked me to complete it first."
+    }
+   ],
+   "sus": [
+    3,
+    2,
+    4,
+    1,
+    3,
+    3,
+    5,
+    2,
+    3,
+    1
+   ],
+   "liked": "The questionnaire is short and clear with a visible progress bar, and every match shows green Requirements met and amber Requirements not met boxes, so I can see why each animal scored the way it did. Browse with a species filter and the Back to all animals link are simple.",
+   "change_one_thing": "Fix the 'Welcome Back Sam' greeting so it uses my name, and define the '(welfare need)' warning in plain words on the matches page. Also let the species filter carry into the matches so a dog-seeker like me is not shown a rabbit at the top.",
+   "id": "P2",
+   "name": "Daniel",
+   "who": "42, parent of children aged 6 and 9, house with a garden, works from home, wants a family dog"
+  },
+  {
+   "tasks": [
+    {
+     "id": "U1",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 7,
+     "comment": "Create account and Log in tabs at the top are clear, and the red errors under each empty field (Enter a name., Enter an email address., Age is required.) told me exactly what to fill in. The small grey hint 'Use at least 8 characters' and the tiny red error text are hard to read for my eyes. The welcome banner said 'Welcome Back Sam' and 'Sam Lee' on a brand-new account, which made me stop and wonder if I was in someone else's account."
+    },
+    {
+     "id": "U2",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 7,
+     "comment": "Question 1 of 10 has three large choice cards (Limited space, Moderate space, Plenty of space) that I could tap easily, and the progress bar with '10% through' helped me know how long was left. On question 7 the hours box had a small grey hint and tiny minus and plus buttons; I had to look twice to see the number was 6. I only saw questions 1 and 7, so I cannot say about the others. The 'Your questionnaire is complete' screen was reassuring."
+    },
+    {
+     "id": "U3",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 5,
+     "comment": "The ranked matches page was easy to scan: Poppy at 100.0% Strong Match, with green 'Requirements met' and amber 'Requirements not met' boxes that explained why. But the amber items say '(welfare need)' in small italics and nothing explains what that phrase means, so I was unsure whether a warning meant the animal could not come to my home. The footnote that staff make the final decision was helpful. The text in the boxes is small for a 68-year-old reader."
+    },
+    {
+     "id": "U4",
+     "completed_without_help": "n/a",
+     "rating_out_of_10": 0,
+     "comment": "Not applicable: I am an adopter, and the admin screens say adopter accounts cannot access these controls."
+    },
+    {
+     "id": "U5",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "Browse animals showed all 11 animals in large cards with a clear pink View profile button, and the profile page had a clear '← Back to all animals' button at the top so I could return to the list easily. Before I finished the questionnaire, the profile only said 'Complete the questionnaire to see compatibility', which was clear. The small grey description text is still hard to read."
+    }
+   ],
+   "sus": [
+    2,
+    2,
+    4,
+    2,
+    3,
+    3,
+    4,
+    2,
+    4,
+    2
+   ],
+   "liked": "The big, plain buttons and clear step-by-step questionnaire with a progress bar. Browse-to-profile-and-back is simple, and the red error messages under each field say what to fix.",
+   "change_one_thing": "Explain 'welfare need' and any warning in plain words right next to the amber box, for example 'This animal needs a quieter home than yours offers. Ask the shelter.' Also make the body text larger and remove the 'Welcome Back Sam' name on a new account.",
+   "id": "P3",
+   "name": "Margaret",
+   "who": "68, retired, lives alone in a bungalow with a small garden, has owned dogs, uses an iPad, low confidence online"
+  },
+  {
+   "tasks": [
+    {
+     "id": "U1",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "The Log in / Create an account toggle and the 'Create an account' button made registering easy to find, and the empty-submit screen names each missing field in red so I knew what to fix. The welcome banner after sign-up said 'Sam Lee' rather than my name, which made me wonder whose account I was in."
+    },
+    {
+     "id": "U2",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 7,
+     "comment": "The progress bar and 'Question 7 of 10' label made it clear how far I was, and the hours field has plus and minus buttons, but Next stays greyed out until you pick an answer, which I had to work out for myself."
+    },
+    {
+     "id": "U3",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 7,
+     "comment": "The ranked list puts Poppy first at 100% with green 'Requirements met' boxes, which explains the match well, but the amber 'Requirements not met' boxes and '(welfare need)' tag are not explained anywhere on the page, so I was not sure how serious a warning was."
+    },
+    {
+     "id": "U4",
+     "completed_without_help": "no",
+     "rating_out_of_10": 6,
+     "comment": "Add new animal worked well: the 'Correct these details' list named the three missing fields, but the Delete option is a second tab on the Manage screen and I could not see the delete step complete from the screenshots, so I cannot confirm it works without trying it."
+    },
+    {
+     "id": "U5",
+     "completed_without_help": "yes",
+     "rating_out_of_10": 8,
+     "comment": "Search and the species filter sit clearly above the 11 animal cards, and each card has a big View profile button; the 'Back to all animals' link on the profile brought me straight back to the list."
+    }
+   ],
+   "sus": [
+    3,
+    2,
+    4,
+    2,
+    4,
+    2,
+    5,
+    2,
+    4,
+    2
+   ],
+   "liked": "The staff admin screens are clear: the Overview stat cards, the recently-added table, and the 'Correct these details' list on the empty Add form all told me what to do without reading help text.",
+   "change_one_thing": "Put Delete on the Manage animals screen as its own visible button, and explain what the amber 'Requirements not met' and '(welfare need)' labels mean on the matches page.",
+   "id": "P4",
+   "name": "Josh",
+   "who": "24, shelter volunteer with a staff account who updates the animal listings, in a hurry"
+  }
+ ]
+}

@@ -80,21 +80,21 @@
   "low_contrast_hover_or_focus": []
  },
  "03-register": {
-  "texts": 20,
+  "texts": 21,
   "low_contrast": [],
   "below_12px": [],
-  "controls_checked": 7,
+  "controls_checked": 6,
   "low_contrast_hover_or_focus": []
  },
  "04-register-errors": {
-  "texts": 24,
+  "texts": 26,
   "low_contrast": [],
   "below_12px": [],
-  "controls_checked": 7,
+  "controls_checked": 6,
   "low_contrast_hover_or_focus": []
  },
  "06-home": {
-  "texts": 33,
+  "texts": 35,
   "low_contrast": [],
   "below_12px": [],
   "controls_checked": 8,
@@ -104,14 +104,14 @@
   "texts": 69,
   "low_contrast": [],
   "below_12px": [],
-  "controls_checked": 30,
+  "controls_checked": 31,
   "low_contrast_hover_or_focus": []
  },
  "08-profile": {
-  "texts": 36,
+  "texts": 37,
   "low_contrast": [],
   "below_12px": [],
-  "controls_checked": 7,
+  "controls_checked": 8,
   "low_contrast_hover_or_focus": []
  },
  "09-questionnaire": {
