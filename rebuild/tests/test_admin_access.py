@@ -12,7 +12,7 @@ GOOD = demo_animal_values()[0]
 GOOD_ANSWERS = {
     "housing_level": 2, "garden_access": "Yes", "has_children": "No", "other_pets": "No",
     "experience": "None", "activity_level": 2, "hours_alone": 4,
-    "preferred_species": "No preference", "preferred_size": "No preference",
+    "preferred_species": "No preference", "preferred_size": "No preference", "allergies": "",
 }
 
 
@@ -92,6 +92,6 @@ def test_profile_issues_flag_missing_photo_and_short_description():
 
 def test_profile_completion_counts_filled_fields():
     animal = Animal(1, "Luna", "Dog", "Labrador", 4, "Female", "Large", "Gentle.", 3, 2, False, False, 4)
-    # 15 fields; medical notes and photo are empty, a False answer still counts as filled
-    assert services.profile_completion(animal) == round(100 * 13 / 15)
+    # 17 fields; medical notes and photo are empty, a False answer and a 0 level still count as filled
+    assert services.profile_completion(animal) == round(100 * 15 / 17)
     assert services.profile_completion(replace(animal, medical_notes="None", image_path="x.png")) == 100

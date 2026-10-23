@@ -43,6 +43,14 @@ DEMO_ANIMALS: tuple[tuple, ...] = (
 # Most demo animals are Available; one is Reserved and one Adopted, to show the status in use.
 DEMO_STATUSES = {"Max": "Reserved", "Bella": "Adopted"}
 
+# Stage 9, from each description: can the animal share a home with other pets (1 or 0), and the
+# experience it needs (a key of EXPERIENCE_NEEDED: 0 first-time owner, 1 some, 2 experienced).
+DEMO_PETS_AND_EXPERIENCE: dict[str, tuple[int, int]] = {
+    "Luna": (1, 1), "Archie": (1, 0), "Nala": (0, 2), "Max": (0, 2), "Oscar": (1, 1),
+    "Milo": (1, 0), "Bella": (1, 0), "Simba": (0, 1), "Willow": (1, 1),
+    "Poppy": (1, 0), "Teddy": (0, 1), "Daisy": (1, 0), "Clover": (1, 1),
+}
+
 
 def demo_animal_values() -> list[dict]:
     keys = ("name", "species", "breed", "age", "sex", "size", "exercise_needs", "min_housing_level",
@@ -52,6 +60,7 @@ def demo_animal_values() -> list[dict]:
         values = dict(zip(keys, row))
         values["image_path"] = f"assets/animals/{values['name'].lower()}.png"
         values["status"] = DEMO_STATUSES.get(values["name"], "Available")
+        values["good_with_pets"], values["experience_needed"] = DEMO_PETS_AND_EXPERIENCE[values["name"]]
         rows.append(values)
     return rows
 
@@ -77,7 +86,9 @@ def prepare(path: str = DEFAULT_DB, env: Mapping[str, str] | None = None) -> str
     if os.path.dirname(path):
         os.makedirs(os.path.dirname(path), exist_ok=True)
     with db.connect(path) as conn:
-        db.init_schema(conn)
+        added = db.init_schema(conn)
+        if "good_with_pets" in added:  # an older database: give the demo animals their stage 9 values
+            db.set_pets_and_experience(conn, DEMO_PETS_AND_EXPERIENCE)
         seed_animals(conn)
         db.use_png_pictures(conn)
         try:

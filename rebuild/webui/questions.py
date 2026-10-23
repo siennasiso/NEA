@@ -21,6 +21,7 @@ class Question:
     prompt: str
     options: tuple[Option, ...] = ()  # empty for the one number question
     hint: str = ""
+    multiple: bool = False  # several answers can be chosen (the allergies question)
 
 
 YES_NO_GARDEN = (("Yes", "The animal can use a secure garden", True), ("No", "There is no private garden access", False))
@@ -40,6 +41,12 @@ QUESTIONS: tuple[Question, ...] = (
         ("Yes", "Another animal already lives with you", True),
         ("No", "There are no other pets at home", False),
     )),
+    Question("allergies", "Is anyone in your home allergic to any of these animals?", (
+        ("No allergies", "Nobody at home has an animal allergy", ()),
+        ("Dogs", "Someone at home is allergic to dogs", "Dog"),
+        ("Cats", "Someone at home is allergic to cats", "Cat"),
+        ("Rabbits", "Someone at home is allergic to rabbits", "Rabbit"),
+    ), multiple=True),
     Question("activity_level", "What activity level can you support?", (
         ("Low", "Short, gentle daily activity", 1),
         ("Moderate", "Regular walks or active play", 2),
@@ -74,4 +81,6 @@ def label_for(question: Question, value: object) -> str:
     """The answer as the adopter chose it, for the summary on My account."""
     if not question.options:
         return f"{value} hours a day"
+    if question.multiple and isinstance(value, tuple) and value:
+        return ", ".join(label for label, _, stored in question.options if stored in value)
     return next((label for label, _, stored in question.options if stored == value), str(value))

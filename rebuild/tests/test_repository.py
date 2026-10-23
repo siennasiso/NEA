@@ -10,7 +10,7 @@ from pawmatch.models import Answers
 from pawmatch.seed import DEMO_ANIMALS, demo_animal_values, seed_animals
 from pawmatch.validation import validate_animal
 
-ANSWERS = Answers(2, True, False, False, "None", 2, 4, "No preference", "No preference")
+ANSWERS = Answers(2, True, False, False, "None", 2, 4, "No preference", "No preference", ("Dog", "Rabbit"))
 
 
 def first_values():
@@ -126,3 +126,30 @@ def test_old_database_gains_calculated_at_column(tmp_path):
         db.init_schema(conn)
         columns = {r[1] for r in conn.execute("PRAGMA table_info(match_results)")}
     assert "calculated_at" in columns
+
+
+def test_old_database_gains_the_stage_9_columns_and_demo_values(tmp_path):
+    from pawmatch.seed import DEMO_PETS_AND_EXPERIENCE, prepare
+
+    path = tmp_path / "before-stage-9.db"
+    old_schema = db.SCHEMA
+    for line in ("    good_with_pets    INTEGER NOT NULL DEFAULT 1 CHECK (good_with_pets IN (0, 1)),\n",
+                 "    experience_needed INTEGER NOT NULL DEFAULT 0 CHECK (experience_needed BETWEEN 0 AND 2),\n",
+                 "    allergies         TEXT    NOT NULL DEFAULT '',\n"):
+        assert line in old_schema
+        old_schema = old_schema.replace(line, "")
+    old = sqlite3.connect(path)
+    old.executescript(old_schema)
+    old.execute("""INSERT INTO animals (name, species, breed, age, sex, size, personality, exercise_needs,
+                   min_housing_level, garden_required, child_compatible, max_hours_alone, date_added)
+                   VALUES ('Nala', 'Cat', 'Bengal', 3, 'Female', 'Medium', 'Lively', 3, 2, 0, 0, 6, '2026-01-01')""")
+    old.commit()
+    old.close()
+    prepare(str(path))
+    with db.connect(str(path)) as conn:
+        animals = {r[1] for r in conn.execute("PRAGMA table_info(animals)")}
+        responses = {r[1] for r in conn.execute("PRAGMA table_info(questionnaire_responses)")}
+        nala = next(a for a in db.list_animals(conn) if a.name == "Nala")
+        assert db.init_schema(conn) == set()  # a second start adds nothing
+    assert {"good_with_pets", "experience_needed"} <= animals and "allergies" in responses
+    assert (int(nala.good_with_pets), nala.experience_needed) == DEMO_PETS_AND_EXPERIENCE["Nala"]

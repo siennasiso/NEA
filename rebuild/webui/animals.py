@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pawmatch.models import ACTIVITY_LEVELS, HOUSING_LEVELS, Animal
+from pawmatch.models import ACTIVITY_LEVELS, EXPERIENCE_NEEDED, HOUSING_LEVELS, Animal
 
 
 def format_age(age_years: int) -> str:
@@ -11,11 +11,13 @@ def format_age(age_years: int) -> str:
 
 
 def needs_lines(animal: Animal) -> list[tuple[str, str]]:
-    """What the animal needs from a home: the five requirements the matching checks."""
+    """What the animal needs from a home: the seven requirements the matching checks."""
     return [
         ("Activity", ACTIVITY_LEVELS[animal.exercise_needs]),
         ("Home type", f"{HOUSING_LEVELS[animal.min_housing_level]} or more"),
         ("Garden", "Required" if animal.garden_required else "Not required"),
         ("Children", "Good with children" if animal.child_compatible else "Adult-only home"),
+        ("Other pets", "Can live with other pets" if animal.good_with_pets else "Needs to be the only pet"),
+        ("Experience", EXPERIENCE_NEEDED[animal.experience_needed]),
         ("Maximum time alone", f"{animal.max_hours_alone} hours"),
     ]

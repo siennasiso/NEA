@@ -12,6 +12,7 @@ from typing import Any, Callable
 from .models import (
     ACTIVITY_LEVELS,
     EXPERIENCE_LEVELS,
+    EXPERIENCE_NEEDED,
     HOUSING_LEVELS,
     NO_PREFERENCE,
     SEXES,
@@ -164,6 +165,11 @@ def validate_animal(raw: dict[str, Any]) -> tuple[dict[str, Any], Errors]:
     cleaned["garden_required"] = _check_flag(raw.get("garden_required"), "garden_required", "garden required", errors)
     cleaned["child_compatible"] = _check_flag(raw.get("child_compatible"), "child_compatible", "child compatible", errors)
     cleaned["max_hours_alone"] = _check_range(raw.get("max_hours_alone"), 0, 24, "max_hours_alone", "Hours alone", errors)
+    cleaned["good_with_pets"] = _check_flag(raw.get("good_with_pets"), "good_with_pets", "good with other pets", errors)
+    cleaned["experience_needed"] = _check_range(
+        raw.get("experience_needed"), min(EXPERIENCE_NEEDED), max(EXPERIENCE_NEEDED), "experience_needed",
+        "Experience needed", errors,
+    )
     notes = _text(raw.get("medical_notes"))
     if len(notes) > TEXT_MAX:
         errors["medical_notes"] = f"Medical notes must be at most {TEXT_MAX} characters."
@@ -181,6 +187,19 @@ def _q_housing(v: Any, e: Errors) -> int | None:
     return level
 
 
+def _q_allergies(v: Any, e: Errors) -> tuple[str, ...]:
+    """Species someone at home is allergic to: any of Dog, Cat, Rabbit, or none (an empty answer)."""
+    if v is None:
+        e["allergies"] = "Choose 'No allergies' or the animals someone is allergic to."
+        return ()
+    chosen = [part.strip() for part in v.split(",")] if isinstance(v, str) else list(v)
+    chosen = [part for part in chosen if part]
+    if any(part not in SPECIES for part in chosen) or len(set(chosen)) != len(chosen):
+        e["allergies"] = "Allergies can only be dogs, cats or rabbits, each chosen once."
+        return ()
+    return tuple(species for species in SPECIES if species in chosen)  # always in the same order
+
+
 def _q_activity(v: Any, e: Errors) -> int | None:
     level = _int(v)
     if level not in ACTIVITY_LEVELS:
@@ -194,6 +213,7 @@ QUESTION_VALIDATORS: dict[str, Callable[[Any, Errors], Any]] = {
     "garden_access": lambda v, e: _check_flag(v, "garden_access", "garden access", e),
     "has_children": lambda v, e: _check_flag(v, "has_children", "children in the home", e),
     "other_pets": lambda v, e: _check_flag(v, "other_pets", "other pets", e),
+    "allergies": _q_allergies,
     "experience": lambda v, e: _check_choice(v, EXPERIENCE_LEVELS, "experience", "level of experience", e),
     "activity_level": _q_activity,
     "hours_alone": lambda v, e: _check_range(v, 0, 24, "hours_alone", "Hours alone", e),
@@ -207,7 +227,7 @@ QUESTION_VALIDATORS: dict[str, Callable[[Any, Errors], Any]] = {
 
 QUESTION_STEPS: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("Your home", ("housing_level", "garden_access")),
-    ("Your household", ("has_children", "other_pets")),
+    ("Your household", ("has_children", "other_pets", "allergies")),
     ("Your lifestyle", ("activity_level", "hours_alone", "experience")),
     ("Your preferences", ("preferred_species", "preferred_size")),
 )

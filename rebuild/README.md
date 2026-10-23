@@ -1,7 +1,7 @@
 # PawMatch (rebuild)
 
 PawMatch helps one animal shelter match adopters with dogs, cats and rabbits. Adopters
-register, browse the animals, answer a nine-question lifestyle questionnaire and get a ranked
+register, browse the animals, answer a ten-question lifestyle questionnaire and get a ranked
 list. Each animal shows a compatibility score, the requirements the adopter meets and does not
 meet, and any welfare warnings. Shelter staff sign in to a separate dashboard to add, edit and
 delete animal records.

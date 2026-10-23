@@ -34,10 +34,11 @@ BASE = f"http://localhost:{PORT}"
 STAFF = ("staff@pawmatch.test", "staff-demo-pass")
 ADOPTER = ("Sam Lee", "sam@pawmatch.test", "30", "adopter-pass")
 SIZES = {"desktop": (1280, 860), "tablet": (820, 1180)}
-# The questionnaire's nine answers, in order (None: the hours question, typed instead). A small
-# flat with a garden, children and another pet, gentle exercise and six hours alone: the top five
-# then mixes Strong and Good matches, so the screenshots show unmet requirements too.
-ANSWERS = ["Limited space", "Yes", "Yes", "Yes", "Low", None, "Some", "No preference", "No preference"]
+# The questionnaire's ten answers, in order (None: the hours question, typed instead; a tuple: the
+# allergies question, where every card in it is chosen). A small flat with a garden, children and
+# another pet, someone allergic to cats, gentle exercise and six hours alone: the top five then
+# mixes Strong and Good matches, so the screenshots show unmet requirements too.
+ANSWERS = ["Limited space", "Yes", "Yes", "Yes", ("Cats",), "Low", None, "Some", "No preference", "No preference"]
 HOURS_ALONE = "6"
 EVIDENCE = ROOT / "docs" / "evidence"
 
@@ -232,6 +233,11 @@ def adopter_flow(s: Shooter) -> None:
             s.settle()
             if s.size == "desktop":
                 s.shot("10-questionnaire-hours")
+        elif isinstance(answer, tuple):
+            for card in answer:
+                s.click(card, ".st-key-question_card")
+            if s.size == "desktop":
+                s.shot("10b-questionnaire-allergies")
         else:
             s.click(answer, ".st-key-question_card")
         s.click("Submit questionnaire" if number == len(ANSWERS) else "Next question")

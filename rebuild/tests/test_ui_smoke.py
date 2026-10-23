@@ -16,7 +16,7 @@ ENTRY = str(Path(__file__).resolve().parents[1] / "streamlit_app.py")
 ANSWERS = {
     "housing_level": 1, "garden_access": True, "has_children": True, "other_pets": True,
     "experience": "Some (family pet growing up)", "activity_level": 1, "hours_alone": 6,
-    "preferred_species": "No preference", "preferred_size": "No preference",
+    "preferred_species": "No preference", "preferred_size": "No preference", "allergies": (),
 }
 GOOGLE = {"redirect_uri": "http://localhost:8501/oauth2callback", "cookie_secret": "test-cookie-secret",
           "client_id": "test-client", "client_secret": "test-secret",
@@ -175,17 +175,49 @@ def test_questionnaire_waits_for_an_answer_before_next(ids):
 
 def test_questionnaire_completes_and_ranks_every_available_animal(ids):
     at = app(ids["user"], "questionnaire")
-    for step in range(9):
-        if step == 5:  # hours alone is typed as a number, not chosen
+    for step in range(10):
+        if step == 6:  # hours alone is typed as a number, not chosen
             at.number_input[0].set_value(6).run()
         else:
             at.button(key=f"choice_{step}_0").click().run()
-        button(at, "Submit questionnaire" if step == 8 else "Next question").click().run()
+        button(at, "Submit questionnaire" if step == 9 else "Next question").click().run()
         assert not at.exception, at.exception
     assert at.session_state["questionnaire_just_completed"] is True
     with db.connect(ids["path"]) as conn:
         user = db.get_user(conn, ids["user"])
         assert len(services.latest_results(conn, user)) == ids["available"]
+
+
+def test_allergy_cards_turn_on_and_off_and_no_allergies_clears_them(ids):
+    at = AppTest.from_file(ENTRY, default_timeout=30)
+    at.session_state["user_id"] = ids["user"]
+    at.run()
+    at.switch_page(state.PAGES["questionnaire"]).run()
+    at.session_state["questionnaire_step"] = 4  # the allergies question
+    at.run()
+    assert "Choose all that apply" in html(at) and button(at, "Next question").disabled
+    allergies = lambda: at.session_state["questionnaire_answers"]["allergies"]  # noqa: E731
+    at.button(key="choice_4_2").click().run()  # Cats
+    at.button(key="choice_4_1").click().run()  # Dogs
+    assert allergies() == ("Dog", "Cat") and not button(at, "Next question").disabled
+    at.button(key="choice_4_2").click().run()  # Cats off again
+    assert allergies() == ("Dog",)
+    at.button(key="choice_4_1").click().run()  # nothing chosen: the question is unanswered again
+    assert allergies() is None and button(at, "Next question").disabled
+    at.button(key="choice_4_3").click().run()  # Rabbits, then No allergies replaces it
+    at.button(key="choice_4_0").click().run()
+    assert allergies() == ()
+    assert not at.exception, at.exception
+
+
+def test_an_allergic_adopter_sees_the_allergy_warning_on_matches(ids):
+    with db.connect(ids["path"]) as conn:
+        user = db.get_user(conn, ids["user"])
+        services.submit_questionnaire(conn, user, ANSWERS | {"allergies": ("Cat",)})
+        results = services.latest_results(conn, user)
+    cats = [r for r in results if r.animal.species == "Cat"]
+    assert cats and all(r.compatibility <= 39.0 and r.warnings[0].startswith("Allergy") for r in cats)
+    assert all(not r.suitable for r in results[-len(cats):])  # the cats are ranked last
 
 
 def test_matches_page_shows_the_top_five_and_can_show_all(ids):
@@ -224,11 +256,14 @@ def test_staff_can_add_an_animal_and_then_delete_it(ids):
     at.number_input(key=f"{ADD}_age").set_value(4)
     at.text_area(key=f"{ADD}_description").input(
         "A cheerful beagle who loves sniffing walks and a warm blanket by the radiator.")
+    at.selectbox(key=f"{ADD}_pets").set_value(False)
+    at.selectbox(key=f"{ADD}_experience").set_value(2)
     button(at, "Save animal record").click().run()
     assert not at.exception, at.exception
     with db.connect(ids["path"]) as conn:
         added = [a for a in db.list_animals(conn) if a.name == "Biscuit"]
     assert len(added) == 1
+    assert added[0].good_with_pets is False and added[0].experience_needed == 2
     biscuit = added[0].animal_id
     assert at.session_state["admin_view"] == "manage"
     assert at.session_state["admin_selected_animal_id"] == biscuit

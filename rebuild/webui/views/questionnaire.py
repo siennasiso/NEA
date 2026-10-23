@@ -1,9 +1,11 @@
 """Adoption form styled to match the interface design (the original pages/3_Questionnaire.py).
 
 One question per screen, as she built it. The questions are in webui/questions.py (her seven
-plus other pets and experience, which the matching uses). "Next question" checks the answer
-with pawmatch.validation.validate_question; submitting validates all nine, stores them and
-ranks every available animal (pawmatch.services.submit_questionnaire).
+plus other pets, allergies and experience, which the matching uses). The allergies question
+takes several answers: each species card turns on and off, and "No allergies" clears them.
+"Next question" checks the answer with pawmatch.validation.validate_question; submitting
+validates all ten, stores them and ranks every available animal
+(pawmatch.services.submit_questionnaire).
 """
 
 from __future__ import annotations
@@ -14,6 +16,7 @@ from html import escape
 import streamlit as st
 
 from pawmatch import db, services
+from pawmatch.models import SPECIES
 from pawmatch.validation import validate_question
 from webui.pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
 from webui.questions import QUESTIONS
@@ -51,6 +54,13 @@ def _select_answer(field: str, value: object) -> None:
     st.session_state.questionnaire_answers[field] = value
     st.session_state.questionnaire_errors = {}
     st.rerun()
+
+
+def _toggle_species(field: str, species: str) -> None:
+    """Turn one species on or off in a several-answer question; none left means not yet answered."""
+    chosen = set(st.session_state.questionnaire_answers.get(field) or ())
+    chosen ^= {species}
+    _select_answer(field, tuple(s for s in SPECIES if s in chosen) or None)
 
 
 if "questionnaire_answers" not in st.session_state:
@@ -95,7 +105,7 @@ with main_column:
             <div class="flow-page-header">
                 <div>
                     <h1>Question {step + 1} of {len(QUESTIONS)}</h1>
-                    <p>Choose one answer then continue</p>
+                    <p>{"Choose all that apply, then continue" if question.multiple else "Choose one answer then continue"}</p>
                 </div>
                 <span>{progress}% through</span>
             </div>
@@ -125,16 +135,21 @@ with main_column:
             else:
                 options = question.options
                 selected = answers.get(field)
-                if selected is not None:
-                    selected_index = next(
-                        index for index, option in enumerate(options)
-                        if option[2] == selected
+                if selected is None:
+                    selected_indexes = []
+                elif question.multiple and selected:
+                    selected_indexes = [index for index, option in enumerate(options) if option[2] in selected]
+                else:
+                    selected_indexes = [index for index, option in enumerate(options) if option[2] == selected]
+                if selected_indexes:
+                    chosen = ",\n".join(
+                        f".st-key-choice_{step}_{index} button, .st-key-choice_{step}_{index} button:hover"
+                        for index in selected_indexes
                     )
                     st.html(
                         f"""
                         <style>
-                        .st-key-choice_{step}_{selected_index} button,
-                        .st-key-choice_{step}_{selected_index} button:hover {{
+                        {chosen} {{
                             border: 2px solid var(--pm-pink-ring) !important;
                             background: #fbeaf4 !important;
                             box-shadow: 0 4px 7px rgba(120,45,80,.25) !important;
@@ -150,7 +165,10 @@ with main_column:
                             key=f"choice_{step}_{index}",
                             width="stretch",
                         ):
-                            _select_answer(field, value)
+                            if question.multiple and value != ():
+                                _toggle_species(field, value)
+                            else:
+                                _select_answer(field, value)
 
             for message in st.session_state.get("questionnaire_errors", {}).values():
                 st.html(f'<p class="field-error" role="alert">{escape(message)}</p>')

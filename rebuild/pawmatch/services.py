@@ -17,7 +17,7 @@ AVAILABLE = STATUSES[0]
 PROFILE_TEXT_MIN = 80
 PROFILE_FIELDS = ("name", "species", "breed", "age", "sex", "size", "personality", "exercise_needs",
                   "min_housing_level", "garden_required", "child_compatible", "max_hours_alone",
-                  "medical_notes", "image_path", "status")
+                  "good_with_pets", "experience_needed", "medical_notes", "image_path", "status")
 
 
 def add_animal(conn: sqlite3.Connection, actor: User | None, raw: dict[str, Any]) -> tuple[int | None, Errors]:

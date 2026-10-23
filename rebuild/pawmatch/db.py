@@ -36,6 +36,8 @@ CREATE TABLE IF NOT EXISTS animals (
     garden_required   INTEGER NOT NULL CHECK (garden_required IN (0, 1)),
     child_compatible  INTEGER NOT NULL CHECK (child_compatible IN (0, 1)),
     max_hours_alone   INTEGER NOT NULL CHECK (max_hours_alone BETWEEN 0 AND 24),
+    good_with_pets    INTEGER NOT NULL DEFAULT 1 CHECK (good_with_pets IN (0, 1)),
+    experience_needed INTEGER NOT NULL DEFAULT 0 CHECK (experience_needed BETWEEN 0 AND 2),
     medical_notes     TEXT    NOT NULL DEFAULT '',
     image_path        TEXT    NOT NULL DEFAULT '',
     status            TEXT    NOT NULL DEFAULT 'Available' CHECK (status IN ('Available', 'Reserved', 'Adopted')),
@@ -53,6 +55,7 @@ CREATE TABLE IF NOT EXISTS questionnaire_responses (
     hours_alone       INTEGER NOT NULL CHECK (hours_alone BETWEEN 0 AND 24),
     preferred_species TEXT    NOT NULL,
     preferred_size    TEXT    NOT NULL,
+    allergies         TEXT    NOT NULL DEFAULT '',
     completed_at      TEXT    NOT NULL
 );
 CREATE TABLE IF NOT EXISTS match_results (
@@ -73,7 +76,13 @@ CREATE TABLE IF NOT EXISTS match_results (
 ANIMAL_FIELDS = (
     "name", "species", "breed", "age", "sex", "size", "personality", "exercise_needs",
     "min_housing_level", "garden_required", "child_compatible", "max_hours_alone",
-    "medical_notes", "image_path", "status",
+    "good_with_pets", "experience_needed", "medical_notes", "image_path", "status",
+)
+# Stage 9 columns, added in place to databases made before them (Design, database changes).
+STAGE9_COLUMNS = (
+    ("animals", "good_with_pets", "INTEGER NOT NULL DEFAULT 1 CHECK (good_with_pets IN (0, 1))"),
+    ("animals", "experience_needed", "INTEGER NOT NULL DEFAULT 0 CHECK (experience_needed BETWEEN 0 AND 2)"),
+    ("questionnaire_responses", "allergies", "TEXT NOT NULL DEFAULT ''"),
 )
 
 
@@ -97,7 +106,8 @@ def connect(path: str | Path) -> Iterator[sqlite3.Connection]:
         conn.close()
 
 
-def init_schema(conn: sqlite3.Connection) -> None:
+def init_schema(conn: sqlite3.Connection) -> set[str]:
+    """Create any missing tables and add any missing columns; returns the stage 9 columns it added."""
     conn.executescript(SCHEMA)
     # Databases made before stage 5 lack calculated_at (Design, Match Results table): add it in place.
     columns = {row[1] for row in conn.execute("PRAGMA table_info(match_results)")}
@@ -107,6 +117,12 @@ def init_schema(conn: sqlite3.Connection) -> None:
     if "status" not in {row[1] for row in conn.execute("PRAGMA table_info(animals)")}:
         conn.execute("ALTER TABLE animals ADD COLUMN status TEXT NOT NULL DEFAULT 'Available' "
                      "CHECK (status IN ('Available', 'Reserved', 'Adopted'))")
+    added = set()
+    for table, column, definition in STAGE9_COLUMNS:  # fixed names, never user input
+        if column not in {row[1] for row in conn.execute(f"PRAGMA table_info({table})")}:
+            conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
+            added.add(column)
+    return added
 
 
 # ---- users ---------------------------------------------------------------
@@ -147,6 +163,7 @@ def _animal(row: sqlite3.Row) -> Animal:
     data = {k: row[k] for k in ("animal_id",) + ANIMAL_FIELDS + ("date_added",)}
     data["garden_required"] = bool(data["garden_required"])
     data["child_compatible"] = bool(data["child_compatible"])
+    data["good_with_pets"] = bool(data["good_with_pets"])
     return Animal(**data)
 
 
@@ -206,6 +223,15 @@ def count_animals(conn: sqlite3.Connection) -> int:
     return conn.execute("SELECT COUNT(*) FROM animals").fetchone()[0]
 
 
+def set_pets_and_experience(conn: sqlite3.Connection, values_by_name: dict[str, tuple[int, int]]) -> int:
+    """Give named animals their 'good with pets' and 'experience needed' values; returns rows changed."""
+    return sum(
+        conn.execute("UPDATE animals SET good_with_pets = ?, experience_needed = ? WHERE name = ?",
+                     (pets, experience, name)).rowcount
+        for name, (pets, experience) in values_by_name.items()
+    )
+
+
 def use_png_pictures(conn: sqlite3.Connection) -> int:
     """Point round-1 demo animals (.jpg on black) at the transparent .png cut-outs; returns rows changed."""
     return conn.execute(
@@ -233,10 +259,10 @@ def save_response(conn: sqlite3.Connection, user_id: int, answers: Answers) -> i
     cur = conn.execute(
         """INSERT INTO questionnaire_responses (user_id, housing_level, garden_access, has_children,
                other_pets, experience, activity_level, hours_alone, preferred_species, preferred_size,
-               completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+               allergies, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (user_id, answers.housing_level, int(answers.garden_access), int(answers.has_children),
          int(answers.other_pets), answers.experience, answers.activity_level, answers.hours_alone,
-         answers.preferred_species, answers.preferred_size, _now()),
+         answers.preferred_species, answers.preferred_size, ",".join(answers.allergies), _now()),
     )
     return int(cur.lastrowid)
 
@@ -253,6 +279,7 @@ def latest_response(conn: sqlite3.Connection, user_id: int) -> tuple[int, Answer
         has_children=bool(row["has_children"]), other_pets=bool(row["other_pets"]),
         experience=row["experience"], activity_level=row["activity_level"], hours_alone=row["hours_alone"],
         preferred_species=row["preferred_species"], preferred_size=row["preferred_size"],
+        allergies=tuple(a for a in row["allergies"].split(",") if a),
     )
 
 

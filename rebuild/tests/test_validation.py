@@ -15,11 +15,12 @@ GOOD_ANIMAL = {
     "name": "Luna", "species": "Dog", "breed": "Labrador cross", "age": "4", "sex": "Female",
     "size": "Large", "personality": "Gentle", "exercise_needs": 3, "min_housing_level": 2,
     "garden_required": "Yes", "child_compatible": "No", "max_hours_alone": 4, "medical_notes": "",
+    "good_with_pets": "No", "experience_needed": 1,
 }
 GOOD_ANSWERS = {
     "housing_level": 2, "garden_access": "Yes", "has_children": "No", "other_pets": "No",
     "experience": "None", "activity_level": 2, "hours_alone": 4,
-    "preferred_species": "Cat", "preferred_size": "No preference",
+    "preferred_species": "Cat", "preferred_size": "No preference", "allergies": [],
 }
 
 
@@ -81,13 +82,15 @@ def test_valid_animal_passes_and_converts_types():
     cleaned, errors = validate_animal(GOOD_ANIMAL)
     assert errors == {}
     assert cleaned["age"] == 4 and cleaned["garden_required"] is True and cleaned["child_compatible"] is False
+    assert cleaned["good_with_pets"] is False and cleaned["experience_needed"] == 1
 
 
 @pytest.mark.parametrize("field,value", [
     ("name", ""), ("species", "Hamster"), ("breed", ""), ("age", 0), ("age", 31), ("sex", "?"),
     ("size", "Huge"), ("personality", " "), ("exercise_needs", 4), ("min_housing_level", 0),
     ("garden_required", "maybe"), ("max_hours_alone", 25), ("max_hours_alone", -1),
-    ("medical_notes", "x" * 501),
+    ("medical_notes", "x" * 501), ("good_with_pets", None), ("good_with_pets", "sometimes"),
+    ("experience_needed", 3), ("experience_needed", -1),
 ])
 def test_invalid_animal_fields_are_rejected(field, value):
     assert field in validate_animal(GOOD_ANIMAL | {field: value})[1]
@@ -107,6 +110,19 @@ def test_unanswered_question_blocks_submission():
 @pytest.mark.parametrize("hours,ok", [(-1, False), (0, True), (24, True), (25, False)])
 def test_hours_alone_range(hours, ok):
     assert ("hours_alone" not in validate_answers(GOOD_ANSWERS | {"hours_alone": hours})[1]) is ok
+
+
+@pytest.mark.parametrize("given,stored", [
+    ([], ()), ((), ()), ("", ()), (["Cat", "Dog"], ("Dog", "Cat")), ("Rabbit, Dog", ("Dog", "Rabbit")),
+])
+def test_allergies_accept_none_or_some_species_in_a_fixed_order(given, stored):
+    answers, errors = validate_answers(GOOD_ANSWERS | {"allergies": given})
+    assert errors == {} and answers.allergies == stored
+
+
+@pytest.mark.parametrize("given", [None, ["Hamster"], ["Dog", "Dog"], "Dog,,Ferret"])
+def test_allergies_reject_no_answer_unknown_animals_and_repeats(given):
+    assert "allergies" in validate_answers(GOOD_ANSWERS | {"allergies": given})[1]
 
 
 def test_step_validation_only_checks_that_step():

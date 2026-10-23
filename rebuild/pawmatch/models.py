@@ -29,6 +29,13 @@ EXPERIENCE_LEVELS: tuple[str, ...] = (
     "Some (family pet growing up)",
     "Experienced owner",
 )
+# What an animal needs from its adopter, as a level of EXPERIENCE_LEVELS (stage 9, from the
+# client interview: "whether they have experience caring for that type of animal").
+EXPERIENCE_NEEDED: dict[int, str] = {
+    0: "Suits a first-time owner",
+    1: "Needs some experience",
+    2: "Needs an experienced owner",
+}
 
 
 @dataclass(frozen=True)
@@ -63,6 +70,8 @@ class Animal:
     garden_required: bool
     child_compatible: bool
     max_hours_alone: int
+    good_with_pets: bool = True  # can share a home with other animals (stage 9)
+    experience_needed: int = 0  # a key of EXPERIENCE_NEEDED (stage 9)
     medical_notes: str = ""
     image_path: str = ""
     status: str = "Available"
@@ -82,6 +91,7 @@ class Answers:
     hours_alone: int
     preferred_species: str
     preferred_size: str
+    allergies: tuple[str, ...] = ()  # species someone at home is allergic to (stage 9)
 
 
 @dataclass(frozen=True)

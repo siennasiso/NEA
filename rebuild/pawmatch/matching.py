@@ -1,10 +1,14 @@
 """Weighted compatibility scoring and ranking (criterion 7).
 
 Normalisation, precisely:
-  compatibility = round(100 * earned_points / 72, 1)
-where 72 is the sum of the five welfare weights below. Each factor earns its
-full weight when the requirement is met and 0 when it is not, except activity,
-which loses half its weight per level of shortfall (12, 6, then 0).
+  compatibility = round(100 * earned_points / 90, 1)
+where 90 is the sum of the seven factor weights below. Each factor earns its
+full weight when the requirement is met and 0 when it is not, except activity
+and experience, which lose half their weight per level of shortfall.
+
+An allergy is not weighed against the other answers. The client asked that an
+animal someone at home is allergic to is never shown as a strong match, so it
+adds a warning and caps the score at 39% (the Low band).
 
 Species (10) and size (5) preferences never change the percentage. They are
 added only to a separate ranking total, so a preferred but unsuitable animal
@@ -15,7 +19,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from .models import HOUSING_LEVELS, NO_PREFERENCE, Animal, Answers, MatchResult
+from .models import EXPERIENCE_LEVELS, EXPERIENCE_NEEDED, HOUSING_LEVELS, NO_PREFERENCE, Animal, Answers, MatchResult
 
 WEIGHTS: dict[str, int] = {
     "hours_alone": 20,
@@ -23,12 +27,16 @@ WEIGHTS: dict[str, int] = {
     "housing": 15,
     "activity": 12,
     "garden": 10,
+    "other_pets": 10,
+    "experience": 8,
 }
-MAX_POINTS = sum(WEIGHTS.values())  # 72
+MAX_POINTS = sum(WEIGHTS.values())  # 90
 PREFERENCE_BONUS: dict[str, int] = {"species": 10, "size": 5}
 
 # Unmet requirements on these factors are welfare risks, so they raise a warning.
-IMPORTANT_FACTORS = frozenset({"hours_alone", "children", "housing"})
+IMPORTANT_FACTORS = frozenset({"hours_alone", "children", "housing", "other_pets"})
+# The highest whole-number score in the Low band (Low is below 40).
+ALLERGY_CAP = 39.0
 
 CATEGORY_THRESHOLDS: tuple[tuple[float, str], ...] = (
     (80.0, "Strong"),
@@ -50,6 +58,8 @@ def category_for(compatibility: float) -> str:
 def _factor_checks(animal: Animal, answers: Answers) -> list[tuple[str, float, str]]:
     """Return (factor, fraction of weight earned, explanation) for each welfare factor."""
     activity_gap = max(0, animal.exercise_needs - answers.activity_level)
+    level = EXPERIENCE_LEVELS.index(answers.experience) if answers.experience in EXPERIENCE_LEVELS else 0
+    experience_gap = max(0, animal.experience_needed - level)
     return [
         (
             "hours_alone",
@@ -82,6 +92,19 @@ def _factor_checks(animal: Animal, answers: Answers) -> list[tuple[str, float, s
             f"Garden: {animal.name} {'needs' if animal.garden_required else 'does not need'} a garden; "
             f"you {'have' if answers.garden_access else 'do not have'} one.",
         ),
+        (
+            "other_pets",
+            1.0 if animal.good_with_pets or not answers.other_pets else 0.0,
+            "Other pets: "
+            + ("another pet lives with you and " if answers.other_pets else "no other pets live with you; ")
+            + f"{animal.name} {'can' if animal.good_with_pets else 'cannot'} share a home with other animals.",
+        ),
+        (
+            "experience",
+            max(0.0, 1.0 - experience_gap / 2),
+            f"Experience: you said '{answers.experience}'; "
+            f"{animal.name} {EXPERIENCE_NEEDED[animal.experience_needed].lower()}.",
+        ),
     ]
 
 
@@ -110,6 +133,12 @@ def score_animal(animal: Animal, answers: Answers) -> MatchResult:
             if factor in IMPORTANT_FACTORS:
                 warnings.append(reason)
     compatibility = round(100 * earned / MAX_POINTS, 1)
+    if animal.species in answers.allergies:
+        reason = (f"Allergy: someone in your home is allergic to {animal.species.lower()}s; "
+                  f"{animal.name} is a {animal.species.lower()}.")
+        unmet.insert(0, reason)
+        warnings.insert(0, reason)
+        compatibility = min(compatibility, ALLERGY_CAP)
     return MatchResult(
         animal=animal,
         compatibility=compatibility,

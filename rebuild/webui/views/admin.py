@@ -16,7 +16,8 @@ from typing import Any, Sequence
 import streamlit as st
 
 from pawmatch import db, services
-from pawmatch.models import ACTIVITY_LEVELS, HOUSING_LEVELS, SEXES, SIZES, SPECIES, STATUSES, Animal
+from pawmatch.models import (ACTIVITY_LEVELS, EXPERIENCE_NEEDED, HOUSING_LEVELS, SEXES, SIZES, SPECIES,
+                             STATUSES, Animal)
 from pawmatch.validation import IMAGE_TYPES, validate_image
 from webui.animals import format_age
 from webui.pawmatch_style import apply_admin_dashboard_style
@@ -133,6 +134,8 @@ def render_animal_form(mode: str, record: Animal | None = None) -> None:
         "min_housing_level": 2,
         "garden_required": False,
         "child_compatible": True,
+        "good_with_pets": True,
+        "experience_needed": 0,
         "max_hours_alone": 4,
         "status": "Available",
         "personality": "",
@@ -207,6 +210,12 @@ def render_animal_form(mode: str, record: Animal | None = None) -> None:
                 format_func=ACTIVITY_LEVELS.get,
                 key=f"{prefix}_activity",
             )
+            experience_needed = st.selectbox(
+                "Experience needed", tuple(EXPERIENCE_NEEDED),
+                index=option_index(tuple(EXPERIENCE_NEEDED), defaults["experience_needed"]),
+                format_func=EXPERIENCE_NEEDED.get,
+                key=f"{prefix}_experience",
+            )
         with m2:
             min_housing_level = st.selectbox(
                 "Indoor space needed", tuple(HOUSING_LEVELS),
@@ -219,6 +228,12 @@ def render_animal_form(mode: str, record: Animal | None = None) -> None:
                 index=0 if defaults["child_compatible"] else 1,
                 format_func=lambda value: "Yes" if value else "No",
                 key=f"{prefix}_children",
+            )
+            good_with_pets = st.selectbox(
+                "Can live with other pets", (True, False),
+                index=0 if defaults["good_with_pets"] else 1,
+                format_func=lambda value: "Yes" if value else "No",
+                key=f"{prefix}_pets",
             )
         with m3:
             max_hours_alone = st.number_input(
@@ -274,6 +289,8 @@ def render_animal_form(mode: str, record: Animal | None = None) -> None:
         "min_housing_level": min_housing_level,
         "garden_required": garden_required,
         "child_compatible": child_compatible,
+        "good_with_pets": good_with_pets,
+        "experience_needed": experience_needed,
         "max_hours_alone": max_hours_alone,
         "status": status,
         "personality": personality,
