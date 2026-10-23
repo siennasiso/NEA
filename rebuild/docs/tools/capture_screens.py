@@ -1,10 +1,21 @@
-"""Start PawMatch headless on a fresh database and save screenshots of the main flows.
+"""Start PawMatch headless on a fresh database and screenshot every page, desktop and tablet.
 
-    .venv/bin/python docs/tools/capture_screens.py docs/img
+    .venv/bin/python docs/tools/capture_screens.py docs/img            # both sizes
+    .venv/bin/python docs/tools/capture_screens.py docs/img desktop    # one size
+
+Everything happens through the real interface: an adopter registers, logs in, browses,
+answers the questionnaire and opens their matches; then a staff member manages animals.
+The database is a temporary file, so nothing here touches data/pawmatch.db.
+
+Each screen is also audited as rendered: every piece of visible text is checked for contrast
+against what is actually behind it (WCAG 2.2 AA: 4.5:1, or 3:1 for large text) and for a size
+of at least 12px, and the login page is worked through with the keyboard alone. The results go
+to docs/evidence/rendered-audit-<size>.json.
 """
 
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -16,161 +27,227 @@ from pathlib import Path
 from playwright.sync_api import Page, sync_playwright
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
-
-from pawmatch import db  # noqa: E402
-from pawmatch.seed import create_admin, prepare  # noqa: E402
-
 PORT = 8766
 BASE = f"http://localhost:{PORT}"
 STAFF = ("staff@pawmatch.test", "staff-demo-pass")
 ADOPTER = ("Sam Lee", "sam@pawmatch.test", "30", "adopter-pass")
+SIZES = {"desktop": (1280, 860), "tablet": (820, 1180)}
+# The questionnaire's nine answers, in order (None: the hours question, typed instead). A small
+# flat with a garden, children and another pet, gentle exercise and six hours alone: the top five
+# then mixes Strong and Good matches, so the screenshots show unmet requirements too.
+ANSWERS = ["Limited space", "Yes", "Yes", "Yes", "Low", None, "Some", "No preference", "No preference"]
+HOURS_ALONE = "6"
+EVIDENCE = ROOT / "docs" / "evidence"
+
+# Runs inside the page: every visible text element, its colour, what is behind it and its size.
+# Backgrounds are blended up through the parents; a gradient behind the text is checked at each
+# solid colour stop (translucent highlights are skipped, as in tests/test_style.py).
+AUDIT_JS = """
+() => {
+  const parse = c => { const m = c && c.match(/rgba?\\(([^)]+)\\)/); if (!m) return null;
+    const p = m[1].split(/[\\s,\\/]+/).filter(Boolean).map(Number);
+    return {r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1}; };
+  const lum = ({r, g, b}) => { const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+  const ratio = (x, y) => { const [a, b] = [lum(x), lum(y)].sort((p, q) => q - p); return (a + 0.05) / (b + 0.05); };
+  const blend = (top, under) => ({r: top.r * top.a + under.r * (1 - top.a), g: top.g * top.a + under.g * (1 - top.a),
+    b: top.b * top.a + under.b * (1 - top.a), a: 1});
+  const hex = c => '#' + [c.r, c.g, c.b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+  const behind = el => {
+    const layers = [];
+    for (let e = el; e; e = e.parentElement) {
+      const s = getComputedStyle(e);
+      const stops = (s.backgroundImage.match(/linear-gradient\\(.*?\\)\\)?(?=,\\s*(?:linear|radial)|$)/g) || [])
+        .flatMap(g => (g.match(/rgba?\\([^)]+\\)/g) || []).map(parse)).filter(c => c && c.a === 1);
+      if (stops.length) return stops.map(stop => layers.reduceRight((under, top) => blend(top, under), stop));
+      const c = parse(s.backgroundColor);
+      if (c && c.a > 0) { layers.push(c); if (c.a === 1) return [layers.reduceRight((under, top) => blend(top, under))]; }
+    }
+    return [layers.reduceRight((under, top) => blend(top, under), {r: 255, g: 255, b: 255, a: 1})];
+  };
+  const found = [];
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const seen = new Set();
+  while (walker.nextNode()) {
+    const el = walker.currentNode.parentElement;
+    if (!walker.currentNode.textContent.trim() || !el || seen.has(el)) continue;
+    seen.add(el);
+    const box = el.getBoundingClientRect(), s = getComputedStyle(el);
+    if (!box.width || !box.height || s.visibility === 'hidden' || Number(s.opacity) === 0) continue;
+    if (el.closest('button:disabled, [aria-disabled="true"], [aria-hidden="true"], style, script, noscript')) continue;
+    const colour = parse(s.color); if (!colour) continue;
+    const size = parseFloat(s.fontSize), weight = Number(s.fontWeight) || 400;
+    const large = size >= 24 || (size >= 18.66 && weight >= 700);
+    const worst = Math.min(...behind(el).map(bg => ratio(colour.a < 1 ? blend(colour, bg) : colour, bg)));
+    found.push({text: walker.currentNode.textContent.trim().slice(0, 48), colour: hex(colour),
+      ratio: Math.round(worst * 100) / 100, needs: large ? 3 : 4.5, size: Math.round(size * 10) / 10});
+  }
+  return found;
+}
+"""
+
+# Runs inside the page: how a keyboard user moves through it. At each Tab stop the focused control
+# is compared with itself unfocused; a focus indicator is "visible" when the two look different.
+FOCUS_JS = """
+async () => {
+  const e = document.activeElement; if (!e || e === document.body) return null;
+  const wrap = e.closest('[data-baseweb="input"], [data-baseweb="base-input"], [data-baseweb="textarea"]') || e;
+  const look = () => [e, wrap].map(x => { const s = getComputedStyle(x);
+    return [s.outlineStyle, s.outlineWidth, s.outlineColor, s.boxShadow, s.borderColor, s.backgroundColor].join('|'); }).join('||');
+  const pause = () => new Promise(done => setTimeout(done, 400));
+  const focused = look(); e.blur(); await pause(); const blurred = look(); e.focus(); await pause();
+  return {tag: e.tagName.toLowerCase(), label: (e.getAttribute('aria-label') || e.innerText || e.placeholder || '').trim().slice(0, 40),
+          visible: focused !== blurred};
+}
+"""
 
 
-def wait_for_server() -> None:
+def start_server(db_path: Path) -> subprocess.Popen:
+    env = dict(os.environ, PAWMATCH_DB=str(db_path), PAWMATCH_ADMIN_EMAIL=STAFF[0],
+               PAWMATCH_ADMIN_PASSWORD=STAFF[1], PAWMATCH_ADMIN_NAME="Matilde Shelter")
+    server = subprocess.Popen(
+        [sys.executable, "-m", "streamlit", "run", "streamlit_app.py", "--server.port", str(PORT),
+         "--server.headless", "true"], cwd=ROOT, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     for _ in range(60):
         try:
             urllib.request.urlopen(f"{BASE}/_stcore/health", timeout=1)
-            return
+            return server
         except OSError:
             time.sleep(0.5)
-    raise RuntimeError("Streamlit did not start")
+    server.kill()
+    raise SystemExit("PawMatch did not start")
 
 
-def settle(page: Page) -> None:
-    page.wait_for_timeout(700)
-    page.wait_for_selector('[data-testid="stApp"][data-test-script-state="notRunning"]', timeout=20000)
-    page.wait_for_timeout(400)
+class Shooter:
+    def __init__(self, page: Page, out: Path, size: str):
+        self.page, self.out, self.size = page, out, size
+        self.audit: dict[str, dict] = {}
+
+    def settle(self) -> None:
+        self.page.wait_for_timeout(700)
+        self.page.wait_for_selector('[data-testid="stApp"][data-test-script-state="notRunning"]', timeout=30000)
+        self.page.wait_for_timeout(500)
+
+    def shot(self, name: str) -> None:
+        """Save the whole page: the viewport grows to the page's height, then goes back."""
+        self.settle()
+        width, height = SIZES[self.size]
+        full = self.page.evaluate(
+            "() => Math.max(...[...document.querySelectorAll('[data-testid=stMain], [data-testid=stSidebar]')]"
+            ".map(e => e.scrollHeight), 0)")
+        self.page.set_viewport_size({"width": width, "height": min(max(int(full), height), 3600)})
+        self.page.wait_for_timeout(500)
+        self.page.screenshot(path=str(self.out / f"{name}-{self.size}.png"))
+        texts = self.page.evaluate(AUDIT_JS)
+        self.audit[name] = {
+            "texts": len(texts),
+            "low_contrast": [x for x in texts if x["ratio"] < x["needs"]],
+            "below_12px": [x for x in texts if x["size"] < 12],
+        }
+        self.page.set_viewport_size({"width": width, "height": height})
+        print("saved", name, self.size, len(texts), "texts,", len(self.audit[name]["low_contrast"]), "low contrast,",
+              len(self.audit[name]["below_12px"]), "small", flush=True)
+
+    def keyboard_tour(self, stops: int = 12) -> None:
+        """Press Tab through the login page, recording each stop and whether focus is visible."""
+        self.page.evaluate("() => document.activeElement && document.activeElement.blur()")
+        tour = []
+        for _ in range(stops):
+            self.page.keyboard.press("Tab")
+            self.page.wait_for_timeout(400)
+            tour.append(self.page.evaluate(FOCUS_JS))
+        self.audit["keyboard-login"] = {"stops": tour}
+
+    def click(self, text: str, scope: str = "") -> None:
+        self.page.locator(f"{scope} button".strip()).filter(has_text=text).first.click()
+        self.settle()
+
+    def fill(self, label: str, value: str) -> None:
+        self.page.get_by_label(label, exact=True).first.fill(value)
+
+    def log_in(self, email: str, password: str) -> None:
+        self.fill("Email address", email)
+        self.fill("Password", password)
+        self.page.keyboard.press("Enter")
+        self.settle()
 
 
-def shot(page: Page, out: Path, name: str, full: bool = True) -> None:
-    """Streamlit scrolls an inner container, so grow the viewport to the content for a full shot."""
-    settle(page)
-    if full:
-        height = page.evaluate("() => document.querySelector('[data-testid=stMain]').scrollHeight")
-        page.set_viewport_size({"width": 1280, "height": min(max(int(height), 860), 3000)})
-        page.wait_for_timeout(300)
-    page.screenshot(path=str(out / f"{name}.png"))
-    page.set_viewport_size({"width": 1280, "height": 860})
-    print("saved", name, flush=True)
+def adopter_flow(s: Shooter) -> None:
+    s.page.goto(BASE)
+    s.shot("01-login")
+    s.keyboard_tour()
+    s.log_in(ADOPTER[1], "wrong-password")
+    s.shot("02-login-error")
+    s.click("Create an account", '[data-testid="stMain"] [data-testid="stButtonGroup"]')
+    s.shot("03-register")
+    s.click("Create account")
+    s.shot("04-register-errors")
+    name, email, age, password = ADOPTER
+    s.fill("Full name", name)
+    s.fill("Email address", email)
+    s.fill("Age", age)
+    s.fill("Password", password)
+    s.fill("Confirm password", password)
+    s.click("Create account")
+    s.shot("05-register-done")
+    s.click("Go to login")
+    s.log_in(email, password)
+    s.shot("06-home")
+    s.click("Browse animals", ".st-key-design_main")
+    s.shot("07-browse")
+    s.click("View profile")
+    s.shot("08-profile")
+    s.click("Questionnaire", ".st-key-design_sidebar")
+    s.shot("09-questionnaire")
+    for number, answer in enumerate(ANSWERS, start=1):
+        if answer is None:
+            s.page.get_by_label("Hours left alone").fill(HOURS_ALONE)
+            s.page.keyboard.press("Tab")
+            s.settle()
+            if s.size == "desktop":
+                s.shot("10-questionnaire-hours")
+        else:
+            s.click(answer, ".st-key-question_card")
+        s.click("Submit questionnaire" if number == len(ANSWERS) else "Next question")
+    s.shot("11-questionnaire-done")
+    s.click("View matches")
+    s.shot("12-matches")
+    s.page.locator('[data-testid="stPageLink"] a').first.click()
+    s.shot("13-profile-scored")
+    s.click("My account", ".st-key-design_sidebar")
+    s.shot("14-account")
+    s.click("Log out")
 
 
-def choose(page: Page, label: str, option: str) -> None:
-    page.get_by_label(label, exact=True).click()
-    page.get_by_role("option", name=option, exact=True).click()
-    settle(page)
+def staff_flow(s: Shooter) -> None:
+    s.log_in(*STAFF)
+    s.shot("15-admin-overview")
+    s.click("Manage animals", '[data-testid="stSidebar"]')
+    s.shot("16-admin-manage")
+    s.click("Add animal", '[data-testid="stSidebar"]')
+    s.click("Save animal record")
+    s.shot("17-admin-add-errors")
 
 
-def click(page: Page, name: str) -> None:
-    page.get_by_role("button", name=name).first.click()
-    settle(page)
-
-
-def nav(page: Page, name: str) -> None:
-    page.get_by_role("link", name=name).first.click()
-    settle(page)
-
-
-def main(out: Path) -> None:
+def main(out: Path, sizes: list[str]) -> None:
     out.mkdir(parents=True, exist_ok=True)
-    db_path = Path(tempfile.mkdtemp()) / "screens.db"
-    prepare(str(db_path))
-    with db.connect(db_path) as conn:
-        create_admin(conn, "Shelter staff", STAFF[0], 40, STAFF[1])
-    env = os.environ | {"PAWMATCH_DB": str(db_path)}
-    server = subprocess.Popen(
-        [sys.executable, "-m", "streamlit", "run", "streamlit_app.py", "--server.headless", "true",
-         "--server.port", str(PORT)], cwd=ROOT, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-    try:
-        wait_for_server()
-        with sync_playwright() as p:
-            browser = p.chromium.launch()
-            page = browser.new_page(viewport={"width": 1280, "height": 860})
-            page.goto(BASE)
-            shot(page, out, "01-home")
-            page.goto(f"{BASE}/browse")
-            shot(page, out, "02-browse")
-            choose(page, "Species", "Rabbit")
-            shot(page, out, "03-browse-filter-rabbit")
-            page.set_viewport_size({"width": 820, "height": 1180})
-            page.goto(f"{BASE}/browse")
-            settle(page)
-            page.screenshot(path=str(out / "16-tablet-browse.png"))
-            print("saved 16-tablet-browse", flush=True)
-            page.set_viewport_size({"width": 1280, "height": 860})
-            page.goto(f"{BASE}/profile?id=2")
-            shot(page, out, "04-profile")
-
-            page.goto(f"{BASE}/account")
-            settle(page)
-            page.get_by_role("tab", name="Register").click()
-            panel = page.get_by_role("tabpanel", name="Register")
-            panel.get_by_label("Full name", exact=True).fill("S")
-            panel.get_by_label("Email address", exact=True).fill("not-an-email")
-            panel.get_by_label("Age", exact=True).fill("16")
-            panel.get_by_label("Password (at least 8 characters)", exact=True).fill("short")
-            panel.get_by_label("Confirm password", exact=True).fill("short")
-            click(page, "Create account")
-            shot(page, out, "05-register-errors")
-            panel.get_by_label("Full name", exact=True).fill(ADOPTER[0])
-            panel.get_by_label("Email address", exact=True).fill(ADOPTER[1])
-            panel.get_by_label("Age", exact=True).fill(ADOPTER[2])
-            panel.get_by_label("Password (at least 8 characters)", exact=True).fill(ADOPTER[3])
-            panel.get_by_label("Confirm password", exact=True).fill(ADOPTER[3])
-            click(page, "Create account")
-            shot(page, out, "06-questionnaire-step1")
-            click(page, "Next")
-            shot(page, out, "07-questionnaire-blocked")
-            choose(page, "What type of home do you live in?", "Small or medium house")
-            choose(page, "Do you have a secure garden?", "Yes")
-            click(page, "Next")
-            choose(page, "Are there children under 16 in your home?", "Yes")
-            choose(page, "Do you have other pets?", "No")
-            click(page, "Next")
-            choose(page, "How much daily activity can you give an animal?", "Medium - about an hour of activity a day")
-            choose(page, "On a normal day, how many hours would the animal be alone?", "4 hours")
-            choose(page, "How much experience do you have with animals?", "Some (family pet growing up)")
-            shot(page, out, "08-questionnaire-step3")
-            click(page, "Next")
-            choose(page, "Which species would you prefer?", "Dog")
-            choose(page, "Which size would you prefer?", "No preference")
-            click(page, "Next")
-            shot(page, out, "09-questionnaire-review")
-            click(page, "Submit and see my matches")
-            page.get_by_text("requirements met").first.click()
-            shot(page, out, "10-results")
-            page.get_by_text("Show every animal").click()
-            settle(page)
-            page.get_by_text("Important requirement not met").first.scroll_into_view_if_needed()
-            shot(page, out, "11-results-warning", full=False)
-
-            # Navigate with the menu from here: a page reload starts a new Streamlit session.
-            nav(page, "My account")
-            click(page, "Log out")
-            nav(page, "Log in")
-            panel = page.get_by_role("tabpanel", name="Log in")
-            panel.get_by_label("Email", exact=True).fill(STAFF[0])
-            panel.get_by_label("Password", exact=True).fill("wrong-password")
-            click(page, "Log in")
-            shot(page, out, "12-login-error")
-            panel.get_by_label("Password", exact=True).fill(STAFF[1])
-            click(page, "Log in")
-            nav(page, "Manage animals")
-            shot(page, out, "13-admin-list")
-            page.get_by_role("tab", name="Add animal").click()
-            settle(page)
-            add = page.get_by_role("tabpanel", name="Add animal")
-            add.get_by_label("Name", exact=True).fill("Pip")
-            click(page, "Save animal")
-            shot(page, out, "14-admin-add-errors")
-            page.get_by_role("tab", name="Edit or delete").click()
-            choose(page, "Animal", "Oscar (Dog, #5)")
-            shot(page, out, "15-admin-edit")
-            browser.close()
-    finally:
-        server.terminate()
-        server.wait(timeout=10)
+    for size in sizes:
+        with tempfile.TemporaryDirectory() as folder:
+            server = start_server(Path(folder) / "screens.db")
+            try:
+                with sync_playwright() as p:
+                    browser = p.chromium.launch()
+                    page = browser.new_page(viewport=dict(zip(("width", "height"), SIZES[size])))
+                    shooter = Shooter(page, out, size)
+                    adopter_flow(shooter)
+                    staff_flow(shooter)
+                    browser.close()
+                EVIDENCE.mkdir(parents=True, exist_ok=True)
+                (EVIDENCE / f"rendered-audit-{size}.json").write_text(json.dumps(shooter.audit, indent=1))
+            finally:
+                server.terminate()
+                server.wait(timeout=10)
 
 
 if __name__ == "__main__":
-    main(Path(sys.argv[1] if len(sys.argv) > 1 else "docs/img"))
+    main(Path(sys.argv[1]), sys.argv[2:] or list(SIZES))

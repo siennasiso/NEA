@@ -1,0 +1,106 @@
+tests/test_style.py run on the original styling (app/pawmatch_style.py ported, before the fix)
+FAILED test_every_text_colour_reaches_4_5_to_1: 66 text colours below 4.5:1
+  .st-key-login_pink_panel, .st-key-register_pink_panel: #ffffff on #f985b2 is 2.33:1
+  .st-key-login_pink_panel, .st-key-register_pink_panel: #ffffff on #ed4f91 is 3.43:1
+  .st-key-login_pink_panel, .st-key-register_pink_panel: #ffffff on #d93679 is 4.42:1
+  .password-hint: #967584 on #fff0f6 is 3.68:1
+  .stFormSubmitButton button: #ffffff on #ed4f91 is 3.43:1
+  .stFormSubmitButton button: #ffffff on #d93679 is 4.42:1
+  .st-key-secondary_button button, .st-key-logout_button button, .st-key: #d93679 on #fff0f6 is 4.01:1
+  .divider: #a98a99 on #fff0f6 is 2.81:1
+  .sidebar-logo: #ffffff on #f77eb0 is 2.45:1
+  .sidebar-logo: #ffffff on #d93679 is 4.42:1
+  .sidebar-brand-subtitle: #8a6676 on #fff0f6 is 4.49:1
+  [data-testid="stSidebar"] .st-key-nav_home button: #ffffff on #ea4c8c is 3.55:1
+  [data-testid="stSidebar"] .st-key-nav_home button: #ffffff on #d93679 is 4.42:1
+  [data-testid="stSidebar"] .st-key-nav_home button:hover: #ffffff on #ea4c8c is 3.55:1
+  [data-testid="stSidebar"] .st-key-nav_home button:hover: #ffffff on #d93679 is 4.42:1
+  .sidebar-user-card small: #8d6b7b on #fff0f6 is 4.21:1
+  .home-eyebrow: #d93679 on #fff0f6 is 4.01:1
+  .home-subtitle: #dc76a6 on #fff0f6 is 2.65:1
+  .status-card-topline strong: #c53673 on #fce2ee is 4.16:1
+  .status-progress-label strong: #d93679 on #fff0f6 is 4.01:1
+  .home-section-heading > p: #8a737e on #fff0f6 is 3.94:1
+  .home-card-kicker: #d24a84 on #fff0f6 is 3.77:1
+  .st-key-home_questionnaire_button button: #ffffff on #ed4f91 is 3.43:1
+  .st-key-home_questionnaire_button button: #ffffff on #d93679 is 4.42:1
+  .reason-card p: #806b75 on #fff0f6 is 4.45:1
+  .dashboard-footer: #9b7f8c on #fff0f6 is 3.28:1
+  .dashboard-footer span:first-child: #d93679 on #fff0f6 is 4.01:1
+  .flow-brand-mark: #ffffff on #db4f8c is 3.81:1
+  .flow-brand small: #8a727e on #fff0f6 is 3.98:1
+  .flow-page-header p: #948b91 on #fff0f6 is 2.99:1
+  .flow-page-header > span: #c06a92 on #fff0f6 is 3.33:1
+  .question-help: #9b8992 on #fff0f6 is 2.98:1
+  .st-key-flow_back button: #c4427e on #fff0f6 is 4.30:1
+  .st-key-flow_next button, .st-key-flow_submit button: #ffffff on #d84d8b is 3.92:1
+  .match-rank: #ffffff on #d84d8b is 3.92:1
+  .match-meta: #d04e88 on #fff0f6 is 3.71:1
+  .match-reason: #77947d on #eef8ee is 3.06:1
+  .match-reason.consideration: #947b53 on #fff6e6 is 3.75:1
+  .match-category: #c75a8b on #fff0f6 is 3.62:1
+  .score-ring: #cf4c88 on #fff0f6 is 3.78:1
+  .profile-button: #ffffff on #d84d8b is 3.92:1
+  .st-key-page_back button, .st-key-profile_back button: #c5417b on #fff0f6 is 4.31:1
+  .completion-card p: #8b7882 on #fff0f6 is 3.73:1
+  .st-key-view_matches_primary button: #ffffff on #d84d8b is 3.92:1
+  .animal-card-copy .animal-breed: #cf4d88 on #fff0f6 is 3.76:1
+  .animal-card-copy .animal-description: #8b7c84 on #fff0f6 is 3.58:1
+  [class*="st-key-view_profile_"] button: #ffffff on #d84d8b is 3.92:1
+  .profile-title p: #cf4d88 on #fff0f6 is 3.76:1
+  .profile-fact strong: #d24986 on #fff0f6 is 3.78:1
+  button: #ffffff on #ea4c8c is 3.55:1
+  button: #ffffff on #d93679 is 4.42:1
+  .admin-eyebrow: #d93679 on #fff0f6 is 4.01:1
+  .st-key-admin_header_add button: #ffffff on #ed4f91 is 3.43:1
+  .st-key-admin_header_add button: #ffffff on #d93679 is 4.42:1
+  .admin-metric-icon: #cc3d78 on #fff0f7 is 4.23:1
+  .metric-available .admin-metric-icon: #388b61 on #ecf8f1 is 3.83:1
+  .metric-reserved .admin-metric-icon: #a97719 on #fff6df is 3.65:1
+  .admin-metric-card p: #91647a on #fff0f6 is 4.42:1
+  .admin-metric-card small: #8b7580 on #fff0f6 is 3.84:1
+  .admin-section-heading > p: #8a737e on #fff0f6 is 3.94:1
+  .admin-card-kicker: #d24a84 on #fff0f6 is 3.77:1
+  .admin-empty-state p: #866d79 on #fff0f6 is 4.25:1
+  .admin-quality-score strong: #d93679 on #fff0f6 is 4.01:1
+  .admin-quality-score span: #90717f on #fff0f6 is 3.92:1
+  .admin-attention-row small: #927784 on #fff0f6 is 3.67:1
+  .admin-algorithm-note span: #876a78 on #fff0f6 is 4.37:1
+FAILED test_no_text_is_smaller_than_12px: 37 font sizes below 12px
+  .sidebar-brand-subtitle: 11.7px
+  .sidebar-section-label: 11.0px
+  .sidebar-user-card small: 10.7px
+  .home-eyebrow: 11.7px
+  .status-card-topline span, .status-progress-label span: 10.7px
+  .status-card-topline strong: 11.2px
+  .home-card-kicker: 10.9px
+  .dashboard-footer: 11.7px
+  .flow-brand small: 11.2px
+  .flow-page-header > span: 9.8px
+  [class*="st-key-choice_"] button: 11.5px
+  .question-help: 10.9px
+  .st-key-question_hours label: 11.5px
+  .st-key-flow_back button, .st-key-flow_next button, .st-key-flow_submi: 11.5px
+  .st-key-page_back button, .st-key-profile_back button: 11.2px
+  .animal-card-copy .animal-breed: 10.2px
+  .animal-card-copy .animal-facts: 9.9px
+  .animal-card-copy .animal-description: 9.8px
+  [class*="st-key-view_profile_"] button: 10.4px
+  .profile-title p: 11.2px
+  .profile-fact: 10.6px
+  .need-line, .account-line: 11.2px
+  .admin-sidebar-note span: 10.9px
+  .admin-eyebrow: 11.2px
+  .admin-access-card small: 10.1px
+  .admin-metric-card p: 10.6px
+  .admin-metric-card small: 11.0px
+  .admin-card-kicker: 10.4px
+  .admin-card-heading > span: 10.6px
+  .admin-quality-score span: 11.5px
+  .admin-mini-heading: 10.4px
+  .admin-attention-row > span: 11.8px
+  .admin-attention-row small: 10.4px
+  .admin-form-section: 10.9px
+  .admin-algorithm-note strong: 11.5px
+  .admin-algorithm-note span: 10.9px
+  .admin-danger-heading p: 10.1px

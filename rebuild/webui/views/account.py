@@ -1,47 +1,52 @@
-"""Log in, register and log out (criterion 5)."""
+"""Show the signed-in user's account and its questionnaire matches link (the original pages/5_My_Account.py)."""
+
+from __future__ import annotations
+
+import html
 
 import streamlit as st
 
-from pawmatch import auth
-from webui.components import show_errors
-from webui.state import PAGES, current_user, database, sign_in, sign_out
+from pawmatch import db
+from webui.pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
+from webui.state import PAGES, database, require_adopter
 
+st.set_page_config(page_title="PawMatch | My account", page_icon="👤", layout="wide")
+user = require_adopter()
 
-user = current_user()
-if user:
-    st.title("My account")
-    st.write(f"Signed in as **{user.name}** ({user.email}).")
-    if user.is_admin:
-        st.caption("Staff account: the Manage animals page is in the menu.")
-    if st.button("Log out", icon=":material/logout:"):
-        sign_out()
-        st.switch_page(PAGES["home"])
-    st.stop()
+with database() as conn:
+    matches_ready = db.latest_response(conn, user.user_id) is not None
 
-st.title("Welcome to PawMatch")
-login_tab, register_tab = st.tabs(["Log in", "Register"])
+apply_questionnaire_matches_style("account")
 
-with login_tab, st.form("login"):
-    email = st.text_input("Email")
-    password = st.text_input("Password", type="password")
-    if st.form_submit_button("Log in", type="primary"):
-        with database() as conn:
-            found, errors = auth.login(conn, email, password)
-        if found:
-            sign_in(found)
+sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
+with sidebar_column:
+    with st.container(key="design_sidebar"):
+        render_questionnaire_matches_sidebar()
+
+with main_column:
+    with st.container(key="design_main"):
+        if st.button("← Back to home", key="page_back"):
             st.switch_page(PAGES["home"])
-        show_errors(errors)
-
-with register_tab, st.form("register"):
-    name = st.text_input("Full name", max_chars=50)
-    new_email = st.text_input("Email address")
-    age = st.text_input("Age", help="You must be 18 or over to adopt.")
-    new_password = st.text_input("Password (at least 8 characters)", type="password")
-    confirm = st.text_input("Confirm password", type="password")
-    if st.form_submit_button("Create account", type="primary"):
-        with database() as conn:
-            created, errors = auth.register(conn, name, new_email, age, new_password, confirm)
-        if created:
-            sign_in(created)
+        st.html('<div class="flow-page-header"><div><h1>My account</h1><p>Your PawMatch profile and personalised results.</p></div></div>')
+        signed_in_with = "Google" if st.session_state.get("signed_in_with") == "google" else "Email and password"
+        st.html(
+            f"""
+            <div class="account-card">
+                <div class="account-avatar" aria-hidden="true">👤</div>
+                <h2>{html.escape(user.name)}</h2>
+                <p class="account-line"><strong>Email:</strong> {html.escape(user.email)}</p>
+                <p class="account-line"><strong>Signed in with:</strong> {signed_in_with}</p>
+                <p class="account-line"><strong>Questionnaire:</strong> {'Complete' if matches_ready else 'Not complete'}</p>
+            </div>
+            """
+        )
+        st.html('<p class="browse-section-title">My matches</p>')
+        if st.button(
+            "View my matches" if matches_ready else "Complete questionnaire to unlock matches",
+            key="view_matches_primary",
+            width="stretch",
+            disabled=not matches_ready,
+        ):
+            st.switch_page(PAGES["matches"])
+        if not matches_ready and st.button("Go to questionnaire", key="flow_next", width="stretch"):
             st.switch_page(PAGES["questionnaire"])
-        show_errors(errors)

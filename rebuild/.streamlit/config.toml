@@ -1,15 +1,66 @@
-[theme]
-base = "light"
-primaryColor = "#2f7d6d"
-backgroundColor = "#f7f5f0"
-secondaryBackgroundColor = "#e8f0ec"
-textColor = "#24312d"
+# PawMatch theme: the client asked for "a cute and friendly look" in soft pink and pastel colours.
+# Every colour is from the original app's palette (app/pawmatch_style.py); the same values are
+# the TOKENS block at the top of webui/pawmatch_style.py. Body text is #4b3f45 (at least 9:1 on every
+# background) and headings #171318. Small pink text and button labels sit on the deeper
+# #c23673 from the same file, so they keep 4.5:1 (see the Design section on accessibility).
 
-[client]
-toolbarMode = "minimal"
+[server]
+headless = true
+maxUploadSize = 2              # MB; validate_image() checks the same limit on the server side
+enableStaticServing = true     # serves static/ (the Nunito font and its licence) at app/static/
 
 [browser]
 gatherUsageStats = false
 
-[server]
-maxUploadSize = 2
+[client]
+toolbarMode = "minimal"        # no developer menu for visitors
+showErrorDetails = "none"      # a visitor never sees a stack trace
+showSidebarNavigation = false  # the menu is drawn by the app (webui/pawmatch_style.py), as in the original
+
+[theme]
+base = "light"
+primaryColor = "#d93679"
+backgroundColor = "#fffafd"
+secondaryBackgroundColor = "#fff0f6"
+textColor = "#4b3f45"
+linkColor = "#c23673"
+linkUnderline = false
+borderColor = "#efd5e2"
+dataframeBorderColor = "#efd5e2"
+dataframeHeaderBackgroundColor = "#fff0f6"
+dataframeHeaderTextColor = "#4b3f45"
+showWidgetBorder = true
+font = "Nunito, sans-serif"           # her own file names Nunito for the flow pages (app/pawmatch_style.py)
+headingFont = "Nunito, sans-serif"
+baseFontSize = 16
+headingFontWeights = [800, 800, 800, 700, 700, 700]
+baseRadius = "12px"
+buttonRadius = "14px"
+# message boxes: information in her pinks; success, warning and error in soft pastels
+redColor = "#bd294b"
+redBackgroundColor = "#fdecef"
+redTextColor = "#a3233f"
+greenColor = "#2f7d4f"
+greenBackgroundColor = "#eef8f1"
+greenTextColor = "#2a6b45"
+blueColor = "#c23673"
+blueBackgroundColor = "#fff0f6"
+blueTextColor = "#a92660"
+orangeColor = "#a5641a"
+orangeBackgroundColor = "#fff6e6"
+orangeTextColor = "#8a5300"
+yellowColor = "#a5641a"
+yellowBackgroundColor = "#fff6e6"
+yellowTextColor = "#8a5300"
+chartCategoricalColors = ["#d93679", "#f985b2", "#ea4c8c", "#a92660"]
+
+[theme.sidebar]
+backgroundColor = "#fff0f6"
+secondaryBackgroundColor = "#fff7fb"
+borderColor = "#efd5e2"
+
+[[theme.fontFaces]]
+family = "Nunito"
+url = "app/static/fonts/Nunito.ttf"
+weight = "200 1000"
+style = "normal"

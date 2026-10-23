@@ -1,25 +1,125 @@
-"""Animal preview page (criterion 3): filters and a grid of compact cards."""
+"""Browse and inspect available animal profiles using the interface design (the original pages/4_Browse_Animals.py).
+
+Adopters only ever see animals marked Available (pawmatch.services.browse). As in the
+original, a profile opens in place of the list, from "View profile" or ?animal=<id>.
+"""
+
+from __future__ import annotations
+
+import html
 
 import streamlit as st
 
-from pawmatch import services
-from pawmatch.models import SIZES, SPECIES
-from webui.components import animal_card
-from webui.state import database
+from pawmatch import db, services
+from pawmatch.models import SPECIES
+from webui.animals import format_age, needs_lines
+from webui.pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
+from webui.state import PAGES, database, picture, require_adopter
 
-st.title("Animals looking for a home")
-f1, f2, f3 = st.columns([1, 1, 2])
-species = f1.selectbox("Species", SPECIES, index=None, placeholder="All species")
-size = f2.selectbox("Size", SIZES, index=None, placeholder="All sizes")
-search = f3.text_input("Search by name or breed", max_chars=20)
+st.set_page_config(page_title="PawMatch | Browse animals", page_icon="🐾", layout="wide")
+user = require_adopter()
 
-with database() as conn:
-    animals = services.browse(conn, species, size, search)
+apply_questionnaire_matches_style("browse")
 
-if not animals:
-    st.info("No animals match those filters.")
-st.caption(f"Showing {len(animals)} animal(s).")
-cols = st.columns(4)
-for i, animal in enumerate(animals):
-    with cols[i % 4]:
-        animal_card(animal, came_from="browse")
+
+def _show_profile(animal_id: int) -> None:
+    """Open one animal profile within the browse page."""
+    st.session_state.browse_animal_id = animal_id
+    st.rerun()
+
+
+def _clear_filters() -> None:
+    """Reset every browse filter to its design default."""
+    st.session_state.browse_search = ""
+    st.session_state.browse_species = "All species"
+
+
+def _selected_animal():
+    """The animal to show, if any: only an available one (a reserved animal's old link shows the list)."""
+    selected_id = str(st.session_state.get("browse_animal_id") or st.query_params.get("animal") or "")
+    if not selected_id.isdigit():
+        return None
+    with database() as conn:
+        animal = db.get_animal(conn, int(selected_id))
+        if animal is None or animal.status != services.AVAILABLE:
+            return None
+        return animal, services.result_for_animal(conn, user, animal.animal_id)
+
+
+sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
+with sidebar_column:
+    with st.container(key="design_sidebar"):
+        render_questionnaire_matches_sidebar()
+
+with main_column:
+    with st.container(key="design_main"):
+        selected = _selected_animal()
+
+        if selected is not None:
+            selected_animal, match = selected
+            if st.button("← Back to all animals", key="profile_back"):
+                st.session_state.pop("browse_animal_id", None)
+                st.query_params.clear()
+                st.rerun()
+
+            name = html.escape(selected_animal.name)
+            st.html(
+                f'<div class="profile-title"><h1>Meet {name}</h1><p>{html.escape(selected_animal.species)} · {html.escape(selected_animal.breed)}</p></div>'
+            )
+            image_column, description_column = st.columns([1, 1.25], gap="large")
+            with image_column:
+                st.image(picture(selected_animal, 720), width="stretch", caption=None)
+            with description_column:
+                st.html(f'<p class="profile-description">{html.escape(selected_animal.personality)}</p>')
+                fact_columns = st.columns(3, gap="small")
+                facts = (("Age", format_age(selected_animal.age)), ("Sex", selected_animal.sex), ("Size", selected_animal.size))
+                for column, (label, value) in zip(fact_columns, facts):
+                    with column:
+                        st.html(f'<div class="profile-fact"><strong>{html.escape(str(value))}</strong>{label}</div>')
+
+                if match is not None:
+                    score_text = f"{match.compatibility:.1f}% compatible · {match.category} match"
+                    reasons = "".join(f'<p class="need-line">✓ {html.escape(line)}</p>' for line in match.met)
+                    reasons += "".join(f'<p class="need-line">! {html.escape(line)}</p>' for line in match.unmet)
+                else:
+                    score_text, reasons = "Complete the questionnaire to see compatibility", ""
+                st.html(f'<div class="needs-card"><h2>Your compatibility</h2><p class="need-line"><strong>{score_text}</strong></p>{reasons}</div>')
+
+            lines = "".join(f'<p class="need-line"><strong>{label}:</strong> {html.escape(value)}</p>'
+                            for label, value in needs_lines(selected_animal))
+            medical = (f'<p class="need-line"><strong>Health notes:</strong> {html.escape(selected_animal.medical_notes)}</p>'
+                       if selected_animal.medical_notes else "")
+            st.html(f'<div class="needs-card"><h2>What {name} Needs from a Home</h2>{lines}{medical}</div>')
+        else:
+            st.session_state.pop("browse_animal_id", None)
+            if st.button("← Back to home", key="page_back"):
+                st.switch_page(PAGES["home"])
+            st.html('<div class="flow-page-header"><div><h1>Find your next companion</h1><p>Search and filter the animals currently available for adoption.</p></div></div>')
+
+            with st.container(key="browse_filter_card"):
+                search_column, species_column, clear_column = st.columns([1.5, 1, .75], gap="small",
+                                                                         vertical_alignment="bottom")
+                with search_column:
+                    search = st.text_input("Search", key="browse_search", placeholder="Name or breed", max_chars=20)
+                with species_column:
+                    species = st.selectbox("Species", ("All species", *SPECIES), key="browse_species")
+                with clear_column:
+                    st.button("Clear filters", on_click=_clear_filters, width="stretch")
+
+            with database() as conn:
+                animals = services.browse(conn, None if species == "All species" else species, None, search)
+            st.html(f'<p class="browse-section-title">Available animals · {len(animals)}</p>')
+            if not animals:
+                st.info("No available animals match those filters. Try another name, or clear the filters.")
+            else:
+                for row_start in range(0, len(animals), 3):
+                    columns = st.columns(3, gap="medium")
+                    for column, animal in zip(columns, animals[row_start:row_start + 3]):
+                        with column:
+                            with st.container(key=f"animal_card_{animal.animal_id}"):
+                                st.image(picture(animal), width="stretch")
+                                st.html(
+                                    f"""<div class="animal-card-copy"><h3>{html.escape(animal.name)}</h3><p class="animal-breed">{html.escape(animal.species)} · {html.escape(animal.breed)}</p><p class="animal-facts">{format_age(animal.age)} · {html.escape(animal.sex)} · {html.escape(animal.size)}</p><p class="animal-description">{html.escape(animal.personality)}</p></div>"""
+                                )
+                                if st.button("View profile", key=f"view_profile_{animal.animal_id}", width="stretch"):
+                                    _show_profile(animal.animal_id)

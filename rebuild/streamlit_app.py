@@ -1,9 +1,14 @@
-"""PawMatch entry point: prepares the database, builds role-aware navigation and runs the page."""
+"""PawMatch entry point: prepares the database, then runs the page asked for.
+
+The pages and their order are the original app's (app.py, then pages/1_ to 7_). Each page
+draws its own menu and checks who may see it (webui/state.py), as in the original, so
+Streamlit's own page list is hidden.
+"""
 
 import streamlit as st
 
 from pawmatch.seed import prepare
-from webui.state import DB_PATH, PAGES, current_user
+from webui.state import DB_PATH, PAGES
 
 st.set_page_config(page_title="PawMatch", page_icon="🐾", layout="wide")
 
@@ -14,17 +19,10 @@ def _prepare_once(path: str) -> None:
 
 
 _prepare_once(str(DB_PATH))
-user = current_user()
 
-pages = [
-    st.Page(PAGES["home"], title="Home", icon=":material/home:", default=True),
-    st.Page(PAGES["browse"], title="Animals", icon=":material/pets:"),
-    st.Page(PAGES["profile"], title="Animal profile", visibility="hidden"),
-    st.Page(PAGES["questionnaire"], title="Questionnaire", icon=":material/checklist:"),
-    st.Page(PAGES["results"], title="My matches", icon=":material/favorite:"),
-    st.Page(PAGES["account"], title="My account" if user else "Log in", icon=":material/person:"),
-]
-if user and user.is_admin:  # staff page is not even routable for anyone else
-    pages.append(st.Page(PAGES["admin"], title="Manage animals", icon=":material/admin_panel_settings:"))
-
-st.navigation(pages, position="top").run()
+TITLES = {
+    "login": "Log in", "home": "Home", "registration": "Create an account", "questionnaire": "Questionnaire",
+    "browse": "Browse animals", "account": "My account", "matches": "My matches", "admin": "Administrator",
+}
+pages = [st.Page(PAGES[name], title=title, default=name == "login") for name, title in TITLES.items()]
+st.navigation(pages, position="hidden").run()

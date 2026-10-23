@@ -1,0 +1,6 @@
+# Testing and building the write-up, on top of requirements.txt.
+-r requirements.txt
+pytest==9.1.1           # the automated test suite (tests/)
+playwright==1.64.1      # docs/tools/capture_screens.py: headless screenshots of every page
+python-docx==1.2.0      # docs/tools/build_nea_opus.py: builds the NEA write-up
+matplotlib==3.11.2      # docs/tools/make_diagrams.py: draws the design diagrams
