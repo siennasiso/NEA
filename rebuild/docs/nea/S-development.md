@@ -12,16 +12,18 @@ PawMatch was built iteratively, one component at a time, in the order of the dec
 6. **Development assessment:** what now works, what does not yet, and what the next stage must do.
 
 @widths 0.6 2.4 2.6 1.1
-| Stage | Built | Commits | Tests passing at end of stage |
+| Stage | Built | Commits | Saved test run at the end of the stage |
 |---|---|---|---|
-| P1 | First working prototype on the tested engine | `ffd0ad5`, `10e84e7`, `b76527c` | 117 |
-| 1 | Accounts and login in her design | `847920a`, `f3d44f9` | rising with each stage |
-| 2 | Staff animal management | `10e84e7`, `847920a` | |
-| 3 | Home page, browse and profile | `847920a` | |
-| 4 | Questionnaire | `e2f5c6a`, `69b2648` | |
-| 5 | Matching and results, design re-check | `fdef5a0`, `e2f5c6a` | 134 at the re-check |
-| 6 | Accessibility audit and final checks | `5c09de3` | |
-| 7 | Changes from all the client and usability reviews | `77ef20a` | {{tests_total}} |
+| P1 | First working prototype on the tested engine | `ffd0ad5`, `10e84e7`, `b76527c` | 73 engine tests (`stage1-pytest.txt`), then 117 with the first page tests (`stage3-pytest.txt`) |
+| 1 | Accounts and login in her design | `847920a`, `f3d44f9` | 103 (`stage2-pytest.txt`: accounts, database and staff access added) |
+| 2 | Staff animal management | `10e84e7`, `847920a` | 103 (same run: the staff rules were built with the accounts) |
+| 3 | Home page, browse and profile | `847920a` | 117 (`stage3-pytest.txt`: page tests added) |
+| 4 | Questionnaire | `e2f5c6a`, `69b2648` | run together with stage 5 |
+| 5 | Matching and results, design re-check | `fdef5a0`, `e2f5c6a` | 134 (`stage5-pytest.txt`) |
+| 6 | Accessibility audit and final checks | `5c09de3` | browser audit (`rendered-audit-*.json`) and 4 style tests |
+| 7 | Changes from all the reviews; staying signed in after a reload | `77ef20a`, `b0e302a` | 191 (`review-pytest.txt`), then {{tests_total}} (`pytest-junit.xml`) |
+
+The engine and the database were built and tested first, and her interface was then ported onto them in one commit (`847920a`). That is why stages 1 to 3 share a commit: each stage's own tests, failures and fixes are in its section.
 
 :::note How the client reviews were carried out
 The client's answers in this section were produced by an AI model role-playing the client: it was given only the client interview from the analysis and the screenshots of each stage, and answered my questions in her voice. This was done because the client was not available for six separate review sessions. It is a limitation, discussed in the evaluation ([[e-limits]]) and logged in Appendix A ([[x-ai]]). The reviews were all held after the build, one per stage, so the changes they asked for were made together in stage 7 (commit `77ef20a`). They are reported under the stage they belong to so each stage's story is complete.
@@ -40,7 +42,7 @@ The client's answers in this section were produced by an AI model role-playing t
 
 :::fix Fixes and retest
 - The tests now build the absolute path to `streamlit_app.py` from the test file's own location. Retest: 9 of 9 passed.
-- The test was changed to check for one box containing both messages, because one box is the better design. Retest: passed (evidence `docs/evidence/stage3-fail1-apptest-path.txt`, `stage3-fail2-error-box.txt`).
+- The test was changed to check for one box containing both messages, because one box is the better design. This is a change to the design's expected result, recorded here: the questionnaire later moved to one question per screen (stage 4), so T4.6 checks that Next stays disabled instead. Retest: passed (evidence `docs/evidence/stage3-fail1-apptest-path.txt`, `stage3-fail2-error-box.txt`).
 :::
 
 :::verdict Development assessment P1
@@ -325,14 +327,53 @@ Each was fixed, and the stylesheet test was improved to model the side menu, see
 ### Changes made after feedback 6 {#s-changes6}
 :::change Changed
 - **Allergy shown as a red warning.** It is part of the welfare box from stage 5, listed first.
-- **Table clipping** fixed in stage 2's changes.
+- **Table clipping** fixed in stage 2's changes; retested at 1440 px in the browser audit and in the screenshot on page [[fig-s2-manage]].
 :::
 
 :::note Not changed, with reasons
-- **Fainter placeholder text and disabled buttons.** These are drawn by Streamlit itself, outside my stylesheet; WCAG does not require contrast for disabled controls, but the client finds them faint, so this is in the evaluation.
+- **Fainter placeholder text and disabled buttons.** These are drawn by Streamlit itself, outside my stylesheet, so the audit's "0 low-contrast texts" covers my text and controls but not Streamlit's own placeholder hints. WCAG does not require contrast for disabled controls, but the client finds them faint, so this is in the evaluation.
 - **Whole-number scores.** Scores keep one decimal place so two close animals are not shown as equal; the score key explains the bands.
 :::
 
 :::verdict Development assessment 6 and sign-off
-The client signed off the final stage (rating 7 out of 10). All {{tests_total}} automated tests pass. The remaining requests are carried into the evaluation as partly met criteria and future development.
+The AI role-played client signed off the final stage (rating 7 out of 10). All {{tests_total}} automated tests pass. The remaining requests are carried into the evaluation as partly met criteria and future development.
+:::
+
+## 3.9 Stage 7: changes from the reviews, and staying signed in {#s-stage7}
+**Aim.** Make every change the six client reviews and the four usability testers asked for (listed under each stage's "Changes made" above), then fix the last problem on my own list: a browser reload signed the user out.
+
+**What was built.**
+- All review changes in one commit (`77ef20a`), each with a test named after the review that asked for it.
+- **Staying signed in.** Streamlit forgets everything when the page is reloaded. Signing in now creates a random session token (32 random bytes from `secrets`), stored in a new `sessions` table with an expiry 12 hours ahead and placed in the address as `?s=…`. On a reload the token is looked up and the user is signed back in; signing out deletes the token, and an expired or made-up token signs nobody in. Only the token travels, never the user's id, so it cannot be guessed or changed into someone else's (commit `b0e302a`).
+
+@code pawmatch/db.py::create_session | Making a session token
+@code pawmatch/db.py::session_user | Looking a token up
+
+### Tests for stage 7 {#s-tests7}
+@widths 0.6 2.4 3 0.7
+| Test | What it checks | Automated test | Result |
+|---|---|---|---|
+| T7.1 | The age rule is written on the registration form (review 1) | `test_review1_age_rule_is_written_on_the_form` | Pass |
+| T7.2 | A blank confirm box gets its own message (review 1) | `test_registration_reports_every_missing_field` | Pass |
+| T7.3 | The size filter narrows the list (review 3) | `test_review3_size_filter_narrows_the_list` | Pass |
+| T7.4 | The profile offers the questionnaire as a button (review 3) | `test_review3_profile_offers_the_questionnaire_as_a_button` | Pass |
+| T7.5 | The home page says staff make the decision (review 3) | `test_review3_home_says_staff_make_the_decision` | Pass |
+| T7.6 | The hours question starts empty (review 4) | `test_review4_hours_question_starts_empty` | Pass |
+| T7.7 | The matches page explains the score and the order (review 5) | `test_review5_matches_explain_the_score_and_the_order` | Pass |
+| T7.8 | Answers can be updated from the account page (review 5) | `test_review5_account_lets_answers_be_updated` | Pass |
+| T7.9 | A reload with the token keeps the adopter signed in | `test_reload_keeps_the_adopter_signed_in` | Pass |
+| T7.10 | A made-up token signs nobody in | `test_signed_out_or_unknown_token_does_not_sign_in` | Pass |
+| T7.11 | A token stops working when signed out or expired | `test_session_token_finds_its_user_until_ended_or_expired` | Pass |
+| All | Every earlier test still passes (regression) | Full suite | {{tests_total}} passed, {{tests_failed}} failed |
+
+:::fail The blank confirm box failed first (also shown under stage 1)
+The new rule for an empty confirm box changed what `test_registration_reports_every_missing_field` expected, and it failed (an extra `confirm` message). Saved before the fix: `docs/evidence/review-fail1-confirm-blank.txt`.
+:::
+
+:::fix Fix and retest
+The test's expected list was updated to include the new message, because the extra message is the change the review asked for. Retest: passed, and the whole suite passed (`review-pytest.txt`).
+:::
+
+:::verdict Development assessment 7
+Every change the reviews asked for that fits the design is built and tested, and a reload no longer signs the user out. Requests that were not built (address fields, a red outline on error boxes, a Cancel button) are explained under each stage and carried into the evaluation. Next: the post-development tests on [[e-results]].
 :::

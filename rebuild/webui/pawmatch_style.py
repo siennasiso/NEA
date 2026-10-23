@@ -364,6 +364,25 @@ def apply_pawmatch_style() -> None:
             }
             .brand-title { font-size: 2.25rem; }
         }
+
+        /* Phone: every control is at least 40px tall so it is easy to tap
+           (WCAG 2.2 target size; render check at 390px wide). */
+        @media (max-width: 640px) {
+            [data-testid="stTextInput"] input,
+            [data-testid="stNumberInput"] input,
+            [data-testid="stTextArea"] textarea,
+            [data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+            [data-testid="stMultiSelect"] div[data-baseweb="select"] > div,
+            [data-testid="stDateInput"] input { min-height: 44px; }
+            [data-testid="stTextInput"] button { min-width: 44px; min-height: 44px; }
+            [data-testid="stButton"] button,
+            [data-testid="stDownloadButton"] button,
+            [data-testid="stFormSubmitButton"] button,
+            [data-testid="stPageLink"] a,
+            [data-testid="stPopover"] button { min-height: 44px; }
+            [data-testid="stCheckbox"] label,
+            [data-testid="stRadio"] label { min-height: 44px; align-items: center; }
+        }
         </style>
         """,
     )
