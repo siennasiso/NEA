@@ -27,7 +27,7 @@ made with the command above, so nobody can sign up as staff.
 .venv/bin/python -m pytest -q
 ```
 
-117 tests: validation, auth, the repository (on a temporary database), matching, staff-only
+134 tests: validation, auth, the repository (on a temporary database), matching, staff-only
 access, and headless page checks with Streamlit's `AppTest`.
 `docs/tools/capture_screens.py` runs the app headless and saves screenshots with Playwright.
 

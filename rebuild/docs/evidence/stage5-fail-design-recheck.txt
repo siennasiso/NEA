@@ -20,7 +20,7 @@ E       sqlite3.OperationalError: no such column: calculated_at
 tests/test_repository.py:116: OperationalError
 _________________ test_old_database_gains_calculated_at_column _________________
 
-tmp_path = PosixPath('/private/var/folders/_g/n9v_ywr5173f74ywkzf843vr0000gn/T/pytest-of-shaansisodia/pytest-15/test_old_database_gains_calcul0')
+tmp_path = PosixPath('<temp folder>')
 
     def test_old_database_gains_calculated_at_column(tmp_path):
         path = tmp_path / "old.db"

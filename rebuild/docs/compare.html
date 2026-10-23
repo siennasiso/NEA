@@ -10,11 +10,11 @@
       <thead><tr><th></th><th>Original <code>app/</code></th><th>Rebuild <code>rebuild/</code></th></tr></thead>
       <tbody>
         <tr><td>Python files (excluding tests)</td><td>16</td><td>19</td></tr>
-        <tr><td>Lines of app code</td><td>5,632, of which 2,256 are the style module and 1,578 are pages</td><td>1,466: 937 domain, 529 pages and UI helpers</td></tr>
+        <tr><td>Lines of app code</td><td>5,632, of which 2,256 are the style module and 1,578 are pages</td><td>1,483 (domain, pages and UI helpers)</td></tr>
         <tr><td>Where logic lives</td><td><code>pawmatch_auth.py</code>, <code>pawmatch_animals.py</code>, <code>pawmatch_matching.py</code>; pages also hold view state and form helpers (admin page 567 lines)</td><td><code>pawmatch/</code> (models, validation, auth, matching, db, services); each page file is 25-110 lines</td></tr>
         <tr><td>Separation of UI and logic</td><td class="ok">Domain modules do not import Streamlit</td><td class="ok">Same, plus pages call one <code>services</code> module and never open SQL</td></tr>
         <tr><td>Database access</td><td>Each function opens its own connection from a module-level path</td><td>Functions take a connection; one context manager commits, rolls back or closes</td></tr>
-        <tr><td>Automated tests</td><td class="ok">14 unittest tests, all passing</td><td class="ok">117 pytest cases (73 test functions), all passing, incl. 10 headless page tests</td></tr>
+        <tr><td>Automated tests</td><td class="ok">14 unittest tests, all passing</td><td class="ok">134 pytest cases (78 test functions), all passing, incl. 10 headless page tests</td></tr>
         <tr><td>Password handling</td><td class="ok">Salted scrypt, constant-time compare</td><td class="ok">Salted scrypt, constant-time compare; one message for wrong email or password</td></tr>
         <tr><td>SQL safety</td><td class="ok">Parameterised values; table names in a migration come from a fixed list</td><td class="ok">Parameterised values; column lists are constants; a test feeds <code>' OR 1=1 --</code> into search</td></tr>
         <tr><td>Staff access control</td><td>Admin page checks the session role and redirects</td><td>Admin page not in the menu for adopters, page guard, and every add/edit/delete checks the role again</td></tr>
@@ -38,7 +38,7 @@
       <li><strong>Write the rule once, then test its edges.</strong> Each form has one validator returning
       errors by field, tested with normal, boundary and wrong data. <span class="muted">Original:
       <code>app/pawmatch_auth.py</code>, <code>app/pawmatch_animals.py</code>, <code>app/pawmatch_matching.py</code>.
-      Rebuild: <code>rebuild/pawmatch/validation.py</code> and <code>rebuild/tests/test_validation.py</code> (48 cases).</span></li>
+      Rebuild: <code>rebuild/pawmatch/validation.py</code> and <code>rebuild/tests/test_validation.py</code> (63 cases).</span></li>
       <li><strong>Define the algorithm so it can't be misread.</strong> The normalisation (÷ 72), the
       partial activity credit, the warning factors and the tie-break order are written at the top of
       the module and each has a test. <span class="muted">Original: <code>app/pawmatch_matching.py</code>.
@@ -60,5 +60,33 @@
     <p class="muted">Where the original is ahead: it tracks an animal's status (Available, Reserved,
     Adopted) and stores extra fields such as other pets and experience on each animal, which the
     rebuild does not.</p>
+  </div>
+
+  <div class="card">
+    <h3>The two NEA documents side by side</h3>
+    <p class="muted">Hers is <code>NEA/kit/PawMatch-NEA-master.docx</code>; the model version is
+    <code>rebuild/docs/PawMatch-NEA-opus.docx</code>, made by <code>rebuild/docs/tools/build_nea_opus.py</code>,
+    which keeps her text and fills each gap where its box was. Counts are from python-docx and pdfinfo
+    (both converted to PDF with LibreOffice).</p>
+    <table>
+      <thead><tr><th></th><th>Hers</th><th>Model version</th></tr></thead>
+      <tbody>
+        <tr><td>Pages</td><td>100</td><td>151</td></tr>
+        <tr><td>Gap boxes ([TO WRITE])</td><td class="warn">38 open</td><td class="ok">0 open: all 38 filled, plus the cover and appendix notes</td></tr>
+        <tr><td>Sections with content</td><td>Analysis complete; Design partly (layouts, flowcharts, tables, validation lists); Development, Testing, Evaluation are headings and empty tables</td><td>Analysis and Design kept, Design gaps filled; Development, Testing, Evaluation and both appendices written</td></tr>
+        <tr><td>Images</td><td>45 (her research, wireframes and flowcharts)</td><td>66: her 45, plus 8 diagrams and 13 screenshots</td></tr>
+        <tr><td>Diagrams added</td><td>None</td><td>Hierarchy chart, module structure, ER diagram, class diagram, 3 flowcharts, wireframes</td></tr>
+        <tr><td>Pseudocode</td><td class="warn">0 blocks (5 boxes left to write)</td><td class="ok">7 blocks, 19 procedures and functions, using her variable names</td></tr>
+        <tr><td>Measurable success criteria</td><td>Requirements listed, no measures</td><td>A measure for each of the 38 requirements</td></tr>
+        <tr><td>Test plans</td><td>Not written</td><td>Development plan (49 tests in 5 components: normal, boundary, invalid) and post-development plan (38 + 10)</td></tr>
+        <tr><td>Development stages</td><td>5 empty stage templates</td><td>5 stages, one per commit, each with code excerpts, a filled test table, a real failed test with its fix and retest, a review and changes</td></tr>
+        <tr><td>Testing evidence</td><td>Empty tables</td><td>27 function, robustness and timing tests with results; 5 annotated screenshots; a usability walkthrough</td></tr>
+        <tr><td>Evaluation</td><td>Empty tables</td><td>Every requirement judged: 36 met, 2 partly met (6.2, 8.1); usability, maintenance, limitations, further development</td></tr>
+        <tr><td>Rows filled in tables</td><td>248</td><td>549</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">What the model version cannot supply: no adopter or shelter staff saw any prototype or
+    tried the system, so its reviews are developer reviews and its usability ratings are recorded as "not
+    collected". It was not tried on a real phone or tablet. These are listed as limits in its evaluation.</p>
   </div>
 </section>

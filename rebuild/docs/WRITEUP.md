@@ -80,7 +80,8 @@ FUNCTION rank(animals, answers)
 
 | Field | Rules | Normal / boundary / erroneous |
 |---|---|---|
-| Name | presence, 2-50 chars, trimmed | "Sam Lee" / "Al", 50 chars / "A", "" |
+| Name | presence, 2-50 chars, trimmed; letters, spaces, hyphens, apostrophes (animals may use digits) | "Mary-Jane" / "Al", 50 chars / "A", "", "12345" |
+| Breed | 2-50 chars, must contain a letter | "Mixed" / "Lab", 50 chars / "X", "###" |
 | Email | presence, `x@y.tld`, lower-cased, unique | "sam@x.com" / "SAM@X.COM " / "no-at.com", duplicate |
 | Age | whole number, 18-120 | 30 / 18, 120 / 17, 2.5, "abc" |
 | Password | presence, ≥ 8 chars, matches confirmation | "longenough" / 8 chars / 7 chars, mismatch |
@@ -101,7 +102,8 @@ browser run for screenshots and the end-to-end flow.
 | `ffd0ad5` stage 1 | `models.py`, `validation.py`, `matching.py` | 73 passed |
 | `10e84e7` stage 2 | `db.py`, `auth.py`, `services.py`, `seed.py`, image thumbnails | 103 passed |
 | `b76527c` stage 3 | `streamlit_app.py`, `webui/`, AppTest smoke tests, screenshot tool | 117 passed |
-| stage 4 | README, this write-up, `compare.html`, screenshots | 117 passed |
+| `213e208` stage 4 | README, this write-up, `compare.html`, screenshots | 117 passed |
+| `fdef5a0` stage 5 | Design re-check: name and breed formats, `calculated_at` on match results (with upgrade of older databases) | 134 passed |
 
 Stage 1 core: preferences never change the percentage.
 
@@ -128,16 +130,21 @@ test file, not the working directory (fixed with an absolute path); later, mergi
 messages into one box broke a test that counted two boxes (the test was updated to check one
 box holding both messages).
 
+Stage 5 re-read every validation list and table design in the Design. Nine tests written
+first failed (name format, breed rules, `calculated_at`); after the fix one older test failed
+too, because its user was called "Sam 2", which the new name rule rejects. Evidence is in
+`docs/evidence/stage5-*.txt`.
+
 ## 4. Testing
 
 ```
 $ .venv/bin/python -m pytest -q
 ........................................................................ [ 61%]
 .............................................                            [100%]
-117 passed in 4.90s
+134 passed in 4.80s
 ```
 
-Cases per file: validation 48, matching 29, repository 12, auth 10, UI 10, admin access 8.
+Cases per file: validation 63, matching 29, repository 14, auth 10, UI 10, admin access 8.
 
 | Criterion | Evidence |
 |---|---|
