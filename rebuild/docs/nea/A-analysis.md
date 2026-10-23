@@ -5,11 +5,11 @@
 @her 30-46
 
 ### The client, made smaller {#a-client}
-The first version of this analysis described the client too broadly. To keep the project to a size that one person can build and test properly, the scope is fixed as follows.
+To keep the project to a size that one person can build and test properly, the scope is fixed as follows.
 
 | Decision | What it means for PawMatch |
 |---|---|
-| **One client organisation** | PawMatch is built for **one small, single-site rescue**: about 10 to 20 animals at any time (dogs, cats and rabbits), run by two or three staff or volunteers. My client speaks for this rescue: she has looked after a wide range of animals and knows what each needs, so she defines the welfare rules and approves each stage. |
+| **One client organisation** | PawMatch is built for **one small, single-site rescue**: about 10 to 20 animals at any time (dogs, cats and rabbits), run by two or three staff or volunteers. My client does not work for a rescue, but her pet-care job means she has looked after a wide range of animals and knows what each needs. She therefore acts as the rescue's welfare adviser: she defines the welfare rules and approves each stage. |
 | **Adopters are users, not the client** | Members of the public use PawMatch to browse and to see how well they suit each animal. Their needs come from the survey (27 responses) and from usability testing, but the client decides the rules. |
 | **Not in scope** | Several branches, online applications or payments, fostering, vet records, or any species other than dogs, cats and rabbits. These are explained under Limitations ([[a-limits]]). |
 
@@ -19,7 +19,7 @@ The first version of this analysis described the client too broadly. To keep the
 |---|---|---|---|
 | **Rescue staff and volunteers** (the client's side) | Sign in with a staff account; add, edit and delete animal records with photos; change an animal's status to Reserved or Adopted; see an overview of records that need attention. | Without a shared system, assessments are manual and records easily go out of date (Q5, Q15). One validated form per animal keeps records consistent, and the same rules are applied to every adopter, which removes the subjective judgement the client described. | Q5, Q6, Q12, Q15 |
 | **Potential adopters** (primary users) | Create an account, browse available animals with filters, open profiles, answer a 10-question lifestyle questionnaire once, then see every animal ranked by suitability with reasons. | Many choose on looks (S3: only 48.1% choose on lifestyle). They need a quick, friendly way to see which animals fit their home *before* they contact the rescue, and an explanation they can act on. Experience ranges from first-time owners to experienced carers, so the language must be plain. | Q1, Q3, Q7, S3, S5, S6, S7 |
-| **The animals** (indirect) | Never use the system, but are affected by its output. | Every scoring rule protects an animal's welfare: time alone, children, space, other pets and allergies weigh most (Q10). | Q1, Q10, S9 |
+| **The animals** (indirect) | Never use the system, but are affected by its output. | Every scoring rule protects an animal's welfare: the client named space, allergies and young children as the most important things to check (Q10). | Q1, Q10, S9 |
 | **The client** | Reviews each development stage and signs off the final system. | She has the animal-care knowledge to judge whether a match is sensible. | Q1 to Q15 |
 
 ### Why this problem is amenable to a computational approach {#a-amenable}
@@ -31,7 +31,7 @@ The table below ties each computational method to a specific part of PawMatch, s
 | Feature of the problem | Why a computer handles it well | Where it appears in PawMatch |
 |---|---|---|
 | The suitability of every adopter for every animal must be judged the same way each time | A fixed algorithm applies identical weighted rules to every pair, which a busy volunteer cannot do consistently by hand | `score_animal` and `rank_animals` (pseudocode on [[d-matching]]) |
-| 20 animals × 7 factors = 140 comparisons for every adopter, repeated whenever an animal is added | Repetitive arithmetic and sorting are instant for a computer (500 animals scored in {{submit_max}} s at worst, see [[e-results]]) | Questionnaire submit: every Available animal is scored and stored |
+| 20 animals × 7 factors = 140 comparisons for every adopter, repeated whenever an animal is added | Repetitive arithmetic and sorting are instant for a computer (500 animals scored in {{submit_max}} s at worst, measured in section 4.1, page [[e-speed]]) | Questionnaire submit: every Available animal is scored and stored |
 | The information is structured (yes/no, numbered levels, ranges) | It can be stored in typed database fields and validated on entry, so the algorithm never receives impossible values | Four SQLite tables with CHECK constraints ([[d-database]]) |
 | Records change often (new arrivals, adoptions) | A database with an admin form updates everything at once; old match results are recalculated on the next submission | Staff dashboard and status field |
 | The output must explain itself | The program can list exactly which rules passed and failed for each animal | Met / not met / warning lists on each match |
@@ -72,7 +72,7 @@ What the computer should **not** decide is also clear from the interview: the fi
 @her 200-203
 
 ### Existing solutions 4 to 8: wider research {#a-more}
-My teacher's feedback was that three existing solutions was not enough, and that I should say which features I will actually incorporate. I therefore looked at five more, chosen to cover the three parts of PawMatch: the adopter questionnaire (E4, E6), the staff back office (E7), the public listing (E5) and weighted matching outside animal adoption (E8).
+Three existing solutions do not show enough of the range of approaches, so I looked at five more, chosen to cover the three parts of PawMatch: the adopter questionnaire (E4, E6), the staff back office (E7), the public listing (E5) and weighted matching outside animal adoption (E8).
 
 @widths 1.5 3.4 3.1
 | Solution | What it does (checked October 2026) | Lesson for PawMatch |
@@ -125,14 +125,14 @@ My teacher's feedback was that three existing solutions was not enough, and that
 @her 445-485
 
 ### Minimum requirements for running PawMatch {#a-minimum}
-My original section described the computer I develop on. The requirements for the *users* and for the machine that runs the system are below, with the reason for each.
+The section above describes the computer I develop on. The requirements for the *users* and for the machine that runs the system are below, with the reason for each.
 
 @widths 1.4 2.6 3
 | Who | Minimum | Justification |
 |---|---|---|
-| Adopter or staff device | Any laptop, desktop or tablet (screen at least 1024 px wide) with a current browser (Chrome, Edge, Safari or Firefox); internet connection | Streamlit runs in the browser, so nothing is installed. 1024 px is a landscape tablet, the smallest screen tested ([[e-results]]). |
+| Adopter or staff device | Any laptop, desktop or tablet (screen at least 1024 px wide) with a current browser (Chrome, Edge, Safari or Firefox); internet connection | Streamlit runs in the browser, so nothing is installed. 1024 px is a landscape tablet, the smallest screen tested (section 4.1, page [[e-results]]). |
 | Input | Mouse or trackpad and keyboard, or touch | Card buttons are large enough to tap; every control can also be reached with the Tab key. |
-| Server (runs the app) | Python 3.11 or later; 1 CPU core, 1 GB RAM; 100 MB disk for the program and database plus up to 2 MB per animal photo | Measured on 500 animals: a submission takes under 0.1 s ([[e-results]]). Photos are limited to 2 MB each, so 20 animals need at most 40 MB. |
+| Server (runs the app) | Python 3.11 or later; 1 CPU core, 1 GB RAM; 100 MB disk for the program and database plus up to 2 MB per animal photo | Measured on 500 animals: a submission takes under 0.1 s (section 4.1, page [[e-speed]]). Photos are limited to 2 MB each, so 20 animals need at most 40 MB. |
 | Software (server) | `streamlit 1.66.1`, `pillow 13.0.0`, `Authlib 1.9.1`, `httpx 0.28.1` (pinned in `requirements.txt`); SQLite is built into Python | Exact versions mean every install behaves like the tested one. |
 | Developer tools | Visual Studio Code, pytest, Git | pytest runs the {{tests_total}} automated tests; Git records each stage as a commit. |
 
@@ -152,7 +152,7 @@ Each limitation from my original list is shown with its cause, its effect, and h
 | No live chat or animations | Time available and Streamlit's design | Less engaging than large charity sites | Friendly pastel style and photos instead (Q11) |
 
 ## 1.8 Requirements and success criteria {#a-criteria}
-My research produced the detailed requirements below (numbered by feature area, 1 to 9). My teacher noted that the list was rather long and had no way of measuring each item, so it is kept as the **requirements list**, and the **success criteria** that follow combine them into 16 measurable statements. Each success criterion states how it will be measured and links to the post-development tests on [[d-postplan]].
+My research produced the detailed requirements below (numbered by feature area, 1 to 9). The list is long and its items cannot each be measured, so it is kept as the **requirements list**, and the **success criteria** that follow combine them into 16 measurable statements. Each success criterion states how it will be measured and links to the post-development tests on [[d-postplan]].
 
 @her 521-523
 
@@ -174,7 +174,7 @@ My research produced the detailed requirements below (numbered by feature area, 
 | SC12 | Staff can add, edit and delete animals with full validation | Each field rejects invalid data; photo PNG/JPG up to 2 MB; delete needs confirmation | 8, 9 | Q5 |
 | SC13 | Adopters can never reach or use staff functions | Every staff action refused for adopter and signed-out users (automated tests) | 8 | Q12 |
 | SC14 | Data is stored reliably and scales beyond the rescue's size | 4 tables with constraints; works with 500 animals and 100 users; browse page loads in under 3 s | 9 | Q15 |
-| SC15 | Users find the system easy to use | Average System Usability Scale score of 68 or more (the average for websites); client signs off the final stage | 1, 6, 7 | Q6, S6 |
+| SC15 | Users find the system easy to use | Average System Usability Scale score of 68 or more (the average for websites: Brooke, 1996, Appendix B); client signs off the final stage | 1, 6, 7 | Q6, S6 |
 | SC16 | Works on laptop and tablet screens | No clipped text or controls at 1440 px and 1024 px widths | 1 | Q6, Q13 |
 
 ## 1.9 References {#a-refs}

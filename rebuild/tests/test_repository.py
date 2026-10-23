@@ -153,3 +153,14 @@ def test_old_database_gains_the_stage_9_columns_and_demo_values(tmp_path):
         assert db.init_schema(conn) == set()  # a second start adds nothing
     assert {"good_with_pets", "experience_needed"} <= animals and "allergies" in responses
     assert (int(nala.good_with_pets), nala.experience_needed) == DEMO_PETS_AND_EXPERIENCE["Nala"]
+
+
+def test_session_token_finds_its_user_until_ended_or_expired(conn):
+    user_id = db.insert_user(conn, "Sam", "sam@example.com", 30, "hash").user_id
+    token = db.create_session(conn, user_id)
+    assert db.session_user(conn, token)[0].user_id == user_id
+    db.end_session(conn, token)
+    assert db.session_user(conn, token) is None
+    expired = db.create_session(conn, user_id)
+    conn.execute("UPDATE sessions SET expires_at = '2000-01-01T00:00:00+00:00' WHERE token = ?", (expired,))
+    assert db.session_user(conn, expired) is None

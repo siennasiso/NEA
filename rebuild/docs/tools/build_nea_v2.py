@@ -754,7 +754,7 @@ class Builder:
             self.her_image(index, caption, width, key)
         elif name == "img":
             path = IMG / args[0]
-            options = dict(o.split("=", 1) for o in args[3:] if "=" in o)
+            options = dict(o.split("=", 1) for a in args[3:] for o in a.split() if "=" in o)
             crop = tuple(int(v) for v in options["crop"].split("-")) if "crop" in options else None
             width = float(args[2]) if len(args) > 2 and args[2] else None
             self.figure(path, args[1], width, options.get("key"), crop)
@@ -827,7 +827,7 @@ def check_pdf(pdf: Path) -> None:
                                                              text=True).stdout).group(1))
     text = subprocess.run(["pdftotext", "-layout", str(pdf), "-"], capture_output=True, text=True).stdout
     problems = [p for p in ("Error! Reference", "Error! Bookmark", "[[", "{{", "@her", ":::") if p in text]
-    unresolved = re.findall(r"\b[ADSEX]\?(?!\w)", text)
+    unresolved = re.findall(r"\b[ADSEX]\?(?!\w)", text) + re.findall(r"Reference source not found", text)
     print(f"{pdf.name}: {pages} pages; unresolved references {len(unresolved)}; markers left {problems}")
 
 

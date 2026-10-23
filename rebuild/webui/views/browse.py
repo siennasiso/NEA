@@ -60,7 +60,7 @@ with main_column:
             selected_animal, match = selected
             if st.button("← Back to all animals", key="profile_back"):
                 st.session_state.pop("browse_animal_id", None)
-                st.query_params.clear()
+                st.query_params.pop("animal", None)
                 st.rerun()
 
             name = html.escape(selected_animal.name)

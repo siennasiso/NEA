@@ -46,12 +46,33 @@ def database() -> Iterator[sqlite3.Connection]:
 
 
 def current_user() -> User | None:
-    """Reload the signed-in user each run so a role change takes effect immediately."""
-    user_id = st.session_state.get("user_id")
-    if user_id is None:
-        return None
+    """Reload the signed-in user each run so a role change takes effect immediately.
+
+    A browser reload starts a new Streamlit session with empty session state, so the
+    session token kept in the address (?s=...) signs the user back in.
+    """
+    token = st.session_state.get("session_token") or st.query_params.get("s")
+    if not token:
+        user_id = st.session_state.get("user_id")
+        if user_id is None:
+            return None
+        with database() as conn:
+            return db.get_user(conn, user_id)
     with database() as conn:
-        return db.get_user(conn, user_id)
+        found = db.session_user(conn, token)
+    if found is None:  # expired or signed out elsewhere
+        st.session_state.pop("user_id", None)
+        st.session_state.pop("session_token", None)
+        if "s" in st.query_params:
+            del st.query_params["s"]
+        return None
+    user, method = found
+    st.session_state["user_id"] = user.user_id
+    st.session_state["session_token"] = token
+    st.session_state.setdefault("signed_in_with", method)
+    if st.query_params.get("s") != token:  # page changes drop the address's query string
+        st.query_params["s"] = token
+    return user
 
 
 def google_ready() -> bool:
@@ -83,13 +104,22 @@ def home_for(user: User) -> str:
 
 def sign_in(user: User, method: str = "password") -> None:
     st.session_state.clear()
+    with database() as conn:
+        token = db.create_session(conn, user.user_id, method)
     st.session_state["user_id"] = user.user_id
     st.session_state["signed_in_with"] = method
+    st.session_state["session_token"] = token
+    st.query_params["s"] = token
 
 
 def sign_out() -> None:
     """Forget the PawMatch session; also end the Google session, or its cookie would sign them back in."""
+    token = st.session_state.get("session_token") or st.query_params.get("s")
+    if token:
+        with database() as conn:
+            db.end_session(conn, token)
     st.session_state.clear()
+    st.query_params.clear()
     if google_signed_in():
         st.logout()
     st.switch_page(PAGES["login"])

@@ -326,3 +326,25 @@ def test_staff_can_add_an_animal_and_then_delete_it(ids):
     at.button(key=f"delete_{biscuit}").click().run()
     with db.connect(ids["path"]) as conn:
         assert all(a.name != "Biscuit" for a in db.list_animals(conn))
+
+
+# Reloading the browser starts a new Streamlit session; the token in the address signs the user back in
+
+
+def test_reload_keeps_the_adopter_signed_in(ids):
+    at = log_in(app(), "sam@example.com", "longenough")
+    token = at.query_params["s"][0] if isinstance(at.query_params["s"], list) else at.query_params["s"]
+    reloaded = AppTest.from_file(ENTRY, default_timeout=30)
+    reloaded.query_params["s"] = token
+    reloaded.run()
+    assert not reloaded.exception, reloaded.exception
+    assert reloaded.session_state["user_id"] == ids["user"]
+    assert "Welcome Back Sam" in html(reloaded)
+
+
+def test_signed_out_or_unknown_token_does_not_sign_in(ids):
+    at = AppTest.from_file(ENTRY, default_timeout=30)
+    at.query_params["s"] = "not-a-real-token"
+    at.run()
+    assert not at.exception, at.exception
+    assert "user_id" not in at.session_state

@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import json
+import secrets
 import sqlite3
 from collections.abc import Iterator
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -71,6 +72,12 @@ CREATE TABLE IF NOT EXISTS match_results (
     warnings      TEXT    NOT NULL,
     calculated_at TEXT    NOT NULL DEFAULT ''
 );
+CREATE TABLE IF NOT EXISTS sessions (
+    token      TEXT    PRIMARY KEY,
+    user_id    INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    method     TEXT    NOT NULL DEFAULT 'password',
+    expires_at TEXT    NOT NULL
+);
 """
 
 ANIMAL_FIELDS = (
@@ -123,6 +130,33 @@ def init_schema(conn: sqlite3.Connection) -> set[str]:
             conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
             added.add(column)
     return added
+
+
+# ---- sessions (a reload keeps the user signed in) -------------------------
+
+SESSION_HOURS = 12
+
+
+def create_session(conn: sqlite3.Connection, user_id: int, method: str = "password") -> str:
+    """A random token for this browser tab; only the token travels, never the user id."""
+    token = secrets.token_urlsafe(32)
+    expires = (datetime.now(timezone.utc) + timedelta(hours=SESSION_HOURS)).isoformat(timespec="seconds")
+    conn.execute("DELETE FROM sessions WHERE expires_at < ?", (_now(),))
+    conn.execute("INSERT INTO sessions (token, user_id, method, expires_at) VALUES (?, ?, ?, ?)",
+                 (token, user_id, method, expires))
+    return token
+
+
+def session_user(conn: sqlite3.Connection, token: str) -> tuple[User, str] | None:
+    """The user and sign-in method for an unexpired token, or None."""
+    row = conn.execute(
+        "SELECT u.*, s.method FROM sessions s JOIN users u ON u.user_id = s.user_id "
+        "WHERE s.token = ? AND s.expires_at >= ?", (token, _now())).fetchone()
+    return (_user(row), row["method"]) if row else None
+
+
+def end_session(conn: sqlite3.Connection, token: str) -> None:
+    conn.execute("DELETE FROM sessions WHERE token = ?", (token,))
 
 
 # ---- users ---------------------------------------------------------------
