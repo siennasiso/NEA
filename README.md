@@ -21,7 +21,7 @@ python setup_demo_database.py
 streamlit run app.py
 ```
 
-The repeatable setup command creates the database, loads 33 demonstration animals and prepares the local administrator account described in `app/README.md`.
+The repeatable setup command creates the database, loads the demonstration animals and prepares the local administrator account described in `app/README.md`.
 
 ## Run the tests
 
