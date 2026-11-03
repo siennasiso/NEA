@@ -3,8 +3,7 @@ __pycache__/
 *.py[cod]
 .venv/
 venv/
-data/*.db
-app/data/*.db
-/app/pawmatch.db
+*.db
 app/uploads/
 *.log
+tmp/

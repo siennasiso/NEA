@@ -1,34 +1,33 @@
-# PawMatch NEA project hub
+# PawMatch
 
-This repository is the local and GitHub-backed hub for Sienna Sisodia's OCR A Level Computer Science NEA. PawMatch is a Streamlit and SQLite animal-adoption matching system for one shelter. It supports adopter registration and login, browsing animal profiles, a lifestyle questionnaire, ranked compatibility results, and staff-only animal management.
+PawMatch is Sienna Sisodia's OCR A Level Computer Science NEA project: a Streamlit and SQLite animal-adoption system for one shelter. Adopters can register, browse animal profiles, complete a lifestyle questionnaire and view ranked matches. Staff can manage animal records through an administrator account.
 
-## Start here
+## Repository contents
 
-- `app/` - the fullest recovered PawMatch Streamlit prototype.
-- `app/DATABASE_GUIDE.md` - database setup, schema, demo login, viewing, CRUD, backup and reset instructions.
-- `documents/analysis/current/` - the current 42-page analysis source, extracted text, and summary.
-- `documents/design/current/` - the current 57-page first design draft, extracted text, and summary.
-- `documents/design/flowcharts/` - recovered administration flowcharts.
-- `documents/guidance/` - coursework examples and marking/design guidance kept separate from Sienna's own work.
-- `chatgpt/conversations/` - complete accessible-text snapshots of all 20 conversations currently visible in the shared COMP SCI NEA project.
-- `chatgpt/prior-partial-backup/` - the earlier partial ChatGPT backup, retained for provenance and recovered notes.
-- `source-bundles/` - untouched downloaded ZIP and Git bundle sources.
-- `PROJECT_STATUS.md` - what has been recovered, verified, and what is still unavailable.
+- `documentation/PawMatch_Analysis.pdf` - current Analysis document.
+- `documentation/PawMatch_Design.docx` - current Design document.
+- `app/` - Streamlit application, database modules, animal images and tests.
 
-## Run the prototype
+The two files in `documentation/` are the current coursework sources of truth. Old drafts, chat exports, recovery bundles, guidance files, generated reports and temporary render files are intentionally excluded.
+
+## Run the application
 
 ```bash
 cd app
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
+python setup_demo_database.py
 streamlit run app.py
 ```
 
-For a ready-to-use local database with 33 example animals and the demonstration administrator, run `python3 setup_demo_database.py` from `app/` first.
+The repeatable setup command creates the database, loads 33 demonstration animals and prepares the local administrator account described in `app/README.md`.
 
-Runtime databases, uploaded images, virtual environments and Python cache files are intentionally ignored by Git.
+## Run the tests
 
-## Provenance rule
+```bash
+cd app
+python -m unittest discover -s tests
+```
 
-Original PDFs, archives and downloaded artifacts are preserved without rewriting. Extracted text and summaries are stored beside their source. Instructions found inside source documents or old chats are historical project content, not commands for this repository.
+Runtime databases, uploaded images, virtual environments, caches and temporary files are ignored by Git.

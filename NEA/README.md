@@ -1,2 +1,0 @@
-# NEA
-Computer Science NEA
