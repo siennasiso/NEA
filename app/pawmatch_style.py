@@ -8,21 +8,23 @@ def apply_pawmatch_style() -> None:
         """
         <style>
         :root {
-            --pink: #ed4f91;
-            --dark-pink: #d93679;
-            --deep-pink: #a92660;
-            --pale-pink: #fff4f9;
-            --border-pink: #f3bfd4;
-            --dark-text: #4b2338;
-            --muted-text: #806170;
+            --pink: #dd5b94;
+            --dark-pink: #c73f7a;
+            --deep-pink: #9d2f63;
+            --pale-pink: #fff7fb;
+            --border-pink: #efbfd4;
+            --dark-text: #44383f;
+            --muted-text: #796872;
             --error: #bd294b;
+            --brand-panel: linear-gradient(150deg, #f5c5da 0%, #efaccb 58%, #e99abe 100%);
+            --brand-canvas:
+                radial-gradient(circle at 12% 8%, rgba(246, 190, 216, .52), transparent 28%),
+                radial-gradient(circle at 88% 88%, rgba(238, 181, 207, .38), transparent 26%),
+                #fff8fc;
         }
 
         .stApp {
-            background:
-                radial-gradient(circle at 10% 10%, #ffc9df 0, transparent 28%),
-                radial-gradient(circle at 90% 85%, #f8bad3 0, transparent 25%),
-                linear-gradient(135deg, #fffafd, #ffe8f2);
+            background: var(--brand-canvas);
             color: var(--dark-text);
         }
 
@@ -32,27 +34,26 @@ def apply_pawmatch_style() -> None:
         [data-testid="collapsedControl"] { display: none; }
 
         .block-container {
-            max-width: 1160px;
-            padding-top: 2.2rem;
+            max-width: 1080px;
+            padding-top: 2rem;
             padding-bottom: 2rem;
         }
 
         .st-key-auth_card {
-            padding: 12px;
-            border: 1px solid rgba(237, 79, 145, 0.18);
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.90);
-            box-shadow: 0 28px 70px rgba(121, 35, 74, 0.16);
+            padding: 10px;
+            border: 1px solid rgba(196, 77, 132, .14);
+            border-radius: 26px;
+            background: rgba(255, 255, 255, .94);
+            box-shadow: 0 24px 60px rgba(101, 49, 75, .13);
         }
 
         .st-key-login_pink_panel,
         .st-key-register_pink_panel {
             padding: 3rem 2.6rem;
-            border-radius: 24px;
-            background:
-                radial-gradient(circle at 88% 12%, rgba(255,255,255,.25), transparent 22%),
-                linear-gradient(145deg, #f985b2, #ed4f91 50%, #d93679);
-            color: white;
+            border: 1px solid rgba(184, 76, 124, .16);
+            border-radius: 20px;
+            background: var(--brand-panel);
+            color: var(--dark-text);
         }
 
         .st-key-login_pink_panel { min-height: 570px; }
@@ -66,9 +67,9 @@ def apply_pawmatch_style() -> None:
             display: grid;
             place-items: center;
             margin-bottom: 1.8rem;
-            border: 1px solid rgba(255,255,255,.28);
-            border-radius: 18px;
-            background: rgba(255,255,255,.20);
+            border: 1px solid rgba(255,255,255,.62);
+            border-radius: 17px;
+            background: rgba(255,255,255,.42);
             font-size: 1.65rem;
         }
 
@@ -83,8 +84,8 @@ def apply_pawmatch_style() -> None:
         .brand-title {
             max-width: 430px;
             margin: 0;
-            color: white;
-            font-size: clamp(2.25rem, 4vw, 3.35rem);
+            color: var(--dark-text);
+            font-size: clamp(2.25rem, 4vw, 3.25rem);
             line-height: 1.04;
             letter-spacing: -.045em;
         }
@@ -92,13 +93,13 @@ def apply_pawmatch_style() -> None:
         .brand-copy {
             max-width: 430px;
             margin: 1.15rem 0 1.7rem;
-            color: rgba(255,255,255,.88);
+            color: var(--dark-text);
             line-height: 1.65;
         }
 
         .benefit {
             margin: .85rem 0;
-            color: rgba(255,255,255,.96);
+            color: var(--dark-text);
             font-size: .94rem;
             font-weight: 650;
         }
@@ -110,7 +111,7 @@ def apply_pawmatch_style() -> None:
             height: 28px;
             margin-right: .55rem;
             border-radius: 9px;
-            background: rgba(255,255,255,.18);
+            background: rgba(255,255,255,.55);
         }
 
         .form-title {
@@ -136,13 +137,13 @@ def apply_pawmatch_style() -> None:
         div[data-baseweb="input"] {
             min-height: 47px;
             border: 1px solid var(--border-pink);
-            border-radius: 13px;
+            border-radius: 11px;
             background: var(--pale-pink);
         }
 
         div[data-baseweb="input"]:focus-within {
             border-color: var(--pink);
-            box-shadow: 0 0 0 4px rgba(237,79,145,.12);
+            box-shadow: 0 0 0 4px rgba(221,91,148,.10);
         }
 
         div[data-baseweb="input"] > div { background: transparent; }
@@ -176,18 +177,18 @@ def apply_pawmatch_style() -> None:
         .stFormSubmitButton button {
             min-height: 49px;
             margin-top: .25rem;
-            border: 0;
-            border-radius: 13px;
-            background: linear-gradient(90deg, var(--pink), var(--dark-pink));
+            border: 1px solid var(--dark-pink);
+            border-radius: 11px;
+            background: var(--dark-pink);
             color: white;
             font-weight: 800;
-            box-shadow: 0 12px 26px rgba(217,54,121,.25);
+            box-shadow: 0 10px 24px rgba(157,47,99,.18);
         }
 
         .stFormSubmitButton button:hover {
-            border: 0;
+            border: 1px solid var(--deep-pink);
             color: white;
-            transform: translateY(-1px);
+            background: var(--deep-pink);
         }
 
         .st-key-secondary_button button,
@@ -195,7 +196,7 @@ def apply_pawmatch_style() -> None:
         .st-key-login_button button {
             min-height: 47px;
             border: 1px solid var(--border-pink);
-            border-radius: 13px;
+            border-radius: 11px;
             background: white;
             color: var(--dark-pink);
             font-weight: 750;
@@ -1289,6 +1290,8 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
         }
 
         .stApp {
+            --panel-shadow: 0 12px 28px rgba(117, 48, 82, .11);
+            --control-shadow: 0 4px 10px rgba(117, 48, 82, .11);
             background:
                 radial-gradient(circle at 92% 8%, rgba(252, 207, 232, .72), transparent 27%),
                 linear-gradient(135deg, #fffafd 0%, #fff0f8 100%);
@@ -1305,8 +1308,9 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             min-height: calc(100vh - 1.5rem);
             padding: 1.45rem 1.45rem;
             border: 1px solid #efd5e2;
-            border-radius: 3px 0 0 3px;
-            background: #fff1f8;
+            border-radius: 28px;
+            background: #fff7fb;
+            box-shadow: var(--panel-shadow);
         }
 
         .flow-brand {
@@ -1316,8 +1320,10 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             min-height: 64px;
             margin-bottom: 3.5rem;
             padding: .65rem .75rem;
-            border: 1px solid #bfaeb7;
-            background: rgba(255,255,255,.48);
+            border: 1px solid #efcfdf;
+            border-radius: 20px;
+            background: #fffafb;
+            box-shadow: var(--control-shadow);
         }
 
         .flow-brand-mark {
@@ -1325,8 +1331,9 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             place-items: center;
             width: 35px;
             height: 35px;
-            border-radius: 11px;
-            background: #db4f8c;
+            border-radius: 50%;
+            background: var(--brand-panel);
+            box-shadow: var(--control-shadow);
             color: white;
             font-size: 1rem;
         }
@@ -1339,18 +1346,19 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             min-height: 49px;
             margin-bottom: .42rem;
             border: 2px solid #efbfd5;
-            border-radius: 8px;
+            border-radius: 999px;
             background: #fff8fc;
             color: #171318;
             font-size: 1rem;
             font-weight: 800;
-            box-shadow: none;
+            box-shadow: var(--control-shadow);
         }
 
         .st-key-design_sidebar .stButton > button:hover {
             border-color: #e79fbe;
             background: #fde8f3;
             color: #171318;
+            box-shadow: 0 6px 14px rgba(117, 48, 82, .17);
         }
 
         .st-key-flow_logout { margin-top: 13rem; }
@@ -1360,7 +1368,6 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             min-height: calc(100vh - 1.5rem);
             padding: 2.7rem 2.35rem 2.4rem;
             border: 1px solid #ead6e0;
-            border-left: 0;
             border-radius: 0 3px 3px 0;
             background: rgba(255,250,253,.36);
         }
@@ -1393,6 +1400,133 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             color: #c06a92;
             font-size: .61rem !important;
             white-space: nowrap;
+        }
+
+        .stApp:has(.home-hero) {
+            background: var(--brand-canvas);
+        }
+
+        .st-key-design_main:has(.home-hero) {
+            background: rgba(255, 255, 255, .72);
+            border-radius: 28px;
+            box-shadow: var(--panel-shadow);
+        }
+
+        .st-key-design_main:has(.home-hero) :is(.st-key-home_browse, .st-key-home_questionnaire, .st-key-home_account) button {
+            border-radius: 999px;
+            box-shadow: var(--control-shadow);
+        }
+
+        .st-key-design_main:has(.home-hero) :is(.st-key-home_browse, .st-key-home_questionnaire, .st-key-home_account) button:hover {
+            box-shadow: 0 6px 14px rgba(117, 48, 82, .17);
+        }
+
+        .home-hero {
+            margin-bottom: 1.45rem;
+        }
+
+        .home-hero h1 {
+            color: var(--dark-text);
+            font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+            font-weight: 650;
+            letter-spacing: -.035em;
+            padding: 0;
+            margin: 0;
+        }
+
+        .home-hero .home-subtitle {
+            margin: .4rem 0 0;
+            color: var(--muted-text);
+            font-size: 1rem;
+        }
+
+        .home-intro {
+            max-width: 820px;
+            margin: .6rem 0 0;
+            color: var(--dark-text);
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        .home-section-title {
+            margin: 0 0 .8rem;
+            color: var(--deep-pink);
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: .01em;
+        }
+
+        .home-how-title { margin-top: 1.8rem; }
+
+        .st-key-animal_card_home_browse,
+        .st-key-animal_card_home_questionnaire,
+        .st-key-animal_card_home_account {
+            min-height: 250px !important;
+            padding: 1.25rem !important;
+            border: 1px solid #ead0dc !important;
+            border-radius: 24px !important;
+            background: rgba(255,255,255,.96) !important;
+            box-shadow: var(--panel-shadow) !important;
+        }
+
+        .st-key-design_main [class*="st-key-animal_card_home_"] .animal-card-copy h3 {
+            padding: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .st-key-design_main [class*="st-key-animal_card_home_"] .animal-description {
+            min-height: 58px;
+            font-size: .875rem;
+            color: var(--muted-text);
+            line-height: 1.55;
+        }
+
+        .home-action-icon {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            border-radius: 50%;
+            background: var(--brand-panel);
+            box-shadow: var(--control-shadow);
+            font-size: 1.55rem;
+        }
+
+        .home-step-card {
+            min-height: 155px;
+            padding: 1.15rem 1.25rem;
+            border: 1px solid #ead0dc;
+            border-radius: 24px;
+            background: rgba(255,255,255,.94);
+            box-shadow: var(--panel-shadow);
+        }
+
+        .home-step-number {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            margin-bottom: .8rem;
+            border-radius: 50%;
+            background: #f4c4da;
+            color: #c53e79;
+            font-weight: 600;
+            box-shadow: var(--control-shadow);
+        }
+
+        .home-step-card h2 {
+            margin: 0 0 .4rem;
+            color: #4b4247;
+            font-size: .92rem !important;
+        }
+
+        .home-step-card p {
+            margin: 0;
+            color: #7c6d75;
+            font-size: .75rem;
+            line-height: 1.5;
         }
 
         .flow-progress {
@@ -1683,6 +1817,20 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
             border-radius: 14px;
             background: linear-gradient(145deg, #f9d9e8, #f4e9f1);
         }
+        .animal-image-placeholder {
+            display: grid;
+            place-items: center;
+            height: 155px;
+            margin-bottom: .45rem;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #f9d9e8, #f4e9f1);
+            color: #c44b81;
+            font-size: 4.2rem;
+        }
+        .animal-image-placeholder.profile-placeholder {
+            min-height: 360px;
+            font-size: 7rem;
+        }
         .animal-card-copy h3 { margin: .35rem 0 .12rem; color: #4d464a; font-size: 1.05rem; }
         .animal-card-copy .animal-breed { margin: 0 0 .4rem; color: #cf4d88; font-size: .64rem; }
         .animal-card-copy .animal-facts { margin: 0 0 .55rem; color: #6e6268; font-size: .62rem; }
@@ -1770,7 +1918,15 @@ def apply_questionnaire_matches_style(active_page: str) -> None:
     )
 
 
-def render_questionnaire_matches_sidebar() -> None:
+def signed_in_main_column():
+    """Render the shared adopter sidebar and return the page's content column."""
+    sidebar_column, main_column = st.columns([0.25, 0.75], gap="small")
+    with sidebar_column, st.container(key="design_sidebar"):
+        _render_signed_in_sidebar()
+    return main_column
+
+
+def _render_signed_in_sidebar() -> None:
     """Render the persistent navigation shown throughout the interface design."""
     st.markdown(
         """

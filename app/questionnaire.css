@@ -1,0 +1,155 @@
+/* Scoped to this page; the shared PawMatch styles still support other pages. */
+.st-key-design_main:has(.questionnaire-header) {
+    padding: clamp(1.35rem, 3vw, 2.5rem);
+    background: linear-gradient(145deg, #fffbfd 20%, #ffe0f3 100%);
+}
+
+.questionnaire-header .questionnaire-percent {
+    display: block;
+    text-align: right;
+    margin: 0 9% .85rem 0;
+    color: #bc346e;
+}
+
+.questionnaire-header h1 {
+    color: #555;
+    font-size: clamp(2rem, 3.2vw, 2.85rem);
+    font-weight: 600;
+    letter-spacing: -.025em;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    padding: 0;
+}
+
+.questionnaire-header p {
+    color: #73686f;
+    margin: 0 0 .3rem;
+}
+
+.questionnaire-progress {
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: .7rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: 999px;
+    background: #edd5e2;
+    accent-color: #db3d80;
+}
+
+.questionnaire-progress::-webkit-progress-bar { background: #edd5e2; }
+.questionnaire-progress::-webkit-progress-value {
+    background: #db3d80;
+    border-radius: 999px;
+}
+.questionnaire-progress::-moz-progress-bar {
+    background: #db3d80;
+    border-radius: 999px;
+}
+
+.st-key-design_main .st-key-question_card {
+    margin: 1.25rem .35rem 0;
+    padding: clamp(1.2rem, 3vw, 2.25rem);
+    border: 1px solid #eee3e9;
+    border-radius: clamp(28px, 5vw, 72px);
+    background: #fff;
+    box-shadow: 0 3px 5px #44383f4d;
+}
+
+.st-key-question_card h2.question-prompt {
+    margin: 0 0 1.35rem;
+    padding: 0;
+    font-size: clamp(1.2rem, 2vw, 1.55rem) !important;
+    font-weight: 600;
+    color: #171318;
+}
+
+[class*="st-key-question_choice_"] [role="radiogroup"] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+    gap: 1.1rem;
+}
+
+[class*="st-key-question_choice_"] label:has(input[type="radio"]) {
+    box-sizing: border-box;
+    width: 100%;
+    align-items: flex-start;
+    min-height: 10.25rem;
+    margin: 0;
+    padding: 1rem .8rem 3.5rem;
+    border: 3px solid transparent;
+    border-radius: 28px;
+    background: #fceaf6;
+    color: #554b52;
+    font-weight: 500;
+    box-shadow: 0 3px 5px #44383f50;
+}
+
+[class*="st-key-question_choice_"] label p {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+[class*="st-key-question_choice_"] label:has(input[type="radio"]:checked) {
+    border-color: #e44689;
+}
+
+[class*="st-key-question_choice_"] label:has(input[type="radio"]:focus-visible) {
+    outline: 2px solid #93224f;
+    outline-offset: 3px;
+}
+
+[class*="st-key-question_choice_"] [role="radiogroup"] :has(> label) {
+    display: block;
+    position: relative;
+    min-width: 0;
+}
+
+/* Streamlit places the accessible caption beside the label in the DOM. */
+[class*="st-key-question_choice_"] label:has(input[type="radio"]) + [id] {
+    position: absolute;
+    top: 4.5rem;
+    inset-inline: 2.4rem .75rem;
+    margin: 0;
+    pointer-events: none;
+}
+
+[class*="st-key-question_choice_"] label:has(input[type="radio"]) + [id] p {
+    color: #73646e;
+    font-size: .91rem;
+    font-weight: 400;
+}
+
+.st-key-question_card :is(.st-key-flow_back, .st-key-flow_next, .st-key-flow_submit) button {
+    min-height: 3.65rem;
+    margin-top: .85rem;
+    border-radius: 11px;
+    font-size: 1rem;
+}
+
+.st-key-question_card :is(.st-key-flow_back, .st-key-flow_next, .st-key-flow_submit) button p {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.st-key-question_card .st-key-flow_back button:not(:disabled) {
+    color: #b32b62;
+    border-color: #e44689;
+}
+
+.st-key-question_card :is(.st-key-flow_next, .st-key-flow_submit) button:not(:disabled) {
+    background: #ca3675;
+    border-color: #ca3675;
+}
+
+.st-key-question_card :is(.st-key-flow_next, .st-key-flow_submit) button:not(:disabled):hover {
+    background: #ab2b62;
+    border-color: #ab2b62;
+}
+
+@media (max-width: 650px) {
+    .st-key-design_main .st-key-question_card { margin-inline: 0; }
+    [class*="st-key-question_choice_"] label:has(input[type="radio"]) { min-height: 7rem; }
+    [class*="st-key-question_choice_"] label:has(input[type="radio"]) + [id] { top: 3.2rem; }
+}

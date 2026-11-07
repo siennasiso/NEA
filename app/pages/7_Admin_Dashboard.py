@@ -3,21 +3,23 @@
 from __future__ import annotations
 
 import html
+import re
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Sequence
+from uuid import uuid4
 
 import streamlit as st
 
 from pawmatch_animals import (
     ACTIVITY_LEVELS,
-    ANIMAL_STATUSES,
-    CHILD_FRIENDLY_OPTIONS,
     EXPERIENCE_LEVELS,
     HOME_TYPES,
     OTHER_PETS_OPTIONS,
     SEXES,
     SIZES,
     SPECIES,
+    animal_image_path,
     create_animal,
     delete_animal,
     fetch_animal,
@@ -69,11 +71,14 @@ def log_out() -> None:
     st.switch_page("app.py")
 
 
-def option_index(options: Sequence[str], value: Any, default: int = 0) -> int:
+def option_index(options: Sequence[Any], value: Any, default: int = 0) -> int:
     try:
-        return list(options).index(str(value))
+        return list(options).index(value)
     except ValueError:
-        return default
+        try:
+            return [str(option) for option in options].index(str(value))
+        except ValueError:
+            return default
 
 
 def clean_date(value: Any) -> str:
@@ -92,7 +97,6 @@ def table_rows(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "Species": record["species"],
             "Breed": record["breed"],
             "Age": format_age(record["age_years"]),
-            "Status": record["status"],
             "Profile": f"{profile_completion(record)}%",
             "Updated": clean_date(record["updated_at"]),
         }
@@ -126,6 +130,20 @@ def render_validation_errors(errors: dict[str, str]) -> None:
     )
 
 
+def save_uploaded_animal_image(uploaded_file: Any, animal_name: str) -> str:
+    """Save a validated JPG/PNG upload and return its app-relative location."""
+    upload_directory = Path(__file__).resolve().parents[1] / "uploads" / "animals"
+    upload_directory.mkdir(parents=True, exist_ok=True)
+    safe_name = re.sub(r"[^a-z0-9]+", "-", animal_name.casefold()).strip("-") or "animal"
+    extension = Path(str(uploaded_file.name)).suffix.casefold()
+    if extension not in {".jpg", ".jpeg", ".png"}:
+        raise ValueError("Only JPG and PNG images can be uploaded.")
+    filename = f"{safe_name}-{uuid4().hex[:10]}{extension}"
+    destination = upload_directory / filename
+    destination.write_bytes(uploaded_file.getvalue())
+    return f"uploads/animals/{filename}"
+
+
 def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
     """Render the shared add/edit form and save validated values to SQLite."""
     animal_id = int(record["animal_id"]) if record else None
@@ -140,16 +158,16 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
         "age_years": 1.0,
         "sex": "Female",
         "size": "Medium",
-        "activity_level": "Moderate",
+        "exercise_needs": "Moderate",
         "home_type": "Either",
+        "recommended_housing_level": 1,
         "garden_required": False,
-        "child_friendly": "Yes",
+        "child_compatible": True,
         "other_pets": "Depends",
         "experience_level": "First-time owner",
-        "max_hours_alone": 4,
-        "status": "Available",
+        "max_hours_left_alone": 4,
         "description": "",
-        "image_url": "",
+        "image": "",
     }
 
     title = "Add a new animal" if mode == "add" else f"Edit {record['name']}"
@@ -195,14 +213,9 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
             )
         with c3:
             age_years = st.number_input(
-                "Age in years", min_value=0.0, max_value=40.0,
+                "Age in years", min_value=0.5, max_value=40.0,
                 value=float(defaults.get("age_years", 1.0)), step=0.5,
                 key=f"{prefix}_age",
-            )
-            status = st.selectbox(
-                "Adoption status", ANIMAL_STATUSES,
-                index=option_index(ANIMAL_STATUSES, defaults.get("status")),
-                key=f"{prefix}_status",
             )
 
         st.markdown("<p class='admin-form-section'>Matching requirements</p>", unsafe_allow_html=True)
@@ -213,14 +226,14 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
                 index=option_index(SIZES, defaults.get("size"), 1),
                 key=f"{prefix}_size",
             )
-            activity_level = st.selectbox(
+            exercise_needs = st.selectbox(
                 "Activity level", ACTIVITY_LEVELS,
-                index=option_index(ACTIVITY_LEVELS, defaults.get("activity_level"), 1),
+                index=option_index(ACTIVITY_LEVELS, defaults.get("exercise_needs"), 1),
                 key=f"{prefix}_activity",
             )
-            max_hours_alone = st.number_input(
+            max_hours_left_alone = st.number_input(
                 "Maximum hours left alone", min_value=0, max_value=24,
-                value=int(defaults.get("max_hours_alone", 4)), step=1,
+                value=int(defaults.get("max_hours_left_alone", 4)), step=1,
                 key=f"{prefix}_alone",
             )
         with m2:
@@ -229,9 +242,9 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
                 index=option_index(HOME_TYPES, defaults.get("home_type"), 2),
                 key=f"{prefix}_home",
             )
-            child_friendly = st.selectbox(
-                "Suitable with children", CHILD_FRIENDLY_OPTIONS,
-                index=option_index(CHILD_FRIENDLY_OPTIONS, defaults.get("child_friendly")),
+            child_compatible = st.checkbox(
+                "Suitable with children",
+                value=bool(defaults.get("child_compatible", False)),
                 key=f"{prefix}_children",
             )
             other_pets = st.selectbox(
@@ -240,6 +253,14 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
                 key=f"{prefix}_pets",
             )
         with m3:
+            recommended_housing_level = st.selectbox(
+                "Recommended housing level", (1, 2, 3),
+                index=option_index(
+                    (1, 2, 3), defaults.get("recommended_housing_level"), 0
+                ),
+                key=f"{prefix}_housing_level",
+                help="1 = limited space, 2 = small/medium house, 3 = large house.",
+            )
             experience_level = st.selectbox(
                 "Required adopter experience", EXPERIENCE_LEVELS,
                 index=option_index(EXPERIENCE_LEVELS, defaults.get("experience_level")),
@@ -266,11 +287,14 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
             placeholder="Describe temperament, routine, care needs and the most suitable home.",
             key=f"{prefix}_description",
         )
-        image_url = st.text_input(
-            "Image URL (optional while designing)",
-            value=str(defaults.get("image_url") or ""),
-            placeholder="https://example.org/animal-photo.jpg",
-            key=f"{prefix}_image",
+        existing_image = animal_image_path(defaults.get("name"), defaults.get("image"))
+        if existing_image.is_file():
+            st.caption(f"Current image: {existing_image.name}")
+        image_upload = st.file_uploader(
+            "Animal photo (JPG or PNG)",
+            type=("jpg", "jpeg", "png"),
+            key=f"{prefix}_image_upload",
+            help="An image is required for new animal records.",
         )
         submitted = st.form_submit_button(
             "Save animal record" if mode == "add" else "Save changes",
@@ -287,23 +311,37 @@ def render_animal_form(mode: str, record: dict[str, Any] | None = None) -> None:
         "age_years": age_years,
         "sex": sex,
         "size": size,
-        "activity_level": activity_level,
+        "exercise_needs": exercise_needs,
         "home_type": home_type,
+        "recommended_housing_level": recommended_housing_level,
         "garden_required": garden_required,
-        "child_friendly": child_friendly,
+        "child_compatible": child_compatible,
         "other_pets": other_pets,
         "experience_level": experience_level,
-        "max_hours_alone": max_hours_alone,
-        "status": status,
+        "max_hours_left_alone": max_hours_left_alone,
         "description": description,
-        "image_url": image_url,
+        "image": (
+            "uploads/animals/pending.png"
+            if image_upload is not None
+            else str(defaults.get("image") or "")
+        ),
     }
     validation_errors, cleaned = validate_animal(values)
+    has_existing_image = bool(str(defaults.get("image") or "").strip())
+    has_seeded_image = animal_image_path(name).is_file()
+    if image_upload is None and not has_existing_image and not has_seeded_image:
+        validation_errors["image"] = "Upload a JPG or PNG image for the animal."
     if validation_errors:
         st.session_state[error_key] = validation_errors
         st.rerun()
 
     st.session_state.pop(error_key, None)
+    if image_upload is not None:
+        try:
+            cleaned["image"] = save_uploaded_animal_image(image_upload, cleaned["name"])
+        except (OSError, ValueError) as error:
+            st.error(f"The image could not be saved: {error}")
+            return
     if mode == "add":
         success, new_id, message = create_animal(cleaned)
         if success:
@@ -402,14 +440,10 @@ with st.container(key="admin_page_shell"):
     if flash:
         st.success(str(flash), icon="✅")
 
-    metric_cols = st.columns(4, gap="medium")
+    metric_cols = st.columns(2, gap="medium")
     with metric_cols[0]:
         render_metric("🐾", "Total records", summary["total"], "All stored animals", "metric-total")
     with metric_cols[1]:
-        render_metric("✓", "Available", summary["available"], "Visible to adopters", "metric-available")
-    with metric_cols[2]:
-        render_metric("⌛", "Reserved", summary["reserved"], "Temporarily unavailable", "metric-reserved")
-    with metric_cols[3]:
         render_metric("!", "Needs attention", summary["needs_attention"], "Missing image or detail", "metric-attention")
 
     if current_view == "overview":
@@ -464,14 +498,14 @@ with st.container(key="admin_page_shell"):
                 )
                 attention = [
                     r for r in all_records
-                    if not str(r.get("image_url") or "").strip()
+                    if not str(r.get("image") or "").strip()
                     or len(str(r.get("description") or "").strip()) < 80
                 ][:3]
                 if attention:
                     st.markdown("<p class='admin-mini-heading'>Check these records</p>", unsafe_allow_html=True)
                     for record in attention:
                         issues = []
-                        if not str(record.get("image_url") or "").strip():
+                        if not str(record.get("image") or "").strip():
                             issues.append("image")
                         if len(str(record.get("description") or "").strip()) < 80:
                             issues.append("description")
@@ -498,15 +532,12 @@ with st.container(key="admin_page_shell"):
             unsafe_allow_html=True,
         )
         with st.container(key="admin_filter_card", border=True):
-            f1, f2, f3 = st.columns([1.7, 0.8, 0.8], gap="medium")
+            f1, f2 = st.columns([1.7, 0.8], gap="medium")
             with f1:
                 search = st.text_input("Search by name or breed", placeholder="Search animal records...", key="admin_search")
             with f2:
                 species_filter = st.selectbox("Species", ("All species", *SPECIES), key="admin_species_filter")
-            with f3:
-                status_filter = st.selectbox("Adoption status", ("All statuses", *ANIMAL_STATUSES), key="admin_status_filter")
-
-        records = fetch_animals(search, species_filter, status_filter)
+        records = fetch_animals(search, species_filter)
         with st.container(key="admin_manage_table", border=True):
             st.markdown(
                 f"""
@@ -527,7 +558,7 @@ with st.container(key="admin_page_shell"):
             selected_index = ids.index(int(state_id)) if state_id in ids else 0
             selected_id = st.selectbox(
                 "Select a record to edit", ids, index=selected_index,
-                format_func=lambda i: f"#{i} — {lookup[i]['name']} ({lookup[i]['species']}, {lookup[i]['status']})",
+                format_func=lambda i: f"#{i} — {lookup[i]['name']} ({lookup[i]['species']})",
                 key="admin_record_selector",
             )
             st.session_state.admin_selected_animal_id = int(selected_id)

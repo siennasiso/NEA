@@ -5,10 +5,12 @@ from __future__ import annotations
 import hashlib
 import hmac
 import re
-import secrets
 import sqlite3
 from pathlib import Path
 from typing import Any
+
+from argon2 import PasswordHasher
+from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatchError
 
 DATABASE_PATH = Path(__file__).resolve().parent / "pawmatch.db"
 EMAIL_PATTERN = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
@@ -18,6 +20,7 @@ USERNAME_PATTERN = re.compile(r"^[A-Za-z0-9_]{3,30}$")
 _SCRYPT_N = 2**14
 _SCRYPT_R = 8
 _SCRYPT_P = 1
+_ARGON2_HASHER = PasswordHasher()
 
 
 class _ClosingConnection(sqlite3.Connection):
@@ -141,8 +144,8 @@ def validate_registration(
 
     if not password:
         errors["password"] = "Create a password."
-    elif len(password) <= 8:
-        errors["password"] = "Your password must contain more than 8 characters."
+    elif len(password) < 8:
+        errors["password"] = "Your password must contain at least 8 characters."
     elif len(password) > 128:
         errors["password"] = "Your password must contain no more than 128 characters."
 
@@ -182,24 +185,18 @@ def validate_login(identifier: str, password: str) -> tuple[dict[str, str], str]
 
 
 def hash_password(password: str) -> str:
-    """Return a salted scrypt hash; the plain password is never stored."""
-    salt = secrets.token_bytes(16)
-    password_hash = hashlib.scrypt(
-        password.encode("utf-8"),
-        salt=salt,
-        n=_SCRYPT_N,
-        r=_SCRYPT_R,
-        p=_SCRYPT_P,
-        dklen=64,
-    )
-    return (
-        f"scrypt${_SCRYPT_N}${_SCRYPT_R}${_SCRYPT_P}$"
-        f"{salt.hex()}${password_hash.hex()}"
-    )
+    """Return a salted Argon2id hash; the plain password is never stored."""
+    return _ARGON2_HASHER.hash(password)
 
 
 def verify_password(password: str, stored_value: str) -> bool:
-    """Compare a password with the salted hash stored in SQLite."""
+    """Verify Argon2id hashes and retain compatibility with legacy scrypt users."""
+    if stored_value.startswith("$argon2id$"):
+        try:
+            return _ARGON2_HASHER.verify(stored_value, password)
+        except (InvalidHashError, VerificationError, VerifyMismatchError):
+            return False
+
     try:
         scheme, n, r, p, salt_hex, hash_hex = stored_value.split("$")
         if scheme != "scrypt":

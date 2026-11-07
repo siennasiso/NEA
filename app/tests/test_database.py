@@ -70,16 +70,15 @@ class DatabaseTests(unittest.TestCase):
         self.assertEqual(seed_demo_animals(), 33)
         self.assertEqual(seed_demo_animals(), 0)
         self.assertEqual(len(fetch_animals()), 33)
-        self.assertEqual(len(fetch_animals(status="Available")), 26)
 
     def test_registration_uses_documented_name_and_password_limits(self) -> None:
         errors, _ = validate_registration(
-            "A" * 50, "valid@example.com", 24, "abcdefghi", "abcdefghi"
+            "A" * 50, "valid@example.com", 24, "abcdefgh", "abcdefgh"
         )
         self.assertEqual(errors, {})
 
         errors, _ = validate_registration(
-            "A" * 51, "another@example.com", 24, "abcdefgh", "abcdefgh"
+            "A" * 51, "another@example.com", 24, "abcdefg", "abcdefg"
         )
         self.assertIn("name", errors)
         self.assertIn("password", errors)
@@ -98,17 +97,27 @@ class DatabaseTests(unittest.TestCase):
         seed_demo_animals()
         animal = fetch_animals()[0]
         animal.update(
-            name="7",
+            name="A7",
             breed="A1",
             description="A" * 20,
-            max_hours_alone=24,
+            max_hours_left_alone=24,
             garden_required=1,
+            sex="Unknown",
         )
         errors, cleaned = validate_animal(animal)
         self.assertEqual(errors, {})
-        self.assertEqual(cleaned["max_hours_alone"], 24)
+        self.assertEqual(cleaned["max_hours_left_alone"], 24)
+        self.assertIsInstance(cleaned["child_compatible"], bool)
 
-        animal.update(name="A" * 51, breed="--", description="A" * 19)
+        animal.update(child_compatible="Older children only")
+        errors, _ = validate_animal(animal)
+        self.assertIn("child_compatible", errors)
+
+        animal.update(child_compatible=True, age_years=0)
+        errors, _ = validate_animal(animal)
+        self.assertIn("age_years", errors)
+
+        animal.update(age_years=1, name="A" * 51, breed="--", description="A" * 19)
         errors, _ = validate_animal(animal)
         self.assertIn("name", errors)
         self.assertIn("breed", errors)
@@ -122,20 +131,17 @@ class DatabaseTests(unittest.TestCase):
         errors, _ = validate_animal_search("x" * 21, "Horse", "Huge")
         self.assertEqual(set(errors), {"search", "species", "size"})
 
-    def test_old_twelve_hour_database_constraint_is_migrated(self) -> None:
+    def test_animal_schema_uses_design_names_without_availability(self) -> None:
         with pawmatch_auth.get_connection() as connection:
             schema = connection.execute(
                 "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'animals'"
             ).fetchone()["sql"]
-            connection.execute("DROP TABLE animals")
-            connection.execute(str(schema).replace("BETWEEN 0 AND 24", "BETWEEN 0 AND 12"))
-
-        initialise_animals_table()
-        with pawmatch_auth.get_connection() as connection:
-            migrated_schema = connection.execute(
-                "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'animals'"
-            ).fetchone()["sql"]
-        self.assertIn("max_hours_alone BETWEEN 0 AND 24", migrated_schema)
+        self.assertIn("exercise_needs", schema)
+        self.assertIn("recommended_housing_level", schema)
+        self.assertIn("child_compatible   INTEGER", schema)
+        self.assertIn("max_hours_left_alone", schema)
+        self.assertIn("image", schema)
+        self.assertNotIn("status", schema)
 
 
 if __name__ == "__main__":

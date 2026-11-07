@@ -20,6 +20,7 @@ from pawmatch_matching import (
     initialise_matching_tables,
     save_questionnaire_response,
     validate_questionnaire,
+    _match_category,
 )
 
 
@@ -78,7 +79,6 @@ class MatchingTests(unittest.TestCase):
         )
         self.assertEqual(preferred["compatibility_score"], neutral["compatibility_score"])
         self.assertEqual(preferred["preference_score"], neutral["preference_score"] + 15)
-        self.assertEqual(preferred["ranking_score"], preferred["preference_score"])
 
     def test_requirement_explanations_include_selected_and_required_values(self) -> None:
         """Result explanations state the user's value and the animal's requirement."""
@@ -91,8 +91,8 @@ class MatchingTests(unittest.TestCase):
         self.assertIn("Oscar can be left for up to 5 hour(s)", explanations)
         self.assertIn("your selected space level is 3 of 3", explanations)
 
-    def test_below_threshold_score_never_receives_preference_points(self) -> None:
-        """Species and size cannot promote an animal below the 70% threshold."""
+    def test_preferences_do_not_make_an_ineligible_animal_eligible(self) -> None:
+        """Preference points are separate and cannot override compulsory failures."""
         max_profile = next(animal for animal in fetch_animals() if animal["name"] == "Max")
         unsuitable = {
             "housing_level": 1,
@@ -105,30 +105,37 @@ class MatchingTests(unittest.TestCase):
         }
         result = calculate_match(max_profile, unsuitable)
         self.assertLess(result["compatibility_score"], MINIMUM_RECOMMENDATION_SCORE)
-        self.assertEqual(result["preference_score"], 0)
-        self.assertEqual(result["ranking_score"], 0)
+        self.assertEqual(result["preference_score"], 15)
+        self.assertFalse(result["is_eligible"])
+        self.assertEqual(result["match_category"], "Ineligible")
+        self.assertTrue(result["compulsory_failures"])
 
-    def test_response_and_available_matches_are_persisted(self) -> None:
-        """Submission stores one response and results only for available animals."""
+    def test_match_categories_use_the_documented_boundaries(self) -> None:
+        self.assertEqual(_match_category(90), "Strong")
+        self.assertEqual(_match_category(89.9), "Good")
+        self.assertEqual(_match_category(79.9), "Possible")
+        self.assertEqual(_match_category(69.9), "Low")
+        self.assertEqual(_match_category(100, has_compulsory_failure=True), "Ineligible")
+
+    def test_response_and_all_match_results_are_persisted(self) -> None:
+        """Submission stores every result while the normal view returns eligible ones."""
         response_id = save_questionnaire_response(self.user_id, self.answers)
         calculated = calculate_and_store_matches(response_id, self.answers)
-        expected_count = sum(
-            calculate_match(animal, self.answers)["compatibility_score"]
-            >= MINIMUM_RECOMMENDATION_SCORE
-            for animal in fetch_animals(status="Available")
+        expected_eligible = sum(
+            calculate_match(animal, self.answers)["is_eligible"]
+            for animal in fetch_animals()
         )
-        self.assertEqual(len(calculated), expected_count)
-        self.assertTrue(
-            all(
-                result["compatibility_score"] >= MINIMUM_RECOMMENDATION_SCORE
-                for result in calculated
-            )
-        )
+        self.assertEqual(len(calculated), len(fetch_animals()))
+        with pawmatch_auth.get_connection() as connection:
+            stored_count = connection.execute(
+                "SELECT COUNT(*) FROM match_results WHERE response_id = ?", (response_id,)
+            ).fetchone()[0]
+        self.assertEqual(stored_count, len(fetch_animals()))
 
         latest = fetch_latest_response(self.user_id)
         self.assertEqual(latest["response_id"], response_id)
         displayed = fetch_latest_matches(self.user_id)
-        self.assertEqual(len(displayed), expected_count)
+        self.assertEqual(len(displayed), expected_eligible)
         self.assertTrue(
             all(
                 match["compatibility_score"] >= MINIMUM_RECOMMENDATION_SCORE
@@ -136,7 +143,11 @@ class MatchingTests(unittest.TestCase):
             )
         )
         ranking_keys = [
-            (match["preference_score"], match["compatibility_score"])
+            (
+                match["compatibility_score"],
+                match["preference_score"],
+                -match["animal_id"],
+            )
             for match in displayed
         ]
         self.assertEqual(ranking_keys, sorted(ranking_keys, reverse=True))

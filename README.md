@@ -13,12 +13,11 @@ The two files in `documentation/` are the current coursework sources of truth. O
 ## Run the application
 
 ```bash
-cd app
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
-python setup_demo_database.py
-streamlit run app.py
+python -m pip install -r app/requirements.txt
+python app/setup_demo_database.py
+python -m streamlit run app/app.py
 ```
 
 The repeatable setup command creates the database, loads the demonstration animals and prepares the local administrator account described in `app/README.md`.

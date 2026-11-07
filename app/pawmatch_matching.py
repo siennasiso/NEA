@@ -64,10 +64,11 @@ def initialise_matching_tables() -> None:
                 match_id             INTEGER PRIMARY KEY AUTOINCREMENT,
                 response_id          INTEGER NOT NULL,
                 animal_id            INTEGER NOT NULL,
-                compatibility_score  INTEGER NOT NULL CHECK (compatibility_score BETWEEN 0 AND 100),
-                ranking_score        INTEGER NOT NULL,
+                compatibility_score  REAL NOT NULL CHECK (compatibility_score BETWEEN 0 AND 100),
+                preference_score     INTEGER NOT NULL CHECK (preference_score BETWEEN 0 AND 15),
+                is_eligible          INTEGER NOT NULL CHECK (is_eligible IN (0, 1)),
                 match_category       TEXT NOT NULL
-                                     CHECK (match_category IN ('Strong', 'Good', 'Possible', 'Low')),
+                                     CHECK (match_category IN ('Strong', 'Good', 'Possible', 'Low', 'Ineligible')),
                 matched_requirements TEXT NOT NULL DEFAULT '[]',
                 unmet_requirements   TEXT NOT NULL DEFAULT '[]',
                 calculated_at        TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -77,6 +78,45 @@ def initialise_matching_tables() -> None:
             )
             """
         )
+        columns = {
+            row["name"] for row in connection.execute("PRAGMA table_info(match_results)")
+        }
+        if "preference_score" not in columns or "is_eligible" not in columns:
+            connection.execute("ALTER TABLE match_results RENAME TO match_results_legacy")
+            connection.execute(
+                """
+                CREATE TABLE match_results (
+                    match_id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                    response_id          INTEGER NOT NULL,
+                    animal_id            INTEGER NOT NULL,
+                    compatibility_score  REAL NOT NULL CHECK (compatibility_score BETWEEN 0 AND 100),
+                    preference_score     INTEGER NOT NULL CHECK (preference_score BETWEEN 0 AND 15),
+                    is_eligible          INTEGER NOT NULL CHECK (is_eligible IN (0, 1)),
+                    match_category       TEXT NOT NULL
+                                         CHECK (match_category IN ('Strong', 'Good', 'Possible', 'Low', 'Ineligible')),
+                    matched_requirements TEXT NOT NULL DEFAULT '[]',
+                    unmet_requirements   TEXT NOT NULL DEFAULT '[]',
+                    calculated_at        TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE (response_id, animal_id),
+                    FOREIGN KEY (response_id) REFERENCES questionnaire_responses(response_id) ON DELETE CASCADE,
+                    FOREIGN KEY (animal_id) REFERENCES animals(animal_id) ON DELETE CASCADE
+                )
+                """
+            )
+            connection.execute(
+                """
+                INSERT INTO match_results (
+                    match_id, response_id, animal_id, compatibility_score,
+                    preference_score, is_eligible, match_category,
+                    matched_requirements, unmet_requirements, calculated_at
+                )
+                SELECT match_id, response_id, animal_id, compatibility_score,
+                       ranking_score, 1, match_category,
+                       matched_requirements, unmet_requirements, calculated_at
+                FROM match_results_legacy
+                """
+            )
+            connection.execute("DROP TABLE match_results_legacy")
         connection.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_questionnaire_user_completed
@@ -86,7 +126,10 @@ def initialise_matching_tables() -> None:
         connection.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_matches_response_rank
-            ON match_results (response_id, ranking_score DESC)
+            ON match_results (
+                response_id, is_eligible DESC, compatibility_score DESC,
+                preference_score DESC, animal_id ASC
+            )
             """
         )
 
@@ -164,13 +207,15 @@ def save_questionnaire_response(user_id: int, values: dict[str, Any]) -> int:
         return int(cursor.lastrowid)
 
 
-def _match_category(score: float) -> str:
-    """Convert a 0-100 compatibility score into the designed category labels."""
-    if score >= 80:
+def _match_category(score: float, has_compulsory_failure: bool = False) -> str:
+    """Convert a score and compulsory checks into the designed category label."""
+    if has_compulsory_failure:
+        return "Ineligible"
+    if score >= 90:
         return "Strong"
-    if score >= 65:
+    if score >= 80:
         return "Good"
-    if score >= 50:
+    if score >= 70:
         return "Possible"
     return "Low"
 
@@ -184,9 +229,10 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
     points = 0
     matched: list[str] = []
     unmet: list[str] = []
+    compulsory_failures: list[str] = []
     animal_name = str(animal["name"])
     selected_hours = int(cleaned["hours_left_alone"])
-    maximum_hours = int(animal["max_hours_alone"])
+    maximum_hours = int(animal["max_hours_left_alone"])
 
     if selected_hours <= maximum_hours:
         points += WEIGHTS["hours_left_alone"]
@@ -195,12 +241,14 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
             f"{animal_name} can be left for up to {maximum_hours} hour(s)."
         )
     else:
-        unmet.append(
+        reason = (
             f"Time alone: you selected {selected_hours} hour(s) per day, but "
             f"{animal_name} can be left for no more than {maximum_hours} hour(s)."
         )
+        unmet.append(reason)
+        compulsory_failures.append(reason)
 
-    children_suitable = not cleaned["has_children"] or animal["child_friendly"] == "Yes"
+    children_suitable = not cleaned["has_children"] or bool(animal["child_compatible"])
     if children_suitable:
         points += WEIGHTS["children"]
         if cleaned["has_children"]:
@@ -211,16 +259,18 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
         else:
             matched.append(
                 f"Children: you selected a home without children, which meets "
-                f"{animal_name}'s child-suitability requirement ({animal['child_friendly']})."
+                f"{animal_name}'s child-suitability requirement."
             )
     else:
-        unmet.append(
+        reason = (
             f"Children: you selected a home with children, but {animal_name}'s "
-            f"profile is listed as '{animal['child_friendly']}'."
+            "profile is not suitable for a home with children."
         )
+        unmet.append(reason)
+        compulsory_failures.append(reason)
 
     selected_housing = int(cleaned["housing_level"])
-    required_housing = int(animal["minimum_housing_level"])
+    required_housing = int(animal["recommended_housing_level"])
     if selected_housing >= required_housing:
         points += WEIGHTS["housing"]
         matched.append(
@@ -233,18 +283,18 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
             f"but {animal_name} requires level {required_housing} of 3."
         )
 
-    animal_activity = ACTIVITY_OPTIONS[str(animal["activity_level"])]
+    animal_activity = ACTIVITY_OPTIONS[str(animal["exercise_needs"])]
     if cleaned["preferred_activity_level"] >= animal_activity:
         points += WEIGHTS["activity"]
         matched.append(
             f"Activity: you can support level {cleaned['preferred_activity_level']} of 3; "
-            f"{animal_name} needs {str(animal['activity_level']).lower()} activity "
+            f"{animal_name} needs {str(animal['exercise_needs']).lower()} activity "
             f"(level {animal_activity} of 3)."
         )
     else:
         unmet.append(
             f"Activity: you can support level {cleaned['preferred_activity_level']} of 3, "
-            f"but {animal_name} needs {str(animal['activity_level']).lower()} activity "
+            f"but {animal_name} needs {str(animal['exercise_needs']).lower()} activity "
             f"(level {animal_activity} of 3)."
         )
 
@@ -259,58 +309,51 @@ def calculate_match(animal: dict[str, Any], answers: dict[str, Any]) -> dict[str
                 f"Garden: {animal_name} does not require a garden, so your selected home is suitable."
             )
     else:
-        unmet.append(
+        reason = (
             f"Garden: you selected no garden access, but {animal_name} requires a secure garden."
         )
+        unmet.append(reason)
+        compulsory_failures.append(reason)
 
     compatibility = round((points / MAX_COMPATIBILITY_POINTS) * 100, 1)
     preference_score = 0
-    if compatibility >= MINIMUM_RECOMMENDATION_SCORE:
-        if cleaned["preferred_species"] != "No preference" and cleaned["preferred_species"] == animal["species"]:
-            preference_score += 10
-        if cleaned["preferred_size"] != "No preference" and cleaned["preferred_size"] == animal["size"]:
-            preference_score += 5
+    if cleaned["preferred_species"] != "No preference" and cleaned["preferred_species"] == animal["species"]:
+        preference_score += 10
+    if cleaned["preferred_size"] != "No preference" and cleaned["preferred_size"] == animal["size"]:
+        preference_score += 5
+
+    is_eligible = not compulsory_failures and compatibility >= MINIMUM_RECOMMENDATION_SCORE
 
     return {
         "animal_id": int(animal["animal_id"]),
         "compatibility_score": compatibility,
         "preference_score": preference_score,
-        # Keep the existing database field as a backwards-compatible alias. It now
-        # stores the pseudocode's preference score, not compatibility + bonus.
-        "ranking_score": preference_score,
-        "match_category": _match_category(compatibility),
+        "match_category": _match_category(compatibility, bool(compulsory_failures)),
+        "is_eligible": is_eligible,
         "matched_requirements": matched,
         "unmet_requirements": unmet,
+        "compulsory_failures": compulsory_failures,
     }
 
 
 def calculate_and_store_matches(response_id: int, answers: dict[str, Any]) -> list[dict[str, Any]]:
-    """Persist eligible animals and return preference-first ranking order."""
+    """Persist every result in compatibility-first recommendation order."""
     initialise_matching_tables()
-    results = [
-        calculate_match(animal, answers)
-        for animal in fetch_animals(status="Available")
-    ]
-    results = [
-        result
-        for result in results
-        if result["compatibility_score"] >= MINIMUM_RECOMMENDATION_SCORE
-    ]
+    results = [calculate_match(animal, answers) for animal in fetch_animals()]
     results.sort(
         key=lambda item: (
-            item["preference_score"], item["compatibility_score"], -item["animal_id"]
-        ),
-        reverse=True,
+            -item["compatibility_score"], -item["preference_score"], item["animal_id"]
+        )
     )
     with get_connection() as connection:
         connection.execute("DELETE FROM match_results WHERE response_id = ?", (response_id,))
         connection.executemany(
             """
             INSERT INTO match_results (
-                response_id, animal_id, compatibility_score, ranking_score,
-                match_category, matched_requirements, unmet_requirements
+                response_id, animal_id, compatibility_score, preference_score,
+                is_eligible, match_category, matched_requirements, unmet_requirements
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             [
                 (
@@ -318,6 +361,7 @@ def calculate_and_store_matches(response_id: int, answers: dict[str, Any]) -> li
                     result["animal_id"],
                     result["compatibility_score"],
                     result["preference_score"],
+                    int(result["is_eligible"]),
                     result["match_category"],
                     json.dumps(result["matched_requirements"]),
                     json.dumps(result["unmet_requirements"]),
@@ -354,27 +398,21 @@ def fetch_latest_matches(user_id: int, include_low: bool = False) -> list[dict[s
     latest = fetch_latest_response(user_id)
     if latest is None:
         return []
-    condition = "" if include_low else "AND mr.compatibility_score >= ?"
+    condition = "" if include_low else "AND mr.is_eligible = 1"
     parameters: tuple[Any, ...] = (latest["response_id"],)
-    if not include_low:
-        parameters += (MINIMUM_RECOMMENDATION_SCORE,)
     with get_connection() as connection:
         rows = connection.execute(
             f"""
             SELECT mr.*,
-                   (CASE WHEN qr.preferred_species = a.species THEN 10 ELSE 0 END
-                    + CASE WHEN qr.preferred_size = a.size THEN 5 ELSE 0 END)
-                       AS preference_score,
                    a.name, a.species, a.breed, a.age_years, a.sex,
-                   a.size, a.activity_level, a.home_type,
-                   a.minimum_housing_level, a.garden_required,
-                   a.child_friendly, a.max_hours_alone,
-                   a.description, a.image_url
+                   a.size, a.exercise_needs, a.home_type,
+                   a.recommended_housing_level, a.garden_required,
+                   a.child_compatible, a.max_hours_left_alone,
+                   a.description, a.image
             FROM match_results AS mr
             JOIN animals AS a ON a.animal_id = mr.animal_id
-            JOIN questionnaire_responses AS qr ON qr.response_id = mr.response_id
             WHERE mr.response_id = ? {condition}
-            ORDER BY preference_score DESC, mr.compatibility_score DESC,
+            ORDER BY mr.compatibility_score DESC, mr.preference_score DESC,
                      mr.animal_id ASC
             """,
             parameters,

@@ -33,11 +33,11 @@ else:
                 st.markdown(
                     """
                     <div class="paw-logo">🐾</div>
-                    <p class="eyebrow">PawMatch Adoption</p>
+                    <p class="eyebrow">PawMatch</p>
                     <h1 class="brand-title">Find a companion who fits your life.</h1>
                     <p class="brand-copy">
-                        Sign in to continue your questionnaire, view your compatibility
-                        results and discover animals suited to your home.
+                        PawMatch compares an animal's needs with your home and lifestyle
+                        so that suitability comes before appearance.
                     </p>
                     <p class="benefit"><span class="tick">✓</span>Personalised compatibility scores</p>
                     <p class="benefit"><span class="tick">✓</span>Clear reasons behind every match</p>
@@ -50,8 +50,8 @@ else:
             with st.container(key="login_form_panel"):
                 st.markdown(
                     """
-                    <p class="eyebrow" style="color:#d93679;">Welcome back</p>
-                    <h2 class="form-title">Log in to your account</h2>
+                    <p class="eyebrow" style="color:#dc548e;">Welcome back</p>
+                    <h2 class="form-title">Login to continue</h2>
                     <p class="form-copy">
                         Enter your email address or administrator username and password.
                     </p>
@@ -104,7 +104,7 @@ else:
                     submitted = st.form_submit_button(
                         "Log in",
                         type="primary",
-                        icon="🐾",
+                        icon=":material/login:",
                         width="stretch",
                     )
 

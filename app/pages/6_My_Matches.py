@@ -11,7 +11,7 @@ from pawmatch_animals import animal_image_path, format_age
 from pawmatch_matching import calculate_match, fetch_latest_matches, fetch_latest_response
 from pawmatch_style import (
     apply_questionnaire_matches_style,
-    render_questionnaire_matches_sidebar,
+    signed_in_main_column,
 )
 
 st.set_page_config(page_title="PawMatch | My matches", page_icon="💗", layout="wide")
@@ -27,10 +27,7 @@ latest_response = fetch_latest_response(user_id)
 matches = fetch_latest_matches(user_id)[:5] if latest_response else []
 species_icons = {"Dog": "🐕", "Cat": "🐈", "Rabbit": "🐇"}
 
-sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
-with sidebar_column:
-    with st.container(key="design_sidebar"):
-        render_questionnaire_matches_sidebar()
+main_column = signed_in_main_column()
 
 with main_column:
     with st.container(key="design_main"):
@@ -41,7 +38,7 @@ with main_column:
             <div class="flow-page-header matches-heading">
                 <div>
                     <h1>Your ranked matches</h1>
-                    <p>Eligible animals are ranked by your preferences, then compatibility.</p>
+                    <p>Eligible animals are ranked by compatibility, with preferences used to break ties.</p>
                 </div>
             </div>
             """,
@@ -69,7 +66,7 @@ with main_column:
                 species = html.escape(str(match["species"]))
                 breed = html.escape(str(match["breed"]))
                 age = html.escape(format_age(match["age_years"]))
-                portrait = animal_image_path(match["name"])
+                portrait = animal_image_path(match["name"], match.get("image"))
                 if portrait.exists():
                     encoded = base64.b64encode(portrait.read_bytes()).decode("ascii")
                     photo_style = ""

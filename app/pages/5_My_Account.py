@@ -7,7 +7,7 @@ import html
 import streamlit as st
 
 from pawmatch_matching import fetch_latest_response
-from pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
+from pawmatch_style import apply_questionnaire_matches_style, signed_in_main_column
 
 st.set_page_config(page_title="PawMatch | My account", page_icon="👤", layout="wide")
 if not st.session_state.get("logged_in", False):
@@ -23,10 +23,7 @@ if matches_ready:
 
 apply_questionnaire_matches_style("account")
 
-sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
-with sidebar_column:
-    with st.container(key="design_sidebar"):
-        render_questionnaire_matches_sidebar()
+main_column = signed_in_main_column()
 
 with main_column:
     with st.container(key="design_main"):

@@ -24,11 +24,11 @@ def list_users() -> None:
 
 def list_animals() -> None:
     """Print a compact list of animal records."""
-    print("animal_id | name | species | breed | age | status")
+    print("animal_id | name | species | breed | age")
     for animal in sorted(fetch_animals(), key=lambda item: item["animal_id"]):
         print(
             f"{animal['animal_id']} | {animal['name']} | {animal['species']} | "
-            f"{animal['breed']} | {animal['age_years']:g} | {animal['status']}"
+            f"{animal['breed']} | {animal['age_years']:g}"
         )
 
 
@@ -55,13 +55,16 @@ def list_matches() -> None:
         rows = connection.execute(
             """
             SELECT mr.match_id, mr.response_id, a.name, mr.compatibility_score,
-                   mr.match_category, mr.calculated_at
+                   mr.preference_score, mr.is_eligible, mr.match_category,
+                   mr.calculated_at
             FROM match_results AS mr
             JOIN animals AS a ON a.animal_id = mr.animal_id
-            ORDER BY mr.response_id, mr.ranking_score DESC
+            ORDER BY mr.response_id, mr.is_eligible DESC,
+                     mr.compatibility_score DESC, mr.preference_score DESC,
+                     mr.animal_id ASC
             """
         ).fetchall()
-    print("match_id | response_id | animal | compatibility | category | calculated_at")
+    print("match_id | response_id | animal | compatibility | preference | eligible | category | calculated_at")
     for row in rows:
         print(" | ".join(str(row[key]) for key in row.keys()))
 

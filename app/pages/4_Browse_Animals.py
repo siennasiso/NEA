@@ -1,4 +1,4 @@
-"""Browse and inspect available animal profiles using the interface design."""
+"""Browse and inspect animal profiles using the interface design."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import streamlit as st
 
 from pawmatch_animals import SPECIES, animal_image_path, fetch_animal, fetch_animals, format_age, seed_demo_animals, validate_animal_search
 from pawmatch_matching import fetch_latest_matches
-from pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
+from pawmatch_style import apply_questionnaire_matches_style, signed_in_main_column
 
 st.set_page_config(page_title="PawMatch | Browse animals", page_icon="🐾", layout="wide")
 if not st.session_state.get("logged_in", False):
@@ -30,12 +30,10 @@ def _clear_filters() -> None:
     """Reset every browse filter to its design default."""
     st.session_state.browse_search = ""
     st.session_state.browse_species = "All species"
+    st.session_state.browse_size = "All sizes"
 
 
-sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
-with sidebar_column:
-    with st.container(key="design_sidebar"):
-        render_questionnaire_matches_sidebar()
+main_column = signed_in_main_column()
 
 with main_column:
     with st.container(key="design_main"):
@@ -55,9 +53,12 @@ with main_column:
             )
             image_column, description_column = st.columns([1, 1.25], gap="large")
             with image_column:
-                portrait = animal_image_path(selected_animal["name"])
+                portrait = animal_image_path(selected_animal["name"], selected_animal.get("image"))
                 if portrait.exists():
-                    st.image(str(portrait), width="stretch")
+                    st.image(str(portrait), width="stretch", alt=f"Cartoon portrait of {selected_animal['name']}")
+                else:
+                    species_icon = {"Dog": "🐕", "Cat": "🐈", "Rabbit": "🐇"}.get(str(selected_animal["species"]), "🐾")
+                    st.markdown(f'<div class="animal-image-placeholder profile-placeholder">{species_icon}</div>', unsafe_allow_html=True)
             with description_column:
                 st.markdown(f'<p class="profile-description">{html.escape(str(selected_animal["description"]))}</p>', unsafe_allow_html=True)
                 fact_columns = st.columns(3, gap="small")
@@ -74,11 +75,11 @@ with main_column:
                 f"""
                 <div class="needs-card">
                     <h2>What {name} Needs from a Home</h2>
-                    <p class="need-line"><strong>Activity:</strong> {html.escape(str(selected_animal['activity_level']))}</p>
+                    <p class="need-line"><strong>Activity:</strong> {html.escape(str(selected_animal['exercise_needs']))}</p>
                     <p class="need-line"><strong>Home type:</strong> {html.escape(str(selected_animal['home_type']))}</p>
                     <p class="need-line"><strong>Garden:</strong> {'Required' if selected_animal['garden_required'] else 'Not required'}</p>
-                    <p class="need-line"><strong>Children:</strong> {html.escape(str(selected_animal['child_friendly']))}</p>
-                    <p class="need-line"><strong>Maximum time alone:</strong> {int(selected_animal['max_hours_alone'])} hours</p>
+                    <p class="need-line"><strong>Children:</strong> {'Suitable' if selected_animal['child_compatible'] else 'Not suitable'}</p>
+                    <p class="need-line"><strong>Maximum time alone:</strong> {int(selected_animal['max_hours_left_alone'])} hours</p>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -87,20 +88,22 @@ with main_column:
             st.session_state.pop("browse_animal_id", None)
             if st.button("← Back to home", key="page_back"):
                 st.switch_page("pages/1_Home.py")
-            st.markdown('<div class="flow-page-header"><div><h1>Find your next companion</h1><p>Search and filter the animals currently available for adoption.</p></div></div>', unsafe_allow_html=True)
+            st.markdown('<div class="flow-page-header"><div><h1>Find your next companion</h1><p>Search and filter the animal profiles.</p></div></div>', unsafe_allow_html=True)
 
             with st.container(key="browse_filter_card"):
-                search_column, species_column, clear_column = st.columns([1.5, 1, .75], gap="small")
+                search_column, species_column, size_column, clear_column = st.columns([1.5, 1, 1, .75], gap="small")
                 with search_column:
                     search = st.text_input("Search", key="browse_search", placeholder="Name or breed", max_chars=20)
                 with species_column:
                     species = st.selectbox("Species", ("All species", *SPECIES), key="browse_species")
+                with size_column:
+                    size = st.selectbox("Size", ("All sizes", "Small", "Medium", "Large"), key="browse_size")
                 with clear_column:
                     st.write("")
                     st.write("")
                     st.button("Clear filters", on_click=_clear_filters, width="stretch")
 
-            search_errors, filters = validate_animal_search(search, species)
+            search_errors, filters = validate_animal_search(search, species, size)
             if search_errors:
                 st.error("Please correct the search or filter values.")
                 animals = []
@@ -108,21 +111,23 @@ with main_column:
                 animals = fetch_animals(
                     filters["search"],
                     filters["species"],
-                    "Available",
                     size=filters["size"],
                 )
-            st.markdown(f'<p class="browse-section-title">Available animals · {len(animals)}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="browse-section-title">Animals · {len(animals)}</p>', unsafe_allow_html=True)
             if not animals:
-                st.info("No available animals match those filters.")
+                st.info("No animal profiles match those filters.")
             else:
                 for row_start in range(0, len(animals), 3):
                     columns = st.columns(3, gap="medium")
                     for column, animal in zip(columns, animals[row_start:row_start + 3]):
                         with column:
                             with st.container(key=f"animal_card_{animal['animal_id']}"):
-                                portrait = animal_image_path(animal["name"])
+                                portrait = animal_image_path(animal["name"], animal.get("image"))
                                 if portrait.exists():
-                                    st.image(str(portrait), width="stretch")
+                                    st.image(str(portrait), width="stretch", alt=f"Cartoon portrait of {animal['name']}")
+                                else:
+                                    species_icon = {"Dog": "🐕", "Cat": "🐈", "Rabbit": "🐇"}.get(str(animal["species"]), "🐾")
+                                    st.markdown(f'<div class="animal-image-placeholder">{species_icon}</div>', unsafe_allow_html=True)
                                 st.markdown(
                                     f"""<div class="animal-card-copy"><h3>{html.escape(str(animal['name']))}</h3><p class="animal-breed">{html.escape(str(animal['species']))} · {html.escape(str(animal['breed']))}</p><p class="animal-facts">{format_age(animal['age_years'])} · {html.escape(str(animal['sex']))} · {html.escape(str(animal['size']))}</p><p class="animal-description">{html.escape(str(animal['description']))}</p></div>""",
                                     unsafe_allow_html=True,

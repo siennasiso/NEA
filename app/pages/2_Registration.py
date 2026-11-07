@@ -57,11 +57,11 @@ else:
                 st.markdown(
                     """
                     <div class="paw-logo">🐾</div>
-                    <p class="eyebrow">Join PawMatch</p>
-                    <h1 class="brand-title">Create an account and meet your best match.</h1>
+                    <p class="eyebrow">PawMatch</p>
+                    <h1 class="brand-title">Find a companion who fits your life.</h1>
                     <p class="brand-copy">
-                        Register once to save your questionnaire answers, receive ranked
-                        recommendations and return to your results at any time.
+                        Create an account to save your questionnaire and receive ranked
+                        compatibility results.
                     </p>
                     <p class="benefit"><span class="tick">✓</span>Recommendations based on your lifestyle</p>
                     <p class="benefit"><span class="tick">✓</span>Securely stored account details</p>
@@ -74,7 +74,7 @@ else:
             with st.container(key="register_form_panel"):
                 st.markdown(
                     """
-                    <p class="eyebrow" style="color:#d93679;">Get started</p>
+                    <p class="eyebrow" style="color:#dc548e;">Get started</p>
                     <h2 class="form-title">Create your account</h2>
                     <p class="form-copy">
                         Complete each field below. All fields are required.
@@ -141,7 +141,7 @@ else:
                             autocomplete="new-password",
                         )
                         st.markdown(
-                            '<p class="password-hint">Use more than 8 characters.</p>',
+                            '<p class="password-hint">Use at least 8 characters.</p>',
                             unsafe_allow_html=True,
                         )
                         if "password" in errors:
@@ -174,7 +174,7 @@ else:
                     submitted = st.form_submit_button(
                         "Create account",
                         type="primary",
-                        icon="🐾",
+                        icon=":material/person_add:",
                         width="stretch",
                     )
 
@@ -228,8 +228,8 @@ else:
                 st.markdown(
                     """
                     <div class="privacy-note">
-                        🔒 Passwords are converted into a salted hash before being stored.
-                        The original password is never saved in the database.
+                        Passwords are converted into a salted hash before storage.
+                        The original password is never saved.
                     </div>
                     """,
                     unsafe_allow_html=True,

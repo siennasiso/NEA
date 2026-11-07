@@ -15,7 +15,7 @@ This command is safe to repeat. It:
 1. creates or upgrades the `users` table;
 2. creates the `animals`, `questionnaire_responses` and `match_results` tables and indexes;
 3. creates or refreshes the demonstration administrator;
-4. adds any missing records from the 13-animal demonstration dataset.
+4. adds any missing records from the 33-animal demonstration dataset.
 
 Demo administrator:
 
@@ -24,7 +24,7 @@ Username: admin123
 Password: password123
 ```
 
-This deliberately simple password is only for local coursework testing. It is stored in SQLite as a salted scrypt hash, not as plain text. Change it before deploying the site or using real data.
+This deliberately simple password is only for local coursework testing. New passwords are stored in SQLite as salted Argon2id hashes, not as plain text; existing scrypt hashes remain verifiable. Change it before deploying the site or using real data.
 
 ## How the database works
 
@@ -39,13 +39,13 @@ The `users` table contains:
 | `username` | Optional unique login name, primarily for administrators |
 | `email` | Unique adopter email and normal adopter login |
 | `age` | Validated age from 18 to 120 |
-| `password_hash` | Salted scrypt hash; never display or edit directly |
+| `password_hash` | Salted Argon2id hash (or a legacy scrypt hash); never display or edit directly |
 | `role` | Either `user` or `admin` |
 | `created_at` | Automatic creation timestamp |
 
-`pawmatch_animals.py` owns animal validation and CRUD operations. The `animals` table stores the public profile, matching requirements, adoption status, image URL and timestamps. Check constraints reject unsupported values even if invalid data bypasses the interface.
+`pawmatch_animals.py` owns animal validation and CRUD operations. The `animals` table stores the public profile, matching requirements, image path and timestamps. PawMatch does not track availability or adoption status. Check constraints reject unsupported values even if invalid data bypasses the interface.
 
-`pawmatch_matching.py` owns questionnaire validation, response storage and match calculation. `questionnaire_responses` stores the seven submitted answers. `match_results` links each response to each available animal and records its compatibility, category and explanations. See `MATCHING_ALGORITHM.md` for the precise weights and ranking rules.
+`pawmatch_matching.py` owns questionnaire validation, response storage and match calculation. `questionnaire_responses` stores the seven submitted answers. `match_results` links each response to each animal and records its compatibility, eligibility, preference score, category and explanations. The weights and ranking rules are defined in that module.
 
 ## View the data safely
 
@@ -69,7 +69,7 @@ sqlite3 pawmatch.db
 .headers on
 .mode column
 SELECT user_id, name, username, email, role FROM users;
-SELECT animal_id, name, species, breed, status FROM animals;
+SELECT animal_id, name, species, breed FROM animals;
 .quit
 ```
 
@@ -100,17 +100,16 @@ record = {
     "age_years": 4,
     "sex": "Female",
     "size": "Medium",
-    "activity_level": "High",
+    "exercise_needs": "High",
     "home_type": "House",
-    "minimum_housing_level": 2,
+    "recommended_housing_level": 2,
     "garden_required": True,
-    "child_friendly": "Older children only",
+    "child_compatible": False,
     "other_pets": "Depends",
     "experience_level": "Experienced owner",
-    "max_hours_alone": 3,
-    "status": "Available",
+    "max_hours_left_alone": 3,
     "description": "Ruby is a clever and energetic dog who enjoys training, enrichment and long daily walks.",
-    "image_url": "",
+    "image": "uploads/animals/ruby.png",
 }
 
 errors, cleaned = validate_animal(record)
@@ -129,7 +128,7 @@ Use the helper functions instead of writing SQL in Streamlit pages:
 from pawmatch_animals import delete_animal, fetch_animal, fetch_animals, update_animal
 
 all_animals = fetch_animals()
-available_dogs = fetch_animals(species="Dog", status="Available")
+dogs = fetch_animals(species="Dog")
 animal = fetch_animal(1)
 
 # Validate a complete changed record before updating it.

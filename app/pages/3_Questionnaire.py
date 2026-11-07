@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import streamlit as st
 
 from pawmatch_matching import (
@@ -13,7 +15,7 @@ from pawmatch_matching import (
 )
 from pawmatch_style import (
     apply_questionnaire_matches_style,
-    render_questionnaire_matches_sidebar,
+    signed_in_main_column,
 )
 
 st.set_page_config(page_title="PawMatch | Questionnaire", page_icon="📝", layout="wide")
@@ -23,9 +25,18 @@ if st.session_state.get("role") == "admin":
     st.switch_page("pages/7_Admin_Dashboard.py")
 
 apply_questionnaire_matches_style("questionnaire")
+st.html(Path(__file__).resolve().parents[1] / "questionnaire.css")
 initialise_matching_tables()
 
 QUESTIONS = (
+    {
+        "field": "garden_access",
+        "prompt": "Do you have access to a garden?",
+        "options": (
+            ("Yes", "The animal can use a secure garden", True),
+            ("No", "There is no private garden access", False),
+        ),
+    },
     {
         "field": "housing_level",
         "prompt": "How much indoor space is available for the animal?",
@@ -33,14 +44,6 @@ QUESTIONS = (
             ("Limited space", "One main room", 1),
             ("Moderate space", "Two or three rooms", 2),
             ("Plenty of space", "Most of the home", 3),
-        ),
-    },
-    {
-        "field": "garden_access",
-        "prompt": "Do you have access to a garden?",
-        "options": (
-            ("Yes", "The animal can use a secure garden", True),
-            ("No", "There is no private garden access", False),
         ),
     },
     {
@@ -105,12 +108,6 @@ def _move_to(step: int) -> None:
     st.rerun()
 
 
-def _select_answer(field: str, value: object) -> None:
-    """Persist a choice in the current Streamlit browser session."""
-    st.session_state.questionnaire_answers[field] = value
-    st.rerun()
-
-
 if "questionnaire_answers" not in st.session_state:
     st.session_state.questionnaire_answers = _initial_answers()
 if "questionnaire_step" not in st.session_state:
@@ -125,10 +122,7 @@ question = QUESTIONS[step]
 field = str(question["field"])
 progress = round(((step + 1) / len(QUESTIONS)) * 100)
 
-sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
-with sidebar_column:
-    with st.container(key="design_sidebar"):
-        render_questionnaire_matches_sidebar()
+main_column = signed_in_main_column()
 
 with main_column:
     with st.container(key="design_main"):
@@ -153,25 +147,19 @@ with main_column:
 
         st.markdown(
             f"""
-            <div class="flow-page-header">
-                <div>
-                    <h1>Question {step + 1} of {len(QUESTIONS)}</h1>
-                    <p>Choose one answer then continue</p>
-                </div>
-                <span>{progress}% through</span>
-            </div>
-            <div class="flow-progress"><span style="width:{progress}%"></span></div>
+            <header class="questionnaire-header">
+                <span class="questionnaire-percent">{progress}% through</span>
+                <h1>Question {step + 1} of {len(QUESTIONS)}</h1>
+                <p>{"Enter your answer then continue" if field == "hours_left_alone" else "Choose one answer then continue"}</p>
+                <progress class="questionnaire-progress" aria-label="Questionnaire progress" value="{progress}" max="100"></progress>
+            </header>
             """,
             unsafe_allow_html=True,
         )
 
-        if st.session_state.get("questionnaire_complete", False):
-            if st.button("View matches", key="view_matches_primary", type="primary", width="stretch"):
-                st.switch_page("pages/6_My_Matches.py")
-
         with st.container(key="question_card"):
             st.markdown(
-                f'<p class="question-prompt">{question["prompt"]}</p>',
+                f'<h2 class="question-prompt">{question["prompt"]}</h2>',
                 unsafe_allow_html=True,
             )
 
@@ -191,36 +179,24 @@ with main_column:
                 answers[field] = int(hours)
             else:
                 options = question["options"]
-                selected = answers.get(field)
-                if selected is not None:
-                    selected_index = next(
-                        index for index, option in enumerate(options)
-                        if option[2] == selected
-                    )
-                    st.markdown(
-                        f"""
-                        <style>
-                        .st-key-choice_{step}_{selected_index} button,
-                        .st-key-choice_{step}_{selected_index} button:hover {{
-                            border: 2px solid #d84d8b !important;
-                            background: #fbeaf4 !important;
-                            box-shadow: 0 4px 7px rgba(120,45,80,.25) !important;
-                        }}
-                        </style>
-                        """,
-                        unsafe_allow_html=True,
-                    )
-                option_columns = st.columns(len(options), gap="small")
-                for index, (label, hint, value) in enumerate(options):
-                    with option_columns[index]:
-                        if st.button(
-                            f"{label}\n\n{hint}",
-                            key=f"choice_{step}_{index}",
-                            width="stretch",
-                        ):
-                            _select_answer(field, value)
+                selected_index = next(
+                    (index for index, option in enumerate(options) if option[2] == answers.get(field)),
+                    None,
+                )
+                # Keep answers separately so they survive when a question's widget is hidden.
+                answers[field] = st.radio(
+                    str(question["prompt"]),
+                    options=[value for _, _, value in options],
+                    index=selected_index,
+                    format_func={value: label for label, _, value in options}.__getitem__,
+                    captions=[hint for _, hint, _ in options],
+                    horizontal=True,
+                    label_visibility="collapsed",
+                    key=f"question_choice_{field}",
+                    width="stretch",
+                )
 
-            back_column, next_column = st.columns([1, 1.35], gap="large")
+            back_column, _, next_column = st.columns([1, 1.4, 1.27], gap="small")
             with back_column:
                 if st.button(
                     "Back",

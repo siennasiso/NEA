@@ -7,7 +7,7 @@ import html
 import streamlit as st
 
 from pawmatch_matching import fetch_latest_matches, fetch_latest_response
-from pawmatch_style import apply_questionnaire_matches_style, render_questionnaire_matches_sidebar
+from pawmatch_style import apply_questionnaire_matches_style, signed_in_main_column
 
 st.set_page_config(page_title="PawMatch | Home", page_icon="🐾", layout="wide")
 if not st.session_state.get("logged_in", False):
@@ -26,23 +26,18 @@ apply_questionnaire_matches_style("home")
 full_name = str(st.session_state.get("user_name", "PawMatch user")).strip()
 first_name = html.escape(full_name.split()[0] if full_name else "there")
 
-sidebar_column, main_column = st.columns([0.25, 0.75], gap=None)
-with sidebar_column:
-    with st.container(key="design_sidebar"):
-        render_questionnaire_matches_sidebar()
+main_column = signed_in_main_column()
 
 with main_column:
     with st.container(key="design_main"):
         st.markdown(
             f"""
-            <div class="flow-page-header">
-                <div>
-                    <h1>Welcome Back {first_name}</h1>
-                    <p>Time to find your purrfect companion!</p>
-                </div>
-            </div>
-            <p class="profile-description">Browse the animals waiting for a home, tell PawMatch about your lifestyle, and view your account.</p>
-            <p class="browse-section-title">MAIN ACTIONS</p>
+            <header class="home-hero">
+                <h1>Find your PawMatch</h1>
+                <p class="home-subtitle">Welcome back, {first_name}</p>
+                <p class="home-intro">Explore animal profiles or take the questionnaire to see which pets suit your home and routine.</p>
+            </header>
+            <p class="home-section-title">Main actions</p>
             """,
             unsafe_allow_html=True,
         )
@@ -50,21 +45,21 @@ with main_column:
         browse_column, questionnaire_column, account_column = st.columns(3, gap="medium")
         with browse_column:
             with st.container(key="animal_card_home_browse"):
-                st.markdown('<div class="account-avatar">🐾</div><div class="animal-card-copy"><h3>Browse animals</h3><p class="animal-description">Search the available animals and open their full profiles.</p></div>', unsafe_allow_html=True)
+                st.markdown('<div class="home-action-icon">🐾</div><div class="animal-card-copy"><h3>Browse animals</h3><p class="animal-description">Search the animal profiles and learn about their individual needs.</p></div>', unsafe_allow_html=True)
                 if st.button("Browse animals", key="home_browse", width="stretch"):
                     st.switch_page("pages/4_Browse_Animals.py")
         with questionnaire_column:
             with st.container(key="animal_card_home_questionnaire"):
-                st.markdown('<div class="account-avatar">📝</div><div class="animal-card-copy"><h3>Take questionnaire</h3><p class="animal-description">Answer seven questions to calculate your best matches.</p></div>', unsafe_allow_html=True)
-                if st.button("Open questionnaire", key="home_questionnaire", width="stretch"):
+                st.markdown('<div class="home-action-icon">📝</div><div class="animal-card-copy"><h3>Take questionnaire</h3><p class="animal-description">Answer seven questions about your home and lifestyle.</p></div>', unsafe_allow_html=True)
+                if st.button("Open questionnaire", key="home_questionnaire", type="primary", width="stretch"):
                     st.switch_page("pages/3_Questionnaire.py")
         with account_column:
             with st.container(key="animal_card_home_account"):
-                st.markdown('<div class="account-avatar">👤</div><div class="animal-card-copy"><h3>My account</h3><p class="animal-description">View your profile and access My Matches under your account.</p></div>', unsafe_allow_html=True)
+                st.markdown('<div class="home-action-icon">👤</div><div class="animal-card-copy"><h3>My account</h3><p class="animal-description">View your details and return to your latest matches.</p></div>', unsafe_allow_html=True)
                 if st.button("View account", key="home_account", width="stretch"):
                     st.switch_page("pages/5_My_Account.py")
 
-        st.markdown('<p class="browse-section-title">HOW IT WORKS</p>', unsafe_allow_html=True)
+        st.markdown('<p class="home-section-title home-how-title">How it works</p>', unsafe_allow_html=True)
         step_columns = st.columns(3, gap="medium")
         steps = (
             ("1", "Tell us about your lifestyle", "Answer questions about your home, routine and preferences."),
@@ -73,4 +68,4 @@ with main_column:
         )
         for column, (number, title, copy) in zip(step_columns, steps):
             with column:
-                st.markdown(f'<div class="needs-card"><div class="flow-brand-mark">{number}</div><h2>{title}</h2><p class="need-line">{copy}</p></div>', unsafe_allow_html=True)
+                st.markdown(f'<div class="home-step-card"><div class="home-step-number">{number}</div><h2>{title}</h2><p>{copy}</p></div>', unsafe_allow_html=True)
