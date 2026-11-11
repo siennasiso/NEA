@@ -1,10 +1,10 @@
 """PawMatch registration page isolated for the development documentation.
 
 This is the registration interface used by the full PawMatch application. It
-keeps the same pink two-column layout, field-level errors and success screen,
-but can be run independently on the development branch with:
+keeps the same pink two-column layout, field-level errors and success screen.
+Run the connected login and registration pages on the development branch with:
 
-    streamlit run registration.py
+    streamlit run app.py
 """
 
 import streamlit as st
@@ -14,18 +14,10 @@ from database import create_database
 
 
 # ---------------------------------------------------------------------------
-# STREAMLIT PAGE SETUP
+# DATABASE SETUP
 # ---------------------------------------------------------------------------
-# This must be the first Streamlit command. The wide layout is important here
-# because the desktop design places the pink information panel beside the form.
-st.set_page_config(
-    page_title="PawMatch | Registration",
-    page_icon="🐾",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
-
-# The registration page can be tested without running a separate setup file.
+# app.py owns the shared Streamlit page configuration and hidden navigation.
+# The registration page can still initialise its required database safely.
 # CREATE TABLE IF NOT EXISTS is repeatable, so existing test users are retained.
 create_database()
 
@@ -222,7 +214,8 @@ def apply_registration_style() -> None:
             background: var(--deep-pink);
         }
 
-        .st-key-test_another_button button {
+        .st-key-secondary_button button,
+        .st-key-login_button button {
             min-height: 47px;
             border: 1px solid var(--border-pink);
             border-radius: 11px;
@@ -338,17 +331,17 @@ if st.session_state.registration_complete:
             "for SQLite."
         )
 
-        # The isolated development page does not navigate into later features.
-        # Instead, this button resets the UI for the next manual test case.
+        # This restores the original success-screen route back to the login
+        # interface. The account remains in SQLite so it can be tested there.
         if st.button(
-            "Test another registration",
-            key="test_another_button",
+            "Go to login",
+            key="login_button",
             width="stretch",
         ):
             st.session_state.registration_complete = False
             st.session_state.registration_errors = {}
             st.session_state.clear_registration_fields = True
-            st.rerun()
+            st.switch_page("login.py")
 
 else:
     # Any errors saved after the last submit are read before the form is drawn.
@@ -564,13 +557,21 @@ else:
                     st.session_state.clear_registration_fields = True
                     st.rerun()
 
-                # The full app normally links back to login here. This isolated
-                # development page identifies that login is intentionally
-                # outside this registration-only evidence stage.
+                # Restore the navigation from the original registration page.
+                # Both pages are registered by app.py, so the button switches
+                # pages without displaying a sidebar navigation menu.
                 st.markdown(
-                    '<div class="divider"><span>Registration development stage</span></div>',
+                    '<div class="divider"><span>Already have an account?</span></div>',
                     unsafe_allow_html=True,
                 )
+
+                if st.button(
+                    "Back to login",
+                    key="secondary_button",
+                    width="stretch",
+                ):
+                    st.session_state.registration_errors = {}
+                    st.switch_page("login.py")
 
                 st.markdown(
                     """
