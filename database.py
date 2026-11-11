@@ -131,11 +131,27 @@ ON match_results (
 """
 
 
+def get_connection(database_path: Path = DATABASE_PATH) -> sqlite3.Connection:
+    """Open SQLite with row names and foreign-key checking enabled.
+
+    Keeping this configuration in one function avoids a subtle error where one
+    part of the program enables foreign keys but another part forgets. Named
+    rows also make the authentication code easier to read than tuple indexes.
+    """
+    connection = sqlite3.connect(database_path, timeout=5)
+    connection.row_factory = sqlite3.Row
+    connection.execute("PRAGMA foreign_keys = ON")
+    return connection
+
+
 def create_database(database_path: Path = DATABASE_PATH) -> Path:
     """Create every designed table and return the database path."""
     database_path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(database_path) as connection:
-        connection.execute("PRAGMA foreign_keys = ON")
+    connection = get_connection(database_path)
+    try:
         connection.executescript(SCHEMA)
+        connection.commit()
+    finally:
+        connection.close()
     return database_path
 

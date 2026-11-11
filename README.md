@@ -1,9 +1,29 @@
-# PawMatch DB1 manual development test
+# PawMatch database and authentication development stages
 
-This branch contains only the PawMatch SQLite schema needed for the DB1 test.
-It does not contain the completed application.
+This branch contains the isolated database, registration and login increments.
+Animal management, browsing, questionnaires and matching are intentionally not
+present yet. This makes the DB1 and R1-R6 development tests traceable.
 
-## Create the database
+## Install and start the authentication stage
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 setup_database.py --fresh
+streamlit run app.py
+```
+
+`--fresh` moves an existing database to a timestamped backup before building a
+new one. It also creates the local demonstration administrator used for R6:
+
+```text
+Username: admin123
+Password: password123
+```
+
+These credentials are intentionally simple and must only be used for local
+coursework testing.
+
+## Create only the database
 
 From this folder, run:
 
@@ -37,4 +57,25 @@ python3 inspect_database.py
 
 For your Development document, capture a screenshot of the Database Structure
 tab showing all four tables and a second screenshot showing the terminal output.
+
+## Registration and login manual tests
+
+The app is ready for the pre-development authentication tests:
+
+- **R1:** confirm the registration form displays name, email, age, password and
+  confirmation fields.
+- **R2:** register `adopter1@example.com`, age 19, with `password123`; confirm
+  that the adopter homepage opens and a `user` row is stored.
+- **R3:** try each invalid value separately: blank/one-character name, invalid
+  email, age 17, duplicate email, mismatched confirmation, seven-character
+  password and eight-character password.
+- **R4:** create two users with the same password. In DB Browser, confirm the
+  `password_hash` values both begin `$argon2id$`, differ from each other and do
+  not contain the plaintext password.
+- **R5:** test correct details, a wrong password and an unknown email. The two
+  invalid credential attempts must show the same generic message.
+- **R6:** confirm an adopter is refused the Admin area, then log in with the
+  demonstration administrator and confirm access is granted.
+
+Use fictional `example.com` addresses for evidence rather than personal data.
 

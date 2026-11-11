@@ -4,6 +4,7 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 
+from auth import ensure_demo_admin
 from database import DATABASE_PATH, create_database
 
 
@@ -30,9 +31,15 @@ arguments = parser.parse_args()
 
 backup = back_up_existing_database(DATABASE_PATH) if arguments.fresh else None
 created_path = create_database()
+admin_id, admin_created = ensure_demo_admin()
 
 if backup is not None:
     print(f"Previous database moved to: {backup}")
 print(f"Database ready: {created_path}")
+print(
+    "Demo administrator "
+    f"{'created' if admin_created else 'refreshed'} with user_id {admin_id}."
+)
+print("Local test login: admin123 / password123")
 print("Open this file in DB Browser for SQLite and select the Database Structure tab.")
 
